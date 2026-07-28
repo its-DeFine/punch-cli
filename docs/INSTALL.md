@@ -37,11 +37,11 @@ User installation:
 ~/.config/punch/
 ```
 
-Provider service installation may additionally use a dedicated system account and state directory. The release-specific provider installer must show every privileged change before applying it.
+The current preview archive makes no privileged or system-service changes. It does not supply or install a Provider service definition; unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published.
 
 ## Update
 
-Install the new verified version. The installer changes the command links only after all files and checksums have validated. It must not overwrite invitation, session, identity, credential, or state files.
+Before extraction, the user verifies the compressed archive against the matching entry in `SHA256SUMS`. The installer then checks the release payload directory, bundled runtime, and command launchers, copies the versioned payload, and atomically changes each selected command link only after the copy succeeds. It must not overwrite invitation, session, identity, credential, or state files.
 
 ## Uninstall
 

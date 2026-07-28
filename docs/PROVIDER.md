@@ -12,7 +12,7 @@ The preview supports allowlisted immutable workload images and bounded structure
 - Optional NVIDIA GPU, driver, Container Toolkit, and stable GPU UUID/CDI identity.
 - A dedicated private state directory.
 
-The Provider CLI does not configure a remote Docker endpoint and must never expose the Docker socket over TCP. Access to the Docker Unix socket is normally equivalent to host-root authority. During the preview, operate the agent on a dedicated or equivalently isolated execution node, under only the release's reviewed service identity. Do not place unrelated user data or credentials on that node.
+The Provider CLI does not configure a remote Docker endpoint and must never expose the Docker socket over TCP. Access to the Docker Unix socket is normally equivalent to host-root authority. During the preview, operate the agent as an owner-supervised foreground process on a dedicated or equivalently isolated execution node. Do not place unrelated user data or credentials on that node.
 
 ## 2. Prepare state
 
@@ -80,7 +80,7 @@ GPU example adds:
 
 Never offer more capacity than the inventory reports as safely allocatable.
 
-## 7. Run the resident agent
+## 7. Run the agent in the supervised foreground
 
 ```bash
 punch-provider serve \
@@ -90,7 +90,7 @@ punch-provider serve \
   --interval-ms 1000
 ```
 
-During the preview, run the agent under the reviewed service definition supplied with the release. The release must identify the service account, Docker-socket membership, state paths, outbound network requirement, retained data, and recovery procedure. Do not invent a root wrapper or grant broader system access. Accept Provider operation only if the node's isolation makes the Docker-socket authority acceptable.
+The current preview archive supports only owner-supervised foreground operation of `punch-provider serve`. It does not supply or install a service definition and makes no privileged or system-service changes. Unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published. Do not invent a root wrapper or grant broader system access. Accept Provider operation only if the node's isolation makes the Docker-socket authority acceptable.
 
 Read local state while the agent remains running:
 

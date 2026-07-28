@@ -12,10 +12,25 @@ for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/
     exit 1
   }
 done
-grep -F 'NODE_VERSION' packaging/THIRD_PARTY_NOTICES.template.md > /dev/null || {
-  printf '%s\n' 'third-party notices template lacks the Node version marker' >&2
+node_marker_count=$(awk '
+  {
+    line = $0
+    while ((position = index(line, "NODE_VERSION")) != 0) {
+      count++
+      line = substr(line, position + length("NODE_VERSION"))
+    }
+  }
+  END { print count + 0 }
+' packaging/THIRD_PARTY_NOTICES.template.md)
+[ "$node_marker_count" -eq 1 ] || {
+  printf '%s\n' 'third-party notices template must contain exactly one Node version marker' >&2
   exit 1
 }
+rendered_notices=$(sed 's/NODE_VERSION/v0.0.0-test/' packaging/THIRD_PARTY_NOTICES.template.md)
+if printf '%s\n' "$rendered_notices" | grep -Eq 'NODE_VERSION|must be replaced|must be copied|before release|public source repository'; then
+  printf '%s\n' 'rendered third-party notices contain a placeholder or build instruction' >&2
+  exit 1
+fi
 grep -F 'Copyright (c) 2016 Luigi Pinca and contributors' packaging/third_party/ws-8.21.1/LICENSE > /dev/null || {
   printf '%s\n' 'ws 8.21.1 license template is incomplete' >&2
   exit 1

@@ -1,10 +1,10 @@
 Punch CLI Runtime Artifact Notice
 Copyright 2026 its-DeFine. All rights reserved.
 
-The Apache License, Version 2.0 in this repository does not grant rights to a
-separately distributed Punch Buyer CLI or Provider Agent binary or bundle. Such
-an artifact may be used only under the terms supplied with its release and the
-applicable Punch invitation or pilot agreement.
+The Apache License, Version 2.0 in this repository does not cover a Punch Buyer
+CLI or Provider Agent binary or bundle. This archive carries this proprietary
+artifact notice; authorization and use are governed by the applicable Punch
+invitation or pilot agreement delivered separately.
 
 No Buyer CLI or Provider Agent implementation source is included in this
 public repository.

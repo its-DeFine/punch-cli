@@ -20,7 +20,7 @@ When a GPU is assigned, the lease uses a stable GPU UUID and CDI identity rather
 
 ## Local privilege
 
-Access to the Docker Unix socket is normally equivalent to host-root authority. Run the Provider agent only under the reviewed release service definition and on a node dedicated or appropriately isolated for providing compute. Do not expose a Docker-compatible API over TCP and do not give Buyers access to the Unix socket.
+Access to the Docker Unix socket is normally equivalent to host-root authority. Run the Provider agent only as an owner-supervised foreground process and on a node dedicated or appropriately isolated for providing compute. The current preview archive does not supply or install a service definition and makes no privileged or system-service changes. Unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published. Do not expose a Docker-compatible API over TCP and do not give Buyers access to the Unix socket.
 
 ## File permissions
 

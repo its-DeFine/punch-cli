@@ -5,6 +5,7 @@ This product includes software developed by its-DeFine.
 
 The Apache-2.0 license in this repository applies to the public documentation,
 installer, verification, and wrapper source tracked in this repository.
-Proprietary Buyer CLI and Provider Agent release artifacts are separately
-licensed and are not covered by the Apache-2.0 license solely because they are
-distributed from this repository.
+Apache-2.0 does not cover proprietary Buyer CLI or Provider Agent bundles. Each
+such archive carries PROPRIETARY-ARTIFACT-NOTICE.txt; authorization and use are
+governed by the applicable Punch invitation or pilot agreement delivered
+separately.

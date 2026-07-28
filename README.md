@@ -58,7 +58,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 
 ## Licensing
 
-The public documentation, installer, and launcher source in this repository are licensed under Apache-2.0. Proprietary Punch Buyer CLI and Provider Agent artifacts are **not** licensed under Apache-2.0; every release containing such an artifact carries its own license and notices.
+The public documentation, installer, and launcher source in this repository are licensed under Apache-2.0. Proprietary Punch Buyer CLI and Provider Agent bundles are **not** covered by Apache-2.0. Their archives carry `PROPRIETARY-ARTIFACT-NOTICE.txt`; authorization and use are governed by the applicable Punch invitation or pilot agreement delivered separately.
 
 ## Security reports
 
