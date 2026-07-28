@@ -22,5 +22,5 @@ chmod 0600 /workspace/.ssh/authorized_keys
 unset authorized_key
 
 /usr/bin/dropbearkey -t ed25519 -f /tmp/dropbear_ed25519_host_key >/dev/null 2>&1
-exec /usr/sbin/dropbear -F -s -g -w -j -k -I 300 \
+exec /usr/sbin/dropbear -F -s -g -w -j -k -I 300 -P /tmp/dropbear.pid \
   -p 127.0.0.1:2222 -r /tmp/dropbear_ed25519_host_key >/dev/null 2>&1
