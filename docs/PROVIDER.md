@@ -14,6 +14,19 @@ The preview supports allowlisted immutable workload images and bounded structure
 
 The Provider CLI does not configure a remote Docker endpoint and must never expose the Docker socket over TCP. Access to the Docker Unix socket is normally equivalent to host-root authority. During the preview, operate the agent as an owner-supervised foreground process on a dedicated or equivalently isolated execution node. Do not place unrelated user data or credentials on that node.
 
+## Runtime images
+
+Punch publishes the fixed interactive runtime at
+`ghcr.io/its-define/punch-interactive`. The image build context is public under
+`images/interactive/`, but the Control implementation remains private. Always
+use the exact `sha256` digest supplied in the Punch `agent.json`; do not use the
+workflow tag as an image policy and do not substitute a locally rebuilt image.
+
+The interactive image runs as UID/GID `65532:65532`, binds SSH only to container
+loopback, and publishes no port. The Provider Docker daemon must pass the Punch
+preflight for user-namespace remapping, cgroup v2 private namespaces, default
+seccomp, and AppArmor before an interactive workload is accepted.
+
 ## 2. Prepare state
 
 ```bash
