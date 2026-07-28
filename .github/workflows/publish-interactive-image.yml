@@ -34,7 +34,7 @@ jobs:
           name="punch-interactive-smoke"
           trap 'docker rm -f "$name" >/dev/null 2>&1 || true' EXIT
           ssh-keygen -q -t ed25519 -N '' -f "$key"
-          authorized_key="$(base64 -w0 < "$key.pub")"
+          authorized_key="$(awk '{print $1 " " $2}' "$key.pub" | base64 -w0)"
           docker run --detach --name "$name" \
             --read-only --network none --cap-drop ALL \
             --security-opt no-new-privileges \
