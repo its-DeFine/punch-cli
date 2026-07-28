@@ -1,5 +1,27 @@
 #!/bin/sh
 set -eu
 
-program_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd -P)
+fail() {
+  printf 'punch-provider launcher: %s\n' "$1" >&2
+  exit 1
+}
+
+launcher=$0
+[ "$(basename -- "$launcher")" = punch-provider ] || fail 'unexpected launcher name'
+if [ -L "$launcher" ]; then
+  target=$(readlink "$launcher") || fail 'cannot read launcher link'
+  case "$target" in
+    /*) launcher=$target ;;
+    *) launcher=$(dirname -- "$launcher")/$target ;;
+  esac
+  [ ! -L "$launcher" ] || fail 'refusing a chained launcher link'
+fi
+
+[ -f "$launcher" ] || fail 'launcher target is missing'
+[ "$(basename -- "$launcher")" = punch-provider ] || fail 'unexpected launcher target'
+launcher_dir=$(CDPATH= cd -- "$(dirname -- "$launcher")" && pwd -P) || fail 'cannot resolve launcher directory'
+program_dir=$(CDPATH= cd -- "$launcher_dir/.." && pwd -P) || fail 'cannot resolve program directory'
+[ -x "$program_dir/runtime/bin/node" ] || fail 'bundled runtime is missing'
+[ -f "$program_dir/lib/punch-provider.mjs" ] && [ ! -L "$program_dir/lib/punch-provider.mjs" ] || fail 'Provider implementation is missing or unsafe'
+
 exec "$program_dir/runtime/bin/node" "$program_dir/lib/punch-provider.mjs" "$@"

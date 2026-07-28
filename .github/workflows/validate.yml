@@ -12,7 +12,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install validation dependency
-        run: sudo apt-get update && sudo apt-get install -y ripgrep
-      - name: Validate public surface
-        run: ./scripts/validate-public.sh
+      - name: Validate public surface without ripgrep
+        run: ./tests/validate-without-rg.sh

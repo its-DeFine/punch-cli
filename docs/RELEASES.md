@@ -12,7 +12,10 @@ An installable release must contain:
 - `SHA256SUMS` covering every downloadable package.
 - Installation and uninstallation scripts.
 - The Apache-2.0 source license and notices for public components.
-- A separate notice and license for any proprietary Provider-agent artifact.
+- A separate notice and license for any proprietary Buyer CLI or Provider Agent artifact.
+- A concise third-party notices manifest naming the exact bundled Node.js version and `ws` 8.21.1.
+- The official distribution `LICENSE` copied unchanged from the exact bundled Node.js release.
+- The MIT `LICENSE` for the bundled `ws` 8.21.1 dependency.
 - Release notes identifying protocol, configuration, and platform compatibility.
 - Strict command-parser regression tests that reject unknown and duplicate flags.
 - Release-specific tests for invitation handling, output verification, brokered SSH proxying, Provider drain semantics, and fail-closed configuration.
