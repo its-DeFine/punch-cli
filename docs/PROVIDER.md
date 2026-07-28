@@ -19,13 +19,61 @@ The Provider CLI does not configure a remote Docker endpoint and must never expo
 Punch publishes the fixed interactive runtime at
 `ghcr.io/its-define/punch-interactive`. The image build context is public under
 `images/interactive/`, but the Control implementation remains private. Always
-use the exact `sha256` digest supplied in the Punch `agent.json`; do not use the
-workflow tag as an image policy and do not substitute a locally rebuilt image.
+pull the release by the exact registry digest supplied by Punch; do not use the
+workflow tag and do not substitute a locally rebuilt image.
+
+The registry digest and Docker's local image ID are two different immutable
+identities. Pull with the registry reference, then record the exact local image
+ID:
+
+```bash
+docker pull 'ghcr.io/its-define/punch-interactive@sha256:REGISTRY_DIGEST'
+docker image inspect \
+  --format '{{.Id}}' \
+  'ghcr.io/its-define/punch-interactive@sha256:REGISTRY_DIGEST'
+```
+
+Punch places the resulting `sha256:LOCAL_IMAGE_ID` in
+`imagePolicies.INTERACTIVE.approvedBaseImage`. Do not put the registry reference
+or a tag in that field. A Punch-supplied interactive policy has this exact
+shape; it appears alongside the separately supplied `VALIDATION` and `WORKLOAD`
+policies:
+
+```json
+{
+  "protocol": "PUNCH_INTERACTIVE_V1",
+  "approvedBaseImage": "sha256:LOCAL_IMAGE_ID",
+  "command": ["/usr/local/bin/punch-interactive"],
+  "inputKeys": [],
+  "seccompProfile": "builtin",
+  "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
+  "appArmorProfile": "docker-default",
+  "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
+}
+```
+
+Do not invent or edit this block by hand for a live Provider. Punch must supply
+it only after the image and local runtime preflight have been verified.
 
 The interactive image runs as UID/GID `65532:65532`, binds SSH only to container
 loopback, and publishes no port. The Provider Docker daemon must pass the Punch
 preflight for user-namespace remapping, cgroup v2 private namespaces, default
 seccomp, and AppArmor before an interactive workload is accepted.
+
+Before setup, verify that Docker reports all four required security options and
+cgroup v2:
+
+```bash
+docker info --format '{{json .SecurityOptions}}'
+docker info --format '{{.CgroupVersion}}'
+```
+
+The security options must include `name=userns`, `name=cgroupns`,
+`name=seccomp,profile=builtin`, and `name=apparmor`; the cgroup version must be
+`2`. Enabling user-namespace remapping changes Docker's storage namespace and
+normally requires a Docker restart. Preserve existing images and containers and
+use a reviewed, host-specific rollback procedure; the public CLI does not make
+that privileged change.
 
 ## 2. Prepare state
 
