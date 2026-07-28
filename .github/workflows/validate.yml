@@ -1,0 +1,18 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  public-surface:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install validation dependency
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Validate public surface
+        run: ./scripts/validate-public.sh

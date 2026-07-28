@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+
+program_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd -P)
+exec "$program_dir/runtime/bin/node" "$program_dir/lib/punch-provider.mjs" "$@"
