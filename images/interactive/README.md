@@ -18,6 +18,11 @@ Official releases are published for `linux/amd64` as
 immutable digest reported by the successful publish workflow, never a mutable
 tag. Do not build or substitute a different image for a Punch pilot.
 
+The `v0.1.0-preview.3` compatible registry reference is
+`ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4`.
+Its expected local image ID is
+`sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b`.
+
 Pull the image by its registry digest. Docker then reports a local content ID
 with `docker image inspect --format '{{.Id}}' IMAGE@sha256:REGISTRY_DIGEST`.
 Punch binds `approvedBaseImage` to that exact local `sha256:` image ID; the

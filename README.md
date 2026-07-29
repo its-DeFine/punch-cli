@@ -11,6 +11,10 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
+The current supported external-pilot package is `v0.1.0-preview.3` for
+Linux/x64. Use only the matching immutable image set in
+[Release and verification policy](docs/RELEASES.md).
+
 ## What is public
 
 - Installation and update tooling.
@@ -29,7 +33,7 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 ## Quick start
 
-1. Confirm that this repository has a published release for your platform.
+1. Download `v0.1.0-preview.3` for Linux/x64 from the repository's Releases page and verify its checksum.
 2. Obtain a single-use Buyer or Provider invitation from Punch.
 3. Install the matching CLI from that verified release; see [Installation](docs/INSTALL.md).
 4. Follow the [Buyer guide](docs/BUYER.md) or [Provider guide](docs/PROVIDER.md).

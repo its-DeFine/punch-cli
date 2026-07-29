@@ -81,6 +81,10 @@ punch-buyer status \
 
 The preview lifecycle records paid time from the first verified `READY`, not from offer listing or container preparation. The offer and the applicable commercial terms control actual price, charges, cancellation, and refund rights.
 
+For interactive jobs, wait until status reports `state: ACCESS_SCHEDULED` and
+`accessEffective: true` before opening SSH. Do not bypass this check with a
+Provider address or direct container connection.
+
 ## 6. Brokered SSH
 
 `punch-buyer ssh` is a byte-stream proxy for OpenSSH's `ProxyCommand`; it is not an interactive terminal by itself. Use the same private key whose public half was bound to the order, a job-specific private known-hosts file, and the fixed container user `punch`:

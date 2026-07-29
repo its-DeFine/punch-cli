@@ -27,6 +27,14 @@ Do not expose Docker over TCP or add an unreviewed root helper. Verify the relea
 
 An offer, reservation, prepared container, or running process does not alone start paid time. Paid time starts only when Punch verifies `READY`.
 
+## Brokered SSH is not ready
+
+Check `punch-buyer status` for `state: ACCESS_SCHEDULED` and
+`accessEffective: true`, confirm the order was bound to the matching Ed25519
+public key, and keep the job-specific known-hosts file. Do not substitute a
+Provider IP, publish a container port, expose Docker, or disable host-key
+checking to bypass a readiness or identity failure.
+
 ## Safe support bundle
 
 Before sharing diagnostics, remove invitations, session or credential files, private keys, provider addresses, workload content, and environment variables. Prefer command version, operating system, architecture, public error code, and a synthetic reproduction.

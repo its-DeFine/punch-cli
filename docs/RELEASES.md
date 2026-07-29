@@ -4,6 +4,26 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
+The current supported external-pilot package is `v0.1.0-preview.3` for
+Linux/x64. It must be used with this exact public image set:
+
+| Kind | Immutable registry reference | Expected local image ID |
+| --- | --- | --- |
+| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:b6691b0f0e0e78c9bfddbe2d327b68340e57d76b563bddbf748eed2019496d6d` | `sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42` |
+| `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:7d2860d642cdb898d1125da58191c58812dec18d3b1da348dd73b44f2982b627` | `sha256:afa534cb00b77ff9a7ca69c9ce750ee2fd41ce3e5bda710473c1f1952198cb96` |
+| `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4` | `sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b` |
+
+These identities are for the published `linux/amd64` images. Pull by registry
+digest and verify the local image ID before placing it in `agent.json`.
+
+The package passed checksum verification, extracted-archive installation,
+strict parser checks, and uninstallation. The public images passed isolated
+runtime smokes; the validation image additionally passed an exact UUID/CDI GPU
+smoke on a Provider node. Two full private-pilot interactive lifecycles passed
+with the same final product behavior before this public artifact set was
+published. That is not a claim that a third full lifecycle used these release
+downloads.
+
 ## Release contents
 
 An installable release must contain:

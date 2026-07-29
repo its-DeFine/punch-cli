@@ -16,44 +16,85 @@ The Provider CLI does not configure a remote Docker endpoint and must never expo
 
 ## Runtime images
 
-Punch publishes the fixed interactive runtime at
-`ghcr.io/its-define/punch-interactive`. The image build context is public under
-`images/interactive/`, but the Control implementation remains private. Always
-pull the release by the exact registry digest supplied by Punch; do not use the
-workflow tag and do not substitute a locally rebuilt image.
+Punch publishes fixed validation, workload, and interactive runtimes. Their
+build contexts are public under `images/`, but the Control implementation
+remains private. Always pull the release by the exact registry digest; do not
+use a workflow tag or substitute a locally rebuilt image.
 
 The registry digest and Docker's local image ID are two different immutable
 identities. Pull with the registry reference, then record the exact local image
 ID:
 
 ```bash
-docker pull 'ghcr.io/its-define/punch-interactive@sha256:REGISTRY_DIGEST'
-docker image inspect \
-  --format '{{.Id}}' \
-  'ghcr.io/its-define/punch-interactive@sha256:REGISTRY_DIGEST'
+docker pull 'ghcr.io/its-define/punch-validation@sha256:b6691b0f0e0e78c9bfddbe2d327b68340e57d76b563bddbf748eed2019496d6d'
+docker pull 'ghcr.io/its-define/punch-workload@sha256:7d2860d642cdb898d1125da58191c58812dec18d3b1da348dd73b44f2982b627'
+docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
 ```
 
-Punch places the resulting `sha256:LOCAL_IMAGE_ID` in
-`imagePolicies.INTERACTIVE.approvedBaseImage`. Do not put the registry reference
-or a tag in that field. A Punch-supplied interactive policy has this exact
-shape; it appears alongside the separately supplied `VALIDATION` and `WORKLOAD`
-policies:
+Verify the expected local IDs in the [release matrix](RELEASES.md) with
+`docker image inspect --format '{{.Id}}' REGISTRY_REFERENCE`. The Provider
+configuration uses these local IDs, not registry references or mutable tags.
+The complete image-policy block for `v0.1.0-preview.3` is:
 
 ```json
 {
-  "protocol": "PUNCH_INTERACTIVE_V1",
-  "approvedBaseImage": "sha256:LOCAL_IMAGE_ID",
-  "command": ["/usr/local/bin/punch-interactive"],
-  "inputKeys": [],
-  "seccompProfile": "builtin",
-  "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
-  "appArmorProfile": "docker-default",
-  "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
+  "VALIDATION": {
+    "image": "sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42",
+    "command": ["/punch/validate"],
+    "inputKeys": ["nonce"]
+  },
+  "WORKLOAD": {
+    "image": "sha256:afa534cb00b77ff9a7ca69c9ce750ee2fd41ce3e5bda710473c1f1952198cb96",
+    "command": ["/punch/run"],
+    "inputKeys": ["nonce", "window_seconds"]
+  },
+  "INTERACTIVE": {
+    "protocol": "PUNCH_INTERACTIVE_V1",
+    "approvedBaseImage": "sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b",
+    "command": ["/usr/local/bin/punch-interactive"],
+    "inputKeys": [],
+    "seccompProfile": "builtin",
+    "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
+    "appArmorProfile": "docker-default",
+    "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
+  }
 }
 ```
 
-Do not invent or edit this block by hand for a live Provider. Punch must supply
-it only after the image and local runtime preflight have been verified.
+The complete `agent.json` has exactly three top-level fields:
+
+```json
+{
+  "publicOrigin": "https://api-punch.embody.zone",
+  "credentialFile": "/absolute/path/.config/punch/provider/credential.json",
+  "imagePolicies": {
+    "VALIDATION": {
+      "image": "sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42",
+      "command": ["/punch/validate"],
+      "inputKeys": ["nonce"]
+    },
+    "WORKLOAD": {
+      "image": "sha256:afa534cb00b77ff9a7ca69c9ce750ee2fd41ce3e5bda710473c1f1952198cb96",
+      "command": ["/punch/run"],
+      "inputKeys": ["nonce", "window_seconds"]
+    },
+    "INTERACTIVE": {
+      "protocol": "PUNCH_INTERACTIVE_V1",
+      "approvedBaseImage": "sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b",
+      "command": ["/usr/local/bin/punch-interactive"],
+      "inputKeys": [],
+      "seccompProfile": "builtin",
+      "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
+      "appArmorProfile": "docker-default",
+      "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
+    }
+  }
+}
+```
+
+Replace only the absolute credential path. Keep the file mode `0600`. Do not
+edit image IDs or policy fields; stop if an inspect result differs from the
+release matrix.
 
 The interactive image runs as UID/GID `65532:65532`, binds SSH only to container
 loopback, and publishes no port. The Provider Docker daemon must pass the Punch
@@ -105,7 +146,10 @@ GPU is optional. CPU-only capacity is valid. GPU offers use a stable GPU UUID an
 
 ## 5. Create the machine identity
 
-Use the machine identifier assigned by Punch:
+Choose one stable, non-secret machine identifier and reuse it unchanged for
+`identity-init`, `setup`, `serve`, and `status`. It must start with a letter or
+digit, contain at most 128 characters, and use only letters, digits, `.`, `_`,
+`:`, `/`, or `-`:
 
 ```bash
 punch-provider identity-init \
