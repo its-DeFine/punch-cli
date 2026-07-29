@@ -16,7 +16,14 @@ Linux/x64. It must be used with this exact public image set:
 These identities are for the published `linux/amd64` images. Pull by registry
 digest and verify the local image ID before placing it in `agent.json`.
 
-The package passed checksum verification, extracted-archive installation,
+The `v0.1.0-preview.4` release candidate adds deterministic pre-enrollment credential replacement through
+`punch-provider rejoin`, explicit Sablier payout binding, unambiguous
+whole-window USDC-cent pricing, and public-safe setup recovery codes. It removes
+the ambiguous public `--price-minor` flag; use `--price-usdc-cents`. It is not
+the current supported package until its release archive and checksum have been
+published and verified on GitHub Releases.
+
+The published `v0.1.0-preview.3` package passed checksum verification, extracted-archive installation,
 strict parser checks, and uninstallation. The public images passed isolated
 runtime smokes; the validation image additionally passed an exact UUID/CDI GPU
 smoke on a Provider node. Two full private-pilot interactive lifecycles passed

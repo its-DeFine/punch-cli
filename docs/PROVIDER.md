@@ -1,5 +1,11 @@
 # Provider guide
 
+> **Preview.4 release-candidate documentation:** this page describes the
+> unpublished `v0.1.0-preview.4` candidate. Operators using the current
+> `v0.1.0-preview.3` package must use the
+> `PROVIDER.md` file in the
+> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
 
 The preview supports allowlisted immutable workload images and bounded structured inputs. It does not accept arbitrary images, commands, mounts, host networking, privileged containers, added capabilities, or arbitrary device paths.
@@ -34,7 +40,7 @@ docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cb
 Verify the expected local IDs in the [release matrix](RELEASES.md) with
 `docker image inspect --format '{{.Id}}' REGISTRY_REFERENCE`. The Provider
 configuration uses these local IDs, not registry references or mutable tags.
-The complete image-policy block for `v0.1.0-preview.3` is:
+The complete image-policy block for the `v0.1.0-preview.4` release candidate is:
 
 ```json
 {
@@ -61,12 +67,18 @@ The complete image-policy block for `v0.1.0-preview.3` is:
 }
 ```
 
-The complete `agent.json` has exactly three top-level fields:
+The complete `agent.json` has exactly four top-level fields. `providerPayout`
+contains only a payout rail and public recipient address; it never contains a
+private key, seed phrase, signer, or wallet credential:
 
 ```json
 {
   "publicOrigin": "https://api-punch.embody.zone",
   "credentialFile": "/absolute/path/.config/punch/provider/credential.json",
+  "providerPayout": {
+    "rail": "SABLIER_USDC",
+    "recipient": "0x1111111111111111111111111111111111111111"
+  },
   "imagePolicies": {
     "VALIDATION": {
       "image": "sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42",
@@ -92,17 +104,34 @@ The complete `agent.json` has exactly three top-level fields:
 }
 ```
 
-Replace only the absolute credential path. Keep the file mode `0600`. Do not
+Replace the absolute credential path and the synthetic payout recipient with
+the Provider's intended public EVM address. Keep the file mode `0600`. Do not
 edit image IDs or policy fields; stop if an inspect result differs from the
-release matrix.
+release matrix. A Provider using the separately approved `LIVEPEER_OPS` rail
+uses `{ "rail": "LIVEPEER_OPS", "recipient": null }` instead.
+
+Choose the rail for the intended workload mode. `SABLIER_USDC` is the
+test-settlement rail for brokered interactive/SSH orders. `LIVEPEER_OPS` is for
+bounded non-interactive workloads. The payout rail is immutable once the offer
+is created, and a Buyer request for the other mode is rejected with
+`PAYOUT_RAIL_MISMATCH`.
+
+If `providerPayout.rail` is `SABLIER_USDC`, complete the full interactive
+security preflight below **before running `setup`**. Setup creates the offer;
+there is no later Provider-side acceptance gate before a compatible Buyer can
+order it. Do not publish a Sablier-backed offer from a node that has not passed
+all four Docker checks. `LIVEPEER_OPS` setup for bounded non-interactive work
+may proceed without user-namespace remapping.
 
 The interactive image runs as UID/GID `65532:65532`, binds SSH only to container
 loopback, and publishes no port. The Provider Docker daemon must pass the Punch
 preflight for user-namespace remapping, cgroup v2 private namespaces, default
 seccomp, and AppArmor before an interactive workload is accepted.
 
-Before setup, verify that Docker reports all four required security options and
-cgroup v2:
+Provider setup for `LIVEPEER_OPS`, `VALIDATION`, and bounded non-interactive
+`WORKLOAD` execution do not require user-namespace remapping. Before
+`SABLIER_USDC` setup, verify that Docker reports all four required security
+options and cgroup v2:
 
 ```bash
 docker info --format '{{json .SecurityOptions}}'
@@ -124,7 +153,11 @@ install -d -m 0700 "$HOME/.local/state/punch-provider"
 chmod 0600 /absolute/path/to/provider-invitation.json
 ```
 
-Punch supplies an invitation and an agent configuration containing only the public origin, credential path, and allowlisted image policies. Both files are secret-bearing pilot material and must not be committed.
+Punch supplies a single-use invitation. The operator prepares an agent
+configuration containing only the public origin, credential path, public payout
+binding, and allowlisted image policies. The invitation is secret-bearing. The
+agent configuration contains no private key or credential, but it is local
+operator configuration and must not be committed.
 
 ## 3. Join
 
@@ -135,6 +168,22 @@ punch-provider join \
   --credential-file /absolute/path/.config/punch/provider/credential.json \
   --json
 ```
+
+If setup returns `PROVIDER_REJOIN_REQUIRED`, stop retries and obtain one fresh
+replacement invitation from Punch. Keep the machine identity, state directory,
+credential path, and original setup reference unchanged, then run:
+
+```bash
+punch-provider rejoin \
+  --invitation /absolute/path/to/replacement-provider-invitation.json \
+  --punch-origin https://api-punch.embody.zone \
+  --credential-file /absolute/path/.config/punch/provider/credential.json \
+  --json
+```
+
+`rejoin` is not a second identity. It is accepted only for a fresh invitation
+bound by Punch to the same active Provider actor. Do not manually remove the
+credential or pending setup journal.
 
 ## 4. Inspect local inventory
 
@@ -171,10 +220,22 @@ punch-provider setup \
   --idempotency-key UNIQUE_SETUP_REFERENCE \
   --cpu-cores 4 --gpu-units 0 --vram-mib 0 \
   --ram-mib 8192 --disk-gib 40 \
-  --window-seconds 300 --price-minor PRICE_MINOR
+  --window-seconds 3600 --price-usdc-cents 34
 ```
 
-`PRICE_MINOR` is an integer value in the asset and unit basis stated by the current invitation/pilot terms. Do not copy a sample economic value into a real offer. The CLI submission is not a substitute for reading fees, payout timing, tax treatment, cancellation, and dispute terms.
+`--price-usdc-cents` is the positive integer number of USDC cents for the
+complete `--window-seconds` interval. The example means USD 0.34 for one hour.
+The CLI converts 34 cents to `340000` six-decimal USDC base units before the
+immutable offer, buyer funding, accounting, and Sablier instruction use that
+one amount. A five-minute window cannot express exactly USD 0.34 per
+hour using whole cents, so use a one-hour window for that price. The public
+preview uses test settlement only unless Punch separately announces and
+authorizes a real-funds release.
+
+Pricing and the payout binding become immutable offer terms. Do not copy a
+sample value or synthetic recipient into an offer. The CLI submission is not a
+substitute for reading fees, payout timing, tax treatment, cancellation, and
+dispute terms.
 
 GPU example adds:
 

@@ -1,11 +1,47 @@
 # Troubleshooting
 
+> **Version boundary:** the `rejoin` and USDC-cent setup guidance on this page
+> applies to the preview.4 release candidate. For the current
+> `v0.1.0-preview.3` package, use `TROUBLESHOOTING.md` in the
+> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+
 ## Invitation rejected
 
 - Confirm that the invitation matches the command role.
 - Confirm that the file is mode `0600` inside a mode-`0700` directory.
 - Do not retry an invitation already redeemed by another machine or user.
 - If exposure is possible, stop and request revocation rather than testing the secret repeatedly.
+
+## Provider setup requires rejoin
+
+`PROVIDER_REJOIN_REQUIRED` means the current Provider session cannot renew for
+setup, normally because it expired before the first machine enrollment. Keep
+the machine identity, credential path, state directory, and original setup
+reference. Request one fresh replacement Provider invitation, run
+`punch-provider rejoin`, and retry that exact setup reference. Do not delete
+local files, create a new machine ID, or retry the consumed invitation.
+
+`rejoin` is only for a Provider that has not yet enrolled its machine. An
+already enrolled resident Provider renews through its machine credential; do
+not request or use an invitation to bypass that proof. If an enrolled `serve`
+process reports a renewal failure, preserve its credential, machine identity,
+renewal journal, and setup state, stop retrying, and contact Punch support with
+the public error code.
+
+## Provider price looks incorrect
+
+The public setup flag is `--price-usdc-cents`, and it prices the complete
+`--window-seconds` interval. `--window-seconds 3600 --price-usdc-cents 34`
+means USD 0.34 for one hour. Do not pass six-decimal USDC base units to this
+flag.
+
+## Interactive preflight reports missing userns
+
+`LIVEPEER_OPS` setup, validation, and bounded non-interactive workloads may
+continue without userns remapping. `SABLIER_USDC` setup and interactive
+brokered SSH remain unavailable until a reviewed maintenance procedure enables
+userns and the complete Docker security preflight passes. Do not make an
+unscheduled Docker storage migration on a shared host.
 
 ## Public endpoint unavailable
 

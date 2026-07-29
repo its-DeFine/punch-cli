@@ -1,5 +1,10 @@
 # Invitations and credentials
 
+> **Version boundary:** Provider `rejoin` is a preview.4 release-candidate
+> interface. Operators using the current `v0.1.0-preview.3` package must use
+> `INVITATIONS.md` in the
+> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+
 Punch Compute is invitation-only during the public preview.
 
 ## Roles
@@ -11,6 +16,13 @@ Punch Compute is invitation-only during the public preview.
 ## Single use
 
 An invitation contains an identifier and redemption secret. It is redeemed once. Retrying a successfully redeemed invitation must not create a second identity or credential.
+
+A Provider session can expire before the first machine enrollment completes.
+That does not authorize deleting local identity or setup state. When the CLI
+returns `PROVIDER_REJOIN_REQUIRED`, Punch issues one fresh invitation bound to
+the same active Provider actor. The operator runs `punch-provider rejoin`; the
+CLI atomically replaces only the expired credential and preserves the exact
+pending setup reference. The original invitation remains consumed.
 
 ## File handling
 
@@ -28,6 +40,7 @@ Never:
 - Commit invitation or credential files.
 - Copy Provider credentials to a Buyer machine.
 - Reuse one invitation for another person or execution node.
+- Delete or rename Provider state merely to bypass `PROVIDER_REJOIN_REQUIRED`.
 
 ## Public endpoint
 

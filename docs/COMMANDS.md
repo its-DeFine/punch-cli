@@ -1,5 +1,10 @@
 # Command reference
 
+> **Version boundary:** `rejoin`, `providerPayout`, and
+> `--price-usdc-cents` below are preview.4 release-candidate interfaces. For
+> the current `v0.1.0-preview.3` package, use `COMMANDS.md` in the
+> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+
 Punch exposes two role-specific commands. The invitation and server-side identity determine what a user may do; installing both commands does not grant both roles.
 
 All paths containing invitations, sessions, credentials, identities, or configuration must be absolute paths in private directories.
@@ -29,9 +34,10 @@ The supported public-preview path is:
 | Command | Purpose |
 | --- | --- |
 | `join` | Redeem one Provider invitation and write the local credential |
+| `rejoin` | Replace an expired pre-enrollment credential using one fresh Provider invitation |
 | `inventory` | Inspect locally visible, allocatable CPU, RAM, disk, and optional GPU resources |
 | `identity-init` | Create the execution node's local signing identity |
-| `setup` | Submit a bounded capacity request for validation |
+| `setup` | Submit bounded capacity, explicit whole-window USDC-cent pricing, and the configured payout binding for validation |
 | `serve` | Run the outbound resident agent |
 | `status` | Read local agent status |
 | `drain` | Stop accepting new work before maintenance |
@@ -44,4 +50,4 @@ Use `--json` for automation where the command supports it. Treat fields not docu
 
 ## Idempotency
 
-Preserve every setup and order reference until the operation reaches a known terminal result. After a timeout, retry the same action with the same reference. Do not generate a new reference merely because the first response was interrupted.
+Preserve every setup and order reference until the operation reaches a known terminal result. After a timeout, retry the same action with the same reference. If `PROVIDER_REJOIN_REQUIRED` is returned, obtain a fresh replacement invitation, run `rejoin`, and then retry the exact prior setup reference. Do not generate a new reference merely because the first response was interrupted.
