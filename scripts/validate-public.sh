@@ -6,6 +6,7 @@ cd "$repo_dir"
 
 sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   images/interactive/punch-interactive images/interactive/punch-ssh-stdio \
+  images/validation/validate.sh images/workload/workload.sh \
   tests/install-uninstall.sh tests/validate-without-rg.sh
 
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do

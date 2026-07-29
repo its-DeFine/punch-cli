@@ -1,0 +1,88 @@
+name: publish validation and workload images
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  validation:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build the exact validation candidate
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: ./images/validation
+          platforms: linux/amd64
+          load: true
+          tags: punch-validation:candidate-${{ github.sha }}
+      - name: Exercise the CPU validation path
+        shell: bash
+        run: |
+          set -euo pipefail
+          input="$(printf '%s' '{"nonce":"0000000000000000000000000000000000000000000000000000000000000000"}' | base64 -w0)"
+          output="$(docker run --rm \
+            --read-only --network none --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --pids-limit 32 --cpus 1 --memory 256m --memory-swap 256m \
+            --tmpfs /work:rw,noexec,nosuid,nodev,size=1m,uid=65532,gid=65532,mode=0700 \
+            --env NVIDIA_VISIBLE_DEVICES= \
+            --env "PUNCH_INPUT_BASE64=$input" \
+            "punch-validation:candidate-${GITHUB_SHA}")"
+          test "$output" = '{"schemaVersion":"punch.validation.cpu.v1","outcome":"PASS"}'
+      - name: Publish the smoke-tested validation candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="ghcr.io/its-define/punch-validation:sha-${GITHUB_SHA}"
+          docker tag "punch-validation:candidate-${GITHUB_SHA}" "$target"
+          docker push "$target"
+
+  workload:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build the exact workload candidate
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: ./images/workload
+          platforms: linux/amd64
+          load: true
+          tags: punch-workload:candidate-${{ github.sha }}
+      - name: Exercise the deterministic workload path
+        shell: bash
+        run: |
+          set -euo pipefail
+          input="$(printf '%s' '{"nonce":"0000000000000000000000000000000000000000000000000000000000000000","window_seconds":1}' | base64 -w0)"
+          output="$RUNNER_TEMP/punch-workload-smoke.mkv"
+          docker run --rm \
+            --read-only --network none --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --pids-limit 32 --cpus 1 --memory 64m --memory-swap 64m \
+            --env "PUNCH_INPUT_BASE64=$input" \
+            "punch-workload:candidate-${GITHUB_SHA}" > "$output"
+          test -s "$output"
+      - name: Publish the smoke-tested workload candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="ghcr.io/its-define/punch-workload:sha-${GITHUB_SHA}"
+          docker tag "punch-workload:candidate-${GITHUB_SHA}" "$target"
+          docker push "$target"
