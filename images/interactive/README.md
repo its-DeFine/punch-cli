@@ -9,6 +9,10 @@ runs a non-root SSH service bound only to the container loopback interface.
 Punch reaches it through a fixed stdio bridge. It publishes no port and does not
 expose the Provider address or Docker socket to a Buyer.
 
+The fixed bridge waits for the container-local SSH listener with a bounded
+retry window. It still fails closed when the listener does not become ready;
+it never falls back to a host port or a provider address.
+
 Official releases are published for `linux/amd64` as
 `ghcr.io/its-define/punch-interactive`. Provider configuration must use the
 immutable digest reported by the successful publish workflow, never a mutable
