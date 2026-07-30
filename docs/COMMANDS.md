@@ -43,6 +43,11 @@ The supported public-preview path is:
 
 Use `punch-provider <command> --help` from the installed release for the exact flags supported by that version. The provider cannot approve its own identity or offer.
 
+`v0.1.0-preview.5` will add an atomic multi-GPU offer contract. It is not
+compatible with the preview.4 singular-GPU flags; see the unpublished,
+non-installable [Preview.5 release contract](PREVIEW5.md). Do not pass those
+flags to preview.4.
+
 ## Output formats
 
 Use `--json` for automation where the command supports it. Treat fields not documented for a release as unstable. Never parse human-formatted output in an agent or script.

@@ -3,6 +3,10 @@
 > **Preview.4 documentation:** this page applies to the published
 > `v0.1.0-preview.4` package.
 
+The next release's multi-GPU offer contract is documented separately in
+[Preview.5 release contract](PREVIEW5.md). It is not an installation guide for
+preview.4 and does not make an unpublished package or image usable.
+
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
 
 The preview supports allowlisted immutable workload images and bounded structured inputs. It does not accept arbitrary images, commands, mounts, host networking, privileged containers, added capabilities, or arbitrary device paths.
@@ -140,7 +144,7 @@ The security options must include `name=userns`, `name=cgroupns`,
 `2`. Enabling user-namespace remapping changes Docker's storage namespace and
 normally requires a Docker restart. Preserve existing images and containers and
 use a reviewed, host-specific rollback procedure; the public CLI does not make
-that privileged change.
+that privileged change or prescribe a one-line Docker configuration change.
 
 ## 2. Prepare state
 

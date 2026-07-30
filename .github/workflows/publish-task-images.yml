@@ -47,6 +47,10 @@ jobs:
           target="ghcr.io/its-define/punch-validation:sha-${GITHUB_SHA}"
           docker tag "punch-validation:candidate-${GITHUB_SHA}" "$target"
           docker push "$target"
+          local_image_id="$(docker image inspect --format '{{.Id}}' "$target")"
+          registry_digest="$(docker buildx imagetools inspect "$target" --format '{{.Manifest.Digest}}')"
+          printf 'PUNCH_RELEASE_CANDIDATE_LOCAL_IMAGE_ID=%s\n' "$local_image_id"
+          printf 'PUNCH_RELEASE_CANDIDATE_REGISTRY_DIGEST=%s\n' "$registry_digest"
 
   workload:
     if: github.ref == 'refs/heads/main'
@@ -86,3 +90,7 @@ jobs:
           target="ghcr.io/its-define/punch-workload:sha-${GITHUB_SHA}"
           docker tag "punch-workload:candidate-${GITHUB_SHA}" "$target"
           docker push "$target"
+          local_image_id="$(docker image inspect --format '{{.Id}}' "$target")"
+          registry_digest="$(docker buildx imagetools inspect "$target" --format '{{.Manifest.Digest}}')"
+          printf 'PUNCH_RELEASE_CANDIDATE_LOCAL_IMAGE_ID=%s\n' "$local_image_id"
+          printf 'PUNCH_RELEASE_CANDIDATE_REGISTRY_DIGEST=%s\n' "$registry_digest"

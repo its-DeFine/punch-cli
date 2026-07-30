@@ -39,6 +39,40 @@ grep -F 'Copyright (c) 2016 Luigi Pinca and contributors' packaging/third_party/
   exit 1
 }
 
+for preview5_requirement in \
+  'Not yet installable' \
+  '--gpu-units' \
+  '--gpu-uuids' \
+  '--gpu-cdis' \
+  '--gpu-communication' \
+  'SAME_NODE' \
+  'P2P_REQUIRED' \
+  '2 through 8' \
+  'comma-separated list with' \
+  '131072' \
+  'memoryMiB' \
+  '--cpu-cores' \
+  'not an enforceable per-container VRAM quota' \
+  'name=userns'; do
+  grep -F -- "$preview5_requirement" docs/PREVIEW5.md > /dev/null || {
+    printf 'preview.5 release contract missing required public statement: %s\n' "$preview5_requirement" >&2
+    exit 1
+  }
+done
+
+for validation_requirement in \
+  'PUNCH_GPU_CDI' \
+  'PUNCH_GPU_CDIS_BASE64' \
+  'PUNCH_GPU_COMMUNICATION' \
+  'punch.validation.gpu-bundle.v1' \
+  'cudaDeviceCanAccessPeer' \
+  'cudaMemcpyPeer'; do
+  if ! grep -F -- "$validation_requirement" images/validation/validate.sh images/validation/probe.cu > /dev/null; then
+    printf 'preview.5 validation source missing required contract element: %s\n' "$validation_requirement" >&2
+    exit 1
+  fi
+done
+
 for file in README.md SECURITY.md CONTRIBUTING.md docs/*.md packaging/*.md; do
   sed -n 's/.*](\([^#][^)]*\.md\)).*/\1/p' "$file" | while IFS= read -r target; do
     case "$target" in

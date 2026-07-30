@@ -61,6 +61,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Platform support](docs/PLATFORMS.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Release and verification policy](docs/RELEASES.md)
+- [Preview.5 release contract — not yet installable](docs/PREVIEW5.md)
 
 ## Licensing
 

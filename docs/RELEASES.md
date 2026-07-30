@@ -29,6 +29,35 @@ with the same final product behavior before this public artifact set was
 published. That is not a claim that those earlier lifecycles used this release
 download.
 
+## Preview.5 release gate
+
+`v0.1.0-preview.5` is not yet an installable package. Its multi-GPU offer
+contract is fixed in [PREVIEW5.md](PREVIEW5.md), but that contract is not a
+registry reference, release tag, package archive, or compatibility promise for
+preview.4.
+
+Before it can become the current supported package, the release operator must:
+
+1. Build the proprietary runtime packages in the private canonical release
+   process; this public repository must not build or contain those artifacts.
+2. From the intended public source revision, run the manually dispatched image
+   workflows for `linux/amd64`. Those workflows build each candidate, run their
+   bounded runtime smoke, and publish only a candidate tag.
+3. On suitable NVIDIA hardware, run the release-specific validation smoke using
+   the proposed multi-GPU UUID/CDI selection. For `P2P_REQUIRED`, prove the
+   required all-direction CUDA peer path; a same-host allocation is not that
+   proof.
+4. Record the resulting immutable registry digest and Docker local image ID for
+   every image in this matrix, then verify the released package against that
+   final matrix. Do not substitute a workflow tag, a locally rebuilt image, or
+   an earlier validation-image digest.
+5. Produce the versioned archives, `SHA256SUMS`, release notes, parser
+   regression results, and public-surface validation; only then publish the tag
+   and non-draft GitHub Release together.
+
+Until every item is complete, operators must continue using the published
+preview.4 package and its image matrix above.
+
 ## Release contents
 
 An installable release must contain:
