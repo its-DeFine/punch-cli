@@ -70,6 +70,21 @@ punch-buyer order \
   --json
 ```
 
+To request one of several acceptable hardware bundles, use one conditional
+request file instead of `--offer-id`:
+
+```bash
+punch-buyer order \
+  --config /absolute/path/.config/punch/buyer/buyer.json \
+  --request-file /absolute/path/conditional-order.json \
+  --order-ref YOUR_UNIQUE_ORDER_REFERENCE \
+  --ssh-public-key-file /absolute/path/to/id_ed25519.pub \
+  --json
+```
+
+Punch selects at most one complete alternative atomically. This is an immediate
+match, not an unfunded standing queue. See [Conditional orders](CONDITIONAL_ORDERS.md).
+
 ## 5. Status
 
 ```bash

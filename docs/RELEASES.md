@@ -4,59 +4,43 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
-The current supported external-pilot package is `v0.1.0-preview.4` for
-Linux/x64. It must be used with this exact public image set:
+`v0.1.0-preview.5` is the supported Linux/x64 external-pilot package only when
+GitHub shows its non-draft prerelease with both versioned archive and checksum
+assets. This source commit alone is not an installable release. The package
+must be used with this exact public image set:
 
 | Kind | Immutable registry reference | Expected local image ID |
 | --- | --- | --- |
-| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:b6691b0f0e0e78c9bfddbe2d327b68340e57d76b563bddbf748eed2019496d6d` | `sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42` |
-| `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:7d2860d642cdb898d1125da58191c58812dec18d3b1da348dd73b44f2982b627` | `sha256:afa534cb00b77ff9a7ca69c9ce750ee2fd41ce3e5bda710473c1f1952198cb96` |
+| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee` | `sha256:4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1` |
+| `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` | `sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930` |
 | `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4` | `sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b` |
 
 These identities are for the published `linux/amd64` images. Pull by registry
 digest and verify the local image ID before placing it in `agent.json`.
 
-The `v0.1.0-preview.4` release adds deterministic pre-enrollment credential replacement through
-`punch-provider rejoin`, explicit Sablier payout binding, unambiguous
-whole-window USDC-cent pricing, and public-safe setup recovery codes. It removes
-the ambiguous public `--price-minor` flag; use `--price-usdc-cents`.
+The `v0.1.0-preview.5` release adds atomic 2–8 GPU offers bound to aligned UUID/CDI
+identities, explicit `SAME_NODE` or all-direction `P2P_REQUIRED` validation,
+and Buyer conditional orders with ranked hardware alternatives. It retains
+single-GPU, CPU-only, `rejoin`, Sablier payout binding, and whole-window
+`--price-usdc-cents` compatibility from preview.4.
 
-The published `v0.1.0-preview.4` package passed checksum verification, extracted-archive installation,
-strict parser checks, and uninstallation. The public images passed isolated
-runtime smokes; the validation image additionally passed an exact UUID/CDI GPU
-smoke on a Provider node. Two full private-pilot interactive lifecycles passed
-with the same final product behavior before this public artifact set was
-published. That is not a claim that those earlier lifecycles used this release
-download.
+The Linux/x64 archive is 44,069,116 bytes with SHA-256
+`4712efb0b858bbae6eccf8c47dbb88ce3b08993802228e1827756e5ac7a521a0`.
+It passed checksum verification, extracted-archive installation, bundled CLI
+execution, strict parser checks, and uninstallation using bundled Node.js
+v22.23.1 and `ws` 8.21.1. The public validation and workload images were built,
+smoke-tested, and published by GitHub Actions from public commit
+`288648ddd96f06acb0abef0d27d3a74ad0b35513`.
 
-## Preview.5 release gate
+## Multi-GPU proof boundary
 
-`v0.1.0-preview.5` is not yet an installable package. Its multi-GPU offer
-contract is fixed in [PREVIEW5.md](PREVIEW5.md), but that contract is not a
-registry reference, release tag, package archive, or compatibility promise for
-preview.4.
-
-Before it can become the current supported package, the release operator must:
-
-1. Build the proprietary runtime packages in the private canonical release
-   process; this public repository must not build or contain those artifacts.
-2. From the intended public source revision, run the manually dispatched image
-   workflows for `linux/amd64`. Those workflows build each candidate, run their
-   bounded runtime smoke, and publish only a candidate tag.
-3. On suitable NVIDIA hardware, run the release-specific validation smoke using
-   the proposed multi-GPU UUID/CDI selection. For `P2P_REQUIRED`, prove the
-   required all-direction CUDA peer path; a same-host allocation is not that
-   proof.
-4. Record the resulting immutable registry digest and Docker local image ID for
-   every image in this matrix, then verify the released package against that
-   final matrix. Do not substitute a workflow tag, a locally rebuilt image, or
-   an earlier validation-image digest.
-5. Produce the versioned archives, `SHA256SUMS`, release notes, parser
-   regression results, and public-surface validation; only then publish the tag
-   and non-draft GitHub Release together.
-
-Until every item is complete, operators must continue using the published
-preview.4 package and its image matrix above.
+The GitHub Actions smoke proves the CPU path and publication identity; it is not
+a real multi-GPU hardware claim. During Provider setup, Punch keeps the offer
+unavailable until the digest-pinned validation container sees the complete
+selected UUID/CDI bundle. `P2P_REQUIRED` additionally fails closed unless CUDA
+peer access and a peer copy pass in every direction. The first external
+eight-GPU Provider proof is therefore still pending and must not be described
+as already completed.
 
 ## Release contents
 

@@ -1,7 +1,7 @@
 # Command reference
 
 > **Version boundary:** `rejoin`, `providerPayout`, and
-> `--price-usdc-cents` below apply to the published `v0.1.0-preview.4`
+> `--price-usdc-cents` and atomic multi-GPU flags below apply to the published `v0.1.0-preview.5`
 > package.
 
 Punch exposes two role-specific commands. The invitation and server-side identity determine what a user may do; installing both commands does not grant both roles.
@@ -19,7 +19,7 @@ punch-buyer join|offers|order|status|output|ssh \
 | --- | --- | --- |
 | `join` | Redeem one Buyer invitation and create a local session | `--invitation`, `--json` |
 | `offers` | List capacity currently available to this Buyer | `--json` |
-| `order` | Create or replay an idempotent order | `--offer-id`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |
+| `order` | Create or replay an idempotent direct or conditional order | exactly one of `--offer-id` or `--request-file`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |
 | `status` | Read the current job state | `--job-id`, `--json` |
 | `ssh` | Carry SSH bytes as OpenSSH's `ProxyCommand` | `--job` |
 | `output` | Download and verify a completed task output | `--job-id`, `--task-id`, `--output`, `--json` |
@@ -43,10 +43,9 @@ The supported public-preview path is:
 
 Use `punch-provider <command> --help` from the installed release for the exact flags supported by that version. The provider cannot approve its own identity or offer.
 
-`v0.1.0-preview.5` will add an atomic multi-GPU offer contract. It is not
-compatible with the preview.4 singular-GPU flags; see the unpublished,
-non-installable [Preview.5 release contract](PREVIEW5.md). Do not pass those
-flags to preview.4.
+For 2–8 GPUs, `setup` requires aligned comma-separated `--gpu-uuids` and
+`--gpu-cdis`, plus `--gpu-communication SAME_NODE|P2P_REQUIRED`. Single-GPU
+and CPU-only forms remain supported. See the [Preview.5 contract](PREVIEW5.md).
 
 ## Output formats
 

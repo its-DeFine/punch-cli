@@ -40,7 +40,7 @@ grep -F 'Copyright (c) 2016 Luigi Pinca and contributors' packaging/third_party/
 }
 
 for preview5_requirement in \
-  'Not yet installable' \
+  'Invitation-only preview' \
   '--gpu-units' \
   '--gpu-uuids' \
   '--gpu-cdis' \
@@ -56,6 +56,20 @@ for preview5_requirement in \
   'name=userns'; do
   grep -F -- "$preview5_requirement" docs/PREVIEW5.md > /dev/null || {
     printf 'preview.5 release contract missing required public statement: %s\n' "$preview5_requirement" >&2
+    exit 1
+  }
+done
+
+for release_requirement in \
+  '4712efb0b858bbae6eccf8c47dbb88ce3b08993802228e1827756e5ac7a521a0' \
+  'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee' \
+  '4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1' \
+  '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
+  '6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930' \
+  'first external' \
+  'still pending'; do
+  grep -F -- "$release_requirement" docs/RELEASES.md > /dev/null || {
+    printf 'preview.5 release matrix missing required statement: %s\n' "$release_requirement" >&2
     exit 1
   }
 done

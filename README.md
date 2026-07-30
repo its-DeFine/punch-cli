@@ -11,10 +11,10 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-The current supported external-pilot package is `v0.1.0-preview.4` for
-Linux/x64. Use only its published archive and checksum together with the
-matching immutable image set in
-[Release and verification policy](docs/RELEASES.md).
+`v0.1.0-preview.5` is supported for Linux/x64 only when GitHub shows its
+non-draft prerelease with the archive and checksum assets. A source commit does
+not make it installable. Use only those release assets together with the
+matching immutable image set in [Release and verification policy](docs/RELEASES.md).
 
 ## What is public
 
@@ -38,7 +38,7 @@ matching immutable image set in
 2. Obtain a single-use Buyer or Provider invitation from Punch.
 3. Install the matching CLI from that verified release; see [Installation](docs/INSTALL.md).
 4. Follow `BUYER.md` or `PROVIDER.md` in the
-   [tagged preview.4 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.4/docs).
+   [tagged preview.5 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.5/docs).
 
 ```bash
 punch-buyer --help
@@ -55,13 +55,14 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Invitations and credentials](docs/INVITATIONS.md)
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
+- [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security model](docs/SECURITY.md)
 - [Platform support](docs/PLATFORMS.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Release and verification policy](docs/RELEASES.md)
-- [Preview.5 release contract — not yet installable](docs/PREVIEW5.md)
+- [Preview.5 atomic multi-GPU contract](docs/PREVIEW5.md)
 
 ## Licensing
 

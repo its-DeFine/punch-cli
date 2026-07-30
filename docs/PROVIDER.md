@@ -1,11 +1,7 @@
 # Provider guide
 
-> **Preview.4 documentation:** this page applies to the published
-> `v0.1.0-preview.4` package.
-
-The next release's multi-GPU offer contract is documented separately in
-[Preview.5 release contract](PREVIEW5.md). It is not an installation guide for
-preview.4 and does not make an unpublished package or image usable.
+> **Preview.5 documentation:** this page applies to the published
+> `v0.1.0-preview.5` package.
 
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
 
@@ -33,25 +29,25 @@ identities. Pull with the registry reference, then record the exact local image
 ID:
 
 ```bash
-docker pull 'ghcr.io/its-define/punch-validation@sha256:b6691b0f0e0e78c9bfddbe2d327b68340e57d76b563bddbf748eed2019496d6d'
-docker pull 'ghcr.io/its-define/punch-workload@sha256:7d2860d642cdb898d1125da58191c58812dec18d3b1da348dd73b44f2982b627'
+docker pull 'ghcr.io/its-define/punch-validation@sha256:dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee'
+docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce'
 docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
 ```
 
 Verify the expected local IDs in the [release matrix](RELEASES.md) with
 `docker image inspect --format '{{.Id}}' REGISTRY_REFERENCE`. The Provider
 configuration uses these local IDs, not registry references or mutable tags.
-The complete image-policy block for `v0.1.0-preview.4` is:
+The complete image-policy block for `v0.1.0-preview.5` is:
 
 ```json
 {
   "VALIDATION": {
-    "image": "sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42",
+    "image": "sha256:4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1",
     "command": ["/punch/validate"],
     "inputKeys": ["nonce"]
   },
   "WORKLOAD": {
-    "image": "sha256:afa534cb00b77ff9a7ca69c9ce750ee2fd41ce3e5bda710473c1f1952198cb96",
+    "image": "sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930",
     "command": ["/punch/run"],
     "inputKeys": ["nonce", "window_seconds"]
   },
@@ -82,12 +78,12 @@ private key, seed phrase, signer, or wallet credential:
   },
   "imagePolicies": {
     "VALIDATION": {
-      "image": "sha256:12c26a0cf669d421791291bd321548ca336b8ec0d976dabc8fd95ebe84df6c42",
+      "image": "sha256:4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1",
       "command": ["/punch/validate"],
       "inputKeys": ["nonce"]
     },
     "WORKLOAD": {
-      "image": "sha256:afa534cb00b77ff9a7ca69c9ce750ee2fd41ce3e5bda710473c1f1952198cb96",
+      "image": "sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930",
       "command": ["/punch/run"],
       "inputKeys": ["nonce", "window_seconds"]
     },
@@ -246,6 +242,29 @@ GPU example adds:
 ```
 
 Never offer more capacity than the inventory reports as safely allocatable.
+
+An atomic eight-GPU offer uses the UUID/CDI pairs reported by `inventory`:
+
+```bash
+punch-provider setup \
+  --machine-id MACHINE_ID \
+  --state-dir /absolute/path/.local/state/punch-provider \
+  --agent-config /absolute/path/.config/punch/provider/agent.json \
+  --idempotency-key STABLE_SETUP_REFERENCE \
+  --cpu-cores 40 --ram-mib ALLOCATABLE_RAM_MIB --disk-gib ALLOCATABLE_DISK_GIB \
+  --gpu-units 8 --vram-mib TOTAL_SELECTED_VRAM_MIB \
+  --gpu-uuids GPU_UUID_1,GPU_UUID_2,GPU_UUID_3,GPU_UUID_4,GPU_UUID_5,GPU_UUID_6,GPU_UUID_7,GPU_UUID_8 \
+  --gpu-cdis CDI_1,CDI_2,CDI_3,CDI_4,CDI_5,CDI_6,CDI_7,CDI_8 \
+  --gpu-communication SAME_NODE \
+  --window-seconds 3600 --price-usdc-cents PRICE
+```
+
+Use comma-separated values without spaces. `SAME_NODE` requires all eight
+devices in one bounded container but does not promise direct peer access.
+Select `P2P_REQUIRED` only when the workload requires it; the validation task
+then fails closed unless CUDA peer access and peer copies pass in every
+direction. PCI bus numbers are inventory locators only—the offer and lease bind
+the corresponding stable UUID/CDI identities.
 
 ## 7. Run the agent in the supervised foreground
 

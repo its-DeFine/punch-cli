@@ -1,11 +1,9 @@
 # Preview.5 release contract
 
-> **Not yet installable:** `v0.1.0-preview.5` has no published package,
-> checksum, tag, or image matrix at this time. This document fixes the intended
-> public offer contract for release validation. It does not authorize use of an
-> unpublished CLI, candidate workflow tag, or locally rebuilt image. Continue
-> to use the published preview.4 package and its release matrix until a
-> preview.5 GitHub Release says otherwise.
+> **Invitation-only preview:** use `v0.1.0-preview.5` only when its non-draft
+> GitHub prerelease provides the archive and checksum, together with the
+> immutable image matrix. A source checkout, workflow tag, or locally rebuilt
+> image is not a supported substitute.
 
 ## Atomic multi-GPU offers
 
@@ -52,10 +50,10 @@ tenant a hard VRAM partition merely because an offer includes this value.
 
 ## Image and host-security release boundary
 
-The release-specific validation image must verify the actual selected GPU set
-and the requested communication class on suitable NVIDIA hardware before the
-final digest is entered in the [release matrix](RELEASES.md). A candidate
-workflow tag is not an immutable published release reference.
+The release-specific validation image verifies the actual selected GPU set and
+requested communication class before Punch makes the offer available. The
+published digest identifies the exact image; publication and a CPU smoke are
+not themselves proof that a particular multi-GPU machine passed validation.
 
 The existing interactive-host security requirement remains unchanged:
 `SABLIER_USDC` setup requires Docker user-namespace remapping in addition to

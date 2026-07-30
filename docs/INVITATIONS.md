@@ -1,7 +1,7 @@
 # Invitations and credentials
 
 > **Version boundary:** Provider `rejoin` applies to the published
-> `v0.1.0-preview.4` package.
+> `v0.1.0-preview.5` package.
 
 Punch Compute is invitation-only during the public preview.
 
