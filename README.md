@@ -11,10 +11,9 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-The current supported external-pilot package is `v0.1.0-preview.3` for
-Linux/x64. These source docs also describe the `v0.1.0-preview.4` release
-candidate; do not use preview.4 until its release archive and checksum
-are present on the Releases page. Use only the matching immutable image set in
+The current supported external-pilot package is `v0.1.0-preview.4` for
+Linux/x64. Use only its published archive and checksum together with the
+matching immutable image set in
 [Release and verification policy](docs/RELEASES.md).
 
 ## What is public
@@ -38,10 +37,8 @@ are present on the Releases page. Use only the matching immutable image set in
 1. Download the current supported Linux/x64 package from the repository's Releases page and verify its checksum.
 2. Obtain a single-use Buyer or Provider invitation from Punch.
 3. Install the matching CLI from that verified release; see [Installation](docs/INSTALL.md).
-4. For the current preview.3 package, use `BUYER.md` or `PROVIDER.md` in the
-   [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
-   The provider documentation on `main` describes the preview.4 release
-   candidate and must not be used with preview.3.
+4. Follow `BUYER.md` or `PROVIDER.md` in the
+   [tagged preview.4 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.4/docs).
 
 ```bash
 punch-buyer --help

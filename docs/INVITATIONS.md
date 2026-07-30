@@ -1,9 +1,7 @@
 # Invitations and credentials
 
-> **Version boundary:** Provider `rejoin` is a preview.4 release-candidate
-> interface. Operators using the current `v0.1.0-preview.3` package must use
-> `INVITATIONS.md` in the
-> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+> **Version boundary:** Provider `rejoin` applies to the published
+> `v0.1.0-preview.4` package.
 
 Punch Compute is invitation-only during the public preview.
 

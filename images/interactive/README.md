@@ -18,7 +18,7 @@ Official releases are published for `linux/amd64` as
 immutable digest reported by the successful publish workflow, never a mutable
 tag. Do not build or substitute a different image for a Punch pilot.
 
-The current `v0.1.0-preview.3` and candidate `v0.1.0-preview.4` compatible registry reference is
+The current `v0.1.0-preview.4` compatible registry reference is
 `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4`.
 Its expected local image ID is
 `sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b`.

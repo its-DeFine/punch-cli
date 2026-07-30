@@ -4,7 +4,7 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
-The current supported external-pilot package is `v0.1.0-preview.3` for
+The current supported external-pilot package is `v0.1.0-preview.4` for
 Linux/x64. It must be used with this exact public image set:
 
 | Kind | Immutable registry reference | Expected local image ID |
@@ -16,20 +16,18 @@ Linux/x64. It must be used with this exact public image set:
 These identities are for the published `linux/amd64` images. Pull by registry
 digest and verify the local image ID before placing it in `agent.json`.
 
-The `v0.1.0-preview.4` release candidate adds deterministic pre-enrollment credential replacement through
+The `v0.1.0-preview.4` release adds deterministic pre-enrollment credential replacement through
 `punch-provider rejoin`, explicit Sablier payout binding, unambiguous
 whole-window USDC-cent pricing, and public-safe setup recovery codes. It removes
-the ambiguous public `--price-minor` flag; use `--price-usdc-cents`. It is not
-the current supported package until its release archive and checksum have been
-published and verified on GitHub Releases.
+the ambiguous public `--price-minor` flag; use `--price-usdc-cents`.
 
-The published `v0.1.0-preview.3` package passed checksum verification, extracted-archive installation,
+The published `v0.1.0-preview.4` package passed checksum verification, extracted-archive installation,
 strict parser checks, and uninstallation. The public images passed isolated
 runtime smokes; the validation image additionally passed an exact UUID/CDI GPU
 smoke on a Provider node. Two full private-pilot interactive lifecycles passed
 with the same final product behavior before this public artifact set was
-published. That is not a claim that a third full lifecycle used these release
-downloads.
+published. That is not a claim that those earlier lifecycles used this release
+download.
 
 ## Release contents
 

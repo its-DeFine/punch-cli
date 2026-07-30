@@ -1,10 +1,7 @@
 # Provider guide
 
-> **Preview.4 release-candidate documentation:** this page describes the
-> unpublished `v0.1.0-preview.4` candidate. Operators using the current
-> `v0.1.0-preview.3` package must use the
-> `PROVIDER.md` file in the
-> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+> **Preview.4 documentation:** this page applies to the published
+> `v0.1.0-preview.4` package.
 
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
 
@@ -40,7 +37,7 @@ docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cb
 Verify the expected local IDs in the [release matrix](RELEASES.md) with
 `docker image inspect --format '{{.Id}}' REGISTRY_REFERENCE`. The Provider
 configuration uses these local IDs, not registry references or mutable tags.
-The complete image-policy block for the `v0.1.0-preview.4` release candidate is:
+The complete image-policy block for `v0.1.0-preview.4` is:
 
 ```json
 {

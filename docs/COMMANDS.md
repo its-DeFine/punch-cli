@@ -1,9 +1,8 @@
 # Command reference
 
 > **Version boundary:** `rejoin`, `providerPayout`, and
-> `--price-usdc-cents` below are preview.4 release-candidate interfaces. For
-> the current `v0.1.0-preview.3` package, use `COMMANDS.md` in the
-> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+> `--price-usdc-cents` below apply to the published `v0.1.0-preview.4`
+> package.
 
 Punch exposes two role-specific commands. The invitation and server-side identity determine what a user may do; installing both commands does not grant both roles.
 

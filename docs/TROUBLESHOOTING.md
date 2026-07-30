@@ -1,9 +1,7 @@
 # Troubleshooting
 
 > **Version boundary:** the `rejoin` and USDC-cent setup guidance on this page
-> applies to the preview.4 release candidate. For the current
-> `v0.1.0-preview.3` package, use `TROUBLESHOOTING.md` in the
-> [tagged preview.3 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.3/docs).
+> applies to the published `v0.1.0-preview.4` package.
 
 ## Invitation rejected
 
