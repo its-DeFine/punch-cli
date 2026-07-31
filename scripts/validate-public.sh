@@ -129,6 +129,23 @@ for validation_requirement in \
   fi
 done
 
+grep -F 'VISIBLE_UUIDS=$(/usr/bin/nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits | LC_ALL=C sort)' \
+  images/validation/validate.sh > /dev/null || {
+  printf '%s\n' 'multi-GPU validation does not canonicalize observed UUID order' >&2
+  exit 1
+}
+grep -F 'EXPECTED_UUIDS=$(printf '\''%s'\'' "${NVIDIA_VISIBLE_DEVICES:?}" | tr '\'','\'' '\''\n'\'' | LC_ALL=C sort)' \
+  images/validation/validate.sh > /dev/null || {
+  printf '%s\n' 'multi-GPU validation does not canonicalize selected UUID order' >&2
+  exit 1
+}
+observed_uuid_fixture=$(printf '%s\n' GPU-b GPU-a GPU-c | LC_ALL=C sort)
+selected_uuid_fixture=$(printf '%s' 'GPU-c,GPU-b,GPU-a' | tr ',' '\n' | LC_ALL=C sort)
+[ "$observed_uuid_fixture" = "$selected_uuid_fixture" ] || {
+  printf '%s\n' 'order-independent exact UUID fixture failed' >&2
+  exit 1
+}
+
 grep -Fx 'FROM nvidia/cuda:12.8.1-devel-ubuntu22.04@sha256:a99a1860ba8e2916e5c3e73b72ec4c4301653a84586e05bfc9a2aa2d58027e97 AS build' \
   images/validation/Dockerfile > /dev/null || {
   printf '%s\n' 'validation build image is not pinned to the supported CUDA 12.8.1 digest' >&2

@@ -19,8 +19,8 @@ if [ -n "${PUNCH_GPU_CDI:-}" ]; then
 fi
 
 case "${PUNCH_GPU_COMMUNICATION:-}" in SAME_NODE|P2P_REQUIRED) ;; *) exit 1 ;; esac
-VISIBLE_UUIDS=$(/usr/bin/nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits)
-EXPECTED_UUIDS=$(printf '%s' "${NVIDIA_VISIBLE_DEVICES:?}" | tr ',' '\n')
+VISIBLE_UUIDS=$(/usr/bin/nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits | LC_ALL=C sort)
+EXPECTED_UUIDS=$(printf '%s' "${NVIDIA_VISIBLE_DEVICES:?}" | tr ',' '\n' | LC_ALL=C sort)
 [ "$VISIBLE_UUIDS" = "$EXPECTED_UUIDS" ]
 
 GPU_JSON='['
