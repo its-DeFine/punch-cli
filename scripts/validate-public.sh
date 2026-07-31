@@ -87,6 +87,38 @@ for validation_requirement in \
   fi
 done
 
+grep -Fx 'FROM nvidia/cuda:12.8.1-devel-ubuntu22.04@sha256:a99a1860ba8e2916e5c3e73b72ec4c4301653a84586e05bfc9a2aa2d58027e97 AS build' \
+  images/validation/Dockerfile > /dev/null || {
+  printf '%s\n' 'validation build image is not pinned to the supported CUDA 12.8.1 digest' >&2
+  exit 1
+}
+grep -Fx 'FROM nvidia/cuda:12.8.1-runtime-ubuntu22.04@sha256:4a801ef9232d2b05e69df4eb8aa054dbbe2824e5499e1e6e857320bb01ac41a9' \
+  images/validation/Dockerfile > /dev/null || {
+  printf '%s\n' 'validation runtime image is not pinned to the supported CUDA 12.8.1 digest' >&2
+  exit 1
+}
+grep -F 'NVIDIA CUDA 12.8.1 Ubuntu 22.04' images/validation/THIRD_PARTY_NOTICES.md > /dev/null || {
+  printf '%s\n' 'validation third-party notice does not match the pinned CUDA base' >&2
+  exit 1
+}
+
+for compatibility_requirement in \
+  '"schemaVersion": "punch.gpu-compatibility.v1"' \
+  '"class": "NVIDIA_CUDA_12_8_1_V1"' \
+  '"minimumLinuxDriver": "570.124.06"' \
+  '"certifiedComputeCapabilities": ["8.9"]' \
+  '"certificationRule": "EXACT_IMAGE_CANARY_BEFORE_OFFER"' \
+  '"unsupportedBehavior": "FAIL_BEFORE_OFFER"'; do
+  grep -F -- "$compatibility_requirement" images/validation/compatibility-policy.json > /dev/null || {
+    printf 'validation compatibility policy missing required statement: %s\n' "$compatibility_requirement" >&2
+    exit 1
+  }
+done
+grep -F 'org.punch.compatibility.class="NVIDIA_CUDA_12_8_1_V1"' images/validation/Dockerfile > /dev/null || exit 1
+grep -F 'org.punch.compatibility.driver-floor="570.124.06"' images/validation/Dockerfile > /dev/null || exit 1
+grep -F 'org.punch.compatibility.certified-compute-capabilities="8.9"' images/validation/Dockerfile > /dev/null || exit 1
+grep -F 'EXACT_IMAGE_CANARY_BEFORE_OFFER' docs/RELEASES.md docs/PLATFORMS.md images/validation/compatibility-policy.json > /dev/null || exit 1
+
 for file in README.md SECURITY.md CONTRIBUTING.md docs/*.md packaging/*.md; do
   sed -n 's/.*](\([^#][^)]*\.md\)).*/\1/p' "$file" | while IFS= read -r target; do
     case "$target" in
