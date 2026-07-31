@@ -87,7 +87,7 @@ for preview7_requirement in \
 done
 
 for release_requirement in \
-  'dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769' \
+  'd7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86' \
   '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
   '8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4' \
   "Docker's local" \
@@ -99,13 +99,13 @@ for release_requirement in \
   }
 done
 
-validation_registry_digest='dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769'
+validation_registry_digest='d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86'
 for release_doc in docs/RELEASES.md docs/PROVIDER.md; do
   grep -F -- "$validation_registry_digest" "$release_doc" > /dev/null || {
     printf 'validation registry digest is missing from %s\n' "$release_doc" >&2
     exit 1
   }
-  if grep -Eq 'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee|4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1|0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' "$release_doc"; then
+  if grep -Eq 'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee|4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1|0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1|dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769' "$release_doc"; then
     printf 'stale validation image identity remains in %s\n' "$release_doc" >&2
     exit 1
   fi
@@ -116,8 +116,8 @@ for active_release_doc in \
   docs/CONDITIONAL_ORDERS.md docs/INSTALL.md docs/INVITATIONS.md \
   docs/PLATFORMS.md docs/PREVIEW7.md docs/PROVIDER.md docs/RELEASES.md docs/SECURITY.md \
   docs/TROUBLESHOOTING.md images/interactive/README.md; do
-  if grep -F '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' "$active_release_doc" > /dev/null; then
-    printf 'retired preview.6 validation digest remains in active guidance: %s\n' "$active_release_doc" >&2
+  if grep -Eq '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1|dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769' "$active_release_doc" > /dev/null; then
+    printf 'retired validation digest remains in active guidance: %s\n' "$active_release_doc" >&2
     exit 1
   fi
 done

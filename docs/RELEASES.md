@@ -11,7 +11,7 @@ must be used with this exact public image set:
 
 | Kind | Immutable policy and runtime reference |
 | --- | --- |
-| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769` |
+| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86` |
 | `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` |
 | `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4` |
 
@@ -33,7 +33,7 @@ The package passed checksum verification, extracted-archive installation, bundle
 execution, strict parser checks, and uninstallation using bundled Node.js
 v22.23.1 and `ws` 8.21.1. The public validation image was built, smoke-tested,
 and published by GitHub Actions from public commit
-`8391f00f7058d629ad1822cea46531b035aa91a1`. The retained workload and
+`50af74cbf94e536beebdde981255107f1b112036`. The retained workload and
 interactive manifests were published from the earlier reviewed release lineage.
 
 ## Multi-GPU proof boundary
@@ -46,14 +46,17 @@ unavailable until the digest-pinned validation container sees the complete
 selected UUID/CDI bundle. `P2P_REQUIRED` additionally fails closed unless CUDA
 peer access and a peer copy pass in every direction. The first external
 eight-GPU Provider proof is therefore still pending and must not be described
-as already completed.
+as already completed. The exact Preview.7 validation image separately passed a
+single-RTX-5080 real-node canary with compute capability 12.0, exact UUID/CDI
+binding, bounded resources, and zero-container cleanup. That promotion proof
+does not substitute for an external Provider lifecycle or multi-GPU P2P proof.
 
 ## GPU compatibility policy
 
 GPU-enabled validation images belong to an immutable compatibility class. The
-first class is `NVIDIA_CUDA_12_8_1_V1`: CUDA 12.8.1 on `linux/amd64`, minimum
-Linux NVIDIA driver `570.124.06`, with compute capability 8.9 as the initial
-real-node-certified architecture. Execution still uses the exact registry
+current class is `NVIDIA_CUDA_12_8_1_V2`: CUDA 12.8.1 on `linux/amd64`, minimum
+Linux NVIDIA driver `570.124.06`, with compute capabilities 8.9 (Ada) and 12.0
+(Blackwell) certified by real-node canaries. Execution still uses the exact registry
 digest listed by the release; the class name is not an image selector and must
 never resolve through a mutable tag.
 

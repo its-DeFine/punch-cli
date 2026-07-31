@@ -21,15 +21,16 @@ The initial Provider preview targets Linux on x86-64 with glibc 2.28 or newer an
 
 CPU-only Providers are first-class. A GPU is not required to join or offer CPU capacity.
 
-The initial GPU compatibility class is `NVIDIA_CUDA_12_8_1_V1`. It uses the
+The current GPU compatibility class is `NVIDIA_CUDA_12_8_1_V2`. It uses the
 release's exact digest-pinned CUDA 12.8.1 validation image and requires Linux
-NVIDIA driver `570.124.06` or newer. The first certified architecture is CUDA
-compute capability 8.9 (Ada). A matching driver version or GPU family name is
+NVIDIA driver `570.124.06` or newer. Certified architectures are CUDA compute
+capabilities 8.9 (Ada) and 12.0 (Blackwell). A matching driver version or GPU family name is
 not sufficient by itself: the exact published image must pass its CUDA canary
 against every selected GPU UUID/CDI identity before `setup` creates an offer.
 Unsupported drivers, architectures, or failed canaries stop before offer
-creation. Other architectures remain unsupported until their own real-node
-promotion gate passes.
+creation. Certification of 12.0 is based on a single-GPU RTX 5080 canary and
+does not claim multi-GPU P2P support. Other architectures remain unsupported
+until their own real-node promotion gate passes.
 
 The current preview archive does not supply or install a service definition and makes no privileged or system-service changes. Unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published.
 

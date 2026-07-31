@@ -29,7 +29,7 @@ Docker's reported local ID varies by image-store implementation, so Punch
 policy always uses the complete immutable registry reference:
 
 ```bash
-docker pull 'ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769'
+docker pull 'ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86'
 docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce'
 docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
 ```
@@ -42,7 +42,7 @@ image-policy block for `v0.1.0-preview.7` is:
 ```json
 {
   "VALIDATION": {
-    "image": "ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769",
+    "image": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
     "command": ["/punch/validate"],
     "inputKeys": ["nonce"]
   },
@@ -78,7 +78,7 @@ private key, seed phrase, signer, or wallet credential:
   },
   "imagePolicies": {
     "VALIDATION": {
-      "image": "ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769",
+      "image": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
       "command": ["/punch/validate"],
       "inputKeys": ["nonce"]
     },

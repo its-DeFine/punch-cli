@@ -30,8 +30,9 @@ kernel releases the lock automatically if the process exits.
 - Preview.6 registry-digest handling remains unchanged.
 - CPU-only, single-GPU, and atomic 2–8 GPU offers remain supported.
 - `SAME_NODE` and `P2P_REQUIRED` retain their Preview.5 meanings.
-- The CUDA compatibility class remains `NVIDIA_CUDA_12_8_1_V1`; the validation
-  manifest changes to the exact digest listed in [RELEASES.md](RELEASES.md).
+- The CUDA compatibility class advances to `NVIDIA_CUDA_12_8_1_V2`; its exact
+  validation manifest certifies compute capabilities 8.9 and 12.0 under the
+  fail-before-offer canary policy listed in [RELEASES.md](RELEASES.md).
 
 No release claim is made from source alone. Installation is supported only
 from the published archive after verifying `SHA256SUMS`.
