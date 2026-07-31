@@ -1,7 +1,8 @@
 # Troubleshooting
 
 > **Version boundary:** the `rejoin` and USDC-cent setup guidance on this page
-> applies to the published `v0.1.0-preview.6` package.
+> applies to `v0.1.0-preview.7` when its non-draft prerelease archive and
+> checksum are published.
 
 ## Invitation rejected
 

@@ -1,7 +1,7 @@
 # Invitations and credentials
 
-> **Version boundary:** Provider `rejoin` applies to the published
-> `v0.1.0-preview.6` package.
+> **Version boundary:** Provider `rejoin` applies to `v0.1.0-preview.7` when
+> its non-draft prerelease archive and checksum are published.
 
 Punch Compute is invitation-only during the public preview.
 

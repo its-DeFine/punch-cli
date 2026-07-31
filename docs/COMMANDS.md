@@ -1,8 +1,8 @@
 # Command reference
 
-> **Version boundary:** `rejoin`, `providerPayout`, and
-> `--price-usdc-cents` and atomic multi-GPU flags below apply to the published `v0.1.0-preview.6`
-> package.
+> **Version boundary:** `rejoin`, `providerPayout`, `--price-usdc-cents`, and
+> the atomic multi-GPU flags below apply to `v0.1.0-preview.7` when its
+> non-draft prerelease archive and checksum are published.
 
 Punch exposes two role-specific commands. The invitation and server-side identity determine what a user may do; installing both commands does not grant both roles.
 

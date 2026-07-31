@@ -73,29 +73,61 @@ for preview6_requirement in \
   }
 done
 
+for preview7_requirement in \
+  'Invitation-only preview' \
+  'canonical sets' \
+  'cryptographically bound' \
+  'Linux advisory lock' \
+  'kernel releases the lock automatically' \
+  'fails closed'; do
+  grep -F -- "$preview7_requirement" docs/PREVIEW7.md > /dev/null || {
+    printf 'preview.7 release contract missing required public statement: %s\n' "$preview7_requirement" >&2
+    exit 1
+  }
+done
+
 for release_requirement in \
-  '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' \
+  'dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769' \
   '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
   '8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4' \
   "Docker's local" \
   'first external' \
   'still pending'; do
   grep -F -- "$release_requirement" docs/RELEASES.md > /dev/null || {
-    printf 'preview.6 release matrix missing required statement: %s\n' "$release_requirement" >&2
+    printf 'preview.7 release matrix missing required statement: %s\n' "$release_requirement" >&2
     exit 1
   }
 done
 
-validation_registry_digest='0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1'
+validation_registry_digest='dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769'
 for release_doc in docs/RELEASES.md docs/PROVIDER.md; do
   grep -F -- "$validation_registry_digest" "$release_doc" > /dev/null || {
     printf 'validation registry digest is missing from %s\n' "$release_doc" >&2
     exit 1
   }
-  if grep -Eq 'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee|4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1' "$release_doc"; then
+  if grep -Eq 'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee|4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1|0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' "$release_doc"; then
     printf 'stale validation image identity remains in %s\n' "$release_doc" >&2
     exit 1
   fi
+done
+
+for active_release_doc in \
+  README.md docs/ARCHITECTURE.md docs/BUYER.md docs/COMMANDS.md \
+  docs/CONDITIONAL_ORDERS.md docs/INSTALL.md docs/INVITATIONS.md \
+  docs/PLATFORMS.md docs/PREVIEW7.md docs/PROVIDER.md docs/RELEASES.md docs/SECURITY.md \
+  docs/TROUBLESHOOTING.md images/interactive/README.md; do
+  if grep -F '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' "$active_release_doc" > /dev/null; then
+    printf 'retired preview.6 validation digest remains in active guidance: %s\n' "$active_release_doc" >&2
+    exit 1
+  fi
+done
+
+for preview7_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
+  grep -F 'non-draft prerelease archive' "$preview7_boundary_doc" > /dev/null && \
+    grep -F 'checksum are published' "$preview7_boundary_doc" > /dev/null || {
+    printf 'preview.7 publication boundary is missing from %s\n' "$preview7_boundary_doc" >&2
+    exit 1
+  }
 done
 
 for active_provider_doc in docs/RELEASES.md docs/PROVIDER.md images/interactive/README.md; do
@@ -106,12 +138,12 @@ for active_provider_doc in docs/RELEASES.md docs/PROVIDER.md images/interactive/
 done
 
 for interactive_requirement in \
-  'v0.1.0-preview.6' \
+  'v0.1.0-preview.7' \
   'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4' \
   'repository@sha256:manifest' \
   'must never be copied'; do
   grep -F -- "$interactive_requirement" images/interactive/README.md > /dev/null || {
-    printf 'interactive image guidance missing preview.6 requirement: %s\n' "$interactive_requirement" >&2
+    printf 'interactive image guidance missing preview.7 requirement: %s\n' "$interactive_requirement" >&2
     exit 1
   }
 done

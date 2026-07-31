@@ -1,7 +1,7 @@
 # Provider guide
 
-> **Preview.6 documentation:** this page applies to the published
-> `v0.1.0-preview.6` package.
+> **Preview.7 documentation:** this page applies to `v0.1.0-preview.7` when
+> its non-draft prerelease archive and checksum are published.
 
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
 
@@ -29,7 +29,7 @@ Docker's reported local ID varies by image-store implementation, so Punch
 policy always uses the complete immutable registry reference:
 
 ```bash
-docker pull 'ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1'
+docker pull 'ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769'
 docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce'
 docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
 ```
@@ -37,12 +37,12 @@ docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cb
 Verify each pulled reference with `docker image inspect REGISTRY_REFERENCE`.
 The Provider configuration uses the exact `repository@sha256:manifest`
 reference, never a mutable tag or a Docker-local image ID. The complete
-image-policy block for `v0.1.0-preview.6` is:
+image-policy block for `v0.1.0-preview.7` is:
 
 ```json
 {
   "VALIDATION": {
-    "image": "ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1",
+    "image": "ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769",
     "command": ["/punch/validate"],
     "inputKeys": ["nonce"]
   },
@@ -78,7 +78,7 @@ private key, seed phrase, signer, or wallet credential:
   },
   "imagePolicies": {
     "VALIDATION": {
-      "image": "ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1",
+      "image": "ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769",
       "command": ["/punch/validate"],
       "inputKeys": ["nonce"]
     },

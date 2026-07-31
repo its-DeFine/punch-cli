@@ -4,14 +4,14 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
-`v0.1.0-preview.6` is the supported Linux/x64 external-pilot package only when
+`v0.1.0-preview.7` is the supported Linux/x64 external-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
 
 | Kind | Immutable policy and runtime reference |
 | --- | --- |
-| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1` |
+| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769` |
 | `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` |
 | `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4` |
 
@@ -20,7 +20,7 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-The `v0.1.0-preview.6` release retains atomic 2–8 GPU offers bound to aligned UUID/CDI
+The `v0.1.0-preview.7` release retains atomic 2–8 GPU offers bound to aligned UUID/CDI
 identities, explicit `SAME_NODE` or all-direction `P2P_REQUIRED` validation,
 and Buyer conditional orders with ranked hardware alternatives. It also binds
 the complete OCI digest reference across classic Docker and Docker's containerd
@@ -31,14 +31,17 @@ single-GPU, CPU-only, `rejoin`, Sablier payout binding, and whole-window
 The release archive's `SHA256SUMS` asset is authoritative for its exact bytes.
 The package passed checksum verification, extracted-archive installation, bundled CLI
 execution, strict parser checks, and uninstallation using bundled Node.js
-v22.23.1 and `ws` 8.21.1. The public validation and workload images were built,
-smoke-tested, and published by GitHub Actions from public commit
-`288648ddd96f06acb0abef0d27d3a74ad0b35513`.
+v22.23.1 and `ws` 8.21.1. The public validation image was built, smoke-tested,
+and published by GitHub Actions from public commit
+`8391f00f7058d629ad1822cea46531b035aa91a1`. The retained workload and
+interactive manifests were published from the earlier reviewed release lineage.
 
 ## Multi-GPU proof boundary
 
-The GitHub Actions smoke proves the CPU path and publication identity; it is not
-a real multi-GPU hardware claim. During Provider setup, Punch keeps the offer
+The GitHub Actions smoke proves the CPU path and publication identity. A
+disposable four-RTX-4090 canary separately proved that the validation image
+accepts the exact selected GPU set independently of host enumeration order;
+it is not a completed external Provider lifecycle. During Provider setup, Punch keeps the offer
 unavailable until the digest-pinned validation container sees the complete
 selected UUID/CDI bundle. `P2P_REQUIRED` additionally fails closed unless CUDA
 peer access and a peer copy pass in every direction. The first external
