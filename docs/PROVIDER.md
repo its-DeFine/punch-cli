@@ -29,7 +29,7 @@ identities. Pull with the registry reference, then record the exact local image
 ID:
 
 ```bash
-docker pull 'ghcr.io/its-define/punch-validation@sha256:dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee'
+docker pull 'ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1'
 docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce'
 docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
 ```
@@ -42,7 +42,7 @@ The complete image-policy block for `v0.1.0-preview.5` is:
 ```json
 {
   "VALIDATION": {
-    "image": "sha256:4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1",
+    "image": "sha256:d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac",
     "command": ["/punch/validate"],
     "inputKeys": ["nonce"]
   },
@@ -78,7 +78,7 @@ private key, seed phrase, signer, or wallet credential:
   },
   "imagePolicies": {
     "VALIDATION": {
-      "image": "sha256:4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1",
+      "image": "sha256:d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac",
       "command": ["/punch/validate"],
       "inputKeys": ["nonce"]
     },

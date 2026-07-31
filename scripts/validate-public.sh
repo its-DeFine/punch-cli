@@ -62,8 +62,8 @@ done
 
 for release_requirement in \
   '4712efb0b858bbae6eccf8c47dbb88ce3b08993802228e1827756e5ac7a521a0' \
-  'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee' \
-  '4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1' \
+  '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' \
+  'd98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac' \
   '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
   '6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930' \
   'first external' \
@@ -72,6 +72,23 @@ for release_requirement in \
     printf 'preview.5 release matrix missing required statement: %s\n' "$release_requirement" >&2
     exit 1
   }
+done
+
+validation_registry_digest='0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1'
+validation_local_image_id='d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac'
+for release_doc in docs/RELEASES.md docs/PROVIDER.md; do
+  grep -F -- "$validation_registry_digest" "$release_doc" > /dev/null || {
+    printf 'validation registry digest is missing from %s\n' "$release_doc" >&2
+    exit 1
+  }
+  grep -F -- "$validation_local_image_id" "$release_doc" > /dev/null || {
+    printf 'validation local image ID is missing from %s\n' "$release_doc" >&2
+    exit 1
+  }
+  if grep -Eq 'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee|4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1' "$release_doc"; then
+    printf 'stale validation image identity remains in %s\n' "$release_doc" >&2
+    exit 1
+  fi
 done
 
 for validation_requirement in \
