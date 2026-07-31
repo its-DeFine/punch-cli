@@ -1,10 +1,10 @@
 {
   "schemaVersion": "punch.gpu-compatibility.v1",
-  "class": "NVIDIA_CUDA_12_8_1_V1",
+  "class": "NVIDIA_CUDA_12_8_1_V2",
   "platform": "linux/amd64",
   "cudaRuntime": "12.8.1",
   "minimumLinuxDriver": "570.124.06",
-  "certifiedComputeCapabilities": ["8.9"],
+  "certifiedComputeCapabilities": ["8.9", "12.0"],
   "certificationRule": "EXACT_IMAGE_CANARY_BEFORE_OFFER",
   "unsupportedBehavior": "FAIL_BEFORE_OFFER"
 }

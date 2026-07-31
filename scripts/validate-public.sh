@@ -195,9 +195,9 @@ grep -F 'NVIDIA CUDA 12.8.1 Ubuntu 22.04' images/validation/THIRD_PARTY_NOTICES.
 
 for compatibility_requirement in \
   '"schemaVersion": "punch.gpu-compatibility.v1"' \
-  '"class": "NVIDIA_CUDA_12_8_1_V1"' \
+  '"class": "NVIDIA_CUDA_12_8_1_V2"' \
   '"minimumLinuxDriver": "570.124.06"' \
-  '"certifiedComputeCapabilities": ["8.9"]' \
+  '"certifiedComputeCapabilities": ["8.9", "12.0"]' \
   '"certificationRule": "EXACT_IMAGE_CANARY_BEFORE_OFFER"' \
   '"unsupportedBehavior": "FAIL_BEFORE_OFFER"'; do
   grep -F -- "$compatibility_requirement" images/validation/compatibility-policy.json > /dev/null || {
@@ -205,9 +205,9 @@ for compatibility_requirement in \
     exit 1
   }
 done
-grep -F 'org.punch.compatibility.class="NVIDIA_CUDA_12_8_1_V1"' images/validation/Dockerfile > /dev/null || exit 1
+grep -F 'org.punch.compatibility.class="NVIDIA_CUDA_12_8_1_V2"' images/validation/Dockerfile > /dev/null || exit 1
 grep -F 'org.punch.compatibility.driver-floor="570.124.06"' images/validation/Dockerfile > /dev/null || exit 1
-grep -F 'org.punch.compatibility.certified-compute-capabilities="8.9"' images/validation/Dockerfile > /dev/null || exit 1
+grep -F 'org.punch.compatibility.certified-compute-capabilities="8.9,12.0"' images/validation/Dockerfile > /dev/null || exit 1
 grep -F 'EXACT_IMAGE_CANARY_BEFORE_OFFER' docs/RELEASES.md docs/PLATFORMS.md images/validation/compatibility-policy.json > /dev/null || exit 1
 
 for file in README.md SECURITY.md CONTRIBUTING.md docs/*.md packaging/*.md; do
