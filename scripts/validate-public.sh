@@ -60,35 +60,60 @@ for preview5_requirement in \
   }
 done
 
+for preview6_requirement in \
+  'Invitation-only preview' \
+  'repository@sha256:manifest' \
+  'Classic Docker' \
+  'containerd image store' \
+  'exact `RepoDigests` entry' \
+  'fails before execution'; do
+  grep -F -- "$preview6_requirement" docs/PREVIEW6.md > /dev/null || {
+    printf 'preview.6 release contract missing required public statement: %s\n' "$preview6_requirement" >&2
+    exit 1
+  }
+done
+
 for release_requirement in \
-  '4712efb0b858bbae6eccf8c47dbb88ce3b08993802228e1827756e5ac7a521a0' \
   '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1' \
-  'd98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac' \
   '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
-  '6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930' \
+  '8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4' \
+  "Docker's local" \
   'first external' \
   'still pending'; do
   grep -F -- "$release_requirement" docs/RELEASES.md > /dev/null || {
-    printf 'preview.5 release matrix missing required statement: %s\n' "$release_requirement" >&2
+    printf 'preview.6 release matrix missing required statement: %s\n' "$release_requirement" >&2
     exit 1
   }
 done
 
 validation_registry_digest='0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1'
-validation_local_image_id='d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac'
 for release_doc in docs/RELEASES.md docs/PROVIDER.md; do
   grep -F -- "$validation_registry_digest" "$release_doc" > /dev/null || {
     printf 'validation registry digest is missing from %s\n' "$release_doc" >&2
-    exit 1
-  }
-  grep -F -- "$validation_local_image_id" "$release_doc" > /dev/null || {
-    printf 'validation local image ID is missing from %s\n' "$release_doc" >&2
     exit 1
   }
   if grep -Eq 'dbdb9592f29d460c8e1661b001320561466a3220956ccb06598298fae3386fee|4f173299eed9021b7dee6b4af21146af618e86d9ce4bb6583e2945ee18e952b1' "$release_doc"; then
     printf 'stale validation image identity remains in %s\n' "$release_doc" >&2
     exit 1
   fi
+done
+
+for active_provider_doc in docs/RELEASES.md docs/PROVIDER.md images/interactive/README.md; do
+  if grep -Eq 'sha256:d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac|sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930|sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b' "$active_provider_doc"; then
+    printf 'Docker-local image ID remains in active release guidance: %s\n' "$active_provider_doc" >&2
+    exit 1
+  fi
+done
+
+for interactive_requirement in \
+  'v0.1.0-preview.6' \
+  'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4' \
+  'repository@sha256:manifest' \
+  'must never be copied'; do
+  grep -F -- "$interactive_requirement" images/interactive/README.md > /dev/null || {
+    printf 'interactive image guidance missing preview.6 requirement: %s\n' "$interactive_requirement" >&2
+    exit 1
+  }
 done
 
 for validation_requirement in \

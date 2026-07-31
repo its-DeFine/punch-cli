@@ -1,7 +1,7 @@
 # Provider guide
 
-> **Preview.5 documentation:** this page applies to the published
-> `v0.1.0-preview.5` package.
+> **Preview.6 documentation:** this page applies to the published
+> `v0.1.0-preview.6` package.
 
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
 
@@ -24,9 +24,9 @@ build contexts are public under `images/`, but the Control implementation
 remains private. Always pull the release by the exact registry digest; do not
 use a workflow tag or substitute a locally rebuilt image.
 
-The registry digest and Docker's local image ID are two different immutable
-identities. Pull with the registry reference, then record the exact local image
-ID:
+The registry digest and Docker's local image ID are different identities.
+Docker's reported local ID varies by image-store implementation, so Punch
+policy always uses the complete immutable registry reference:
 
 ```bash
 docker pull 'ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1'
@@ -34,26 +34,26 @@ docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66
 docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
 ```
 
-Verify the expected local IDs in the [release matrix](RELEASES.md) with
-`docker image inspect --format '{{.Id}}' REGISTRY_REFERENCE`. The Provider
-configuration uses these local IDs, not registry references or mutable tags.
-The complete image-policy block for `v0.1.0-preview.5` is:
+Verify each pulled reference with `docker image inspect REGISTRY_REFERENCE`.
+The Provider configuration uses the exact `repository@sha256:manifest`
+reference, never a mutable tag or a Docker-local image ID. The complete
+image-policy block for `v0.1.0-preview.6` is:
 
 ```json
 {
   "VALIDATION": {
-    "image": "sha256:d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac",
+    "image": "ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1",
     "command": ["/punch/validate"],
     "inputKeys": ["nonce"]
   },
   "WORKLOAD": {
-    "image": "sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930",
+    "image": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
     "command": ["/punch/run"],
     "inputKeys": ["nonce", "window_seconds"]
   },
   "INTERACTIVE": {
     "protocol": "PUNCH_INTERACTIVE_V1",
-    "approvedBaseImage": "sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b",
+    "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4",
     "command": ["/usr/local/bin/punch-interactive"],
     "inputKeys": [],
     "seccompProfile": "builtin",
@@ -78,18 +78,18 @@ private key, seed phrase, signer, or wallet credential:
   },
   "imagePolicies": {
     "VALIDATION": {
-      "image": "sha256:d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac",
+      "image": "ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1",
       "command": ["/punch/validate"],
       "inputKeys": ["nonce"]
     },
     "WORKLOAD": {
-      "image": "sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930",
+      "image": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
       "command": ["/punch/run"],
       "inputKeys": ["nonce", "window_seconds"]
     },
     "INTERACTIVE": {
       "protocol": "PUNCH_INTERACTIVE_V1",
-      "approvedBaseImage": "sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b",
+      "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4",
       "command": ["/usr/local/bin/punch-interactive"],
       "inputKeys": [],
       "seccompProfile": "builtin",
@@ -103,7 +103,7 @@ private key, seed phrase, signer, or wallet credential:
 
 Replace the absolute credential path and the synthetic payout recipient with
 the Provider's intended public EVM address. Keep the file mode `0600`. Do not
-edit image IDs or policy fields; stop if an inspect result differs from the
+edit image references or policy fields; stop if an inspect result differs from the
 release matrix. A Provider using the separately approved `LIVEPEER_OPS` rail
 uses `{ "rail": "LIVEPEER_OPS", "recipient": null }` instead.
 

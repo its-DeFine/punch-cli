@@ -4,29 +4,32 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
-`v0.1.0-preview.5` is the supported Linux/x64 external-pilot package only when
+`v0.1.0-preview.6` is the supported Linux/x64 external-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
 
-| Kind | Immutable registry reference | Expected local image ID |
-| --- | --- | --- |
-| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1` | `sha256:d98d77b84dd6bffa6c9bafc32ac5693213573698c8b38fbd9d8c100d8da579ac` |
-| `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` | `sha256:6a17d1cbe32e821df44369d372bb52981c4707515edc825cfbcefdf2333bd930` |
-| `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4` | `sha256:2f13a113c8dd5d3c2ddb38f2e1cee7d4aaa2f7ba3c157de7743bb8d1276ea33b` |
+| Kind | Immutable policy and runtime reference |
+| --- | --- |
+| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1` |
+| `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` |
+| `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4` |
 
-These identities are for the published `linux/amd64` images. Pull by registry
-digest and verify the local image ID before placing it in `agent.json`.
+These references identify the published `linux/amd64` images. Pull and place
+the same complete reference in `agent.json`. Never substitute Docker's local
+`.Id`: classic and containerd image stores report different local identities
+for the same OCI manifest.
 
-The `v0.1.0-preview.5` release adds atomic 2–8 GPU offers bound to aligned UUID/CDI
+The `v0.1.0-preview.6` release retains atomic 2–8 GPU offers bound to aligned UUID/CDI
 identities, explicit `SAME_NODE` or all-direction `P2P_REQUIRED` validation,
-and Buyer conditional orders with ranked hardware alternatives. It retains
+and Buyer conditional orders with ranked hardware alternatives. It also binds
+the complete OCI digest reference across classic Docker and Docker's containerd
+image store. It retains
 single-GPU, CPU-only, `rejoin`, Sablier payout binding, and whole-window
 `--price-usdc-cents` compatibility from preview.4.
 
-The Linux/x64 archive is 44,069,116 bytes with SHA-256
-`4712efb0b858bbae6eccf8c47dbb88ce3b08993802228e1827756e5ac7a521a0`.
-It passed checksum verification, extracted-archive installation, bundled CLI
+The release archive's `SHA256SUMS` asset is authoritative for its exact bytes.
+The package passed checksum verification, extracted-archive installation, bundled CLI
 execution, strict parser checks, and uninstallation using bundled Node.js
 v22.23.1 and `ws` 8.21.1. The public validation and workload images were built,
 smoke-tested, and published by GitHub Actions from public commit

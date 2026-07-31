@@ -11,7 +11,7 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-`v0.1.0-preview.5` is supported for Linux/x64 only when GitHub shows its
+`v0.1.0-preview.6` is supported for Linux/x64 only when GitHub shows its
 non-draft prerelease with the archive and checksum assets. A source commit does
 not make it installable. Use only those release assets together with the
 matching immutable image set in [Release and verification policy](docs/RELEASES.md).
@@ -38,7 +38,7 @@ matching immutable image set in [Release and verification policy](docs/RELEASES.
 2. Obtain a single-use Buyer or Provider invitation from Punch.
 3. Install the matching CLI from that verified release; see [Installation](docs/INSTALL.md).
 4. Follow `BUYER.md` or `PROVIDER.md` in the
-   [tagged preview.5 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.5/docs).
+   [tagged preview.6 documentation](https://github.com/its-DeFine/punch-cli/tree/v0.1.0-preview.6/docs).
 
 ```bash
 punch-buyer --help
@@ -62,6 +62,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Platform support](docs/PLATFORMS.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Release and verification policy](docs/RELEASES.md)
+- [Preview.6 Docker-store compatibility contract](docs/PREVIEW6.md)
 - [Preview.5 atomic multi-GPU contract](docs/PREVIEW5.md)
 
 ## Licensing
