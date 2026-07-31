@@ -42,6 +42,21 @@ peer access and a peer copy pass in every direction. The first external
 eight-GPU Provider proof is therefore still pending and must not be described
 as already completed.
 
+## GPU compatibility policy
+
+GPU-enabled validation images belong to an immutable compatibility class. The
+first class is `NVIDIA_CUDA_12_8_1_V1`: CUDA 12.8.1 on `linux/amd64`, minimum
+Linux NVIDIA driver `570.124.06`, with compute capability 8.9 as the initial
+real-node-certified architecture. Execution still uses the exact registry
+digest listed by the release; the class name is not an image selector and must
+never resolve through a mutable tag.
+
+The Provider must run the exact-image CUDA canary against the selected GPU
+UUID/CDI set before offer creation. A driver below the floor, an uncertified
+architecture, an image mismatch, or a failed compute/topology canary fails
+before the offer exists. A new image digest or compatibility baseline creates
+a new policy generation and never silently rebinds an existing offer.
+
 ## Release contents
 
 An installable release must contain:
