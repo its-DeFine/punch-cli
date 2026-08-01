@@ -86,6 +86,21 @@ for preview7_requirement in \
   }
 done
 
+for preview8_requirement in \
+  'Invitation-only preview' \
+  '--all-gpus' \
+  'does not require another' \
+  'unreserved' \
+  'serializes withdrawal with Buyer' \
+  'optional explicit digest' \
+  'bounded timeouts' \
+  'raw upstream bodies'; do
+  grep -F -- "$preview8_requirement" docs/PREVIEW8.md > /dev/null || {
+    printf 'preview.8 release contract missing required public statement: %s\n' "$preview8_requirement" >&2
+    exit 1
+  }
+done
+
 for release_requirement in \
   'd7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86' \
   '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
@@ -94,7 +109,7 @@ for release_requirement in \
   'first external' \
   'still pending'; do
   grep -F -- "$release_requirement" docs/RELEASES.md > /dev/null || {
-    printf 'preview.7 release matrix missing required statement: %s\n' "$release_requirement" >&2
+    printf 'current release matrix missing required statement: %s\n' "$release_requirement" >&2
     exit 1
   }
 done
@@ -114,7 +129,7 @@ done
 for active_release_doc in \
   README.md docs/ARCHITECTURE.md docs/BUYER.md docs/COMMANDS.md \
   docs/CONDITIONAL_ORDERS.md docs/INSTALL.md docs/INVITATIONS.md \
-  docs/PLATFORMS.md docs/PREVIEW7.md docs/PROVIDER.md docs/RELEASES.md docs/SECURITY.md \
+  docs/PLATFORMS.md docs/PREVIEW7.md docs/PREVIEW8.md docs/PROVIDER.md docs/RELEASES.md docs/SECURITY.md \
   docs/TROUBLESHOOTING.md images/interactive/README.md; do
   if grep -Eq '0ea3a3ca041c5b90cc47e0213b366660bbff4f2a74ba7b61d1442d627abea3b1|dc656cb034ade77b0d2d770147aed4317c2296e899f37cbb3e81b5c43d38a769' "$active_release_doc" > /dev/null; then
     printf 'retired validation digest remains in active guidance: %s\n' "$active_release_doc" >&2
@@ -122,10 +137,10 @@ for active_release_doc in \
   fi
 done
 
-for preview7_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
-  grep -F 'non-draft prerelease archive' "$preview7_boundary_doc" > /dev/null && \
-    grep -F 'checksum are published' "$preview7_boundary_doc" > /dev/null || {
-    printf 'preview.7 publication boundary is missing from %s\n' "$preview7_boundary_doc" >&2
+for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
+  grep -F 'non-draft prerelease archive' "$current_boundary_doc" > /dev/null && \
+    grep -F 'checksum are published' "$current_boundary_doc" > /dev/null || {
+    printf 'preview.8 publication boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done
@@ -138,12 +153,12 @@ for active_provider_doc in docs/RELEASES.md docs/PROVIDER.md images/interactive/
 done
 
 for interactive_requirement in \
-  'v0.1.0-preview.7' \
+  'v0.1.0-preview.8' \
   'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4' \
   'repository@sha256:manifest' \
   'must never be copied'; do
   grep -F -- "$interactive_requirement" images/interactive/README.md > /dev/null || {
-    printf 'interactive image guidance missing preview.7 requirement: %s\n' "$interactive_requirement" >&2
+    printf 'interactive image guidance missing preview.8 requirement: %s\n' "$interactive_requirement" >&2
     exit 1
   }
 done

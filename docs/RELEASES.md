@@ -4,7 +4,7 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
-`v0.1.0-preview.7` is the supported Linux/x64 external-pilot package only when
+`v0.1.0-preview.8` is the supported Linux/x64 external-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
@@ -20,7 +20,10 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-The `v0.1.0-preview.7` release retains atomic 2–8 GPU offers bound to aligned UUID/CDI
+The `v0.1.0-preview.8` release adds explicit `--all-gpus` whole-node setup,
+transactional withdrawal of unreserved listed offers, Provider identity reuse
+across offer creation and withdrawal, bounded poll timeouts, and sanitized
+public error codes. It retains atomic 2–8 GPU offers bound to aligned UUID/CDI
 identities, explicit `SAME_NODE` or all-direction `P2P_REQUIRED` validation,
 and Buyer conditional orders with ranked hardware alternatives. It also binds
 the complete OCI digest reference across classic Docker and Docker's containerd

@@ -1,7 +1,7 @@
 # Troubleshooting
 
 > **Version boundary:** the `rejoin` and USDC-cent setup guidance on this page
-> applies to `v0.1.0-preview.7` when its non-draft prerelease archive and
+> applies to `v0.1.0-preview.8` when its non-draft prerelease archive and
 > checksum are published.
 
 ## Invitation rejected
@@ -33,6 +33,14 @@ The public setup flag is `--price-usdc-cents`, and it prices the complete
 `--window-seconds` interval. `--window-seconds 3600 --price-usdc-cents 34`
 means USD 0.34 for one hour. Do not pass six-decimal USDC base units to this
 flag.
+
+## Provider wants to replace or remove an offer
+
+Do not re-register, delete credentials, or create another machine identity.
+Use a fresh setup reference to create another immutable offer with the existing
+identity. Use `punch-provider withdraw` with the exact offer ID and one stable
+idempotency key to pause an unfilled listed offer. A reserved offer cannot be
+withdrawn; that rejection protects the Buyer that already won the race.
 
 ## Interactive preflight reports missing userns
 

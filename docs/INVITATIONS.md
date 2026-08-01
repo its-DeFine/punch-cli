@@ -1,6 +1,6 @@
 # Invitations and credentials
 
-> **Version boundary:** Provider `rejoin` applies to `v0.1.0-preview.7` when
+> **Version boundary:** Provider `rejoin` applies to `v0.1.0-preview.8` when
 > its non-draft prerelease archive and checksum are published.
 
 Punch Compute is invitation-only during the public preview.
@@ -21,6 +21,10 @@ returns `PROVIDER_REJOIN_REQUIRED`, Punch issues one fresh invitation bound to
 the same active Provider actor. The operator runs `punch-provider rejoin`; the
 CLI atomically replaces only the expired credential and preserves the exact
 pending setup reference. The original invitation remains consumed.
+
+An enrolled Provider does not redeem another invitation merely to create or
+withdraw another offer. Normal session renewal and fresh setup references reuse
+the existing Provider and machine identities.
 
 ## File handling
 

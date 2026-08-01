@@ -1,6 +1,6 @@
 # Provider guide
 
-> **Preview.7 documentation:** this page applies to `v0.1.0-preview.7` when
+> **Preview.8 documentation:** this page applies to `v0.1.0-preview.8` when
 > its non-draft prerelease archive and checksum are published.
 
 The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
@@ -37,7 +37,7 @@ docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cb
 Verify each pulled reference with `docker image inspect REGISTRY_REFERENCE`.
 The Provider configuration uses the exact `repository@sha256:manifest`
 reference, never a mutable tag or a Docker-local image ID. The complete
-image-policy block for `v0.1.0-preview.7` is:
+image-policy block for `v0.1.0-preview.8` is:
 
 ```json
 {
@@ -243,6 +243,25 @@ GPU example adds:
 
 Never offer more capacity than the inventory reports as safely allocatable.
 
+On a dedicated execution node, the common whole-node form is:
+
+```bash
+punch-provider setup \
+  --machine-id MACHINE_ID \
+  --state-dir /absolute/path/.local/state/punch-provider \
+  --agent-config /absolute/path/.config/punch/provider/agent.json \
+  --idempotency-key STABLE_SETUP_REFERENCE \
+  --cpu-cores ALLOCATABLE_CPU_CORES --ram-mib ALLOCATABLE_RAM_MIB \
+  --disk-gib ALLOCATABLE_DISK_GIB --all-gpus \
+  --window-seconds 3600 --price-usdc-cents PRICE
+```
+
+`--all-gpus` uses every GPU reported by the local inventory, including its
+stable UUID/CDI identity and observed VRAM. For 2–8 GPUs it defaults to
+`SAME_NODE`. Add `--gpu-communication P2P_REQUIRED` only when the offer must
+prove CUDA peer access. The option is never implicit; on a shared host, select
+capacity manually so unrelated devices are not advertised.
+
 An atomic eight-GPU offer uses the UUID/CDI pairs reported by `inventory`:
 
 ```bash
@@ -266,7 +285,32 @@ then fails closed unless CUDA peer access and peer copies pass in every
 direction. PCI bus numbers are inventory locators only—the offer and lease bind
 the corresponding stable UUID/CDI identities.
 
-## 7. Run the agent in the supervised foreground
+## 7. Withdraw an unfilled offer
+
+Normal operation reuses the enrolled Provider and machine identities. Creating
+another immutable offer uses a fresh setup reference; it does not require a new
+invitation or another `join`.
+
+To remove an unfilled offer from Buyer discovery without deleting its audit
+history:
+
+```bash
+punch-provider withdraw \
+  --machine-id MACHINE_ID \
+  --state-dir /absolute/path/.local/state/punch-provider \
+  --agent-config /absolute/path/.config/punch/provider/agent.json \
+  --offer-id OFFER_ID \
+  --idempotency-key STABLE_WITHDRAWAL_REFERENCE
+```
+
+Control transactionally binds the current immutable offer digest. An operator
+who already has that digest may also pass `--offer-digest SHA256` for a strict
+stale-version check. Withdrawal succeeds only while the offer is still
+`LISTED`; if a Buyer reservation wins the race, the withdrawal fails and cannot
+take capacity away from that Buyer. Retry a lost response with the same
+idempotency key.
+
+## 8. Run the agent in the supervised foreground
 
 ```bash
 punch-provider serve \
@@ -288,7 +332,7 @@ punch-provider status \
 
 Local status is not proof that Punch Control has accepted the latest heartbeat or drain state.
 
-## 8. Drain
+## 9. Drain
 
 Request local draining before maintenance:
 
