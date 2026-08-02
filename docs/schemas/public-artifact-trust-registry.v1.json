@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "punch.public-artifact-trust-registry.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "runtimeMatchRequired": true,
+  "registryKeys": ["schemaVersion", "artifactKind", "authorityStatus", "releaseAuthority", "proofLabel", "entries"],
+  "entryKeys": [
+    "sourceIdentity",
+    "artifactDigest",
+    "providerEntrypointDigest",
+    "buyerEntrypointDigest",
+    "sbomDigest",
+    "contractDigest",
+    "trustState"
+  ],
+  "authorityStatuses": ["MANAGER_APPROVED_HANDOFF", "UNREVIEWED", "REVOKED"],
+  "trustStates": ["HANDOFF_APPROVED", "UNTRUSTED", "REVOKED"],
+  "releaseAuthority": false
+}

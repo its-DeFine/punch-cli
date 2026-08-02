@@ -33,6 +33,14 @@ closing the OpenSSH client ends that client connection, not the Punch job
 lifecycle. Do not infer an early-termination API from a private canary or from
 an SSH disconnect.
 
+`TARGETED_ZERO_TEST` is not a released Buyer or Provider command. See the
+[targeted zero-price test contract](TARGETED_ZERO_TEST.md). Do not invent a
+zero-price flag or treat the public reference schema as an enabled runtime.
+
+The next gated setup-as-offer and Buyer-stop reference is maintained in
+[NEXT_COMMAND_REFERENCE.md](NEXT_COMMAND_REFERENCE.md); it does not change the
+current released command surface above.
+
 ## Provider
 
 The supported public-preview path is:

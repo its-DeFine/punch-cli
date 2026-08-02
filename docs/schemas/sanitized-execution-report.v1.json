@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "punch.disposable-pov-report.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "runtimeMatchRequired": true,
+  "requiredProofLabel": "LOCAL_DETERMINISTIC_PASS",
+  "timing": "UTC+MONOTONIC",
+  "capturedInput": false,
+  "childOutput": "SANITIZED_IN_MEMORY",
+  "separateEnvironments": ["provider", "buyerA", "buyerB"],
+  "requiredPublicChildReceipts": 14,
+  "requiredStepCount": 17,
+  "replay": "OUTPUT_ONLY",
+  "productionStoreMutation": false
+}

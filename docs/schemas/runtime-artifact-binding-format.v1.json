@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "punch.runtime-artifact-binding-format.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "runtimeMatchRequired": true,
+  "bindingKeys": ["schemaVersion", "artifactKind", "contractDigest", "buildBinding", "trustRegistryPath"],
+  "buildBindingKeys": ["schemaVersion", "sourceIdentity", "artifactDigest", "providerEntrypointDigest", "buyerEntrypointDigest", "sbomDigest", "contractDigest"],
+  "bindingIsAuthority": false,
+  "managerApprovedRegistryRequired": true
+}

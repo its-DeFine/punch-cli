@@ -48,6 +48,13 @@ and configuration terms. They are not evidence of a completed testnet transfer
 or a real-USDC payment. No funding, payout, or cancellation claim is made here
 without release-specific proof and authorization.
 
+`TARGETED_ZERO_TEST` is separately gated and unreleased. The public
+[targeted zero-price test contract](TARGETED_ZERO_TEST.md) and its reference
+schema are not a matching runtime artifact, release, or live Provider/Buyer
+proof. It must remain disabled until a matching artifact and owner-controlled
+authorization exist; paid offers remain subject to their existing positive
+price and settlement invariants.
+
 ## Multi-GPU proof boundary
 
 The GitHub Actions smoke proves the CPU path and publication identity. A

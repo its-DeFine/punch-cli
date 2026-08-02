@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "punch.public-safe-contract-binding.v1",
+  "artifactKind": "public-safe-contract-binding",
+  "contractDigest": "ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f",
+  "buildBinding": {
+    "schemaVersion": "punch.build-binding.v1",
+    "sourceIdentity": {"kind": "DECLARED", "value": "punch-public-safe-contract-fixture"},
+    "artifactDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "providerEntrypointDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "buyerEntrypointDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "sbomDigest": null,
+    "contractDigest": "ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f"
+  },
+  "trustRegistryPath": "tests/fixtures/public-safe-trust-registry.v1.json"
+}

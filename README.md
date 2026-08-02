@@ -63,6 +63,8 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Release and verification policy](docs/RELEASES.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)
+- [Targeted zero-price test contract](docs/TARGETED_ZERO_TEST.md) (gated and unreleased)
+- [Executable public-docs boundary](docs/EXECUTABLE_DOCS.md) (gated and unreleased)
 - [Preview.7 GPU validation and setup recovery contract](docs/PREVIEW7.md)
 - [Preview.6 Docker-store compatibility contract](docs/PREVIEW6.md)
 - [Preview.5 atomic multi-GPU contract](docs/PREVIEW5.md)

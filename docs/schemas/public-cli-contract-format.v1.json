@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "punch.public-safe-contract-format.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "runtimeMatchRequired": true,
+  "contractSchema": "punch.public-safe-contract.v1",
+  "cliMetadataSchema": "punch.public-cli-contract.v1",
+  "contractKeys": ["schemaVersion", "publicCli", "claims", "contractDigest", "buildBinding"],
+  "publicCliKeys": ["schemaVersion", "provider", "buyer", "proofBoundary"],
+  "commandKeys": ["name", "flags", "synopsis"],
+  "buildBindingKeys": ["schemaVersion", "sourceIdentity", "artifactDigest", "providerEntrypointDigest", "buyerEntrypointDigest", "sbomDigest", "contractDigest"],
+  "proofLabels": [
+    "LOCAL_DETERMINISTIC_PASS",
+    "RUNTIME_ARTIFACT_BOUND_PASS",
+    "NO_COACHING_E2E_PASS",
+    "LIVE_E2E_PROVEN",
+    "GATED_UNRELEASED"
+  ]
+}

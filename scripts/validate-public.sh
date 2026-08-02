@@ -238,71 +238,15 @@ for file in README.md SECURITY.md CONTRIBUTING.md docs/*.md packaging/*.md; do
   done
 done
 
-scan_pattern='(/home/|/Users/|192\.168\.|100\.77\.|SUPABASE|DATABASE_URL|BEGIN [A-Z ]*PRIVATE KEY|ghp_|github_pat_|cloudflared.*token|punch-compute)'
-scan_dir=$(mktemp -d "${TMPDIR:-/tmp}/punch-public-scan.XXXXXX") || {
-  printf '%s\n' 'could not create temporary directory for public material scan' >&2
-  exit 1
-}
-scan_matches=$scan_dir/matches
-scan_errors=$scan_dir/errors
-find_errors=$scan_dir/find-errors
-: > "$scan_matches" || exit 1
-: > "$scan_errors" || exit 1
-: > "$find_errors" || exit 1
-trap 'rm -rf -- "$scan_dir"' EXIT HUP INT TERM
-
-set +e
-find . \
-  -path './.git' -prune -o \
-  -type f ! -path './scripts/validate-public.sh' \
-  -exec sh -c '
-    pattern=$1
-    matches=$2
-    errors=$3
-    shift 3
-    scan_error() {
-      printf "%s\n" error >> "$errors" 2> /dev/null || printf "%s\n" error >&2
-      exit 1
-    }
-    for file do
-      grep -Eq "$pattern" "$file" > /dev/null 2>&1
-      status=$?
-      case "$status" in
-        0)
-          case "$file" in
-            *[!A-Za-z0-9_./-]*) display="./[path-withheld]" ;;
-            *)
-              printf "%s\n" "$file" | grep -Eq "$pattern" > /dev/null 2>&1
-              path_status=$?
-              case "$path_status" in
-                0) display="./[path-withheld]" ;;
-                1) display=$file ;;
-                *) scan_error ;;
-              esac
-              ;;
-          esac
-          printf "%s\n" "$display" >> "$matches" 2> /dev/null || scan_error
-          ;;
-        1) ;;
-        *) scan_error ;;
-      esac
-    done
-  ' sh "$scan_pattern" "$scan_matches" "$scan_errors" {} + 2> "$find_errors"
-find_status=$?
-set -e
-if [ "$find_status" -ne 0 ] || [ -s "$scan_errors" ] || [ -s "$find_errors" ]; then
-  printf '%s\n' 'public material scan failed' >&2
-  exit 1
-fi
-if [ -s "$scan_matches" ]; then
-  while IFS= read -r file; do
-    printf 'private or secret-like material detected in %s\n' "$file" >&2
-  done < "$scan_matches"
-  exit 1
-fi
-
-rm -rf -- "$scan_dir"
-trap - EXIT HUP INT TERM
+node scripts/validate-targeted-zero-contract.js --self-test
+node scripts/generate-command-reference.mjs \
+  --contract tests/fixtures/public-safe-contract.v1.json \
+  --binding tests/fixtures/public-safe-contract-binding.v1.json \
+  --target docs/NEXT_COMMAND_REFERENCE.md
+node scripts/scan-public-material.mjs
+node scripts/scan-public-material.mjs --self-test
+node scripts/run-docs-smoke.mjs --self-test
+node scripts/generate-command-reference.mjs --self-test
 
 ./tests/install-uninstall.sh
 ./tests/docs-contract.sh

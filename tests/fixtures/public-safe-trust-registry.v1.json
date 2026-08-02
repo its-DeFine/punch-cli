@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "punch.public-artifact-trust-registry.v1",
+  "artifactKind": "artifact-trust-registry",
+  "authorityStatus": "MANAGER_APPROVED_HANDOFF",
+  "releaseAuthority": false,
+  "proofLabel": "LOCAL_DETERMINISTIC_PASS",
+  "entries": [
+    {
+      "sourceIdentity": {"kind": "DECLARED", "value": "punch-public-safe-contract-fixture"},
+      "artifactDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "providerEntrypointDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "buyerEntrypointDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "sbomDigest": null,
+      "contractDigest": "ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f",
+      "trustState": "HANDOFF_APPROVED"
+    }
+  ]
+}

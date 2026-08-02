@@ -12,5 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate executable public-docs contracts
+        run: |
+          node scripts/generate-command-reference.mjs --self-test
+          node scripts/run-docs-smoke.mjs --self-test
       - name: Validate public surface without ripgrep
         run: ./tests/validate-without-rg.sh
