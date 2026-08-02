@@ -78,6 +78,19 @@ public key, and keep the job-specific known-hosts file. Do not substitute a
 Provider IP, publish a container port, expose Docker, or disable host-key
 checking to bypass a readiness or identity failure.
 
+## OpenSSH closed but the job is still active
+
+The public Buyer CLI has no `stop` or `cancel` command. `exit`, a disconnected
+SSH client, or an interrupted `punch-buyer ssh` proxy only ends that local
+connection; it does not request lifecycle termination, settle a payment, or
+release capacity. Do not use an undocumented endpoint or a Provider address as
+a substitute. Check `punch-buyer status` and use a separately published support
+or commercial process for an early-termination question.
+
+An exact-runtime/private canary can exercise Control-owned terminal cleanup,
+but it does not prove a released public stop path or testnet/real-USDC
+settlement.
+
 ## Safe support bundle
 
 Before sharing diagnostics, remove invitations, session or credential files, private keys, provider addresses, workload content, and environment variables. Prefer command version, operating system, architecture, public error code, and a synthetic reproduction.

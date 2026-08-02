@@ -7,7 +7,7 @@ cd "$repo_dir"
 sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   images/interactive/punch-interactive images/interactive/punch-ssh-stdio \
   images/validation/validate.sh images/workload/workload.sh \
-  tests/install-uninstall.sh tests/validate-without-rg.sh
+  tests/docs-contract.sh tests/install-uninstall.sh tests/validate-without-rg.sh
 
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do
   [ -s "$required" ] || {
@@ -305,4 +305,5 @@ rm -rf -- "$scan_dir"
 trap - EXIT HUP INT TERM
 
 ./tests/install-uninstall.sh
+./tests/docs-contract.sh
 printf '%s\n' 'public repository validation: PASS'

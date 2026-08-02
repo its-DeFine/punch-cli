@@ -32,7 +32,12 @@ flowchart LR
 4. The Provider prepares and starts the bounded container.
 5. The lifecycle records paid time only after Punch verifies `READY`, exactly once; commercial terms remain authoritative for charges.
 6. Punch brokers access while the job is active.
-7. Stop removes the workload container, temporary network and files, and releases the resource lease.
+7. Punch Control directs terminal cleanup: the Provider removes the workload container, temporary network and files, and releases the resource lease.
 8. Punch records one terminal outcome and reconciles the applicable payment path.
 
-The CLI reports lifecycle state but does not itself hold funds or decide administrative disputes.
+The CLI reports lifecycle state but does not itself hold funds or decide administrative disputes. The public Buyer command surface has no `stop` or `cancel` operation: closing a brokered OpenSSH client does not direct step 7.
+
+An exact-runtime/private canary may demonstrate Control-directed access and
+terminal cleanup in its own bounded environment. It is not proof that the
+public CLI has a Buyer-stop workflow, that an external Provider/Buyer path is
+live, or that testnet/real-USDC settlement occurred.

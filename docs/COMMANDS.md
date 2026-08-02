@@ -27,6 +27,12 @@ punch-buyer join|offers|order|status|output|ssh \
 
 Every Buyer command requires `--config`. See the complete workflow in [Buyer guide](BUYER.md).
 
+There is no Buyer `stop` or `cancel` command in this public command contract.
+`ssh` is only OpenSSH `ProxyCommand` transport with `--config` and `--job`;
+closing the OpenSSH client ends that client connection, not the Punch job
+lifecycle. Do not infer an early-termination API from a private canary or from
+an SSH disconnect.
+
 ## Provider
 
 The supported public-preview path is:
@@ -69,3 +75,12 @@ Use `--json` for automation where the command supports it. Treat fields not docu
 ## Idempotency
 
 Preserve every setup, withdrawal, and order reference until the operation reaches a known terminal result. After a timeout, retry the same action with the same reference. If `PROVIDER_REJOIN_REQUIRED` is returned, obtain a fresh replacement invitation, run `rejoin`, and then retry the exact prior setup reference. Do not generate a new reference merely because the first response was interrupted.
+
+## Current proof boundary
+
+The documented Buyer commands and schemas do not prove a released archive, an
+external Provider/Buyer lifecycle, or a testnet/real-USDC settlement. In
+particular, an exact-runtime/private canary that exercises access or terminal
+cleanup is not a released public `punch-buyer` workflow. Treat `USDC`, price,
+and payout fields as protocol terms unless a release-specific settlement proof
+and authorization say otherwise.

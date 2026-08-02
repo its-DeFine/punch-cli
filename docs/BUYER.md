@@ -2,6 +2,13 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
+> **Current command and proof boundary:** the available Buyer CLI schema exposes
+> `join`, `offers`, `order`, `status`, `output`, and `ssh` only. There is no
+> released Buyer `stop` or `cancel` command. Until a non-draft release archive
+> and checksum are published, this is a candidate workflow, not proof of a
+> downloadable package, an external Provider/Buyer run, or testnet/real-USDC
+> settlement.
+
 ## 1. Prepare private configuration
 
 Create a private directory:
@@ -85,6 +92,10 @@ punch-buyer order \
 Punch selects at most one complete alternative atomically. This is an immediate
 match, not an unfunded standing queue. See [Conditional orders](CONDITIONAL_ORDERS.md).
 
+Record the job identifier returned by the order result. A successful order does
+not itself prove that access is ready, that a container is running, or that a
+payment has settled.
+
 ## 5. Status
 
 ```bash
@@ -117,7 +128,21 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first connection. If it changes during the same job generation, stop instead of accepting the replacement. The byte stream is brokered through Punch; the Buyer is not given the provider address or Docker socket.
 
-## 7. Download output
+## 7. Ending access is not a lifecycle stop
+
+Use `exit`, close the OpenSSH client, or interrupt the local SSH process only to
+end that local connection. None of those actions calls a Punch job-stop or
+cancellation operation, releases capacity, or determines paid time. Do not
+invent an HTTP route, connect directly to a Provider, or infer a `punch-buyer
+stop` command from an internal test.
+
+The exact-runtime/private canary may exercise Control-owned terminal cleanup and
+Provider `STOP` work after its own terminal conditions. That is evidence only
+for that controlled canary; it is not a current public Buyer CLI behavior. Use
+`punch-buyer status` to observe the documented job state and follow a separately
+published support or commercial process for any early-termination question.
+
+## 8. Download output
 
 ```bash
 punch-buyer output \

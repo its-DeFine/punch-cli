@@ -65,3 +65,6 @@ peer copies for the exact offered bundle.
 This is not a durable standing queue. If no offer currently matches, Punch
 creates neither an order nor a payment. A future queue requires a verified
 maximum funding commitment; preview.5 does not create unfunded queued demand.
+
+`USDC` and `maxPriceMinor` are request-schema fields. They do not by themselves
+prove a testnet or real-USDC funding, settlement, or payout path.

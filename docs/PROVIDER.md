@@ -101,16 +101,18 @@ private key, seed phrase, signer, or wallet credential:
 }
 ```
 
-Replace the absolute credential path and the synthetic payout recipient with
-the Provider's intended public EVM address. Keep the file mode `0600`. Do not
-edit image references or policy fields; stop if an inspect result differs from the
-release matrix. A Provider using the separately approved `LIVEPEER_OPS` rail
-uses `{ "rail": "LIVEPEER_OPS", "recipient": null }` instead.
+The recipient is synthetic. Do not configure a testnet or live recipient, send
+value, or infer settlement readiness from this candidate documentation. Keep
+the file mode `0600`. Do not edit image references or policy fields; stop if an
+inspect result differs from the release matrix. A Provider using the separately
+approved `LIVEPEER_OPS` rail uses `{ "rail": "LIVEPEER_OPS", "recipient": null }`
+instead.
 
-Choose the rail for the intended workload mode. `SABLIER_USDC` is the
-test-settlement rail for brokered interactive/SSH orders. `LIVEPEER_OPS` is for
-bounded non-interactive workloads. The payout rail is immutable once the offer
-is created, and a Buyer request for the other mode is rejected with
+Choose the rail for the intended workload mode. `SABLIER_USDC` is the candidate
+configuration label for brokered interactive/SSH orders; it is not proof of a
+testnet or real-USDC settlement rail. `LIVEPEER_OPS` is for bounded
+non-interactive workloads. The payout rail is immutable once the offer is
+created, and a Buyer request for the other mode is rejected with
 `PAYOUT_RAIL_MISMATCH`.
 
 If `providerPayout.rail` is `SABLIER_USDC`, complete the full interactive
@@ -222,12 +224,12 @@ punch-provider setup \
 
 `--price-usdc-cents` is the positive integer number of USDC cents for the
 complete `--window-seconds` interval. The example means USD 0.34 for one hour.
-The CLI converts 34 cents to `340000` six-decimal USDC base units before the
-immutable offer, buyer funding, accounting, and Sablier instruction use that
-one amount. A five-minute window cannot express exactly USD 0.34 per
-hour using whole cents, so use a one-hour window for that price. The public
-preview uses test settlement only unless Punch separately announces and
-authorizes a real-funds release.
+The candidate CLI schema converts 34 cents to `340000` six-decimal USDC base
+units before the immutable offer, buyer funding, accounting, and Sablier
+instruction use that one amount. A five-minute window cannot express exactly
+USD 0.34 per hour using whole cents, so use a one-hour window for that price.
+The conversion is not proof of testnet or real-USDC funding, accounting, or
+payout; a release-specific settlement proof and authorization are required.
 
 Pricing and the payout binding become immutable offer terms. Do not copy a
 sample value or synthetic recipient into an offer. The CLI submission is not a

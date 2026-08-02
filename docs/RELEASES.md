@@ -4,6 +4,11 @@
 
 This repository is the public documentation and distribution surface for Punch CLI. The network remains invitation-only. Do not treat an unpublished tag, source checkout, or draft release as an installable CLI.
 
+This source checkout contains documentation, installers, launchers, and image
+contexts, not a versioned proprietary runtime archive or its checksum manifest.
+It therefore cannot prove a released command surface, a downloadable package,
+an external Provider/Buyer run, or testnet/real-USDC settlement.
+
 `v0.1.0-preview.8` is the supported Linux/x64 external-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
@@ -31,13 +36,17 @@ image store. It retains
 single-GPU, CPU-only, `rejoin`, Sablier payout binding, and whole-window
 `--price-usdc-cents` compatibility from preview.4.
 
-The release archive's `SHA256SUMS` asset is authoritative for its exact bytes.
-The package passed checksum verification, extracted-archive installation, bundled CLI
-execution, strict parser checks, and uninstallation using bundled Node.js
-v22.23.1 and `ws` 8.21.1. The public validation image was built, smoke-tested,
-and published by GitHub Actions from public commit
-`50af74cbf94e536beebdde981255107f1b112036`. The retained workload and
-interactive manifests were published from the earlier reviewed release lineage.
+Once published, a release archive's `SHA256SUMS` asset is authoritative for its
+exact bytes. Before publication, the release gate must verify the extracted
+archive, its bundled CLI behavior, strict parser checks, and installation and
+uninstallation with the exact bundled runtime. Source-level fixtures and an
+image-workflow definition do not substitute for those archive checks or prove
+an external lifecycle or settlement.
+
+`SABLIER_USDC`, `USDC`, pricing, and payout fields describe candidate protocol
+and configuration terms. They are not evidence of a completed testnet transfer
+or a real-USDC payment. No funding, payout, or cancellation claim is made here
+without release-specific proof and authorization.
 
 ## Multi-GPU proof boundary
 
