@@ -80,12 +80,14 @@ checking to bypass a readiness or identity failure.
 
 ## OpenSSH closed but the job is still active
 
-The public Buyer CLI has no `stop` or `cancel` command. `exit`, a disconnected
-SSH client, or an interrupted `punch-buyer ssh` proxy only ends that local
-connection; it does not request lifecycle termination, settle a payment, or
-release capacity. Do not use an undocumented endpoint or a Provider address as
-a substitute. Check `punch-buyer status` and use a separately published support
-or commercial process for an early-termination question.
+`exit`, a disconnected SSH client, or an interrupted `punch-buyer ssh` proxy
+only ends that local connection. In the current released command surface, the
+Buyer CLI has no `stop` or `cancel` command. For the next gated artifact, use
+the [approved asynchronous stop contract](PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md):
+poll the Buyer-bound GET route after `202`, retry the identical Buyer/job
+request, and wait for terminal `200` or definitive sanitized `409`. Do not use
+an undocumented endpoint, admin/Provider fallback, or Provider address. The
+local SSH action only ends the connection; it does not request lifecycle termination.
 
 An exact-runtime/private canary can exercise Control-owned terminal cleanup,
 but it does not prove a released public stop path or testnet/real-USDC

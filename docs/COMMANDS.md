@@ -41,6 +41,9 @@ The next gated setup-as-offer and Buyer-stop reference is maintained in
 [NEXT_COMMAND_REFERENCE.md](NEXT_COMMAND_REFERENCE.md); it does not change the
 current released command surface above.
 
+The approved asynchronous stop behavior for that next gated reference is
+defined in [the public-safe stop contract](PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md).
+
 ## Provider
 
 The supported public-preview path is:

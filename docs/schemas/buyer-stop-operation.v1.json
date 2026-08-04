@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://its-define.github.io/punch-cli/schemas/buyer-stop-operation.v1.json",
+  "title": "Punch Buyer asynchronous stop operation",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "operationId",
+    "correlationId",
+    "contractId",
+    "state",
+    "phase",
+    "retryable"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "punch.buyer-stop-operation.v1" },
+    "operationId": { "type": "string", "pattern": "^bso_[0-9a-f]{48}$" },
+    "correlationId": { "type": "string", "pattern": "^bso_[0-9a-f]{48}$" },
+    "contractId": { "type": "string", "minLength": 1 },
+    "state": { "enum": ["ACCEPTANCE_PENDING", "IN_PROGRESS", "SUCCEEDED", "FAILED"] },
+    "phase": {
+      "enum": [
+        "ACCEPTANCE",
+        "ACCESS_REVOCATION",
+        "LIFECYCLE_FINALIZATION",
+        "PROVIDER_CLEANUP",
+        "COMPLETED",
+        "TERMINAL_FAILURE"
+      ]
+    },
+    "retryable": { "type": "boolean" },
+    "retryAfterMs": { "type": "integer", "minimum": 1, "maximum": 300000 },
+    "lifecycleState": { "type": "string", "minLength": 1 },
+    "resolution": { "type": "string", "minLength": 1 },
+    "cleanupState": { "enum": ["PENDING", "RELEASED"] },
+    "reason": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "state": { "enum": ["IN_PROGRESS", "ACCEPTANCE_PENDING"] } } },
+      "then": {
+        "required": ["retryAfterMs"],
+        "properties": { "retryable": { "const": true } }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "SUCCEEDED" } } },
+      "then": {
+        "required": ["lifecycleState", "resolution", "cleanupState"],
+        "properties": {
+          "phase": { "const": "COMPLETED" },
+          "retryable": { "const": false },
+          "cleanupState": { "const": "RELEASED" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "FAILED" } } },
+      "then": {
+        "required": ["reason"],
+        "properties": {
+          "phase": { "const": "TERMINAL_FAILURE" },
+          "retryable": { "const": false }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "ACCEPTANCE_PENDING" } } },
+      "then": {
+        "properties": { "phase": { "const": "ACCEPTANCE" } }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "IN_PROGRESS" } } },
+      "then": {
+        "properties": {
+          "phase": { "enum": ["ACCESS_REVOCATION", "PROVIDER_CLEANUP"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "phase": { "const": "ACCESS_REVOCATION" } } },
+      "then": {
+        "not": { "required": ["cleanupState"] }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": { "const": "PROVIDER_CLEANUP" }
+        }
+      },
+      "then": {
+        "required": ["cleanupState"],
+        "properties": { "cleanupState": { "const": "PENDING" } }
+      }
+    }
+  ]
+}

@@ -9,6 +9,11 @@ The Buyer CLI is `punch-buyer`. The preview configuration below points it to the
 > downloadable package, an external Provider/Buyer run, or testnet/real-USDC
 > settlement.
 
+The next gated public-safe stop contract is documented in
+[PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md](PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md).
+It is source-derived from the manager-approved private handoff and does not
+change the current released command surface by itself.
+
 ## 1. Prepare private configuration
 
 Create a private directory:
@@ -128,7 +133,42 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first connection. If it changes during the same job generation, stop instead of accepting the replacement. The byte stream is brokered through Punch; the Buyer is not given the provider address or Docker socket.
 
-## 7. Ending access is not a lifecycle stop
+## 7. Asynchronous Buyer stop (next gated contract)
+
+For an artifact that explicitly carries the approved async-stop contract, use:
+
+```bash
+punch-buyer stop \
+  --config /absolute/path/.config/punch/buyer/buyer.json \
+  --job JOB_ID \
+  --json
+```
+
+The CLI submits the exact empty-body POST once. The server performs compact
+authentication/ownership/eligibility and relay validation, writes a durable
+`PREPARED` journal intent, then immediately returns `202 ACCEPTANCE_PENDING`
+and enqueues canonical lifecycle acceptance. The CLI waits for `retryAfterMs`
+and polls the same Buyer-bound GET route to terminal success or definitive
+sanitized failure. Exact retries use the same authenticated Buyer/job-bound
+idempotency key; the CLI does not create a new idempotency token or use an
+admin/Provider fallback. A `202` stop operation never surfaces an ambiguous
+`BUYER_STOP_TIMEOUT`.
+
+GET with no prior journal entry returns `404` and never creates stop intent. GET
+with a `PREPARED` entry may resume the same canonical acceptance and immediately
+returns `202 ACCEPTANCE_PENDING`; a lost response or restart uses the same
+Buyer/job binding. An `IN_PROGRESS` `PROVIDER_CLEANUP` projection may report
+`cleanupState: "PENDING"`; terminal success reports `cleanupState: "RELEASED"`.
+
+Each stop HTTP request has a 10-second bound and the full reconciliation has a
+300-second deadline. If the initial POST is ambiguous (`524` or local timeout),
+poll GET first: continue a found operation, and retry the exact same POST `{}`
+only after a sanitized GET `404`. Ambiguous repeated retries remain bounded
+with sanitized retry/backoff; malformed or rebound projections fail closed as
+`BUYER_PROTOCOL_INVALID`. A `503` projection timeout is a generic retryable
+error outside `punch.buyer-stop-operation.v1`, not an operation result.
+
+## 8. Ending only the local SSH connection
 
 Use `exit`, close the OpenSSH client, or interrupt the local SSH process only to
 end that local connection. None of those actions calls a Punch job-stop or
@@ -142,7 +182,7 @@ for that controlled canary; it is not a current public Buyer CLI behavior. Use
 `punch-buyer status` to observe the documented job state and follow a separately
 published support or commercial process for any early-termination question.
 
-## 8. Download output
+## 9. Download output
 
 ```bash
 punch-buyer output \

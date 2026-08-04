@@ -7,7 +7,9 @@ cd "$repo_dir"
 sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   images/interactive/punch-interactive images/interactive/punch-ssh-stdio \
   images/validation/validate.sh images/workload/workload.sh \
-  tests/docs-contract.sh tests/install-uninstall.sh tests/validate-without-rg.sh
+  tests/buyer-stop-contract.sh tests/docs-contract.sh \
+  tests/install-uninstall.sh tests/interactive-image-contract.sh \
+  tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do
   [ -s "$required" ] || {
@@ -224,6 +226,9 @@ grep -F 'org.punch.compatibility.class="NVIDIA_CUDA_12_8_1_V2"' images/validatio
 grep -F 'org.punch.compatibility.driver-floor="570.124.06"' images/validation/Dockerfile > /dev/null || exit 1
 grep -F 'org.punch.compatibility.certified-compute-capabilities="8.9,12.0"' images/validation/Dockerfile > /dev/null || exit 1
 grep -F 'EXACT_IMAGE_CANARY_BEFORE_OFFER' docs/RELEASES.md docs/PLATFORMS.md images/validation/compatibility-policy.json > /dev/null || exit 1
+
+./tests/interactive-image-contract.sh
+./tests/buyer-stop-contract.sh
 
 for file in README.md SECURITY.md CONTRIBUTING.md docs/*.md packaging/*.md; do
   sed -n 's/.*](\([^#][^)]*\.md\)).*/\1/p' "$file" | while IFS= read -r target; do

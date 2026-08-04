@@ -40,6 +40,7 @@ jobs:
             --security-opt no-new-privileges \
             --tmpfs /workspace:rw,nosuid,nodev,size=64m,uid=65532,gid=65532,mode=0700 \
             --tmpfs /tmp:rw,noexec,nosuid,nodev,size=16m,uid=65532,gid=65532,mode=0700 \
+            --env NVIDIA_DRIVER_CAPABILITIES=compute,utility \
             --env "PUNCH_BUYER_AUTHORIZED_KEY_BASE64=$authorized_key" \
             "punch-interactive:candidate-${GITHUB_SHA}"
           for attempt in {1..20}; do
@@ -59,3 +60,7 @@ jobs:
           target="ghcr.io/its-define/punch-interactive:sha-${GITHUB_SHA}"
           docker tag "punch-interactive:candidate-${GITHUB_SHA}" "$target"
           docker push "$target"
+          registry_digest="$(docker buildx imagetools inspect "$target" --format '{{.Manifest.Digest}}')"
+          case "$registry_digest" in sha256:????????????????????????????????????????????????????????????????) : ;; *) exit 1 ;; esac
+          printf 'PUNCH_INTERACTIVE_REGISTRY_REFERENCE=%s\n' "$target"
+          printf 'PUNCH_INTERACTIVE_REGISTRY_DIGEST=%s\n' "$registry_digest"
