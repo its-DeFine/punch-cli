@@ -43,10 +43,14 @@ not become `BUYER_STOP_TIMEOUT`. `503` is a generic retryable projection
 timeout outside `punch.buyer-stop-operation.v1`, reserved for failure before the
 durable intent can begin. An `IN_PROGRESS` `PROVIDER_CLEANUP` projection may use
 `cleanupState: "PENDING"`; terminal success uses `"RELEASED"`.
-Each stop request is bounded to 10 seconds within a 300-second overall
-reconciliation deadline. After an ambiguous POST `524` or local timeout, GET
-is polled first; only sanitized GET `404` permits retrying the identical POST.
-Malformed or rebound projections fail closed as `BUYER_PROTOCOL_INVALID`.
+An exact retry returns the same operation ID instead of creating another stop.
+The server's compact Buyer/job projection has a bounded 30-second deadline; a
+slower read fails retryably without claiming a new operation or unknown
+terminal outcome. CLI request attempts remain bounded to 10 seconds within a
+300-second overall reconciliation deadline. After an ambiguous POST `524` or
+local timeout, GET is polled first; only sanitized GET `404` permits retrying
+the identical POST. Malformed or rebound projections fail closed as
+`BUYER_PROTOCOL_INVALID`.
 
 The required `punch.disposable-pov-report.v1` keeps Provider, Buyer-A, and
 Buyer-B environments distinct, uses `UTC+MONOTONIC` timing, captures no input,

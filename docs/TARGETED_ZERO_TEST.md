@@ -9,9 +9,10 @@ runtime artifact and does not enable the capability. No public release, live
 offer, payment, Sablier stream, or Buyer/Provider run is claimed.
 
 The capability may be enabled only by an owner-controlled release carrying a
-matching runtime artifact and explicit authorization. A source checkout,
-candidate schema, test result, or documentation change must not be treated as
-that authorization.
+matching runtime artifact and explicit authorization. Only the existing
+bootstrap owner administrator may enable or change this gate and issue its
+authorizations. A source checkout, candidate schema, test result, or
+documentation change must not be treated as that authorization.
 
 The public reference is deliberately protocol-level. It does not publish
 private routes, actor identifiers, credentials, internal storage, or
@@ -24,7 +25,8 @@ An authenticated Provider may create this mode only with a server-issued,
 single-use authorization ID and the designated Buyer actor. The authorization
 binds the exact Provider actor and machine, target Buyer, capacity/window
 limits, expiry, and an immutable authorization digest. The Provider cannot
-make an ordinary paid offer targeted or zero-priced by changing a price field.
+make an ordinary paid offer targeted or zero-priced by changing a price field,
+issue the authorization, or change the gate.
 
 The authorization is checked and consumed atomically with the first successful
 order. A withdrawn, expired, already-consumed, mismatched, or unverifiable

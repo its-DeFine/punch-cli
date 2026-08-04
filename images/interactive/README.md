@@ -30,7 +30,7 @@ immutable digest reported by the successful publish workflow, never a mutable
 tag. Do not build or substitute a different image for a Punch pilot.
 
 The current `v0.1.0-preview.8` compatible registry reference is
-`ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4`.
+`ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311`.
 
 That is the already published preview.8 image. The CUDA/glibc interactive
 candidate in this checkout is not a release replacement until the publish

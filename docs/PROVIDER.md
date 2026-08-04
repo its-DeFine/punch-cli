@@ -31,7 +31,7 @@ policy always uses the complete immutable registry reference:
 ```bash
 docker pull 'ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86'
 docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce'
-docker pull 'ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4'
+docker pull 'ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311'
 ```
 
 Verify each pulled reference with `docker image inspect REGISTRY_REFERENCE`.
@@ -53,7 +53,7 @@ image-policy block for `v0.1.0-preview.8` is:
   },
   "INTERACTIVE": {
     "protocol": "PUNCH_INTERACTIVE_V1",
-    "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4",
+    "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311",
     "command": ["/usr/local/bin/punch-interactive"],
     "inputKeys": [],
     "seccompProfile": "builtin",
@@ -89,7 +89,7 @@ private key, seed phrase, signer, or wallet credential:
     },
     "INTERACTIVE": {
       "protocol": "PUNCH_INTERACTIVE_V1",
-      "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:8734a58eea53ca64690b4cbc94cc1e4b15af4407730c2352a81b2958e3d021e4",
+      "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311",
       "command": ["/usr/local/bin/punch-interactive"],
       "inputKeys": [],
       "seccompProfile": "builtin",

@@ -15,7 +15,7 @@ const topKeys = [
   'directIdProbe', 'replay', 'expiry', 'consumption', 'moneyEffects',
   'sablier', 'liveProof'
 ];
-const authorizationKeys = ['required', 'singleUse', 'binds'];
+const authorizationKeys = ['required', 'singleUse', 'issuer', 'binds'];
 const expectedBinds = [
   'providerActor', 'providerMachine', 'targetBuyerActor', 'capacity',
   'window', 'expiry', 'authorizationDigest'
@@ -51,6 +51,7 @@ function validateSchema(value) {
   exactKeys(value.providerAuthorization, authorizationKeys, 'providerAuthorization');
   assert.strictEqual(value.providerAuthorization.required, true, 'authorization required drift');
   assert.strictEqual(value.providerAuthorization.singleUse, true, 'authorization single-use drift');
+  assert.strictEqual(value.providerAuthorization.issuer, 'BOOTSTRAP_OWNER_ADMIN_ONLY', 'authorization issuer drift');
   assert.deepStrictEqual(value.providerAuthorization.binds, expectedBinds, 'ordered authorization binds drift');
 }
 
@@ -58,6 +59,7 @@ const requiredMarkdownClaims = [
   '`TARGETED_ZERO_TEST` is a gated, unreleased capability',
   'not a matching private\nruntime artifact and does not enable the capability',
   'matching runtime artifact and explicit authorization',
+  'bootstrap owner administrator may enable or change this gate and issue its\nauthorizations',
   'exact Provider actor and machine',
   'single-use authorization ID',
   'same generic not-found outcome',
@@ -122,6 +124,9 @@ function runNegativeFixtures(schema, markdown) {
     fixture.providerAuthorization[key] = false;
     assertRejected(`mutate authorization ${key}`, () => validateSchema(fixture));
   }
+  const wrongIssuer = clone(schema);
+  wrongIssuer.providerAuthorization.issuer = 'ANY_ADMIN';
+  assertRejected('mutate authorization issuer', () => validateSchema(wrongIssuer));
   for (const key of Object.keys(expected)) {
     const fixture = clone(schema);
     fixture[key] = typeof expected[key] === 'boolean' ? !expected[key] : `${expected[key]}_DRIFT`;
