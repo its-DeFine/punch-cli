@@ -64,6 +64,12 @@ Provider setup creates the immutable offer request. There is no separate public
 offer-publish command. Deterministic validation and operator approval must pass
 before the offer becomes `LISTED`.
 
+### Gated Provider offer lifecycle preview
+
+`offer-status`, `offer-unlist`, and `offer-retire` are a **GATED_UNRELEASED
+Preview.10+ candidate**. They are not in the published `v0.1.0-preview.9`
+archive, are not supported by its endpoint, and do not alter the Buyer command surface. Their future Provider-only contract and release gate are in the [Provider offer lifecycle preview](OFFER_LIFECYCLE_PREVIEW.md).
+
 ## Output and idempotency
 
 Use `--json` for automation where supported. Never parse human-formatted output

@@ -164,3 +164,8 @@ NetBird management material with program files.
 
 Preview.9 is zero-price only. Payment, settlement, payout, refunds, and paid
 offer economics are outside this release's acceptance boundary.
+
+`offer-status`, `offer-unlist`, and `offer-retire` are not Preview.9 commands.
+They are separately documented only as a **GATED_UNRELEASED Preview.10+
+candidate** and must not be used until a matching archive is published. See
+[Provider offer lifecycle preview](OFFER_LIFECYCLE_PREVIEW.md).
