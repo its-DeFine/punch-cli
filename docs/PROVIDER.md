@@ -1,346 +1,166 @@
 # Provider guide
 
-> **Preview.8 documentation:** this page applies to `v0.1.0-preview.8` when
-> its non-draft prerelease archive and checksum are published.
+> **Preview.9 supervised pilot:** this page applies to `v0.1.0-preview.9` only
+> when its non-draft prerelease archive and checksum are published for Linux/x64.
 
-The Provider CLI is `punch-provider`. The resident agent runs on the local execution node and connects outbound to the HTTPS origin in its agent configuration. Use only the official origin supplied with the release or invitation.
+The Provider agent runs on the execution node and connects outbound to Punch.
+The Provider does not expose a public SSH port or Docker socket. Preview.9 uses
+a Punch gateway bound only to the Provider's NetBird overlay address on TCP
+`22222`.
 
-The preview supports allowlisted immutable workload images and bounded structured inputs. It does not accept arbitrary images, commands, mounts, host networking, privileged containers, added capabilities, or arbitrary device paths.
+Provider onboarding is operator-supervised. A Provider cannot approve itself,
+issue a targeted-zero authorization, or publish a public free offer.
 
 ## 1. Host requirements
 
-- A supported Linux system; see [Platform support](PLATFORMS.md).
-- Docker Engine available through the local Unix socket.
-- Sufficient CPU, RAM, and disk for the offered capacity.
-- Optional NVIDIA GPU, driver, Container Toolkit, and stable GPU UUID/CDI identity.
-- A dedicated private state directory.
+- Linux x64 with glibc 2.28 or newer.
+- Docker Engine available through its local Unix socket only.
+- cgroup v2, builtin seccomp, and `docker-default` AppArmor for interactive
+  workloads; private user namespaces according to the pilot host policy.
+- For GPU offers, a compatible NVIDIA driver/toolkit and stable UUID/CDI
+  identity matching the advertised device.
+- NetBird installed and enrolled by the Punch operator on interface `wt0`.
+- A dedicated mode-`0700` state directory and enough disk for the pinned images
+  plus one bounded workload.
 
-The Provider CLI does not configure a remote Docker endpoint and must never expose the Docker socket over TCP. Access to the Docker Unix socket is normally equivalent to host-root authority. During the preview, operate the agent as an owner-supervised foreground process on a dedicated or equivalently isolated execution node. Do not place unrelated user data or credentials on that node.
+The exact Preview.9 images are:
 
-## Runtime images
+```text
+ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86
+ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce
+ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311
+```
 
-Punch publishes fixed validation, workload, and interactive runtimes. Their
-build contexts are public under `images/`, but the Control implementation
-remains private. Always pull the release by the exact registry digest; do not
-use a workflow tag or substitute a locally rebuilt image.
+Pull and inspect those complete `repository@sha256:manifest` references. Never
+substitute a mutable tag or Docker-local image ID.
 
-The registry digest and Docker's local image ID are different identities.
-Docker's reported local ID varies by image-store implementation, so Punch
-policy always uses the complete immutable registry reference:
+## 2. Prepare private state
 
 ```bash
-docker pull 'ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86'
-docker pull 'ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce'
-docker pull 'ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311'
-```
-
-Verify each pulled reference with `docker image inspect REGISTRY_REFERENCE`.
-The Provider configuration uses the exact `repository@sha256:manifest`
-reference, never a mutable tag or a Docker-local image ID. The complete
-image-policy block for `v0.1.0-preview.8` is:
-
-```json
-{
-  "VALIDATION": {
-    "image": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
-    "command": ["/punch/validate"],
-    "inputKeys": ["nonce"]
-  },
-  "WORKLOAD": {
-    "image": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
-    "command": ["/punch/run"],
-    "inputKeys": ["nonce", "window_seconds"]
-  },
-  "INTERACTIVE": {
-    "protocol": "PUNCH_INTERACTIVE_V1",
-    "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311",
-    "command": ["/usr/local/bin/punch-interactive"],
-    "inputKeys": [],
-    "seccompProfile": "builtin",
-    "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
-    "appArmorProfile": "docker-default",
-    "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
-  }
-}
-```
-
-The complete `agent.json` has exactly four top-level fields. `providerPayout`
-contains only a payout rail and public recipient address; it never contains a
-private key, seed phrase, signer, or wallet credential:
-
-```json
-{
-  "publicOrigin": "https://api-punch.embody.zone",
-  "credentialFile": "/absolute/path/.config/punch/provider/credential.json",
-  "providerPayout": {
-    "rail": "SABLIER_USDC",
-    "recipient": "0x1111111111111111111111111111111111111111"
-  },
-  "imagePolicies": {
-    "VALIDATION": {
-      "image": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
-      "command": ["/punch/validate"],
-      "inputKeys": ["nonce"]
-    },
-    "WORKLOAD": {
-      "image": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
-      "command": ["/punch/run"],
-      "inputKeys": ["nonce", "window_seconds"]
-    },
-    "INTERACTIVE": {
-      "protocol": "PUNCH_INTERACTIVE_V1",
-      "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311",
-      "command": ["/usr/local/bin/punch-interactive"],
-      "inputKeys": [],
-      "seccompProfile": "builtin",
-      "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
-      "appArmorProfile": "docker-default",
-      "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
-    }
-  }
-}
-```
-
-The recipient is synthetic. Do not configure a testnet or live recipient, send
-value, or infer settlement readiness from this candidate documentation. Keep
-the file mode `0600`. Do not edit image references or policy fields; stop if an
-inspect result differs from the release matrix. A Provider using the separately
-approved `LIVEPEER_OPS` rail uses `{ "rail": "LIVEPEER_OPS", "recipient": null }`
-instead.
-
-Choose the rail for the intended workload mode. `SABLIER_USDC` is the candidate
-configuration label for brokered interactive/SSH orders; it is not proof of a
-testnet or real-USDC settlement rail. `LIVEPEER_OPS` is for bounded
-non-interactive workloads. The payout rail is immutable once the offer is
-created, and a Buyer request for the other mode is rejected with
-`PAYOUT_RAIL_MISMATCH`.
-
-If `providerPayout.rail` is `SABLIER_USDC`, complete the full interactive
-security preflight below **before running `setup`**. Setup creates the offer;
-there is no later Provider-side acceptance gate before a compatible Buyer can
-order it. Do not publish a Sablier-backed offer from a node that has not passed
-all four Docker checks. `LIVEPEER_OPS` setup for bounded non-interactive work
-may proceed without user-namespace remapping.
-
-The interactive image runs as UID/GID `65532:65532`, binds SSH only to container
-loopback, and publishes no port. The Provider Docker daemon must pass the Punch
-preflight for user-namespace remapping, cgroup v2 private namespaces, default
-seccomp, and AppArmor before an interactive workload is accepted.
-
-Provider setup for `LIVEPEER_OPS`, `VALIDATION`, and bounded non-interactive
-`WORKLOAD` execution do not require user-namespace remapping. Before
-`SABLIER_USDC` setup, verify that Docker reports all four required security
-options and cgroup v2:
-
-```bash
-docker info --format '{{json .SecurityOptions}}'
-docker info --format '{{.CgroupVersion}}'
-```
-
-The security options must include `name=userns`, `name=cgroupns`,
-`name=seccomp,profile=builtin`, and `name=apparmor`; the cgroup version must be
-`2`. Enabling user-namespace remapping changes Docker's storage namespace and
-normally requires a Docker restart. Preserve existing images and containers and
-use a reviewed, host-specific rollback procedure; the public CLI does not make
-that privileged change or prescribe a one-line Docker configuration change.
-
-## 2. Prepare state
-
-```bash
-install -d -m 0700 "$HOME/.config/punch/provider"
-install -d -m 0700 "$HOME/.local/state/punch-provider"
+sudo install -d -m 0700 -o punch-provider -g punch-provider /var/lib/punch-provider
+sudo install -d -m 0700 -o punch-provider -g punch-provider /var/lib/punch-provider/clean-v4
 chmod 0600 /absolute/path/to/provider-invitation.json
 ```
 
-Punch supplies a single-use invitation. The operator prepares an agent
-configuration containing only the public origin, credential path, public payout
-binding, and allowlisted image policies. The invitation is secret-bearing. The
-agent configuration contains no private key or credential, but it is local
-operator configuration and must not be committed.
+The release archive carries:
 
-## 3. Join
+```text
+provider/provider-agent.example.json
+provider/punch-provider.service
+```
+
+The operator copies the configuration template to an owner-only path, replaces
+only the Provider-specific credential path and verified NetBird overlay IP,
+and preserves all image digests and `cleanStateProviderTaskSlice: true`.
+Never copy another Provider's credential, identity, overlay IP, peer/group ID,
+Buyer binding, or setup key.
+
+## 3. Join and initialize the machine
 
 ```bash
 punch-provider join \
   --invitation /absolute/path/to/provider-invitation.json \
   --punch-origin https://api-punch.embody.zone \
-  --credential-file /absolute/path/.config/punch/provider/credential.json \
+  --credential-file /var/lib/punch-provider/clean-v4/provider-credential.private.json \
   --json
-```
 
-If setup returns `PROVIDER_REJOIN_REQUIRED`, stop retries and obtain one fresh
-replacement invitation from Punch. Keep the machine identity, state directory,
-credential path, and original setup reference unchanged, then run:
+punch-provider inventory --json
 
-```bash
-punch-provider rejoin \
-  --invitation /absolute/path/to/replacement-provider-invitation.json \
-  --punch-origin https://api-punch.embody.zone \
-  --credential-file /absolute/path/.config/punch/provider/credential.json \
-  --json
-```
-
-`rejoin` is not a second identity. It is accepted only for a fresh invitation
-bound by Punch to the same active Provider actor. Do not manually remove the
-credential or pending setup journal.
-
-## 4. Inspect local inventory
-
-```bash
-punch-provider inventory
-```
-
-GPU is optional. CPU-only capacity is valid. GPU offers use a stable GPU UUID and CDI identity, never only an index.
-
-## 5. Create the machine identity
-
-Choose one stable, non-secret machine identifier and reuse it unchanged for
-`identity-init`, `setup`, `serve`, and `status`. It must start with a letter or
-digit, contain at most 128 characters, and use only letters, digits, `.`, `_`,
-`:`, `/`, or `-`:
-
-```bash
 punch-provider identity-init \
-  --state-dir /absolute/path/.local/state/punch-provider \
+  --state-dir /var/lib/punch-provider \
   --machine-id MACHINE_ID
 ```
 
-The private Ed25519 identity stays on the execution node and must remain mode `0600` inside a mode-`0700` state directory.
+Invitations are single-use. Preserve the resulting credential, machine ID,
+identity key, and state directory. Do not delete local state to bypass a
+rejection.
 
-## 6. Submit setup and capacity
+## 4. NetBird operator step
 
-CPU-only example:
+The Provider operator enrolls the peer with a fresh one-time setup key, verifies
+its peer identity and overlay address, and places only that peer in the assigned
+Provider group. The setup key is staged in a mode-`0600` file and never placed
+in chat, Git, logs, shell history, a service argument, or the agent config.
+The Provider never receives the NetBird management token.
 
-```bash
-punch-provider setup \
-  --machine-id MACHINE_ID \
-  --state-dir /absolute/path/.local/state/punch-provider \
-  --agent-config /absolute/path/.config/punch/provider/agent.json \
-  --idempotency-key UNIQUE_SETUP_REFERENCE \
-  --cpu-cores 4 --gpu-units 0 --vram-mib 0 \
-  --ram-mib 8192 --disk-gib 40 \
-  --window-seconds 3600 --price-usdc-cents 34
-```
+The Punch workspace must not have a default full-mesh policy. Contract-scoped
+policy grants are managed by Punch, not by the Provider CLI.
 
-`--price-usdc-cents` is the positive integer number of USDC cents for the
-complete `--window-seconds` interval. The example means USD 0.34 for one hour.
-The candidate CLI schema converts 34 cents to `340000` six-decimal USDC base
-units before the immutable offer, buyer funding, accounting, and Sablier
-instruction use that one amount. A five-minute window cannot express exactly
-USD 0.34 per hour using whole cents, so use a one-hour window for that price.
-The conversion is not proof of testnet or real-USDC funding, accounting, or
-payout; a release-specific settlement proof and authorization are required.
+## 5. Submit the supervised offer
 
-Pricing and the payout binding become immutable offer terms. Do not copy a
-sample value or synthetic recipient into an offer. The CLI submission is not a
-substitute for reading fees, payout timing, tax treatment, cancellation, and
-dispute terms.
-
-GPU example adds:
-
-```bash
---gpu-units 1 --vram-mib VRAM_MIB \
---gpu-uuid GPU_UUID --gpu-cdi CDI_DEVICE
-```
-
-Never offer more capacity than the inventory reports as safely allocatable.
-
-On a dedicated execution node, the common whole-node form is:
+The operator supplies a fresh single-use authorization ID and its exact Buyer
+actor binding. A one-GPU example is:
 
 ```bash
 punch-provider setup \
   --machine-id MACHINE_ID \
-  --state-dir /absolute/path/.local/state/punch-provider \
-  --agent-config /absolute/path/.config/punch/provider/agent.json \
+  --state-dir /var/lib/punch-provider \
+  --agent-config /absolute/path/to/provider-agent.json \
   --idempotency-key STABLE_SETUP_REFERENCE \
-  --cpu-cores ALLOCATABLE_CPU_CORES --ram-mib ALLOCATABLE_RAM_MIB \
-  --disk-gib ALLOCATABLE_DISK_GIB --all-gpus \
-  --window-seconds 3600 --price-usdc-cents PRICE
+  --cpu-cores 4 --ram-mib 8192 --disk-gib 40 \
+  --gpu-units 1 --vram-mib VRAM_MIB \
+  --gpu-uuid GPU_UUID --gpu-cdi CDI_DEVICE \
+  --window-seconds 1200 --price-minor 0 \
+  --targeted-zero-authorization-id AUTHORIZATION_ID \
+  --targeted-buyer-actor-id BUYER_ACTOR_ID \
+  --json
 ```
 
-`--all-gpus` uses every GPU reported by the local inventory, including its
-stable UUID/CDI identity and observed VRAM. For 2–8 GPUs it defaults to
-`SAME_NODE`. Add `--gpu-communication P2P_REQUIRED` only when the offer must
-prove CUDA peer access. The option is never implicit; on a shared host, select
-capacity manually so unrelated devices are not advertised.
+Zero price is rejected unless both bindings are present. The offer remains
+unavailable until deterministic validation passes on the exact GPU/CDI and
+pinned images and the operator approves listing. The authorization cannot be
+used to create a publicly claimable free offer.
 
-An atomic eight-GPU offer uses the UUID/CDI pairs reported by `inventory`:
+## 6. Run the resident agent
 
-```bash
-punch-provider setup \
-  --machine-id MACHINE_ID \
-  --state-dir /absolute/path/.local/state/punch-provider \
-  --agent-config /absolute/path/.config/punch/provider/agent.json \
-  --idempotency-key STABLE_SETUP_REFERENCE \
-  --cpu-cores 40 --ram-mib ALLOCATABLE_RAM_MIB --disk-gib ALLOCATABLE_DISK_GIB \
-  --gpu-units 8 --vram-mib TOTAL_SELECTED_VRAM_MIB \
-  --gpu-uuids GPU_UUID_1,GPU_UUID_2,GPU_UUID_3,GPU_UUID_4,GPU_UUID_5,GPU_UUID_6,GPU_UUID_7,GPU_UUID_8 \
-  --gpu-cdis CDI_1,CDI_2,CDI_3,CDI_4,CDI_5,CDI_6,CDI_7,CDI_8 \
-  --gpu-communication SAME_NODE \
-  --window-seconds 3600 --price-usdc-cents PRICE
-```
-
-Use comma-separated values without spaces. `SAME_NODE` requires all eight
-devices in one bounded container but does not promise direct peer access.
-Select `P2P_REQUIRED` only when the workload requires it; the validation task
-then fails closed unless CUDA peer access and peer copies pass in every
-direction. PCI bus numbers are inventory locators only—the offer and lease bind
-the corresponding stable UUID/CDI identities.
-
-## 7. Withdraw an unfilled offer
-
-Normal operation reuses the enrolled Provider and machine identities. Creating
-another immutable offer uses a fresh setup reference; it does not require a new
-invitation or another `join`.
-
-To remove an unfilled offer from Buyer discovery without deleting its audit
-history:
-
-```bash
-punch-provider withdraw \
-  --machine-id MACHINE_ID \
-  --state-dir /absolute/path/.local/state/punch-provider \
-  --agent-config /absolute/path/.config/punch/provider/agent.json \
-  --offer-id OFFER_ID \
-  --idempotency-key STABLE_WITHDRAWAL_REFERENCE
-```
-
-Control transactionally binds the current immutable offer digest. An operator
-who already has that digest may also pass `--offer-digest SHA256` for a strict
-stale-version check. Withdrawal succeeds only while the offer is still
-`LISTED`; if a Buyer reservation wins the race, the withdrawal fails and cannot
-take capacity away from that Buyer. Retry a lost response with the same
-idempotency key.
-
-## 8. Run the agent in the supervised foreground
+Direct supervised execution:
 
 ```bash
 punch-provider serve \
   --machine-id MACHINE_ID \
-  --state-dir /absolute/path/.local/state/punch-provider \
-  --agent-config /absolute/path/.config/punch/provider/agent.json \
+  --state-dir /var/lib/punch-provider \
+  --agent-config /absolute/path/to/provider-agent.json \
   --interval-ms 1000
 ```
 
-The current preview archive supports only owner-supervised foreground operation of `punch-provider serve`. It does not supply or install a service definition and makes no privileged or system-service changes. Unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published. Do not invent a root wrapper or grant broader system access. Accept Provider operation only if the node's isolation makes the Docker-socket authority acceptable.
+For supervised service operation, review the supplied unit, ensure the
+`punch-provider` user has only the required local Docker access, and create
+`/etc/punch-provider.env`:
 
-Read local state while the agent remains running:
-
-```bash
-punch-provider status \
-  --state-dir /absolute/path/.local/state/punch-provider \
-  --machine-id MACHINE_ID
+```text
+PUNCH_MACHINE_ID=MACHINE_ID
+PUNCH_AGENT_CONFIG=/absolute/path/to/provider-agent.json
 ```
 
-Local status is not proof that Punch Control has accepted the latest heartbeat or drain state.
+The unit does not enroll NetBird, create credentials, or install itself.
 
-## 9. Drain
+## 7. Acceptance checklist
 
-Request local draining before maintenance:
+Before retaining a Provider, prove:
+
+- the designated Buyer alone discovers the offer;
+- exact order replay returns the same contract;
+- the Provider automatically starts the pinned container and gateway;
+- Buyer status reaches `ACTIVE` with `accessEffective: true`;
+- a separate Buyer environment connects with OpenSSH and a harmless GPU command
+  returns the expected UUID/model;
+- Buyer stop closes an existing session and an exact retry is safe;
+- fresh SSH is rejected after stop;
+- signed cleanup removes the container and TCP `22222` listener and releases
+  capacity.
+
+## 8. Drain and rollback
 
 ```bash
 punch-provider drain \
-  --state-dir /absolute/path/.local/state/punch-provider
+  --state-dir /var/lib/punch-provider
 ```
 
-`drain` writes local `DRAINING` intent only. Keep the resident agent running, wait for Punch Control to observe the state, and verify there is no active lease before maintenance. Draining does not itself stop the agent, terminate work, or authorize deletion of customer state.
+Keep the agent running until Control observes the drain and there is no active
+lease. Stop the service, restore the previously verified CLI version and its
+matching agent configuration, reload systemd, and restart. Never roll back
+credentials, identity keys, state directories, invitations, setup keys, or
+NetBird management material with program files.
+
+Preview.9 is zero-price only. Payment, settlement, payout, refunds, and paid
+offer economics are outside this release's acceptance boundary.

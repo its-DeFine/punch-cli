@@ -1,0 +1,22 @@
+[Unit]
+Description=Punch Compute provider host service
+After=network-online.target docker.service netbird.service
+Wants=network-online.target docker.service netbird.service
+
+[Service]
+Type=simple
+User=punch-provider
+Group=punch-provider
+EnvironmentFile=/etc/punch-provider.env
+ExecStart=/usr/local/bin/punch-provider serve --state-dir /var/lib/punch-provider --machine-id ${PUNCH_MACHINE_ID} --agent-config ${PUNCH_AGENT_CONFIG} --interval-ms 1000
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/punch-provider
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

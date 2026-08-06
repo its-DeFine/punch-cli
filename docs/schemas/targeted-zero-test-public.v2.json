@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "punch.targeted-zero-test.v2",
+  "artifactKind": "public-reference-schema",
+  "offerMode": "TARGETED_ZERO_TEST",
+  "releaseStatus": "SUPERVISED_PREVIEW9_ONLY",
+  "runtimeMatchRequired": true,
+  "providerAuthorization": {
+    "required": true,
+    "singleUse": true,
+    "issuer": "BOOTSTRAP_OWNER_ADMIN_ONLY",
+    "binds": ["providerActor", "providerMachine", "targetBuyerActor", "capacity", "window", "expiry", "authorizationDigest"]
+  },
+  "buyerVisibility": "TARGET_ONLY",
+  "directIdProbe": "GENERIC_NOT_FOUND",
+  "replay": "SAME_BUYER_SAME_ORDER_REFERENCE_AND_PAYLOAD_ONLY",
+  "expiry": "FAIL_CLOSED",
+  "consumption": "SINGLE_USE_SETUP_AUTHORIZATION_REUSABLE_TARGETED_OFFER",
+  "moneyEffects": "NONE",
+  "sablier": "NONE",
+  "liveProof": "ONE_OWNER_OPERATED_PROVIDER_BUYER_E2E_PASS"
+}

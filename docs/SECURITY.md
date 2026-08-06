@@ -5,8 +5,10 @@
 - Invitations are single-use, role-bound secrets.
 - Buyer sessions and Provider credentials are stored only in private local files.
 - The supported configuration uses the official public Punch HTTPS endpoint; changing it redirects credentials and is security-sensitive.
-- Provider agents initiate outbound connections; no inbound Provider port is required for Punch.
-- Buyers never receive the Provider address or container-runtime access.
+- Provider agents and NetBird peers initiate outbound connections; no public
+  Provider SSH port is required.
+- Buyers never receive the public Provider address, host credential, or
+  container-runtime access.
 
 ## Container restrictions
 
@@ -20,7 +22,12 @@ When a GPU is assigned, the lease uses a stable GPU UUID and CDI identity rather
 
 ## Local privilege
 
-Access to the Docker Unix socket is normally equivalent to host-root authority. Run the Provider agent only as an owner-supervised foreground process and on a node dedicated or appropriately isolated for providing compute. The current preview archive does not supply or install a service definition and makes no privileged or system-service changes. Unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published. Do not expose a Docker-compatible API over TCP and do not give Buyers access to the Unix socket.
+Access to the Docker Unix socket is normally equivalent to host-root authority.
+Run the Provider agent only on a dedicated or appropriately isolated node.
+Preview.9 supplies a hardened reference service but does not install or enable
+it; the operator must review its Docker authority and host isolation. Do not
+expose a Docker-compatible API over TCP or give Buyers access to the Unix
+socket.
 
 ## File permissions
 
@@ -32,7 +39,11 @@ The CLI must fail closed when these requirements are not satisfied. Never place 
 
 ## Network privacy
 
-Cloudflare terminates the public Punch hostname. This hides the Provider execution node from Buyers, but it does not make a compromised Provider or Buyer trustworthy. Authentication, authorization, container limits, and lifecycle cleanup remain required.
+Cloudflare terminates the public Punch hostname. Contract-scoped SSH uses
+NetBird between the Buyer environment and the Provider's overlay-only Punch
+gateway. Neither transport is marketplace authority or makes a compromised
+Provider or Buyer trustworthy. Authentication, contract-generation binding,
+container limits, revocation, and lifecycle cleanup remain required.
 
 ## Preview limitations
 

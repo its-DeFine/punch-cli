@@ -6,21 +6,26 @@ Punch CLI is a thin public client for the Punch control plane. It does not conta
 flowchart LR
   B["Buyer CLI"] -->|"HTTPS"| P["Punch public endpoint"]
   A["Provider agent"] -->|"Outbound HTTPS"| P
-  P -->|"Brokered session and output"| B
+  B -->|"Contract-scoped SSH over NetBird"| G["Provider Punch gateway"]
   A --> R["Local container runtime"]
+  G -->|"Bound container attachment"| R
   R --> C["Bounded workload container"]
 ```
 
 ## Buyer boundary
 
 - The supported Buyer configuration contains only the public Punch hostname.
-- Punch brokers interactive sessions and output retrieval.
-- The Buyer does not receive a provider IP address, host credential, container-runtime endpoint, or Docker socket.
+- Punch authorizes interactive sessions and output retrieval. NetBird supplies
+  encrypted peer connectivity or relay fallback; it is not marketplace or
+  lifecycle authority.
+- The Buyer receives no public Provider address, host SSH credential,
+  container-runtime endpoint, or Docker socket.
 
 ## Provider boundary
 
 - The resident agent runs on the local execution node. Punch does not require or expose whether that node is bare metal or a virtual machine.
-- The agent inventories only resources visible locally and connects outbound to Punch.
+- The agent inventories only resources visible locally and connects outbound to
+  Punch. NetBird also connects outbound; no public Provider SSH port is needed.
 - Workloads run in allowlisted, immutable images with bounded structured inputs.
 - The provider's container runtime remains local and is never exposed to Buyers.
 
@@ -31,13 +36,16 @@ flowchart LR
 3. A Buyer creates an idempotent order.
 4. The Provider prepares and starts the bounded container.
 5. The lifecycle records paid time only after Punch verifies `READY`, exactly once; commercial terms remain authoritative for charges.
-6. Punch brokers access while the job is active.
+6. Punch grants a contract-generation-bound NetBird gateway only after the
+   workload and gateway are ready.
 7. Punch Control directs terminal cleanup: the Provider removes the workload container, temporary network and files, and releases the resource lease.
 8. Punch records one terminal outcome and reconciles the applicable payment path.
 
-The CLI reports lifecycle state but does not itself hold funds or decide administrative disputes. The current released public Buyer command surface has no `stop` or `cancel` operation: closing a brokered OpenSSH client does not direct step 7. The next gated async-stop contract is documented in [the public-safe handoff](PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md).
+The CLI reports lifecycle state but does not hold funds or decide administrative
+disputes. Preview.9 releases `punch-buyer stop`: it fences access before cleanup,
+closes active gateway sessions, and reconciles one durable cleanup operation.
+Closing OpenSSH alone still does not direct step 7.
 
-An exact-runtime/private canary may demonstrate Control-directed access and
-terminal cleanup in its own bounded environment. It is not proof that the
-public CLI has a Buyer-stop workflow, that an external Provider/Buyer path is
-live, or that testnet/real-USDC settlement occurred.
+Preview.9 has one owner-operated Provider-to-Buyer lifecycle proof. It does not
+prove payment settlement, refunds, arbitrary external Providers, broad
+concurrency, or general availability.

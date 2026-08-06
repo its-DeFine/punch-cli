@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "punch.preview9-runtime-contract.v1",
+  "releaseVersion": "0.1.0-preview.9",
+  "provenRuntimeCommit": "f1cad6a577926eae7f1487595b4193e66d5563ff",
+  "platform": "linux-x64",
+  "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
+  "gatewayPort": 22222,
+  "offerPolicy": "OWNER_TARGETED_ZERO_ONLY",
+  "priceMinor": 0,
+  "paymentSettlementEnabled": false,
+  "selfServiceProviderOnboarding": false,
+  "liveProof": "ONE_OWNER_OPERATED_PROVIDER_BUYER_E2E_PASS",
+  "images": {
+    "validation": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
+    "workload": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
+    "interactive": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311"
+  }
+}

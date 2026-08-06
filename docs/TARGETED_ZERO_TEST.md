@@ -2,83 +2,72 @@
 
 ## Status and release boundary
 
-`TARGETED_ZERO_TEST` is a gated, unreleased capability. The public repository
-contains only this public-safe contract and its reference schema;
-`docs/schemas/targeted-zero-test-public.v1.json` is not a matching private
-runtime artifact and does not enable the capability. No public release, live
-offer, payment, Sablier stream, or Buyer/Provider run is claimed.
+`TARGETED_ZERO_TEST` is released only for the supervised `v0.1.0-preview.9`
+pilot with its matching runtime artifact and explicit owner authorization. It
+is not a publicly claimable free offer, a general marketplace feature, or a
+payment/settlement release.
 
-The capability may be enabled only by an owner-controlled release carrying a
-matching runtime artifact and explicit authorization. Only the existing
-bootstrap owner administrator may enable or change this gate and issue its
-authorizations. A source checkout, candidate schema, test result, or
-documentation change must not be treated as that authorization.
+Only the bootstrap owner administrator may enable this mode and issue its
+authorizations. A source checkout, schema, documentation change, or CLI flag is
+not authority.
 
-The public reference is deliberately protocol-level. It does not publish
-private routes, actor identifiers, credentials, internal storage, or
-implementation-specific CLI flags. The installed matching artifact's
-`--help` and generated schema will be authoritative for exact command syntax.
-
-## Provider experience
+## Provider authorization
 
 An authenticated Provider may create this mode only with a server-issued,
-single-use authorization ID and the designated Buyer actor. The authorization
-binds the exact Provider actor and machine, target Buyer, capacity/window
-limits, expiry, and an immutable authorization digest. The Provider cannot
-make an ordinary paid offer targeted or zero-priced by changing a price field,
-issue the authorization, or change the gate.
+single-use authorization ID and designated Buyer actor. The authorization binds
+the exact Provider actor and machine, target Buyer, capacity, access window,
+expiry, and immutable authorization digest. The Provider cannot issue or widen
+the authorization or make an ordinary offer free by changing its price.
 
-The authorization is checked and consumed atomically with the first successful
-order. A withdrawn, expired, already-consumed, mismatched, or unverifiable
-authorization fails closed without creating or changing capacity. A consumed
-zero-test offer never relists.
+The authorization is checked and consumed during supervised Provider setup. A
+withdrawn, expired, consumed, mismatched, or unverifiable authorization fails
+closed. Once created, the immutable offer may serve the same designated Buyer
+again after a completed cleanup and capacity release; the Provider cannot
+retarget it or use the consumed setup authorization to create another offer.
 
 ## Buyer experience
 
 Only the designated authenticated Buyer can discover and order the offer.
-Every other Buyer, including a direct probe using the offer ID, receives the
-same generic not-found outcome. The target, expiry, unused state, immutable
-digest, and order binding are rechecked during order creation.
+Every other Buyer, including a direct offer-ID probe, receives the same generic
+not-found result. The target, expiry, unused state, immutable digest, and order
+binding are rechecked during order creation.
 
-The designated Buyer uses the normal interactive lifecycle: order, readiness,
-brokered SSH, Buyer stop, cleanup, relay revocation, and lease release. Stop
-ends access and requires cleanup; it is not a Sablier cancellation.
+The Buyer uses the normal commands: `offers`, `order`, readiness `status`,
+brokered `ssh`, and `stop`. There is no Buyer zero-price or authorization flag.
 
-## Single-use and expiry rules
+## Replay and expiry
 
-- The same Buyer with the same order reference and identical payload may
-  replay the exact existing contract result.
-- A different order reference, Buyer, payload, or authorization digest fails
-  without capacity or payment mutation.
-- Expiry and withdrawal are fail-closed, including when they race with order
-  creation.
-- Concurrent orders can consume at most one authorization.
+- The same Buyer, order reference, and payload replay the existing contract.
+- A different Buyer, reference, payload, or authorization digest fails without
+  a capacity or financial mutation.
+- Expiry and withdrawal are fail-closed when racing with order creation.
+- Capacity reservation is atomic; a one-capacity pilot machine can run at most
+  one contract at a time.
+- Exact Buyer-stop retry reconciles the same durable operation.
 
 ## Zero-value semantics
 
 `TARGETED_ZERO_TEST` creates no payment authorization, tender, ledger money
-line, token transaction, Sablier stream, payout instruction, refund, or
-cancellation. The lifecycle records explicit zero-test authorization and
-termination audit states instead of synthetic money or settlement evidence.
-Paid offers retain their positive-price, payment, accounting, and Sablier
-invariants unchanged.
+line, token transaction, Sablier stream, payout instruction, refund, or payment
+cancellation. Stop is lifecycle termination and cleanup, not a financial
+settlement operation. Paid-offer economics are outside Preview.9.
 
-## Focused docs-following test plan
+## Established proof and remaining boundary
 
-Before any owner considers enabling the capability, the matching runtime
-artifact must prove, with deterministic tests, target-only visibility and
-generic direct-ID rejection; exact replay; cross-Buyer rejection; expiry;
-withdrawal-before-order; atomic single-use races; no relist; zero money
-effects; normal provisioning, SSH, stop, relay-revocation, cleanup, and lease
-release; plus unchanged paid behavior. The public docs gate checks only the
-public contract/schema boundary. It does not substitute for those private
-runtime tests or live journey proof.
+The matching clean-v4 runtime completed one owner-operated Provider-to-Buyer
+canary with target-only discovery, exact order replay, pinned-container
+provisioning, NetBird-backed brokered SSH, harmless GPU output, Buyer stop,
+active-session closure, fresh-access denial, signed cleanup, and capacity
+release. No real funds were used.
 
-The public release gate must fail closed if the reference schema, this
-contract, or any later generated public artifact disagrees with the required
-mode, status, one-use, target-only, expiry, replay, no-funds, no-Sablier, and
-unreleased semantics.
+This proof is limited to one supervised Provider, one designated Buyer, one
+RTX 5080, and one concurrent workload. It does not establish self-service
+Provider onboarding, public free offers, payment/refund behavior,
+multi-Provider scheduling, or general availability.
 
-The reference schema's release-gate values are `punch.targeted-zero-test.v1`,
-`TARGETED_ZERO_TEST`, `GATED_UNRELEASED`, `TARGET_ONLY`,
-`GENERIC_NOT_FOUND`, `NONE`, and `NOT_ESTABLISHED`.
+The Preview.9 reference schema is
+`docs/schemas/targeted-zero-test-public.v2.json`. Its release values are
+`punch.targeted-zero-test.v2`,
+`TARGETED_ZERO_TEST`, `SUPERVISED_PREVIEW9_ONLY`, `TARGET_ONLY`,
+`GENERIC_NOT_FOUND`, `NONE`, and
+`ONE_OWNER_OPERATED_PROVIDER_BUYER_E2E_PASS`.

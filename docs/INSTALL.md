@@ -37,7 +37,10 @@ User installation:
 ~/.config/punch/
 ```
 
-The current preview archive makes no privileged or system-service changes. It does not supply or install a Provider service definition; unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published.
+The Preview.9 archive makes no privileged or system-service changes. It carries
+a reference Provider service unit and agent configuration under `provider/`,
+but does not install or enable them. A Punch operator must render, review, and
+install those files during supervised Provider onboarding.
 
 ## Update
 

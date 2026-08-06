@@ -29,10 +29,10 @@ Official releases are published for `linux/amd64` as
 immutable digest reported by the successful publish workflow, never a mutable
 tag. Do not build or substitute a different image for a Punch pilot.
 
-The current `v0.1.0-preview.8` compatible registry reference is
+The current `v0.1.0-preview.9` compatible registry reference is
 `ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311`.
 
-That is the already published preview.8 image. The CUDA/glibc interactive
+That is the unchanged digest-pinned image used by Preview.9. The CUDA/glibc interactive
 candidate in this checkout is not a release replacement until the publish
 workflow reports a new registry manifest digest. Do not update Provider policy
 to a local image ID or to the workflow tag.

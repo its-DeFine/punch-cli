@@ -2,17 +2,11 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Current command and proof boundary:** the available Buyer CLI schema exposes
-> `join`, `offers`, `order`, `status`, `output`, and `ssh` only. There is no
-> released Buyer `stop` or `cancel` command. Until a non-draft release archive
-> and checksum are published, this is a candidate workflow, not proof of a
-> downloadable package, an external Provider/Buyer run, or testnet/real-USDC
-> settlement.
-
-The next gated public-safe stop contract is documented in
-[PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md](PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md).
-It is source-derived from the manager-approved private handoff and does not
-change the current released command surface by itself.
+> **Preview.9 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
+> `order`, `status`, `output`, `ssh`, and `stop`. It is supported only from the
+> non-draft `v0.1.0-preview.9` release archive with its matching checksum. The
+> proven pilot used an owner-targeted zero-price offer and no payment,
+> settlement, payout, or refund path.
 
 ## 1. Prepare private configuration
 
@@ -28,7 +22,8 @@ Create `buyer.json` with the public origin and an absolute session-file path:
 {
   "schemaVersion": "punch.buyer-public-config.v1",
   "publicOrigin": "https://api-punch.embody.zone",
-  "sessionFile": "/absolute/path/.config/punch/buyer/session.json"
+  "sessionFile": "/absolute/path/.config/punch/buyer/session.json",
+  "netBirdGateway": true
 }
 ```
 
@@ -97,6 +92,11 @@ punch-buyer order \
 Punch selects at most one complete alternative atomically. This is an immediate
 match, not an unfunded standing queue. See [Conditional orders](CONDITIONAL_ORDERS.md).
 
+In the supervised pilot, an authorized zero-price offer appears only to its
+designated Buyer. The Buyer still uses the normal `order` command and never
+passes a price, zero-value, authorization, or Provider identity flag. A visible
+offer is not permission to alter its terms.
+
 Record the job identifier returned by the order result. A successful order does
 not itself prove that access is ready, that a container is running, or that a
 payment has settled.
@@ -110,9 +110,11 @@ punch-buyer status \
   --json
 ```
 
-The preview lifecycle records paid time from the first verified `READY`, not from offer listing or container preparation. The offer and the applicable commercial terms control actual price, charges, cancellation, and refund rights.
+Access starts from the first verified `READY`, not from offer listing or
+container preparation. Preview.9 uses zero-price supervised offers and does not
+exercise payment, settlement, payout, or refund behavior.
 
-For interactive jobs, wait until status reports `state: ACCESS_SCHEDULED` and
+For Preview.9 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -131,11 +133,15 @@ ssh -i /absolute/path/to/id_ed25519 \
   punch@punch-job
 ```
 
-The isolated known-hosts file records the ephemeral job container key on first connection. If it changes during the same job generation, stop instead of accepting the replacement. The byte stream is brokered through Punch; the Buyer is not given the provider address or Docker socket.
+The isolated known-hosts file records the ephemeral job container key on first
+connection. If it changes during the same job generation, stop instead of
+accepting the replacement. Preview.9 carries SSH bytes through a
+contract-scoped NetBird gateway. The Buyer receives no public Provider address,
+host SSH credential, host SSH port, or Docker socket.
 
-## 7. Asynchronous Buyer stop (next gated contract)
+## 7. Stop and release
 
-For an artifact that explicitly carries the approved async-stop contract, use:
+Preview.9 releases the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \
@@ -171,16 +177,9 @@ error outside `punch.buyer-stop-operation.v1`, not an operation result.
 ## 8. Ending only the local SSH connection
 
 Use `exit`, close the OpenSSH client, or interrupt the local SSH process only to
-end that local connection. None of those actions calls a Punch job-stop or
-cancellation operation, releases capacity, or determines paid time. Do not
-invent an HTTP route, connect directly to a Provider, or infer a `punch-buyer
-stop` command from an internal test.
-
-The exact-runtime/private canary may exercise Control-owned terminal cleanup and
-Provider `STOP` work after its own terminal conditions. That is evidence only
-for that controlled canary; it is not a current public Buyer CLI behavior. Use
-`punch-buyer status` to observe the documented job state and follow a separately
-published support or commercial process for any early-termination question.
+end that local connection. None of those actions calls the stop operation or
+releases capacity. Use `punch-buyer stop` for lifecycle termination. Do not
+invent an HTTP route or connect directly to a Provider.
 
 ## 9. Download output
 

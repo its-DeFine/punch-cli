@@ -6,7 +6,7 @@ const path = require('path');
 const assert = require('assert');
 
 const repo = path.resolve(__dirname, '..');
-const schemaPath = path.join(repo, 'docs/schemas/targeted-zero-test-public.v1.json');
+const schemaPath = path.join(repo, 'docs/schemas/targeted-zero-test-public.v2.json');
 const markdownPath = path.join(repo, 'docs/TARGETED_ZERO_TEST.md');
 
 const topKeys = [
@@ -21,19 +21,19 @@ const expectedBinds = [
   'window', 'expiry', 'authorizationDigest'
 ];
 const expected = {
-  schemaVersion: 'punch.targeted-zero-test.v1',
+  schemaVersion: 'punch.targeted-zero-test.v2',
   artifactKind: 'public-reference-schema',
   offerMode: 'TARGETED_ZERO_TEST',
-  releaseStatus: 'GATED_UNRELEASED',
+  releaseStatus: 'SUPERVISED_PREVIEW9_ONLY',
   runtimeMatchRequired: true,
   buyerVisibility: 'TARGET_ONLY',
   directIdProbe: 'GENERIC_NOT_FOUND',
   replay: 'SAME_BUYER_SAME_ORDER_REFERENCE_AND_PAYLOAD_ONLY',
   expiry: 'FAIL_CLOSED',
-  consumption: 'ATOMIC_SINGLE_USE_NO_RELIST',
+  consumption: 'SINGLE_USE_SETUP_AUTHORIZATION_REUSABLE_TARGETED_OFFER',
   moneyEffects: 'NONE',
   sablier: 'NONE',
-  liveProof: 'NOT_ESTABLISHED'
+  liveProof: 'ONE_OWNER_OPERATED_PROVIDER_BUYER_E2E_PASS'
 };
 
 function exactKeys(object, keys, label) {
@@ -56,28 +56,25 @@ function validateSchema(value) {
 }
 
 const requiredMarkdownClaims = [
-  '`TARGETED_ZERO_TEST` is a gated, unreleased capability',
-  'not a matching private\nruntime artifact and does not enable the capability',
-  'matching runtime artifact and explicit authorization',
-  'bootstrap owner administrator may enable or change this gate and issue its\nauthorizations',
-  'exact Provider actor and machine',
+  'released only for the supervised `v0.1.0-preview.9`',
+  'matching runtime artifact and explicit owner authorization',
+  'not a publicly claimable free offer',
+  'Only the bootstrap owner administrator',
   'single-use authorization ID',
-  'same generic not-found outcome',
-  'The authorization is checked and consumed atomically',
-  'A consumed\nzero-test offer never relists',
-  'same order reference and identical payload may\n  replay',
-  'Expiry and withdrawal are fail-closed',
-  'Concurrent orders can consume at most one authorization',
+  'exact Provider actor and machine',
+  'same generic\nnot-found result',
+  'Capacity reservation is atomic',
   'creates no payment authorization, tender, ledger money',
-  'it is not a Sablier cancellation',
-  'Paid offers retain their positive-price',
-  'public contract/schema boundary',
-  'private\nruntime tests or live journey proof'
+  'Stop is lifecycle termination and cleanup',
+  'ONE_OWNER_OPERATED_PROVIDER_BUYER_E2E_PASS',
+  'No real funds were used',
+  'does not establish self-service'
 ];
 const contradictoryMarkdown = [
-  /\b(?:the|this|a)\s+(?:capability|runtime|artifact|offer|proof)\s+(?:is|was|has been)\s+(?:released|enabled|live|established|proven)\b/i,
   /\b(?:payment|settlement)\s+(?:(?:is|was|has been)\s+)?settled\b/i,
-  /\bSablier[-\s]+(?:stream[-\s]+)?created\b/i
+  /\bSablier[-\s]+(?:stream[-\s]+)?created\b/i,
+  /\bis a publicly claimable free offer\b/i,
+  /\bself-service Provider onboarding is (?:released|enabled|available)\b/i
 ];
 
 function validateMarkdown(markdown) {
@@ -140,7 +137,7 @@ function runNegativeFixtures(schema, markdown) {
   const missingBind = clone(schema);
   missingBind.providerAuthorization.binds.pop();
   assertRejected('omit final authorization bind', () => validateSchema(missingBind));
-  const overclaim = `${markdown}\nThe capability is released and enabled; live proof is established, payment is settled, and a Sablier stream was created.\n`;
+  const overclaim = `${markdown}\nPayment is settled, a Sablier stream was created, and this is a publicly claimable free offer.\n`;
   assertRejected('Markdown release/payment/Sablier overclaim', () => validateMarkdown(overclaim));
 }
 

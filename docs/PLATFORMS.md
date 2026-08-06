@@ -16,7 +16,10 @@ The bundled Linux runtime requires `GLIBC_2.28`, `GLIBCXX_3.4.21`, and `CXXABI_1
 The initial Provider preview targets Linux on x86-64 with glibc 2.28 or newer and:
 
 - Docker Engine available through the local Unix socket.
-- An operator able to supervise `punch-provider serve` as a foreground process.
+- An operator able to supervise `punch-provider serve` directly or install the
+  reviewed Preview.9 reference service.
+- NetBird enrolled by the operator for contract-scoped gateway access; no
+  public Provider SSH port is required.
 - Optional NVIDIA GPU support only when the host driver and NVIDIA Container Toolkit are already compatible with the published release requirements.
 
 CPU-only Providers are first-class. A GPU is not required to join or offer CPU capacity.
@@ -32,7 +35,9 @@ creation. Certification of 12.0 is based on a single-GPU RTX 5080 canary and
 does not claim multi-GPU P2P support. Other architectures remain unsupported
 until their own real-node promotion gate passes.
 
-The current preview archive does not supply or install a service definition and makes no privileged or system-service changes. Unattended or background Provider operation is unsupported until a separately reviewed, release-specific service definition is published.
+Preview.9 supplies a reference service definition but does not install or
+enable it. Operator-reviewed service activation is supported only for the
+supervised pilot.
 
 ## Release authority
 

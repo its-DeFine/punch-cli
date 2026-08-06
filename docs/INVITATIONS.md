@@ -1,7 +1,7 @@
 # Invitations and credentials
 
-> **Version boundary:** Provider `rejoin` applies to `v0.1.0-preview.8` when
-> its non-draft prerelease archive and checksum are published.
+> **Version boundary:** this page applies to `v0.1.0-preview.9` when its
+> non-draft prerelease archive and checksum are published.
 
 Punch Compute is invitation-only during the public preview.
 
@@ -15,16 +15,15 @@ Punch Compute is invitation-only during the public preview.
 
 An invitation contains an identifier and redemption secret. It is redeemed once. Retrying a successfully redeemed invitation must not create a second identity or credential.
 
-A Provider session can expire before the first machine enrollment completes.
-That does not authorize deleting local identity or setup state. When the CLI
-returns `PROVIDER_REJOIN_REQUIRED`, Punch issues one fresh invitation bound to
-the same active Provider actor. The operator runs `punch-provider rejoin`; the
-CLI atomically replaces only the expired credential and preserves the exact
-pending setup reference. The original invitation remains consumed.
+A failed or interrupted join does not authorize deleting local identity or
+setup state. Preserve the invitation, credential path, machine identity, and
+setup reference and return the sanitized public error code to the Punch
+operator. The operator decides whether the same idempotent operation can be
+reconciled or a fresh invitation is required.
 
-An enrolled Provider does not redeem another invitation merely to create or
-withdraw another offer. Normal session renewal and fresh setup references reuse
-the existing Provider and machine identities.
+An enrolled Provider does not redeem another invitation merely to create
+another offer. Fresh setup references reuse the existing Provider and machine
+identities.
 
 ## File handling
 
@@ -42,7 +41,7 @@ Never:
 - Commit invitation or credential files.
 - Copy Provider credentials to a Buyer machine.
 - Reuse one invitation for another person or execution node.
-- Delete or rename Provider state merely to bypass `PROVIDER_REJOIN_REQUIRED`.
+- Delete or rename Provider state merely to bypass a join or setup rejection.
 
 ## Public endpoint
 

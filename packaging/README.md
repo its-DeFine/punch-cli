@@ -17,6 +17,9 @@ third_party/
     LICENSE
   ws/
     LICENSE
+provider/
+  provider-agent.example.json
+  punch-provider.service
 payload/
   bin/
     punch-buyer
@@ -28,7 +31,10 @@ payload/
     bin/node
 ```
 
-The two launchers in this directory are the Apache-2.0 templates copied to `payload/bin`. The version-pinned Node runtime and proprietary implementation bundles are supplied by the private release build.
+The two launchers in this directory are the Apache-2.0 templates copied to
+`payload/bin`. Preview.9 also copies the two reviewed `packaging/clean-v4`
+templates to `provider/`. The version-pinned Node runtime and proprietary
+implementation bundles are supplied by the private release build.
 
 Before packaging, the release process must:
 

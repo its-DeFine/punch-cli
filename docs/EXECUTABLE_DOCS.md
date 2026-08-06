@@ -2,10 +2,11 @@
 
 ## Status
 
-The executable Provider/Buyer walkthrough is `GATED_UNRELEASED`. This public
-checkout contains only structural formats, deterministic validators, and
-sanitized fixture tests. It does not contain a trusted runtime artifact,
-private contract handoff, credentials, routes, identities, or live proof.
+This source-derived executable-docs framework remains `GATED_UNRELEASED` and
+non-authoritative. It is preserved as the deterministic pre-release contract
+mechanism. The separately released Preview.9 surface and live-proof boundary
+are governed by [PREVIEW9.md](PREVIEW9.md) and its runtime contract; this page
+does not override them.
 
 The generated CLI reference is valid only when an exact runtime-artifact
 contract is bound to a reviewed trust-registry entry. A generated contract is
@@ -24,13 +25,12 @@ The approved asynchronous stop projection is documented in
 [the public-safe stop contract](PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md)
 and its [operation schema](schemas/buyer-stop-operation.v1.json).
 
-## Next public contract
+## Historical generated contract
 
-The next gated contract includes an explicit Buyer `stop` operation as part of
-the public lifecycle. Provider `setup` creates the offer; there is no new
-Provider `offer` verb. Exact flags and syntax remain handoff-dependent and
-must be generated from the reviewed sanitized private contract, not guessed
-from this document.
+The generated contract introduced the Buyer `stop` operation now carried by
+Preview.9. Provider `setup` creates the offer; there is no new Provider `offer`
+verb. The generated file remains non-release evidence and is kept to detect
+source/docs drift.
 
 The approved stop handoff makes the operation asynchronous: POST writes a
 durable `PREPARED` journal intent and immediately returns `202 ACCEPTANCE_PENDING`;

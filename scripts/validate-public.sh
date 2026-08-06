@@ -11,6 +11,8 @@ sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
+node --test tests/preview9-release-contract.mjs
+
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do
   [ -s "$required" ] || {
     printf 'required public licensing template is missing: %s\n' "$required" >&2
@@ -103,6 +105,21 @@ for preview8_requirement in \
   }
 done
 
+for preview9_requirement in \
+  'Invitation-only supervised pilot' \
+  'clean-v4' \
+  'NetBird' \
+  'TCP `22222`' \
+  'punch-buyer stop' \
+  'Exact order and stop retries' \
+  'no payment settlement' \
+  'self-service Provider onboarding'; do
+  grep -F -- "$preview9_requirement" docs/PREVIEW9.md > /dev/null || {
+    printf 'preview.9 release contract missing required public statement: %s\n' "$preview9_requirement" >&2
+    exit 1
+  }
+done
+
 for release_requirement in \
   'd7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86' \
   '16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce' \
@@ -142,7 +159,7 @@ done
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
   grep -F 'non-draft prerelease archive' "$current_boundary_doc" > /dev/null && \
     grep -F 'checksum are published' "$current_boundary_doc" > /dev/null || {
-    printf 'preview.8 publication boundary is missing from %s\n' "$current_boundary_doc" >&2
+    printf 'preview.9 publication boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done
@@ -155,12 +172,12 @@ for active_provider_doc in docs/RELEASES.md docs/PROVIDER.md images/interactive/
 done
 
 for interactive_requirement in \
-  'v0.1.0-preview.8' \
+  'v0.1.0-preview.9' \
   'ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311' \
   'repository@sha256:manifest' \
   'must never be copied'; do
   grep -F -- "$interactive_requirement" images/interactive/README.md > /dev/null || {
-    printf 'interactive image guidance missing preview.8 requirement: %s\n' "$interactive_requirement" >&2
+    printf 'interactive image guidance missing preview.9 requirement: %s\n' "$interactive_requirement" >&2
     exit 1
   }
 done

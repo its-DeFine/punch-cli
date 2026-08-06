@@ -1,0 +1,32 @@
+{
+  "publicOrigin": "https://api-punch.embody.zone",
+  "credentialFile": "/var/lib/punch-provider/clean-v4/provider-credential.private.json",
+  "cleanStateProviderTaskSlice": true,
+  "netBirdGateway": {
+    "enabled": true,
+    "interfaceName": "wt0",
+    "netBirdOverlayIp": "REPLACE_WITH_PROVIDER_NETBIRD_OVERLAY_IP",
+    "gatewayPort": 22222
+  },
+  "imagePolicies": {
+    "VALIDATION": {
+      "image": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
+      "command": ["/usr/local/bin/punch-validate"],
+      "inputKeys": ["PUNCH_VALIDATION_INPUT"]
+    },
+    "WORKLOAD": {
+      "image": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
+      "command": ["/usr/local/bin/punch-workload"],
+      "inputKeys": ["PUNCH_WORKLOAD_INPUT", "PUNCH_WORKLOAD_OUTPUT"]
+    },
+    "INTERACTIVE": {
+      "protocol": "PUNCH_INTERACTIVE_V1",
+      "approvedBaseImage": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311",
+      "command": ["/usr/local/bin/punch-interactive"],
+      "seccompProfile": "builtin",
+      "seccompProfileDigest": "aa305575d85c2445b2b61555bfee2fb0a2260f671d7000e9b40849e2ed8317f5",
+      "appArmorProfile": "docker-default",
+      "appArmorProfileDigest": "98eb02dfa81397d55e75c3890266de0ea2e058d2061c6da140d7369824b1c38a"
+    }
+  }
+}

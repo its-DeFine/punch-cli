@@ -6,10 +6,9 @@ This repository is the public documentation and distribution surface for Punch C
 
 This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
-It therefore cannot prove a released command surface, a downloadable package,
-an external Provider/Buyer run, or testnet/real-USDC settlement.
+The GitHub release assets are the installable surface.
 
-`v0.1.0-preview.8` is the supported Linux/x64 external-pilot package only when
+`v0.1.0-preview.9` is the supported Linux/x64 supervised-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
@@ -25,16 +24,11 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-The `v0.1.0-preview.8` release adds explicit `--all-gpus` whole-node setup,
-transactional withdrawal of unreserved listed offers, Provider identity reuse
-across offer creation and withdrawal, bounded poll timeouts, and sanitized
-public error codes. It retains atomic 2–8 GPU offers bound to aligned UUID/CDI
-identities, explicit `SAME_NODE` or all-direction `P2P_REQUIRED` validation,
-and Buyer conditional orders with ranked hardware alternatives. It also binds
-the complete OCI digest reference across classic Docker and Docker's containerd
-image store. It retains
-single-GPU, CPU-only, `rejoin`, Sablier payout binding, and whole-window
-`--price-usdc-cents` compatibility from preview.4.
+Preview.9 adds the clean-v4 supervised lifecycle: operator-approved Provider
+onboarding, owner-targeted zero-price offers, idempotent Buyer order recovery,
+contract-scoped NetBird SSH, released Buyer stop, access revocation, signed
+cleanup, and capacity release. It carries a reference Provider service and
+agent configuration but does not install or enable them automatically.
 
 Once published, a release archive's `SHA256SUMS` asset is authoritative for its
 exact bytes. Before publication, the release gate must verify the extracted
@@ -43,17 +37,18 @@ uninstallation with the exact bundled runtime. Source-level fixtures and an
 image-workflow definition do not substitute for those archive checks or prove
 an external lifecycle or settlement.
 
-`SABLIER_USDC`, `USDC`, pricing, and payout fields describe candidate protocol
-and configuration terms. They are not evidence of a completed testnet transfer
-or a real-USDC payment. No funding, payout, or cancellation claim is made here
-without release-specific proof and authorization.
+Preview.9 does not activate payment, payout, settlement, or refunds. Its zero
+price is accepted only with a single-use owner authorization bound to the exact
+Provider, machine, capacity, window, and designated Buyer. The Buyer has no
+zero-price flag, the Provider cannot issue the authorization, and the offer is
+not publicly claimable. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
-`TARGETED_ZERO_TEST` is separately gated and unreleased. The public
-[targeted zero-price test contract](TARGETED_ZERO_TEST.md) and its reference
-schema are not a matching runtime artifact, release, or live Provider/Buyer
-proof. It must remain disabled until a matching artifact and owner-controlled
-authorization exist; paid offers remain subject to their existing positive
-price and settlement invariants.
+The machine-readable [Preview.9 runtime contract](preview9-runtime-contract.json)
+binds the frozen lifecycle proof and image set. One owner-operated RTX 5080
+Provider-to-Buyer canary proved exact order replay, NetBird-backed brokered SSH,
+Buyer stop, active-session closure, fresh-access denial, signed cleanup, and
+capacity release. It does not prove general external-provider readiness or any
+financial behavior.
 
 ## Multi-GPU proof boundary
 
