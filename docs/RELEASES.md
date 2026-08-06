@@ -8,7 +8,7 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-`v0.1.0-preview.9` is the supported Linux/x64 supervised-pilot package only when
+`v0.1.0-preview.9` remains the supported Linux/x64 supervised-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
@@ -23,6 +23,22 @@ These references identify the published `linux/amd64` images. Pull and place
 the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
+
+## Preview.10 gate
+
+Preview.10 is `GATED_UNRELEASED`. It becomes installable only when a non-draft
+GitHub prerelease publishes the matching Linux/x64 archive and `SHA256SUMS`, and
+the exact archive passes isolated Buyer acceptance. Its private runtime binding
+is `99fe8c30863ec331228c5f3696ecdbecb99d7b5d`.
+
+Preview.10 adds role-aware Buyer NetBird bootstrap to `join`: explicit consent
+before any privileged client installation, one one-off ephemeral enrollment
+bound to the approved Buyer and narrow Buyer group, private setup-key-file
+delivery, startup connectivity verification, and immediate local key removal.
+The Buyer needs no NetBird dashboard, login, or second code. The payment and
+Provider-governance boundaries below remain unchanged. See
+[Preview.10](PREVIEW10.md) and its
+[runtime contract](preview10-runtime-contract.json).
 
 Preview.9 adds the clean-v4 supervised lifecycle: operator-approved Provider
 onboarding, owner-targeted zero-price offers, idempotent Buyer order recovery,

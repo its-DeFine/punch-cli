@@ -1,7 +1,8 @@
-# NetBird connectivity in Preview.9
+# NetBird connectivity in Preview.10
 
-> **Supervised pilot:** this transport is part of `v0.1.0-preview.9` only with
-> its matching clean-v4 runtime and release archive.
+> **Supervised pilot:** the Buyer-bootstrap transport is part of
+> `v0.1.0-preview.10` only with its matching clean-v4 runtime and release
+> archive. Until that archive is published, it is `GATED_UNRELEASED`.
 
 NetBird supplies encrypted peer connectivity, NAT traversal, and relay fallback
 between the Buyer environment and the Provider's Punch gateway. Punch remains
@@ -18,8 +19,16 @@ duration, stop, and cleanup. NetBird never becomes marketplace authority.
 - The workspace default full-mesh policy must be disabled.
 - A contract grant is limited to its designated Buyer and Provider groups,
   gateway port, and contract generation.
-- NetBird management tokens and setup keys never appear in CLI arguments, logs,
-  public configuration, or lifecycle receipts.
+- NetBird management tokens and setup-key values never appear in CLI arguments,
+  logs, public configuration, or lifecycle receipts. Buyer `join` uses a private
+  mode-`0600` setup-key file and removes it after connectivity verification.
+
+## Buyer enrollment boundary
+
+Control issues enrollment only after Punch Buyer authentication. It is one-off,
+ephemeral, bound to the approved Buyer and existing narrow Buyer group, and
+cannot create a second peer after consumption. The CLI verifies NetBird startup
+connectivity. The Buyer needs no NetBird dashboard, login, or separate code.
 
 ## Access lifecycle
 
@@ -36,6 +45,6 @@ harmless GPU command succeeded while the contract was active. Buyer stop closed
 the existing session; a fresh connection was rejected; exact stop replay was
 safe; and cleanup removed the gateway listener and workload.
 
-The proof used the configured NetBird workspace path available during the
-owner-operated pilot. It does not independently certify every NAT combination,
-relay region, or self-hosted NetBird topology.
+That proof predates automatic Buyer bootstrap. Preview.10 remains gated until
+the exact archive completes isolated Linux/x64 Buyer acceptance. Neither proof
+certifies every NAT combination, relay region, or self-hosted NetBird topology.

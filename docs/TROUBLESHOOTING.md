@@ -1,6 +1,6 @@
 # Troubleshooting
 
-> **Version boundary:** this page applies to `v0.1.0-preview.9` when its
+> **Version boundary:** this page applies to `v0.1.0-preview.10` when its
 > non-draft prerelease archive and checksum are published for Linux/x64.
 
 ## Invitation or setup rejected
@@ -42,8 +42,13 @@ privilege cannot be maintained.
 ## NetBird or brokered SSH is not ready
 
 - Confirm the Buyer config contains `"netBirdGateway": true`.
-- Confirm both peers are connected and the Provider has the expected `wt0`
-  overlay address.
+- On Linux/x64, rerun the exact same `join` invitation. If the official NetBird
+  client is missing, approve the explained install or use `--yes` only when the
+  same privileged change has already been reviewed.
+- Do not request, paste, or store a NetBird setup key and do not use a NetBird
+  dashboard workaround. Punch issues one one-off enrollment after Buyer auth.
+- `NETBIRD_PLATFORM_UNSUPPORTED`, declined install, enrollment rejection, or an
+  uncertain enrollment fails closed; return only the sanitized error code.
 - Confirm there is no default full-mesh policy.
 - Wait for Buyer status `state: ACTIVE` and `accessEffective: true`.
 - Use the same private key whose public half was attached to the order.
@@ -68,7 +73,7 @@ must be rejected.
 
 ## Payment or refund question
 
-Preview.9 uses owner-targeted zero-price offers. Payment, settlement, payout,
+Preview.10 uses owner-targeted zero-price offers. Payment, settlement, payout,
 refunds, and paid offer economics were not activated or accepted by this
 release. Do not infer financial behavior from the lifecycle result.
 

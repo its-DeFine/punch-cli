@@ -14,6 +14,11 @@ require() {
 }
 
 require README.md 'v0.1.0-preview.9'
+require README.md 'v0.1.0-preview.10'
+require docs/PREVIEW10.md 'GATED_UNRELEASED'
+require docs/PREVIEW10.md 'one-off, ephemeral setup key'
+require docs/BUYER.md 'NetBird bootstrap'
+require docs/BUYER.md 'mode-`0600`'
 require docs/PREVIEW9.md 'clean-v4 supervised pilot'
 require docs/PREVIEW9.md 'no payment settlement'
 require docs/PREVIEW9.md 'Exact order and stop retries'

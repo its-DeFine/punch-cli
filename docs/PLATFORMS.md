@@ -4,10 +4,8 @@ Platform support is declared per release because the Buyer CLI and Provider agen
 
 ## Buyer
 
-Planned preview packages:
-
-- macOS on Apple silicon.
-- Linux on x86-64 with glibc 2.28 or newer.
+Preview.10 Buyer bootstrap supports only Linux on x86-64 with glibc 2.28 or
+newer. Other operating systems fail closed before NetBird installation.
 
 The bundled Linux runtime requires `GLIBC_2.28`, `GLIBCXX_3.4.21`, and `CXXABI_1.3.9`. No distribution or kernel baseline is claimed beyond those verified ABI requirements.
 
@@ -35,7 +33,7 @@ creation. Certification of 12.0 is based on a single-GPU RTX 5080 canary and
 does not claim multi-GPU P2P support. Other architectures remain unsupported
 until their own real-node promotion gate passes.
 
-Preview.9 supplies a reference service definition but does not install or
+Preview.10 supplies a reference service definition but does not install or
 enable it. Operator-reviewed service activation is supported only for the
 supervised pilot.
 

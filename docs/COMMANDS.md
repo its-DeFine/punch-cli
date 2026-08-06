@@ -1,7 +1,7 @@
 # Command reference
 
 > **Version boundary:** the clean-v4 Buyer stop, NetBird gateway, and supervised
-> targeted-zero setup below apply to `v0.1.0-preview.9` when its non-draft prerelease archive
+> targeted-zero setup below apply to `v0.1.0-preview.10` when its non-draft prerelease archive
 > and checksum are published.
 
 Punch exposes two role-specific commands. The invitation and server-side
@@ -17,7 +17,7 @@ punch-buyer join|offers|order|status|output|ssh|stop \
 
 | Command | Purpose | Important flags |
 | --- | --- | --- |
-| `join` | Redeem one Buyer invitation and create a local session | `--invitation`, `--json` |
+| `join` | Redeem one Buyer invitation, bootstrap NetBird, and create a local session | `--invitation`, optional explicit install confirmation `--yes`, `--json` |
 | `offers` | List capacity visible to this Buyer | `--json` |
 | `order` | Create or replay an idempotent direct or conditional order | exactly one of `--offer-id` or `--request-file`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |
 | `status` | Read the current job state and access readiness | `--job-id`, `--json` |
@@ -29,13 +29,13 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.9 Buyers do not pass a zero-price flag. An operator-approved
+Preview.10 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
 ## Provider
 
-The supported Preview.9 supervised path is:
+The supported Preview.10 supervised path is:
 
 | Command | Purpose |
 | --- | --- |
@@ -76,8 +76,9 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Preview.9 has one owner-operated Provider-to-Buyer NetBird SSH and Buyer-stop
-proof. It does not prove payment settlement, refunds, arbitrary external
+proof. Preview.10 Buyer bootstrap remains gated until isolated Linux/x64
+acceptance. Neither proves payment settlement, refunds, arbitrary external
 Providers, multi-Provider scheduling, or general availability. The historical
 generated pre-release reference in
 [NEXT_COMMAND_REFERENCE.md](NEXT_COMMAND_REFERENCE.md) remains non-authoritative
-for Preview.9; [PREVIEW9.md](PREVIEW9.md) governs this release.
+for the current release; [PREVIEW10.md](PREVIEW10.md) governs Preview.10.

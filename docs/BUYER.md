@@ -2,9 +2,9 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.9 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
+> **Preview.10 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
 > `order`, `status`, `output`, `ssh`, and `stop`. It is supported only from the
-> non-draft `v0.1.0-preview.9` release archive with its matching checksum. The
+> non-draft `v0.1.0-preview.10` release archive with its matching checksum. The
 > proven pilot used an owner-targeted zero-price offer and no payment,
 > settlement, payout, or refund path.
 
@@ -44,7 +44,23 @@ punch-buyer join \
   --json
 ```
 
-The CLI stores the resulting session reference in the configured private path. Do not move or edit it manually.
+### NetBird bootstrap
+
+On Linux/x64, `join` validates the Punch invitation and then checks the official
+NetBird client. If NetBird is missing, the CLI explains the privileged package
+change and asks for confirmation. For supervised automation, `--yes` is the
+explicit confirmation; it is accepted only by `join`.
+
+After Buyer authentication, Control can issue one one-off, ephemeral enrollment
+bound to that approved Buyer and the existing narrow Buyer group. The CLI gives
+the setup key to NetBird through a temporary mode-`0600` file, verifies startup
+connectivity, and removes the local file immediately. The Buyer does not need a
+NetBird dashboard, login, or second code, and must never receive or paste the
+setup-key value. If NetBird is already connected, the CLI does not request a new
+enrollment. Successful JSON output includes `"netBird": "CONNECTED"`.
+
+The CLI stores the resulting Punch session reference in the configured private
+path. Do not move or edit it manually.
 
 ## 3. List offers
 
@@ -111,10 +127,10 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.9 uses zero-price supervised offers and does not
+container preparation. Preview.10 uses zero-price supervised offers and does not
 exercise payment, settlement, payout, or refund behavior.
 
-For Preview.9 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.10 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -135,13 +151,13 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.9 carries SSH bytes through a
+accepting the replacement. Preview.10 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
 ## 7. Stop and release
 
-Preview.9 releases the approved asynchronous Buyer stop command:
+Preview.10 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \
