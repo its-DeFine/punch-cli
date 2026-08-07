@@ -11,9 +11,10 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-`v0.1.0-preview.9` remains the published Linux/x64 package. `v0.1.0-preview.11` is
-`GATED_UNRELEASED` until GitHub shows its non-draft prerelease with the archive
-and checksum assets. A source commit does not make either version installable.
+`v0.1.0-preview.11` remains the published Linux/x64 package. `v0.1.0-preview.12`
+is `GATED_UNRELEASED` until GitHub shows its non-draft prerelease with the
+archive and checksum assets. A source commit does not make either version
+installable.
 Use only release assets together with the matching immutable image set in
 [Release and verification policy](docs/RELEASES.md).
 
@@ -39,7 +40,7 @@ Use only release assets together with the matching immutable image set in
 2. Obtain a single-use Buyer or Provider invitation from Punch.
 3. Install the matching CLI from that verified release; see [Installation](docs/INSTALL.md).
 4. Follow the documentation tagged for the exact installed release. The
-   Preview.11 Buyer flow is documented here before publication for review only.
+   Preview.12 guided flow is documented here before publication for review only.
 
 ```bash
 punch-buyer --help
@@ -58,6 +59,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Provider guide](docs/PROVIDER.md)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
+- [Autonomous agent runbook](docs/AGENT_RUNBOOK.md) (gated Preview.12 candidate)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security model](docs/SECURITY.md)
 - [Platform support](docs/PLATFORMS.md)
@@ -65,6 +67,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Release and verification policy](docs/RELEASES.md)
 - [Preview.9 clean-v4 supervised pilot](docs/PREVIEW9.md)
 - [Preview.11 supervised Buyer bootstrap](docs/PREVIEW11.md) (gated and unreleased)
+- [Preview.12 guided Punch home](docs/PREVIEW12.md) (gated and unreleased)
 - [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (included in the gated Preview.11 release source)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)

@@ -1,8 +1,8 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the isolated guided-CLI branch. It
-> is not part of the published Preview.11 archive until a later release binds
-> this source and its `punch` launcher.
+> **Release boundary:** this page documents the gated Preview.12 candidate. It
+> is not installable until the exact Preview.12 archive and checksum are
+> published in a non-draft prerelease.
 
 Run `punch` in a terminal to open the interactive home. It is a continuous,
 local navigation layer over the existing role commands, not a one-time setup
@@ -28,4 +28,7 @@ does not hide sudo, create a second enrollment code, or bypass a failed setup.
 
 For scripts and automation, keep using `punch-buyer ...` and
 `punch-provider ...`, or use the equivalent `punch buyer ...` and
-`punch provider ...` forwarding forms. Exit codes are preserved.
+`punch provider ...` forwarding forms. Exit codes are preserved. Autonomous
+use must follow the separate custody, approval, retry, and state rules in the
+[Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
+interactive prompts.

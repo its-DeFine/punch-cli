@@ -8,7 +8,7 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-`v0.1.0-preview.9` remains the supported Linux/x64 supervised-pilot package only when
+`v0.1.0-preview.11` remains the supported Linux/x64 supervised-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
@@ -55,6 +55,22 @@ ownership/non-enumeration, replay, order-versus-unlist, and terminal-retirement
 contract. That proof is not a release artifact or exact archive acceptance.
 The commands remain unavailable until the same non-draft release publishes the
 matching archive and checksum assets.
+
+## Preview.12 gate
+
+Preview.12 is `GATED_UNRELEASED`. It adds the continuous state-aware `punch`
+home and the dedicated autonomous-agent runbook while preserving every
+Preview.11 lifecycle, access, zero-price, and settlement boundary. Its exact
+private release source is commit
+`1ec5d6ec6a86367a02cddd0496fd4c389159c42b`, tree
+`fb579c8177c43da2d992324d17429d49a517398a`. See
+[Preview.12](PREVIEW12.md) and its
+[runtime contract](preview12-runtime-contract.json).
+
+It becomes installable only after the matching Linux/x64 archive and
+`SHA256SUMS` are published in a non-draft prerelease. Guided and autonomous
+local acceptance does not replace the separate Preview.11 NetBird/SSH proof
+or constitute exact Preview.12 archive acceptance.
 
 Preview.9 adds the clean-v4 supervised lifecycle: operator-approved Provider
 onboarding, owner-targeted zero-price offers, idempotent Buyer order recovery,

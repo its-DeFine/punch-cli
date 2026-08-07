@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "punch.preview12-runtime-contract.v1",
+  "releaseVersion": "0.1.0-preview.12",
+  "privateReleaseSource": {
+    "commit": "1ec5d6ec6a86367a02cddd0496fd4c389159c42b",
+    "tree": "fb579c8177c43da2d992324d17429d49a517398a"
+  },
+  "provenRuntimeCommit": "76041898382f764d3404ecb12112b684bafad1af",
+  "platform": "linux-x64",
+  "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
+  "buyerNetBirdBootstrap": "PUNCH_JOIN_ONE_OFF_NARROW_GROUP",
+  "privilegedInstallConfirmationRequired": true,
+  "gatewayPort": 22222,
+  "offerPolicy": "OWNER_TARGETED_ZERO_ONLY",
+  "priceMinor": 0,
+  "paymentSettlementEnabled": false,
+  "selfServiceProviderOnboarding": false,
+  "guidedCli": {
+    "launcher": "punch",
+    "mode": "CONTINUOUS_STATE_AWARE_HOME",
+    "roles": ["BUYER", "PROVIDER"],
+    "directCommandsPreserved": true,
+    "agentRunbook": "docs/AGENT_RUNBOOK.md"
+  },
+  "providerOfferLifecycle": {
+    "schemaVersion": "punch.provider-offer-lifecycle.v1",
+    "commands": ["offer-status", "offer-unlist", "offer-retire"],
+    "focusedIntegrationProof": "INHERITED_PREVIEW11_DISPOSABLE_POSTGRES_PASS_1_OF_1",
+    "exactArchiveAcceptance": "PENDING"
+  },
+  "liveProof": "PENDING_EXACT_PREVIEW12_ARCHIVE_ACCEPTANCE",
+  "images": {
+    "validation": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86",
+    "workload": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce",
+    "interactive": "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311"
+  }
+}

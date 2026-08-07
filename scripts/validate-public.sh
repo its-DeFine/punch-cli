@@ -11,11 +11,22 @@ sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
-node --test tests/preview9-release-contract.mjs tests/preview11-release-contract.mjs
+node --test tests/preview9-release-contract.mjs tests/preview11-release-contract.mjs tests/preview12-release-contract.mjs
 
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do
   [ -s "$required" ] || {
     printf 'required public licensing template is missing: %s\n' "$required" >&2
+    exit 1
+  }
+done
+
+for preview12_requirement in \
+  'GATED_UNRELEASED' \
+  'continuous, state-aware `punch` home' \
+  'direct non-interactive command surface' \
+  'PENDING_EXACT_PREVIEW12_ARCHIVE_ACCEPTANCE'; do
+  grep -F -- "$preview12_requirement" docs/PREVIEW12.md docs/preview12-runtime-contract.json > /dev/null || {
+    printf 'preview.12 release contract missing required public statement: %s\n' "$preview12_requirement" >&2
     exit 1
   }
 done

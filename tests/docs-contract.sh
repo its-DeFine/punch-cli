@@ -13,10 +13,12 @@ require() {
   }
 }
 
-require README.md 'v0.1.0-preview.9'
 require README.md 'v0.1.0-preview.11'
+require README.md 'v0.1.0-preview.12'
 require docs/PREVIEW11.md 'GATED_UNRELEASED'
 require docs/PREVIEW11.md 'one-off, ephemeral setup key'
+require docs/PREVIEW12.md 'GATED_UNRELEASED'
+require docs/PREVIEW12.md 'continuous, state-aware `punch` home'
 require docs/PREVIEW10.md 'never publicly promoted'
 require docs/PREVIEW10.md '--offer-id'
 require docs/BUYER.md 'NetBird bootstrap'
@@ -61,8 +63,14 @@ require docs/COMMANDS.md 'Guided `punch` home'
 require docs/GUIDED_CLI.md 'continuous'
 require docs/GUIDED_CLI.md 'punch buyer'
 require docs/GUIDED_CLI.md 'punch provider'
+require docs/GUIDED_CLI.md 'Punch agent runbook'
+require docs/AGENT_RUNBOOK.md 'APPROVAL_REQUIRED'
+require docs/AGENT_RUNBOOK.md 'punch buyer stop'
+require docs/AGENT_RUNBOOK.md 'punch provider offer-retire'
 require docs/preview11-runtime-contract.json '0e615565780e60c49fd1c5fc6d1d07940e1d4be4'
 require docs/preview11-runtime-contract.json '76041898382f764d3404ecb12112b684bafad1af'
+require docs/preview12-runtime-contract.json '1ec5d6ec6a86367a02cddd0496fd4c389159c42b'
+require docs/preview12-runtime-contract.json 'PENDING_EXACT_PREVIEW12_ARCHIVE_ACCEPTANCE'
 
 node scripts/validate-targeted-zero-contract.js --self-test
 node scripts/generate-command-reference.mjs \
@@ -72,5 +80,6 @@ node scripts/generate-command-reference.mjs \
 node scripts/generate-command-reference.mjs --self-test
 node scripts/run-docs-smoke.mjs --self-test
 node scripts/scan-public-material.mjs --self-test
+node --test tests/agent-runbook-contract.mjs
 
 printf '%s\n' 'public docs command/proof contract: PASS'
