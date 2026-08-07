@@ -88,9 +88,16 @@ check_link() {
 }
 
 case "$role" in
-  buyer) check_link punch-buyer ;;
-  provider) check_link punch-provider ;;
+  buyer)
+    check_link punch
+    check_link punch-buyer
+    ;;
+  provider)
+    check_link punch
+    check_link punch-provider
+    ;;
   all)
+    check_link punch
     check_link punch-buyer
     check_link punch-provider
     ;;
@@ -101,7 +108,7 @@ trap 'rm -rf -- "$tmp_dir"' EXIT HUP INT TERM
 mkdir -- "$tmp_dir"
 cp -R -- "$payload_dir"/. "$tmp_dir"/
 
-for command in punch-buyer punch-provider; do
+for command in punch punch-buyer punch-provider; do
   [ -x "$tmp_dir/bin/$command" ] || fail "release command is missing: $command"
 done
 
@@ -119,9 +126,16 @@ install_link() {
 }
 
 case "$role" in
-  buyer) install_link punch-buyer ;;
-  provider) install_link punch-provider ;;
+  buyer)
+    install_link punch
+    install_link punch-buyer
+    ;;
+  provider)
+    install_link punch
+    install_link punch-provider
+    ;;
   all)
+    install_link punch
     install_link punch-buyer
     install_link punch-provider
     ;;

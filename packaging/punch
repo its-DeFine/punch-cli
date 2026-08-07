@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+
+fail() {
+  printf 'punch launcher: %s\n' "$1" >&2
+  exit 1
+}
+
+launcher=$0
+[ "$(basename -- "$launcher")" = punch ] || fail 'unexpected launcher name'
+if [ -L "$launcher" ]; then
+  target=$(readlink "$launcher") || fail 'cannot read launcher link'
+  case "$target" in
+    /*) launcher=$target ;;
+    *) launcher=$(dirname -- "$launcher")/$target ;;
+  esac
+  [ ! -L "$launcher" ] || fail 'refusing a chained launcher link'
+fi
+
+[ -f "$launcher" ] || fail 'launcher target is missing'
+[ "$(basename -- "$launcher")" = punch ] || fail 'unexpected launcher target'
+launcher_dir=$(CDPATH= cd -- "$(dirname -- "$launcher")" && pwd -P) || fail 'cannot resolve launcher directory'
+program_dir=$(CDPATH= cd -- "$launcher_dir/.." && pwd -P) || fail 'cannot resolve program directory'
+[ -x "$program_dir/runtime/bin/node" ] || fail 'bundled runtime is missing'
+[ -f "$program_dir/lib/punch.mjs" ] && [ ! -L "$program_dir/lib/punch.mjs" ] || fail 'guided implementation is missing or unsafe'
+
+exec "$program_dir/runtime/bin/node" "$program_dir/lib/punch.mjs" "$@"

@@ -58,7 +58,7 @@ if [ -d "$bin_dir" ]; then
   bin_dir=$(CDPATH= cd -- "$bin_dir" && pwd -P)
 fi
 
-for command in punch-buyer punch-provider; do
+for command in punch punch-buyer punch-provider; do
   link=$bin_dir/$command
   if [ -L "$link" ]; then
     target=$(readlink "$link")

@@ -8,6 +8,10 @@ Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
+The isolated guided-CLI branch also adds a state-aware `punch` home without
+changing either role command. Its release boundary and behavior are documented
+in [Guided `punch` home](GUIDED_CLI.md).
+
 ## Buyer
 
 ```text
