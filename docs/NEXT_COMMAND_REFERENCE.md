@@ -17,16 +17,16 @@ are published. Current released guidance remains in [Command reference](COMMANDS
 <!-- GENERATED CLI CONTRACT:BEGIN -->
 <!-- proof: LOCAL_DETERMINISTIC_PASS -->
 <!-- authority: MANAGER_APPROVED_HANDOFF_ONLY; release-authority: false -->
-<!-- contract-digest: 914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52 -->
-<!-- artifact-digest: 0a85ef7ecb2d12ae1224fb9b92358b3de5fdeb3aff8fa36d344fca7236b5170f -->
+<!-- contract-digest: 6d098376d9fc28f8ae890cd4ce3b2b3b56c630ee14d7780d61c813afc0dfa72e -->
+<!-- artifact-digest: e780a7b5e9278c36ca828b8f9c06b6701ae694cf204ff24b98b048f4e5f65bfb -->
 {
   "schemaVersion": "punch.public-cli-contract.v1",
-  "contractDigest": "914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52",
+  "contractDigest": "6d098376d9fc28f8ae890cd4ce3b2b3b56c630ee14d7780d61c813afc0dfa72e",
   "proofLabel": "LOCAL_DETERMINISTIC_PASS",
   "releaseStatus": "GATED_UNRELEASED",
   "authority": "MANAGER_APPROVED_HANDOFF_ONLY",
-  "artifactId": "private-release-source:803305b295771e54186f5a2ea7a862b9ef04f6c4:tree:847886f38766d5e2723ae376e54a4211390db6b7:runtime:76041898382f764d3404ecb12112b684bafad1af",
-  "artifactDigest": "0a85ef7ecb2d12ae1224fb9b92358b3de5fdeb3aff8fa36d344fca7236b5170f",
+  "artifactId": "private-release-source:681fc45f56d17515a3202ce27de6006181a5ba6b:tree:0ec00e7b08d4e52b7d874bce8f7ae1fadd48be06:runtime:76041898382f764d3404ecb12112b684bafad1af",
+  "artifactDigest": "e780a7b5e9278c36ca828b8f9c06b6701ae694cf204ff24b98b048f4e5f65bfb",
   "provider": {
     "executable": "punch-provider",
     "booleanFlags": [

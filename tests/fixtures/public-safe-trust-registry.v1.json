@@ -6,12 +6,12 @@
   "proofLabel": "LOCAL_DETERMINISTIC_PASS",
   "entries": [
     {
-      "sourceIdentity": {"kind": "DECLARED", "value": "private-release-source:803305b295771e54186f5a2ea7a862b9ef04f6c4:tree:847886f38766d5e2723ae376e54a4211390db6b7:runtime:76041898382f764d3404ecb12112b684bafad1af"},
-      "artifactDigest": "0a85ef7ecb2d12ae1224fb9b92358b3de5fdeb3aff8fa36d344fca7236b5170f",
+      "sourceIdentity": {"kind": "DECLARED", "value": "private-release-source:681fc45f56d17515a3202ce27de6006181a5ba6b:tree:0ec00e7b08d4e52b7d874bce8f7ae1fadd48be06:runtime:76041898382f764d3404ecb12112b684bafad1af"},
+      "artifactDigest": "e780a7b5e9278c36ca828b8f9c06b6701ae694cf204ff24b98b048f4e5f65bfb",
       "providerEntrypointDigest": "3177704343e41e084e4a7f7da161a875458a32c0d6ba007babb338ba3647b4f7",
       "buyerEntrypointDigest": "8e7e5eb51e71bd76ac31886e0904290b615a96424d41120b156165fdb8d3d7fb",
       "sbomDigest": null,
-      "contractDigest": "914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52",
+      "contractDigest": "6d098376d9fc28f8ae890cd4ce3b2b3b56c630ee14d7780d61c813afc0dfa72e",
       "trustState": "HANDOFF_APPROVED"
     }
   ]

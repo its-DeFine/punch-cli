@@ -17,8 +17,8 @@ test("Preview.10 public contract is exact, gated, and zero-settlement", () => {
     schemaVersion: "punch.preview10-runtime-contract.v1",
     releaseVersion: "0.1.0-preview.10",
     privateReleaseSource: {
-      commit: "803305b295771e54186f5a2ea7a862b9ef04f6c4",
-      tree: "847886f38766d5e2723ae376e54a4211390db6b7",
+      commit: "681fc45f56d17515a3202ce27de6006181a5ba6b",
+      tree: "0ec00e7b08d4e52b7d874bce8f7ae1fadd48be06",
     },
     provenRuntimeCommit: "76041898382f764d3404ecb12112b684bafad1af",
     platform: "linux-x64",
@@ -58,7 +58,7 @@ test("Current Buyer docs require confirmation and keep setup-key values out of a
 test("Preview.10 Provider offer lifecycle reference binds the approved release source", () => {
   const handoff = json("tests/fixtures/public-safe-contract.v1.json");
   const binding = handoff.buildBinding;
-  const source = "private-release-source:803305b295771e54186f5a2ea7a862b9ef04f6c4:tree:847886f38766d5e2723ae376e54a4211390db6b7:runtime:76041898382f764d3404ecb12112b684bafad1af";
+  const source = "private-release-source:681fc45f56d17515a3202ce27de6006181a5ba6b:tree:0ec00e7b08d4e52b7d874bce8f7ae1fadd48be06:runtime:76041898382f764d3404ecb12112b684bafad1af";
   assert.deepEqual(binding.sourceIdentity, { kind: "DECLARED", value: source });
   assert.equal(binding.providerEntrypointDigest, "3177704343e41e084e4a7f7da161a875458a32c0d6ba007babb338ba3647b4f7");
   assert.equal(binding.buyerEntrypointDigest, "8e7e5eb51e71bd76ac31886e0904290b615a96424d41120b156165fdb8d3d7fb");
