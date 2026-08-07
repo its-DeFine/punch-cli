@@ -1,9 +1,9 @@
 {
-  "schemaVersion": "punch.preview10-runtime-contract.v1",
-  "releaseVersion": "0.1.0-preview.10",
+  "schemaVersion": "punch.preview11-runtime-contract.v1",
+  "releaseVersion": "0.1.0-preview.11",
   "privateReleaseSource": {
-    "commit": "13c3006496227cad7a73767204698b44822c048c",
-    "tree": "9ca0b9ac25c836609d88f04849ac27b7f97ce38f"
+    "commit": "2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f",
+    "tree": "e34959cf3179186d4558e3fa1e345e628b8c9e15"
   },
   "provenRuntimeCommit": "76041898382f764d3404ecb12112b684bafad1af",
   "platform": "linux-x64",

@@ -14,9 +14,11 @@ require() {
 }
 
 require README.md 'v0.1.0-preview.9'
-require README.md 'v0.1.0-preview.10'
-require docs/PREVIEW10.md 'GATED_UNRELEASED'
-require docs/PREVIEW10.md 'one-off, ephemeral setup key'
+require README.md 'v0.1.0-preview.11'
+require docs/PREVIEW11.md 'GATED_UNRELEASED'
+require docs/PREVIEW11.md 'one-off, ephemeral setup key'
+require docs/PREVIEW10.md 'never publicly promoted'
+require docs/PREVIEW10.md '--offer-id'
 require docs/BUYER.md 'NetBird bootstrap'
 require docs/BUYER.md 'mode-`0600`'
 require docs/PREVIEW9.md 'clean-v4 supervised pilot'
@@ -48,15 +50,15 @@ require docs/PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md '300-second overa
 require docs/schemas/buyer-stop-operation.v1.json 'punch.buyer-stop-operation.v1'
 require docs/NEXT_COMMAND_REFERENCE.md 'LOCAL_DETERMINISTIC_PASS'
 require docs/NEXT_COMMAND_REFERENCE.md 'release-authority: false'
-require docs/OFFER_LIFECYCLE_PREVIEW.md 'Preview.10 release source — not published'
+require docs/OFFER_LIFECYCLE_PREVIEW.md 'Preview.11 release source — not published'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'not in the published `v0.1.0-preview.9` archive'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'It never stops, revokes, fences, or cleans up an accepted contract.'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'The exact replay returns the original durable receipt.'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'does not delete, relist, or recreate either record.'
 require docs/COMMANDS.md 'do not alter the Buyer command surface.'
-require docs/COMMANDS.md 'included in the supervised Preview.10 release source'
-require docs/preview10-runtime-contract.json '13c3006496227cad7a73767204698b44822c048c'
-require docs/preview10-runtime-contract.json '76041898382f764d3404ecb12112b684bafad1af'
+require docs/COMMANDS.md 'included in the supervised Preview.11 release source'
+require docs/preview11-runtime-contract.json '2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f'
+require docs/preview11-runtime-contract.json '76041898382f764d3404ecb12112b684bafad1af'
 
 node scripts/validate-targeted-zero-contract.js --self-test
 node scripts/generate-command-reference.mjs \

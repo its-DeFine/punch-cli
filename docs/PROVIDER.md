@@ -166,6 +166,6 @@ Preview.9 is zero-price only. Payment, settlement, payout, refunds, and paid
 offer economics are outside this release's acceptance boundary.
 
 `offer-status`, `offer-unlist`, and `offer-retire` are not Preview.9 commands.
-They are included in the supervised Preview.10 release source, but must not be
+They are included in the supervised Preview.11 release source, but must not be
 used until its matching archive is published. See [Provider offer
 lifecycle](OFFER_LIFECYCLE_PREVIEW.md).

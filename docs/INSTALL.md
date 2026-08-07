@@ -42,7 +42,7 @@ a reference Provider service unit and agent configuration under `provider/`,
 but does not install or enable them. A Punch operator must render, review, and
 install those files during supervised Provider onboarding.
 
-Preview.10 Buyer `join` is different from archive installation: on supported
+Preview.11 Buyer `join` is different from archive installation: on supported
 Linux/x64, if the official NetBird client is missing, `join` explains the
 privileged package change and requires interactive confirmation or explicit
 `--yes` before downloading the official installer. The script is downloaded to

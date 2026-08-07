@@ -2,9 +2,9 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.10 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
+> **Preview.11 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
 > `order`, `status`, `output`, `ssh`, and `stop`. It is supported only from the
-> non-draft `v0.1.0-preview.10` release archive with its matching checksum. The
+> non-draft `v0.1.0-preview.11` release archive with its matching checksum. The
 > proven pilot used an owner-targeted zero-price offer and no payment,
 > settlement, payout, or refund path.
 
@@ -127,10 +127,10 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.10 uses zero-price supervised offers and does not
+container preparation. Preview.11 uses zero-price supervised offers and does not
 exercise payment, settlement, payout, or refund behavior.
 
-For Preview.10 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.11 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -151,13 +151,13 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.10 carries SSH bytes through a
+accepting the replacement. Preview.11 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
 ## 7. Stop and release
 
-Preview.10 preserves the approved asynchronous Buyer stop command:
+Preview.11 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \

@@ -1,7 +1,7 @@
 # Command reference
 
 > **Version boundary:** the clean-v4 Buyer stop, NetBird gateway, and supervised
-> targeted-zero setup below apply to `v0.1.0-preview.10` when its non-draft prerelease archive
+> targeted-zero setup below apply to `v0.1.0-preview.11` when its non-draft prerelease archive
 > and checksum are published.
 
 Punch exposes two role-specific commands. The invitation and server-side
@@ -29,13 +29,13 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.10 Buyers do not pass a zero-price flag. An operator-approved
+Preview.11 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
 ## Provider
 
-The supported Preview.10 supervised path is:
+The supported Preview.11 supervised path is:
 
 | Command | Purpose |
 | --- | --- |
@@ -69,8 +69,8 @@ before the offer becomes `LISTED`.
 
 ### Provider offer lifecycle
 
-`offer-status`, `offer-unlist`, and `offer-retire` are included in the supervised Preview.10 release source. They are absent from published
-`v0.1.0-preview.9` and must not be used until the matching Preview.10 archive
+`offer-status`, `offer-unlist`, and `offer-retire` are included in the supervised Preview.11 release source. They are absent from published
+`v0.1.0-preview.9` and must not be used until the matching Preview.11 archive
 is published. They do not alter the Buyer command surface.
 
 All three require `--machine-id`, `--state-dir`, `--agent-config`, and
@@ -90,9 +90,9 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Preview.9 has one owner-operated Provider-to-Buyer NetBird SSH and Buyer-stop
-proof. Preview.10 Buyer bootstrap remains gated until isolated Linux/x64
+proof. Preview.11 Buyer bootstrap remains gated until isolated Linux/x64
 acceptance. Neither proves payment settlement, refunds, arbitrary external
 Providers, multi-Provider scheduling, or general availability. The historical
 generated pre-release reference in
 [NEXT_COMMAND_REFERENCE.md](NEXT_COMMAND_REFERENCE.md) remains non-authoritative
-for the current release; [PREVIEW10.md](PREVIEW10.md) governs Preview.10.
+for the current release; [PREVIEW11.md](PREVIEW11.md) governs Preview.11.

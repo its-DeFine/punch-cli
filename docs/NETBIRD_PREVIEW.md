@@ -1,7 +1,7 @@
-# NetBird connectivity in Preview.10
+# NetBird connectivity in Preview.11
 
 > **Supervised pilot:** the Buyer-bootstrap transport is part of
-> `v0.1.0-preview.10` only with its matching clean-v4 runtime and release
+> `v0.1.0-preview.11` only with its matching clean-v4 runtime and release
 > archive. Until that archive is published, it is `GATED_UNRELEASED`.
 
 NetBird supplies encrypted peer connectivity, NAT traversal, and relay fallback
@@ -45,6 +45,6 @@ harmless GPU command succeeded while the contract was active. Buyer stop closed
 the existing session; a fresh connection was rejected; exact stop replay was
 safe; and cleanup removed the gateway listener and workload.
 
-That proof predates automatic Buyer bootstrap. Preview.10 remains gated until
+That proof predates automatic Buyer bootstrap. Preview.11 remains gated until
 the exact archive completes isolated Linux/x64 Buyer acceptance. Neither proof
 certifies every NAT combination, relay region, or self-hosted NetBird topology.

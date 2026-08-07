@@ -12,13 +12,13 @@ const images = {
   interactive: "ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311",
 };
 
-test("Preview.10 public contract is exact, gated, and zero-settlement", () => {
-  assert.deepEqual(json("docs/preview10-runtime-contract.json"), {
-    schemaVersion: "punch.preview10-runtime-contract.v1",
-    releaseVersion: "0.1.0-preview.10",
+test("Preview.11 public contract is exact, gated, and zero-settlement", () => {
+  assert.deepEqual(json("docs/preview11-runtime-contract.json"), {
+    schemaVersion: "punch.preview11-runtime-contract.v1",
+    releaseVersion: "0.1.0-preview.11",
     privateReleaseSource: {
-      commit: "13c3006496227cad7a73767204698b44822c048c",
-      tree: "9ca0b9ac25c836609d88f04849ac27b7f97ce38f",
+      commit: "2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f",
+      tree: "e34959cf3179186d4558e3fa1e345e628b8c9e15",
     },
     provenRuntimeCommit: "76041898382f764d3404ecb12112b684bafad1af",
     platform: "linux-x64",
@@ -39,11 +39,13 @@ test("Preview.10 public contract is exact, gated, and zero-settlement", () => {
     liveProof: "PENDING_EXACT_ARCHIVE_ACCEPTANCE",
     images,
   });
-  assert.match(text("docs/PREVIEW10.md"), /GATED_UNRELEASED/);
-  assert.match(text("docs/PREVIEW10.md"), /one-off, ephemeral setup key/);
-  assert.match(text("docs/PREVIEW10.md"), /does\s+not need a NetBird dashboard/);
-  assert.match(text("docs/PREVIEW10.md"), /offer-unlist/);
-  assert.match(text("docs/PREVIEW10.md"), /exact archive acceptance/);
+  assert.match(text("docs/PREVIEW11.md"), /GATED_UNRELEASED/);
+  assert.match(text("docs/PREVIEW11.md"), /one-off, ephemeral setup key/);
+  assert.match(text("docs/PREVIEW11.md"), /does\s+not need a NetBird dashboard/);
+  assert.match(text("docs/PREVIEW11.md"), /offer-unlist/);
+  assert.match(text("docs/PREVIEW11.md"), /exact archive acceptance/);
+  assert.match(text("docs/PREVIEW10.md"), /never publicly promoted/);
+  assert.match(text("docs/PREVIEW10.md"), /--offer-id/);
 });
 
 test("Current Buyer docs require confirmation and keep setup-key values out of argv", () => {
@@ -55,10 +57,10 @@ test("Current Buyer docs require confirmation and keep setup-key values out of a
   assert.doesNotMatch(docs, /--setup-key\s+[A-Za-z0-9_-]+/);
 });
 
-test("Preview.10 Provider offer lifecycle reference binds the approved release source", () => {
+test("Preview.11 Provider offer lifecycle reference binds the approved release source", () => {
   const handoff = json("tests/fixtures/public-safe-contract.v1.json");
   const binding = handoff.buildBinding;
-  const source = "private-release-source:13c3006496227cad7a73767204698b44822c048c:tree:9ca0b9ac25c836609d88f04849ac27b7f97ce38f:runtime:76041898382f764d3404ecb12112b684bafad1af";
+  const source = "private-release-source:2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f:tree:e34959cf3179186d4558e3fa1e345e628b8c9e15:runtime:76041898382f764d3404ecb12112b684bafad1af";
   assert.deepEqual(binding.sourceIdentity, { kind: "DECLARED", value: source });
   assert.equal(binding.providerEntrypointDigest, "3177704343e41e084e4a7f7da161a875458a32c0d6ba007babb338ba3647b4f7");
   assert.equal(binding.buyerEntrypointDigest, "8e7e5eb51e71bd76ac31886e0904290b615a96424d41120b156165fdb8d3d7fb");

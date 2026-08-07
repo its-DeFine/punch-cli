@@ -1,6 +1,6 @@
 # Troubleshooting
 
-> **Version boundary:** this page applies to `v0.1.0-preview.10` when its
+> **Version boundary:** this page applies to `v0.1.0-preview.11` when its
 > non-draft prerelease archive and checksum are published for Linux/x64.
 
 ## Invitation or setup rejected
@@ -73,7 +73,7 @@ must be rejected.
 
 ## Payment or refund question
 
-Preview.10 uses owner-targeted zero-price offers. Payment, settlement, payout,
+Preview.11 uses owner-targeted zero-price offers. Payment, settlement, payout,
 refunds, and paid offer economics were not activated or accepted by this
 release. Do not infer financial behavior from the lifecycle result.
 

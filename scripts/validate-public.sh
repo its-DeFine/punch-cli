@@ -11,7 +11,7 @@ sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
-node --test tests/preview9-release-contract.mjs tests/preview10-release-contract.mjs
+node --test tests/preview9-release-contract.mjs tests/preview11-release-contract.mjs
 
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do
   [ -s "$required" ] || {
@@ -20,14 +20,14 @@ for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/
   }
 done
 
-for preview10_requirement in \
+for preview11_requirement in \
   'GATED_UNRELEASED' \
   'one-off, ephemeral setup key' \
   'NetBird dashboard, NetBird login' \
   'PENDING_EXACT_ARCHIVE_ACCEPTANCE' \
   'offer-unlist'; do
-  grep -F -- "$preview10_requirement" docs/PREVIEW10.md docs/preview10-runtime-contract.json > /dev/null || {
-    printf 'preview.10 release contract missing required public statement: %s\n' "$preview10_requirement" >&2
+  grep -F -- "$preview11_requirement" docs/PREVIEW11.md docs/preview11-runtime-contract.json > /dev/null || {
+    printf 'preview.11 release contract missing required public statement: %s\n' "$preview11_requirement" >&2
     exit 1
   }
 done

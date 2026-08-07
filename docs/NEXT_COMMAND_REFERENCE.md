@@ -1,6 +1,6 @@
-# Preview.10 release-source command reference
+# Preview.11 release-source command reference
 
-This generated reference is a `GATED_UNRELEASED` Preview.10 release-source
+This generated reference is a `GATED_UNRELEASED` Preview.11 release-source
 contract. It is derived from the manager-approved sanitized handoff and the
 separate trust-registry fixture, whose `releaseAuthority` is `false`. It proves
 only `LOCAL_DETERMINISTIC_PASS`; it does not prove a published archive,
@@ -10,23 +10,23 @@ The generated `artifactDigest` is a deterministic release-source binding of the
 declared source identity and role entrypoint hashes. It is not a `SHA256SUMS`
 archive digest.
 
-Do not use these commands until the matching Preview.10 archive and authority
+Do not use these commands until the matching Preview.11 archive and authority
 are published. Current released guidance remains in [Command reference](COMMANDS.md),
 [Buyer guide](BUYER.md), and [Provider guide](PROVIDER.md).
 
 <!-- GENERATED CLI CONTRACT:BEGIN -->
 <!-- proof: LOCAL_DETERMINISTIC_PASS -->
 <!-- authority: MANAGER_APPROVED_HANDOFF_ONLY; release-authority: false -->
-<!-- contract-digest: c860927b5ddab76b82f69d63f76dd4dc57daa2b222605deb6b6aab491736ddf7 -->
-<!-- artifact-digest: 7d1d93585a16aaed3b6254f17ad86539fd3da7c0538f1d5cea9b085d92297f44 -->
+<!-- contract-digest: 2cb71190ddf89454494b7b61460e05238b5a07e64957383b4db82a6fb2a3c572 -->
+<!-- artifact-digest: e03f5ede8e0f6b067eb811c37d13babd49264e9d5be75c3b84e8a6d6a55743b1 -->
 {
   "schemaVersion": "punch.public-cli-contract.v1",
-  "contractDigest": "c860927b5ddab76b82f69d63f76dd4dc57daa2b222605deb6b6aab491736ddf7",
+  "contractDigest": "2cb71190ddf89454494b7b61460e05238b5a07e64957383b4db82a6fb2a3c572",
   "proofLabel": "LOCAL_DETERMINISTIC_PASS",
   "releaseStatus": "GATED_UNRELEASED",
   "authority": "MANAGER_APPROVED_HANDOFF_ONLY",
-  "artifactId": "private-release-source:13c3006496227cad7a73767204698b44822c048c:tree:9ca0b9ac25c836609d88f04849ac27b7f97ce38f:runtime:76041898382f764d3404ecb12112b684bafad1af",
-  "artifactDigest": "7d1d93585a16aaed3b6254f17ad86539fd3da7c0538f1d5cea9b085d92297f44",
+  "artifactId": "private-release-source:2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f:tree:e34959cf3179186d4558e3fa1e345e628b8c9e15:runtime:76041898382f764d3404ecb12112b684bafad1af",
+  "artifactDigest": "e03f5ede8e0f6b067eb811c37d13babd49264e9d5be75c3b84e8a6d6a55743b1",
   "provider": {
     "executable": "punch-provider",
     "booleanFlags": [

@@ -24,25 +24,32 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.10 gate
+## Preview.10 superseded
 
-Preview.10 is `GATED_UNRELEASED`. It becomes installable only when a non-draft
+Preview.10 was never publicly promoted: exact archive acceptance found that the
+Provider rejected documented `--offer-id`. Its immutable tags, private
+prerelease, and unpromoted public draft remain historical records; Preview.11
+supersedes it.
+
+## Preview.11 gate
+
+Preview.11 is `GATED_UNRELEASED`. It becomes installable only when a non-draft
 GitHub prerelease publishes the matching Linux/x64 archive and `SHA256SUMS`, and
 the exact archive passes isolated Buyer acceptance. Its private runtime binding
-is release source `13c3006496227cad7a73767204698b44822c048c`, tree
-`9ca0b9ac25c836609d88f04849ac27b7f97ce38f`, and proven runtime/builder commit
+is release source `2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f`, tree
+`e34959cf3179186d4558e3fa1e345e628b8c9e15`, and proven runtime/builder commit
 `76041898382f764d3404ecb12112b684bafad1af`.
 
-Preview.10 adds role-aware Buyer NetBird bootstrap to `join`: explicit consent
+Preview.11 adds role-aware Buyer NetBird bootstrap to `join`: explicit consent
 before any privileged client installation, one one-off ephemeral enrollment
 bound to the approved Buyer and narrow Buyer group, private setup-key-file
 delivery, startup connectivity verification, and immediate local key removal.
 The Buyer needs no NetBird dashboard, login, or second code. The payment and
 Provider-governance boundaries below remain unchanged. See
-[Preview.10](PREVIEW10.md) and its
-[runtime contract](preview10-runtime-contract.json).
+[Preview.11](PREVIEW11.md) and its
+[runtime contract](preview11-runtime-contract.json).
 
-Preview.10 also includes Provider-owned `offer-status`, `offer-unlist`, and
+Preview.11 also includes Provider-owned `offer-status`, `offer-unlist`, and
 `offer-retire`. A focused disposable PostgreSQL integration passes their
 ownership/non-enumeration, replay, order-versus-unlist, and terminal-retirement
 contract. That proof is not a release artifact or exact archive acceptance.

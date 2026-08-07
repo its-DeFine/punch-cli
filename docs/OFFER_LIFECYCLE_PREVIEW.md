@@ -1,12 +1,12 @@
 # Provider offer lifecycle preview
 
-> **Preview.10 release source — not published:** `offer-status`,
-> `offer-unlist`, and `offer-retire` are included in the supervised Preview.10
+> **Preview.11 release source — not published:** `offer-status`,
+> `offer-unlist`, and `offer-retire` are included in the supervised Preview.11
 > runtime source. They are not in the published `v0.1.0-preview.9` archive and
-> are not installed or supported until the matching non-draft Preview.10
+> are not installed or supported until the matching non-draft Preview.11
 > archive and `SHA256SUMS` are published.
 
-This Preview.10 release source does not change the published Preview.9 Provider
+This Preview.11 release source does not change the published Preview.9 Provider
 surface or any Buyer command, order, access, stop, or cleanup behavior.
 
 ## Provider-only contract
@@ -51,7 +51,7 @@ capacity, terminal direct lifecycle records, and fenced access. It retains audit
 
 ## Release gate
 
-This source stays gated until all of the following bind to the same Preview.10
+This source stays gated until all of the following bind to the same Preview.11
 release:
 
 1. A matching private runtime artifact implements the contract.
@@ -64,4 +64,4 @@ release:
 
 Until then, use only the commands in the installed release's `--help` output.
 This page is a fail-closed release-source contract, not a Preview.9 or
-Preview.10 deployment or release claim.
+Preview.11 deployment or release claim.
