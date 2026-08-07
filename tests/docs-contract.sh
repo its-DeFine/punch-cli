@@ -69,7 +69,7 @@ require docs/AGENT_RUNBOOK.md 'punch buyer stop'
 require docs/AGENT_RUNBOOK.md 'punch provider offer-retire'
 require docs/preview11-runtime-contract.json '0e615565780e60c49fd1c5fc6d1d07940e1d4be4'
 require docs/preview11-runtime-contract.json '76041898382f764d3404ecb12112b684bafad1af'
-require docs/preview12-runtime-contract.json '1ec5d6ec6a86367a02cddd0496fd4c389159c42b'
+require docs/preview12-runtime-contract.json '67b8735939154375fd6da3a44d540631af55777d'
 require docs/preview12-runtime-contract.json 'PENDING_EXACT_PREVIEW12_ARCHIVE_ACCEPTANCE'
 
 node scripts/validate-targeted-zero-contract.js --self-test

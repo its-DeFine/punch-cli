@@ -62,8 +62,8 @@ Preview.12 is `GATED_UNRELEASED`. It adds the continuous state-aware `punch`
 home and the dedicated autonomous-agent runbook while preserving every
 Preview.11 lifecycle, access, zero-price, and settlement boundary. Its exact
 private release source is commit
-`1ec5d6ec6a86367a02cddd0496fd4c389159c42b`, tree
-`fb579c8177c43da2d992324d17429d49a517398a`. See
+`67b8735939154375fd6da3a44d540631af55777d`, tree
+`ebac3e5a46d7005c8fd898d427b6f508326ab227`. See
 [Preview.12](PREVIEW12.md) and its
 [runtime contract](preview12-runtime-contract.json).
 

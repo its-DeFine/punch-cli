@@ -10,8 +10,8 @@ test("Preview.12 binds the exact guided source and unchanged pilot boundary", ()
   assert.equal(contract.schemaVersion, "punch.preview12-runtime-contract.v1");
   assert.equal(contract.releaseVersion, "0.1.0-preview.12");
   assert.deepEqual(contract.privateReleaseSource, {
-    commit: "1ec5d6ec6a86367a02cddd0496fd4c389159c42b",
-    tree: "fb579c8177c43da2d992324d17429d49a517398a",
+    commit: "67b8735939154375fd6da3a44d540631af55777d",
+    tree: "ebac3e5a46d7005c8fd898d427b6f508326ab227",
   });
   assert.equal(contract.platform, "linux-x64");
   assert.equal(contract.offerPolicy, "OWNER_TARGETED_ZERO_ONLY");
