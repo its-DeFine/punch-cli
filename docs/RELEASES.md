@@ -29,8 +29,8 @@ for the same OCI manifest.
 Preview.10 is `GATED_UNRELEASED`. It becomes installable only when a non-draft
 GitHub prerelease publishes the matching Linux/x64 archive and `SHA256SUMS`, and
 the exact archive passes isolated Buyer acceptance. Its private runtime binding
-is release source `681fc45f56d17515a3202ce27de6006181a5ba6b`, tree
-`0ec00e7b08d4e52b7d874bce8f7ae1fadd48be06`, and proven runtime/builder commit
+is release source `13c3006496227cad7a73767204698b44822c048c`, tree
+`9ca0b9ac25c836609d88f04849ac27b7f97ce38f`, and proven runtime/builder commit
 `76041898382f764d3404ecb12112b684bafad1af`.
 
 Preview.10 adds role-aware Buyer NetBird bootstrap to `join`: explicit consent

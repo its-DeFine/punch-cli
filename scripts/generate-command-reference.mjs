@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const formatVersion = 'punch.runtime-artifact-contract.v1';
 const bindingVersion = 'punch.runtime-artifact-binding.v1';
-const approvedHandoffContractDigest = '6d098376d9fc28f8ae890cd4ce3b2b3b56c630ee14d7780d61c813afc0dfa72e';
+const approvedHandoffContractDigest = 'c860927b5ddab76b82f69d63f76dd4dc57daa2b222605deb6b6aab491736ddf7';
 
 const topBindingKeys = [
   'schemaVersion', 'artifactKind', 'artifactId', 'contractPath', 'sourceRoot',

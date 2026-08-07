@@ -55,7 +55,7 @@ require docs/OFFER_LIFECYCLE_PREVIEW.md 'The exact replay returns the original d
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'does not delete, relist, or recreate either record.'
 require docs/COMMANDS.md 'do not alter the Buyer command surface.'
 require docs/COMMANDS.md 'included in the supervised Preview.10 release source'
-require docs/preview10-runtime-contract.json '681fc45f56d17515a3202ce27de6006181a5ba6b'
+require docs/preview10-runtime-contract.json '13c3006496227cad7a73767204698b44822c048c'
 require docs/preview10-runtime-contract.json '76041898382f764d3404ecb12112b684bafad1af'
 
 node scripts/validate-targeted-zero-contract.js --self-test
