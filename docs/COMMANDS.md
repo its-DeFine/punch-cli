@@ -43,6 +43,9 @@ The supported Preview.10 supervised path is:
 | `inventory` | Inspect locally visible CPU, RAM, disk, and optional GPU resources |
 | `identity-init` | Create the execution node's local signing identity |
 | `setup` | Submit bounded capacity and the operator-issued designated-Buyer zero authorization |
+| `offer-status` | Read one owned offer's lifecycle receipt |
+| `offer-unlist` | Stop new orders for one owned unaccepted offer |
+| `offer-retire` | Retire one eligible unlisted offer and environment |
 | `serve` | Run the outbound resident agent |
 | `status` | Read local agent status |
 | `drain` | Stop accepting new work before maintenance |
@@ -64,11 +67,16 @@ Provider setup creates the immutable offer request. There is no separate public
 offer-publish command. Deterministic validation and operator approval must pass
 before the offer becomes `LISTED`.
 
-### Gated Provider offer lifecycle preview
+### Provider offer lifecycle
 
-`offer-status`, `offer-unlist`, and `offer-retire` are a **GATED_UNRELEASED
-Preview.10+ candidate**. They are not in the published `v0.1.0-preview.9`
-archive, are not supported by its endpoint, and do not alter the Buyer command surface. Their future Provider-only contract and release gate are in the [Provider offer lifecycle preview](OFFER_LIFECYCLE_PREVIEW.md).
+`offer-status`, `offer-unlist`, and `offer-retire` are included in the supervised Preview.10 release source. They are absent from published
+`v0.1.0-preview.9` and must not be used until the matching Preview.10 archive
+is published. They do not alter the Buyer command surface.
+
+All three require `--machine-id`, `--state-dir`, `--agent-config`, and
+`--offer-id`. `offer-unlist` and `offer-retire` also require a stable
+`--idempotency-key`. The complete lifecycle and archive-release gate are in
+[Provider offer lifecycle](OFFER_LIFECYCLE_PREVIEW.md).
 
 ## Output and idempotency
 

@@ -29,7 +29,9 @@ for the same OCI manifest.
 Preview.10 is `GATED_UNRELEASED`. It becomes installable only when a non-draft
 GitHub prerelease publishes the matching Linux/x64 archive and `SHA256SUMS`, and
 the exact archive passes isolated Buyer acceptance. Its private runtime binding
-is `99fe8c30863ec331228c5f3696ecdbecb99d7b5d`.
+is release source `803305b295771e54186f5a2ea7a862b9ef04f6c4`, tree
+`847886f38766d5e2723ae376e54a4211390db6b7`, and proven runtime/builder commit
+`76041898382f764d3404ecb12112b684bafad1af`.
 
 Preview.10 adds role-aware Buyer NetBird bootstrap to `join`: explicit consent
 before any privileged client installation, one one-off ephemeral enrollment
@@ -39,6 +41,13 @@ The Buyer needs no NetBird dashboard, login, or second code. The payment and
 Provider-governance boundaries below remain unchanged. See
 [Preview.10](PREVIEW10.md) and its
 [runtime contract](preview10-runtime-contract.json).
+
+Preview.10 also includes Provider-owned `offer-status`, `offer-unlist`, and
+`offer-retire`. A focused disposable PostgreSQL integration passes their
+ownership/non-enumeration, replay, order-versus-unlist, and terminal-retirement
+contract. That proof is not a release artifact or exact archive acceptance.
+The commands remain unavailable until the same non-draft release publishes the
+matching archive and checksum assets.
 
 Preview.9 adds the clean-v4 supervised lifecycle: operator-approved Provider
 onboarding, owner-targeted zero-price offers, idempotent Buyer order recovery,

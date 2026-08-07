@@ -24,7 +24,8 @@ for preview10_requirement in \
   'GATED_UNRELEASED' \
   'one-off, ephemeral setup key' \
   'NetBird dashboard, NetBird login' \
-  'PENDING_ISOLATED_LINUX_BUYER_ACCEPTANCE'; do
+  'PENDING_EXACT_ARCHIVE_ACCEPTANCE' \
+  'offer-unlist'; do
   grep -F -- "$preview10_requirement" docs/PREVIEW10.md docs/preview10-runtime-contract.json > /dev/null || {
     printf 'preview.10 release contract missing required public statement: %s\n' "$preview10_requirement" >&2
     exit 1

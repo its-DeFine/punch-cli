@@ -1,23 +1,26 @@
 # Provider offer lifecycle preview
 
-> **GATED_UNRELEASED Preview.10+ candidate:** `offer-status`, `offer-unlist`, and `offer-retire` are not in the published `v0.1.0-preview.9` archive.
-> No source commit, private runtime proof, or Preview.10 documentation makes these commands installed or supported.
+> **Preview.10 release source — not published:** `offer-status`,
+> `offer-unlist`, and `offer-retire` are included in the supervised Preview.10
+> runtime source. They are not in the published `v0.1.0-preview.9` archive and
+> are not installed or supported until the matching non-draft Preview.10
+> archive and `SHA256SUMS` are published.
 
-This candidate does not change the published Preview.9 Provider surface or any
-Buyer command, order, access, stop, or cleanup behavior.
+This Preview.10 release source does not change the published Preview.9 Provider
+surface or any Buyer command, order, access, stop, or cleanup behavior.
 
-## Intended Provider-only contract
+## Provider-only contract
 
 An authenticated owning Provider will use these commands with an exact offer
 ID:
 
 | Command | Intended result |
 | --- | --- |
-| `punch-provider offer-status` | Read the Provider-owned offer's lifecycle status. |
-| `punch-provider offer-unlist --idempotency-key KEY` | Change a `LISTED` offer to `UNLISTED` only when it has no accepted obligation. |
-| `punch-provider offer-retire --idempotency-key KEY` | Irreversibly retire an eligible `UNLISTED` offer and its environment. |
+| `punch-provider offer-status --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID` | Read the Provider-owned offer's lifecycle status. |
+| `punch-provider offer-unlist --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY` | Change a `LISTED` offer to `UNLISTED` only when it has no accepted obligation. |
+| `punch-provider offer-retire --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY` | Irreversibly retire an eligible `UNLISTED` offer and its environment. |
 
-The planned JSON status receipt uses schema version
+The JSON status receipt uses schema version
 `punch.provider-offer-lifecycle.v1` and includes `offerId`, `environmentId`,
 `state`, `environmentState`, and `capacityReserved`. Mutation receipts also
 include a stable `operationId` and `replayed` flag. Ownership failure is
@@ -28,7 +31,7 @@ Use one stable idempotency key per mutation. Reusing it with different request c
 
 ## Safety rules
 
-The future lifecycle is one way:
+The lifecycle is one way:
 
 ```text
 LISTED -> UNLISTED -> RETIRED
@@ -48,8 +51,8 @@ capacity, terminal direct lifecycle records, and fenced access. It retains audit
 
 ## Release gate
 
-This candidate stays gated until all of the following bind to the same
-Preview.10-or-later release:
+This source stays gated until all of the following bind to the same Preview.10
+release:
 
 1. A matching private runtime artifact implements the contract.
 2. Focused integration proof covers Provider ownership/non-enumeration,
@@ -60,5 +63,5 @@ Preview.10-or-later release:
    public documentation drift gate.
 
 Until then, use only the commands in the installed release's `--help` output.
-This page is a fail-closed candidate contract, not a Preview.9 or Preview.10
-deployment or release claim.
+This page is a fail-closed release-source contract, not a Preview.9 or
+Preview.10 deployment or release claim.

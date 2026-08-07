@@ -1,34 +1,37 @@
-# Next gated command reference
+# Preview.10 release-source command reference
 
-This generated reference is a `GATED_UNRELEASED` public contract. It is
-derived from the manager-approved sanitized handoff and the separate trust
-registry fixture, whose `releaseAuthority` is `false`. It proves only
-`LOCAL_DETERMINISTIC_PASS`; it does not prove a published artifact,
-provenance, deployment, or live Buyer/Provider E2E.
+This generated reference is a `GATED_UNRELEASED` Preview.10 release-source
+contract. It is derived from the manager-approved sanitized handoff and the
+separate trust-registry fixture, whose `releaseAuthority` is `false`. It proves
+only `LOCAL_DETERMINISTIC_PASS`; it does not prove a published archive,
+deployment, or exact-archive Buyer/Provider E2E.
 
-Do not use these commands against live systems until a release-specific
-artifact and authority are published. Current released guidance remains in
-[Command reference](COMMANDS.md), [Buyer guide](BUYER.md), and [Provider guide](PROVIDER.md).
+The generated `artifactDigest` is a deterministic release-source binding of the
+declared source identity and role entrypoint hashes. It is not a `SHA256SUMS`
+archive digest.
+
+Do not use these commands until the matching Preview.10 archive and authority
+are published. Current released guidance remains in [Command reference](COMMANDS.md),
+[Buyer guide](BUYER.md), and [Provider guide](PROVIDER.md).
 
 <!-- GENERATED CLI CONTRACT:BEGIN -->
 <!-- proof: LOCAL_DETERMINISTIC_PASS -->
 <!-- authority: MANAGER_APPROVED_HANDOFF_ONLY; release-authority: false -->
-<!-- contract-digest: ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f -->
-<!-- artifact-digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+<!-- contract-digest: 914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52 -->
+<!-- artifact-digest: 0a85ef7ecb2d12ae1224fb9b92358b3de5fdeb3aff8fa36d344fca7236b5170f -->
 {
   "schemaVersion": "punch.public-cli-contract.v1",
-  "contractDigest": "ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f",
+  "contractDigest": "914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52",
   "proofLabel": "LOCAL_DETERMINISTIC_PASS",
   "releaseStatus": "GATED_UNRELEASED",
   "authority": "MANAGER_APPROVED_HANDOFF_ONLY",
-  "artifactId": "punch-public-safe-contract-fixture",
-  "artifactDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "artifactId": "private-release-source:803305b295771e54186f5a2ea7a862b9ef04f6c4:tree:847886f38766d5e2723ae376e54a4211390db6b7:runtime:76041898382f764d3404ecb12112b684bafad1af",
+  "artifactDigest": "0a85ef7ecb2d12ae1224fb9b92358b3de5fdeb3aff8fa36d344fca7236b5170f",
   "provider": {
     "executable": "punch-provider",
     "booleanFlags": [
       "help",
-      "json",
-      "all-gpus"
+      "json"
     ],
     "commands": [
       {
@@ -39,15 +42,6 @@ artifact and authority are published. Current released guidance remains in
           "credential-file"
         ],
         "synopsis": "join --invitation ABSOLUTE_JSON --punch-origin ORIGIN --credential-file ABSOLUTE_JSON"
-      },
-      {
-        "name": "rejoin",
-        "flags": [
-          "invitation",
-          "punch-origin",
-          "credential-file"
-        ],
-        "synopsis": "rejoin --invitation ABSOLUTE_JSON --punch-origin ORIGIN --credential-file ABSOLUTE_JSON"
       },
       {
         "name": "inventory",
@@ -72,7 +66,6 @@ artifact and authority are published. Current released guidance remains in
           "agent-config",
           "idempotency-key",
           "cpu-cores",
-          "all-gpus",
           "gpu-units",
           "gpu-uuid",
           "gpu-cdi",
@@ -83,21 +76,11 @@ artifact and authority are published. Current released guidance remains in
           "ram-mib",
           "disk-gib",
           "window-seconds",
-          "price-usdc-cents"
+          "price-minor",
+          "targeted-zero-authorization-id",
+          "targeted-buyer-actor-id"
         ],
-        "synopsis": "setup --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --idempotency-key KEY"
-      },
-      {
-        "name": "withdraw",
-        "flags": [
-          "machine-id",
-          "state-dir",
-          "agent-config",
-          "offer-id",
-          "offer-digest",
-          "idempotency-key"
-        ],
-        "synopsis": "withdraw --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID [--offer-digest SHA256] --idempotency-key KEY"
+        "synopsis": "setup --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --idempotency-key KEY --price-minor 0 --targeted-zero-authorization-id ID --targeted-buyer-actor-id ID"
       },
       {
         "name": "serve",
@@ -123,6 +106,38 @@ artifact and authority are published. Current released guidance remains in
           "state-dir"
         ],
         "synopsis": "drain --state-dir DIR"
+      },
+      {
+        "name": "offer-status",
+        "flags": [
+          "machine-id",
+          "state-dir",
+          "agent-config",
+          "offer-id"
+        ],
+        "synopsis": "offer-status --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID"
+      },
+      {
+        "name": "offer-unlist",
+        "flags": [
+          "machine-id",
+          "state-dir",
+          "agent-config",
+          "offer-id",
+          "idempotency-key"
+        ],
+        "synopsis": "offer-unlist --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY"
+      },
+      {
+        "name": "offer-retire",
+        "flags": [
+          "machine-id",
+          "state-dir",
+          "agent-config",
+          "offer-id",
+          "idempotency-key"
+        ],
+        "synopsis": "offer-retire --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY"
       }
     ],
     "flow": [

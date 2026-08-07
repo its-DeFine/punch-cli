@@ -1,13 +1,14 @@
-# Preview.10 supervised Buyer bootstrap
+# Preview.10 supervised Buyer bootstrap and Provider offer lifecycle
 
 > **GATED_UNRELEASED:** `v0.1.0-preview.10` is not installable until GitHub
 > publishes a non-draft Linux/x64 prerelease with a matching archive and
 > `SHA256SUMS` asset.
 
-Preview.10 keeps the Preview.9 clean-v4, owner-targeted zero-price lifecycle and
-adds supervised NetBird bootstrap to `punch-buyer join`. Payment settlement,
-payouts, refunds, public free offers, and self-service Provider onboarding stay
-disabled.
+Preview.10 keeps the Preview.9 clean-v4, owner-targeted zero-price lifecycle,
+adds supervised NetBird bootstrap to `punch-buyer join`, and includes
+Provider-owned `offer-status`, `offer-unlist`, and `offer-retire`. Payment
+settlement, payouts, refunds, public free offers, and self-service Provider
+onboarding stay disabled.
 
 ## Buyer join contract
 
@@ -32,8 +33,11 @@ do not obtain or paste a setup key manually.
 ## Proof boundary
 
 The machine-readable [Preview.10 runtime contract](preview10-runtime-contract.json)
-binds private runtime commit `99fe8c30863ec331228c5f3696ecdbecb99d7b5d`,
-Linux/x64, the existing immutable images, and this bootstrap contract. Focused
-local tests are not a live Buyer acceptance. The release remains gated until an
-isolated Linux/x64 Buyer completes join, discovery, targeted `$0` order,
-brokered SSH, Buyer stop, revocation, and cleanup with the exact archive.
+binds private release source `803305b295771e54186f5a2ea7a862b9ef04f6c4`, tree
+`847886f38766d5e2723ae376e54a4211390db6b7`, proven runtime/builder commit
+`76041898382f764d3404ecb12112b684bafad1af`, Linux/x64, the immutable images,
+and this contract. The Provider offer lifecycle has one disposable PostgreSQL
+integration pass; that is not exact archive acceptance. The release remains
+gated until an isolated Linux/x64 Buyer completes join, discovery, targeted
+`$0` order, brokered SSH, Buyer stop, revocation, and cleanup with the exact
+archive.

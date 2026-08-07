@@ -65,7 +65,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Release and verification policy](docs/RELEASES.md)
 - [Preview.9 clean-v4 supervised pilot](docs/PREVIEW9.md)
 - [Preview.10 supervised Buyer bootstrap](docs/PREVIEW10.md) (gated and unreleased)
-- [Provider offer lifecycle preview](docs/OFFER_LIFECYCLE_PREVIEW.md) (Preview.10+ candidate; gated and unreleased)
+- [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (included in the gated Preview.10 release source)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)
 - [Targeted zero-price test contract](docs/TARGETED_ZERO_TEST.md) (supervised Preview.9 only)

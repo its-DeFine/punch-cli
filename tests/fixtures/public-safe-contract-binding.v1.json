@@ -1,15 +1,15 @@
 {
   "schemaVersion": "punch.public-safe-contract-binding.v1",
   "artifactKind": "public-safe-contract-binding",
-  "contractDigest": "ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f",
+  "contractDigest": "914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52",
   "buildBinding": {
     "schemaVersion": "punch.build-binding.v1",
-    "sourceIdentity": {"kind": "DECLARED", "value": "punch-public-safe-contract-fixture"},
-    "artifactDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "providerEntrypointDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-    "buyerEntrypointDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "sourceIdentity": {"kind": "DECLARED", "value": "private-release-source:803305b295771e54186f5a2ea7a862b9ef04f6c4:tree:847886f38766d5e2723ae376e54a4211390db6b7:runtime:76041898382f764d3404ecb12112b684bafad1af"},
+    "artifactDigest": "0a85ef7ecb2d12ae1224fb9b92358b3de5fdeb3aff8fa36d344fca7236b5170f",
+    "providerEntrypointDigest": "3177704343e41e084e4a7f7da161a875458a32c0d6ba007babb338ba3647b4f7",
+    "buyerEntrypointDigest": "8e7e5eb51e71bd76ac31886e0904290b615a96424d41120b156165fdb8d3d7fb",
     "sbomDigest": null,
-    "contractDigest": "ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f"
+    "contractDigest": "914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52"
   },
   "trustRegistryPath": "tests/fixtures/public-safe-trust-registry.v1.json"
 }

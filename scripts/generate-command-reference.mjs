@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const formatVersion = 'punch.runtime-artifact-contract.v1';
 const bindingVersion = 'punch.runtime-artifact-binding.v1';
-const approvedHandoffContractDigest = 'ed2258c6839d161c0111c2d386a1f79ef67f23de31feb9a9265e645c88341e7f';
+const approvedHandoffContractDigest = '914229300cca2ea126c542ee273a795e7356735a8fb4ea1902642475b5008e52';
 
 const topBindingKeys = [
   'schemaVersion', 'artifactKind', 'artifactId', 'contractPath', 'sourceRoot',
@@ -115,18 +115,19 @@ const handoffRegistryKeys = ['schemaVersion', 'artifactKind', 'authorityStatus',
 const handoffRegistryEntryKeys = ['sourceIdentity', 'artifactDigest', 'providerEntrypointDigest', 'buyerEntrypointDigest', 'sbomDigest', 'contractDigest', 'trustState'];
 const handoffExpected = {
   provider: {
-    booleanFlags: ['help', 'json', 'all-gpus'],
+    booleanFlags: ['help', 'json'],
     flow: ['join', 'inventory', 'identity-init', 'setup', 'serve', 'status', 'drain'],
     commands: [
       ['join', ['invitation', 'punch-origin', 'credential-file'], 'join --invitation ABSOLUTE_JSON --punch-origin ORIGIN --credential-file ABSOLUTE_JSON'],
-      ['rejoin', ['invitation', 'punch-origin', 'credential-file'], 'rejoin --invitation ABSOLUTE_JSON --punch-origin ORIGIN --credential-file ABSOLUTE_JSON'],
       ['inventory', ['observed-at'], 'inventory [--observed-at ISO_TIMESTAMP]'],
       ['identity-init', ['state-dir', 'machine-id'], 'identity-init --state-dir DIR --machine-id ID'],
-      ['setup', ['machine-id', 'state-dir', 'agent-config', 'idempotency-key', 'cpu-cores', 'all-gpus', 'gpu-units', 'gpu-uuid', 'gpu-cdi', 'gpu-uuids', 'gpu-cdis', 'gpu-communication', 'vram-mib', 'ram-mib', 'disk-gib', 'window-seconds', 'price-usdc-cents'], 'setup --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --idempotency-key KEY'],
-      ['withdraw', ['machine-id', 'state-dir', 'agent-config', 'offer-id', 'offer-digest', 'idempotency-key'], 'withdraw --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID [--offer-digest SHA256] --idempotency-key KEY'],
+      ['setup', ['machine-id', 'state-dir', 'agent-config', 'idempotency-key', 'cpu-cores', 'gpu-units', 'gpu-uuid', 'gpu-cdi', 'gpu-uuids', 'gpu-cdis', 'gpu-communication', 'vram-mib', 'ram-mib', 'disk-gib', 'window-seconds', 'price-minor', 'targeted-zero-authorization-id', 'targeted-buyer-actor-id'], 'setup --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --idempotency-key KEY --price-minor 0 --targeted-zero-authorization-id ID --targeted-buyer-actor-id ID'],
       ['serve', ['machine-id', 'state-dir', 'agent-config', 'interval-ms'], 'serve --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON [--interval-ms N]'],
       ['status', ['state-dir', 'machine-id'], 'status --state-dir DIR --machine-id ID'],
-      ['drain', ['state-dir'], 'drain --state-dir DIR']
+      ['drain', ['state-dir'], 'drain --state-dir DIR'],
+      ['offer-status', ['machine-id', 'state-dir', 'agent-config', 'offer-id'], 'offer-status --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID'],
+      ['offer-unlist', ['machine-id', 'state-dir', 'agent-config', 'offer-id', 'idempotency-key'], 'offer-unlist --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY'],
+      ['offer-retire', ['machine-id', 'state-dir', 'agent-config', 'offer-id', 'idempotency-key'], 'offer-retire --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY']
     ]
   },
   buyer: {
