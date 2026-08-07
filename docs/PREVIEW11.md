@@ -33,8 +33,8 @@ do not obtain or paste a setup key manually.
 ## Proof boundary
 
 The machine-readable [Preview.11 runtime contract](preview11-runtime-contract.json)
-binds private release source `2d9889eeef738bddb339ca8e20c5cfd2a84a8f5f`, tree
-`e34959cf3179186d4558e3fa1e345e628b8c9e15`, proven runtime/builder commit
+binds private release source `0e615565780e60c49fd1c5fc6d1d07940e1d4be4`, tree
+`1b78916a4896459365b7ad3439a5e67bb5794f99`, proven runtime/builder commit
 `76041898382f764d3404ecb12112b684bafad1af`, Linux/x64, the immutable images,
 and this contract. The Provider offer lifecycle has one disposable PostgreSQL
 integration pass; that is not exact archive acceptance. The release remains
