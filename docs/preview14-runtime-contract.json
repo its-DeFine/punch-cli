@@ -3,10 +3,10 @@
   "releaseVersion": "0.1.0-preview.14",
   "releaseStatus": "GATED_UNRELEASED",
   "privateReleaseSource": {
-    "commit": "b4b6625984bb04d49e21c0024da09505170d1fb2",
-    "tree": "5233e3c4c307f3f9cc665c12e1244367ea96f5bf"
+    "commit": "27f952fd0b6ae1b651197512cbe81b5b13d29f4a",
+    "tree": "264f37f42f9e2ffade46b4a3695b204f44953fcf"
   },
-  "controlArchiveSha256": "sha256:0ecd8732f3ada26fa6bc2a80f31ef493750104c39e2c1eb67b8f57c6222d7891",
+  "controlArchiveSha256": "sha256:95d3b65a5bcf3854e6cc1248ebcfd492dc01fc6faacb7c968ded767a33c3734e",
   "artifactBinding": {
     "authority": "AUTHORITATIVE_PACKAGED_CLI_SURFACE_REQUIRED",
     "archiveSha256": null,

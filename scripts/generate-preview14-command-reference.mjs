@@ -12,9 +12,9 @@ const marker = /<!-- GENERATED PREVIEW14 COMMAND REFERENCE:BEGIN -->[\s\S]*?<!--
 const formatKeys = ['schemaVersion', 'artifactKind', 'releaseStatus', 'runtimeMatchRequired', 'contractSchema', 'requiredTopLevelKeys', 'privateRuntimeBindingKeys', 'artifactKeys', 'commandKeys', 'flagKeys', 'workflowKeys', 'securityKeys', 'generationRule'];
 const pendingArtifact = 'PENDING_DETERMINISTIC_BUILD';
 const expectedPrivateRuntimeBinding = Object.freeze({
-  commit: 'b4b6625984bb04d49e21c0024da09505170d1fb2',
-  tree: '5233e3c4c307f3f9cc665c12e1244367ea96f5bf',
-  controlArchiveSha256: 'sha256:0ecd8732f3ada26fa6bc2a80f31ef493750104c39e2c1eb67b8f57c6222d7891'
+  commit: '27f952fd0b6ae1b651197512cbe81b5b13d29f4a',
+  tree: '264f37f42f9e2ffade46b4a3695b204f44953fcf',
+  controlArchiveSha256: 'sha256:95d3b65a5bcf3854e6cc1248ebcfd492dc01fc6faacb7c968ded767a33c3734e'
 });
 
 function exactKeys(value, keys, label) {
