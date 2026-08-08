@@ -103,6 +103,8 @@ for required in \
   'REAL_DOCKER_ENGINE' \
   'REAL_REGISTRY_DIGEST_PULL' \
   'REAL_SSH_DATA_PLANE' \
+  'executionReceipt' \
+  'punch.preview14-clean-host-e2e-execution-receipt.v1' \
   'fakeDocker' \
   'fakeFetch' \
   'inMemoryControl' \
@@ -114,7 +116,29 @@ for required in \
   }
 done
 
+for required in \
+  'sameMachineId' \
+  'sameSetupRef' \
+  'sameOfferId' \
+  'sameOrderRefSameJob' \
+  'oneContract' \
+  'oneReservation' \
+  'sameContainerBinding' \
+  'realOpenSsh' \
+  'sameTerminalReceiptDigest' \
+  'signedCleanupDigestPresent' \
+  'activeSessions' \
+  'activeTickets' \
+  'noFixtureTransport' \
+  'noDependencyInjection'; do
+  grep -F -- "$required" docs/schemas/preview14-clean-host-e2e-execution-receipt.v1.json > /dev/null || {
+    printf 'Preview.14 execution-receipt schema missing: %s\n' "$required" >&2
+    exit 1
+  }
+done
+
 node scripts/verify-preview14-clean-host-e2e.mjs --self-test
+node --test tests/preview14-clean-host-e2e-verifier.mjs
 node scripts/generate-preview14-command-reference.mjs --self-test
 node scripts/generate-preview14-command-reference.mjs \
   --template docs/preview14-public-command-contract.template.json

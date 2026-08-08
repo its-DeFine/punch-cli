@@ -10,6 +10,7 @@
     "status",
     "sanitized",
     "credentialsCaptured",
+    "executionReceipt",
     "execution",
     "artifact",
     "provider",
@@ -17,6 +18,10 @@
     "cleanup",
     "substitutionGuards"
   ],
+  "requiredExecutionReceipt": {
+    "schemaVersion": "punch.preview14-clean-host-e2e-execution-receipt.v1",
+    "sha256": "sha256:<exact companion receipt bytes>"
+  },
   "requiredExecution": {
     "platform": "linux-x64",
     "environment": "DISPOSABLE_CLEAN_VM",
@@ -54,6 +59,6 @@
     "sourceCli": false,
     "mockSsh": false
   },
-  "acceptanceRule": "Every required step is PASS; a fake or substituted seam rejects release acceptance.",
-  "authorityBoundary": "A syntactically valid report is necessary release evidence, not proof by itself. The release owner must retain the exact archive, runtime binding, and execution receipt."
+  "acceptanceRule": "Every required step is PASS, the exact companion execution-receipt bytes match executionReceipt.sha256, and every correlated receipt invariant passes; a fake or substituted seam rejects release acceptance.",
+  "authorityBoundary": "A syntactically valid report and bound sanitized execution receipt are necessary release evidence, not proof by themselves. The release owner must retain the exact archive, runtime binding, report, and execution receipt."
 }

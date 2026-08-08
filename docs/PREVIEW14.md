@@ -65,10 +65,15 @@ either resumes one owned attempt or reports a safe terminal failure.
 
 The machine-readable clean-host evidence format is
 [`punch.preview14-clean-host-e2e-report.v1`](schemas/preview14-clean-host-e2e-report.v1.json).
+The summary binds the exact bytes of its companion
+[`punch.preview14-clean-host-e2e-execution-receipt.v1`](schemas/preview14-clean-host-e2e-execution-receipt.v1.json)
+by SHA-256. The companion retains only sanitized correlated assertions for
+setup replay, order and restart idempotency, real Buyer SSH, terminal stop
+replay, zero-state cleanup, and archive/no-substitution provenance.
 The release gate rejects a source CLI, fake Docker/fetch/SSH seam, in-memory
 Control substitute, missing archive checksum, incomplete stop fence, or a
-report containing credential/private-host material. This parser is an evidence
-gate, not a runtime emulator.
+report or receipt containing credential/private-host material. Verification
+requires both files; this parser is an evidence gate, not a runtime emulator.
 
 The companion
 [`punch.preview14-public-command-contract.v1`](schemas/preview14-public-command-contract-format.v1.json)
