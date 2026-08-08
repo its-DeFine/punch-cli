@@ -66,6 +66,12 @@ supervised service is the normal resident mode. Recovery uses the same durable
 journal and labelled resource adoption rule as the lifecycle, so a restart
 either resumes one owned attempt or reports a safe terminal failure.
 
+Resident recovery is bound to the completed setup baseline and the expected
+durable lifecycle task: it fails closed on a drifted or incomplete setup rather
+than reconstructing an offer or changing its immutable terms. An authenticated
+interactive session ends at its authorized access deadline and cleans up its
+exact owned execution; expiry never extends access through recovery.
+
 The machine-readable clean-host evidence format is
 [`punch.preview14-clean-host-e2e-report.v1`](schemas/preview14-clean-host-e2e-report.v1.json).
 The summary binds the exact bytes of its companion

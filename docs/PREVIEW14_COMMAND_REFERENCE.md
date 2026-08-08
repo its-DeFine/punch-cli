@@ -1,16 +1,16 @@
 # Preview.14 command reference
 
 > **Status: `GATED_UNRELEASED`.** The reviewed command map is bound to private
-> runtime commit `bcabfc6dbada237ee08628919fbc7ee3a2b910ad`, tree
-> `6ffffd59b116169e8062abd3e4febb702ac648d4`, and deterministic Control archive
-> `sha256:00b51e7408e6d41f6d500c5c95a9c6ae767e3fe460bc6fabfb73a9c48b3c96de`.
+> runtime commit `e46685b029357e7f92c4900897d139535045c773`, tree
+> `4c9da91ab066183d8023fb2af36a2b193fef8378`, and deterministic Control archive
+> `sha256:d44d55bd684348f1dc7b50484a41f5dc09328f1c2fa98a9ecdc2e4dfaaf2608c`.
 > This reference stays empty until the deterministic public archive,
 > `SHA256SUMS`, runtime-contract digest, and canonical packaged CLI surface are
 > also bound. Do not infer missing artifact hashes from source identity.
 
 <!-- GENERATED PREVIEW14 COMMAND REFERENCE:BEGIN -->
-<!-- private-runtime-commit: bcabfc6dbada237ee08628919fbc7ee3a2b910ad -->
-<!-- private-runtime-tree: 6ffffd59b116169e8062abd3e4febb702ac648d4 -->
-<!-- control-archive-sha256: sha256:00b51e7408e6d41f6d500c5c95a9c6ae767e3fe460bc6fabfb73a9c48b3c96de -->
+<!-- private-runtime-commit: e46685b029357e7f92c4900897d139535045c773 -->
+<!-- private-runtime-tree: 4c9da91ab066183d8023fb2af36a2b193fef8378 -->
+<!-- control-archive-sha256: sha256:d44d55bd684348f1dc7b50484a41f5dc09328f1c2fa98a9ecdc2e4dfaaf2608c -->
 <!-- Preview.14 public artifact binding pending deterministic build. -->
 <!-- GENERATED PREVIEW14 COMMAND REFERENCE:END -->
