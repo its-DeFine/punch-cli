@@ -55,7 +55,7 @@ require docs/PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md '300-second overa
 require docs/schemas/buyer-stop-operation.v1.json 'punch.buyer-stop-operation.v1'
 require docs/NEXT_COMMAND_REFERENCE.md 'LOCAL_DETERMINISTIC_PASS'
 require docs/NEXT_COMMAND_REFERENCE.md 'release-authority: false'
-require docs/OFFER_LIFECYCLE_PREVIEW.md 'Preview.11 release source — not published'
+require docs/OFFER_LIFECYCLE_PREVIEW.md 'Preview.14 release source — gated and not published'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'not in the published `v0.1.0-preview.9` archive'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'It never stops, revokes, fences, or cleans up an accepted contract.'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'The exact replay returns the original durable receipt.'
