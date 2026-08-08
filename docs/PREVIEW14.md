@@ -46,8 +46,11 @@ supported Linux/x64 dependency installation. Docker, NetBird, or NVIDIA
 container-toolkit installation may be offered only when required by the
 selected execution surface. Guided TTY use may invoke the visible `sudo` prompt
 after consent; direct non-interactive use needs explicit confirmation and a
-cached `sudo` authorization. Punch never silently replaces a driver or kernel,
-reboots the host, or changes unrelated Docker daemon policy.
+cached `sudo` authorization. The reviewed Docker boundary requires
+`userns-remap=default`; setup preserves unrelated daemon settings, validates the
+merged configuration, and restores the prior file if activation fails. Punch
+never silently replaces a driver or kernel, reboots the host, or changes
+unrelated Docker daemon policy.
 
 Provider setup starts in `PENDING_AGENT` and records identity, dependency,
 image, exact-machine, pre-list proof, and supervised-service progress there.

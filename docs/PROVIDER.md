@@ -116,7 +116,10 @@ asks for confirmation, may prompt for `sudo`, and then continues the same setup
 through activation. A direct non-interactive invocation requires both `--yes`
 and an already cached `sudo` authorization; it fails with a recovery action
 instead of opening a hidden prompt. Consent never authorizes an unlisted
-package, driver, kernel, reboot, or unrelated daemon-policy change.
+package, driver, kernel, reboot, or unrelated daemon-policy change. The required
+Docker user-namespace boundary is `userns-remap=default`; Punch preserves all
+other daemon settings and retains an exact rollback artifact when it enables
+that setting.
 
 The Buyer identity, owner-targeted `$0` authorization, access window, offer ID,
 and price come from authenticated Control. They are not normal Provider input.
