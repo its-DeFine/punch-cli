@@ -11,7 +11,18 @@ sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
-node --test tests/preview9-release-contract.mjs tests/preview11-release-contract.mjs tests/preview12-release-contract.mjs
+node --test tests/preview9-release-contract.mjs tests/preview11-release-contract.mjs tests/preview12-release-contract.mjs tests/preview13-release-contract.mjs
+
+for preview13_requirement in \
+  'Dynamic require of "events" is not supported' \
+  'createRequire' \
+  'Preview.12 must not be used' \
+  'PENDING_EXACT_PREVIEW13_ARCHIVE_ACCEPTANCE'; do
+  grep -F -- "$preview13_requirement" docs/PREVIEW13.md docs/preview13-runtime-contract.json > /dev/null || {
+    printf 'preview.13 release contract missing required public statement: %s\n' "$preview13_requirement" >&2
+    exit 1
+  }
+done
 
 for required in packaging/THIRD_PARTY_NOTICES.template.md packaging/third_party/ws-8.21.1/LICENSE; do
   [ -s "$required" ] || {

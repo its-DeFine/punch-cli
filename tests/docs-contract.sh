@@ -15,10 +15,13 @@ require() {
 
 require README.md 'v0.1.0-preview.11'
 require README.md 'v0.1.0-preview.12'
+require README.md 'v0.1.0-preview.13'
 require docs/PREVIEW11.md 'GATED_UNRELEASED'
 require docs/PREVIEW11.md 'one-off, ephemeral setup key'
 require docs/PREVIEW12.md 'GATED_UNRELEASED'
 require docs/PREVIEW12.md 'continuous, state-aware `punch` home'
+require docs/PREVIEW13.md 'Dynamic require of "events" is not supported'
+require docs/PREVIEW13.md 'createRequire'
 require docs/PREVIEW10.md 'never publicly promoted'
 require docs/PREVIEW10.md '--offer-id'
 require docs/BUYER.md 'NetBird bootstrap'
@@ -71,6 +74,8 @@ require docs/preview11-runtime-contract.json '0e615565780e60c49fd1c5fc6d1d07940e
 require docs/preview11-runtime-contract.json '76041898382f764d3404ecb12112b684bafad1af'
 require docs/preview12-runtime-contract.json '67b8735939154375fd6da3a44d540631af55777d'
 require docs/preview12-runtime-contract.json 'PENDING_EXACT_PREVIEW12_ARCHIVE_ACCEPTANCE'
+require docs/preview13-runtime-contract.json '7af5f302db2076cfde14c69baf1e5d8b1d4017ab'
+require docs/preview13-runtime-contract.json 'PENDING_EXACT_PREVIEW13_ARCHIVE_ACCEPTANCE'
 
 node scripts/validate-targeted-zero-contract.js --self-test
 node scripts/generate-command-reference.mjs \

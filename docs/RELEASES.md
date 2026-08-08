@@ -8,7 +8,7 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-`v0.1.0-preview.11` remains the supported Linux/x64 supervised-pilot package only when
+`v0.1.0-preview.13` is the supported Linux/x64 supervised-pilot package only when
 GitHub shows its non-draft prerelease with both versioned archive and checksum
 assets. This source commit alone is not an installable release. The package
 must be used with this exact public image set:
@@ -71,6 +71,25 @@ It becomes installable only after the matching Linux/x64 archive and
 `SHA256SUMS` are published in a non-draft prerelease. Guided and autonomous
 local acceptance does not replace the separate Preview.11 NetBird/SSH proof
 or constitute exact Preview.12 archive acceptance.
+
+## Preview.13 Provider serve correction
+
+Preview.13 supersedes Preview.12 for Provider serving. Preview.12's immutable
+Provider bundle terminates at startup with `Dynamic require of "events" is not
+supported`. Preview.13 adds the Node ESM `createRequire` bridge required by the
+bundled CommonJS `ws` dependency and adds a resident-serve regression gate.
+
+The exact private release source is commit
+`7af5f302db2076cfde14c69baf1e5d8b1d4017ab`, tree
+`b20ce13f3ad534d4766880feb11284a3e161a24e`. The release preserves Preview.12
+identities, credentials, state directories, offers, command semantics, and all
+invitation-only, owner-targeted zero-price, NetBird, and no-settlement
+boundaries. See [Preview.13](PREVIEW13.md) and its
+[runtime contract](preview13-runtime-contract.json).
+
+It is installable only when the non-draft GitHub prerelease publishes the
+matching Linux/x64 archive and `SHA256SUMS` and the exact shipped archive passes
+the documented install, Provider serve, and zero-residual acceptance.
 
 Preview.9 adds the clean-v4 supervised lifecycle: operator-approved Provider
 onboarding, owner-targeted zero-price offers, idempotent Buyer order recovery,
