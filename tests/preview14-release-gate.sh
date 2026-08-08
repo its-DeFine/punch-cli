@@ -10,8 +10,8 @@ import { readFileSync } from 'node:fs';
 const contract = JSON.parse(readFileSync('docs/preview14-runtime-contract.json', 'utf8'));
 const version = '0.1.0-preview.14';
 const privateSource = {
-  commit: '4ebec08f612c048583b43fd37c3ecfa0d644a94f',
-  tree: '1f026def4c55a482a0e8cc039693891ed62bc980'
+  commit: 'a1336f858031f54de9a69351241b1293d7a2dddc',
+  tree: '4f46d96d2ab29c8143cdc69005c1790f1cbac503'
 };
 if (!contract || typeof contract !== 'object' || Array.isArray(contract)
     || contract.schemaVersion !== 'punch.preview14-runtime-contract.v1'
@@ -23,7 +23,7 @@ if (!contract || typeof contract !== 'object' || Array.isArray(contract)
     || contract.paymentSettlementEnabled !== false || contract.selfServiceProviderOnboarding !== false) {
   throw new Error('Public Preview.14 runtime contract is incompatible with the private builder.');
 }
-if (contract.controlArchiveSha256 !== 'sha256:b8278e6b45cba643f9a0f8b49d73e9ee9159ab1e4153ae4879fa4a06837d509e') {
+if (contract.controlArchiveSha256 !== 'sha256:e8577b5612846c3df042a58166c19e121c6351313aaa77a9cad9a0c694e35853') {
   throw new Error('Public Preview.14 runtime contract lost the reviewed Control archive binding.');
 }
 process.stdout.write('Preview.14 private-builder runtime-contract compatibility: PASS\n');
@@ -58,9 +58,9 @@ for required in \
   'privateReleaseSource' \
   'NETBIRD_CONTRACT_SCOPED_GATEWAY' \
   'OWNER_TARGETED_ZERO_ONLY' \
-  '4ebec08f612c048583b43fd37c3ecfa0d644a94f' \
-  '1f026def4c55a482a0e8cc039693891ed62bc980' \
-  'b8278e6b45cba643f9a0f8b49d73e9ee9159ab1e4153ae4879fa4a06837d509e' \
+  'a1336f858031f54de9a69351241b1293d7a2dddc' \
+  '4f46d96d2ab29c8143cdc69005c1790f1cbac503' \
+  'e8577b5612846c3df042a58166c19e121c6351313aaa77a9cad9a0c694e35853' \
   'REVIEWED_FINAL_COMMAND_MAP_PUBLIC_ARTIFACT_BINDING_PENDING' \
   'STATE_AWARE_HOME' \
   'PENDING_AGENT' \
@@ -150,9 +150,9 @@ if [ -e "$contract" ]; then
     --target docs/PREVIEW14_COMMAND_REFERENCE.md
 else
   for required in \
-    '4ebec08f612c048583b43fd37c3ecfa0d644a94f' \
-    '1f026def4c55a482a0e8cc039693891ed62bc980' \
-    'b8278e6b45cba643f9a0f8b49d73e9ee9159ab1e4153ae4879fa4a06837d509e' \
+    'a1336f858031f54de9a69351241b1293d7a2dddc' \
+    '4f46d96d2ab29c8143cdc69005c1790f1cbac503' \
+    'e8577b5612846c3df042a58166c19e121c6351313aaa77a9cad9a0c694e35853' \
     'public artifact binding pending deterministic build'; do
     grep -F -- "$required" docs/PREVIEW14_COMMAND_REFERENCE.md > /dev/null || {
       printf 'Preview.14 pending command reference is missing source/artifact boundary: %s\n' "$required" >&2
