@@ -72,6 +72,36 @@ It becomes installable only after the matching Linux/x64 archive and
 local acceptance does not replace the separate Preview.11 NetBird/SSH proof
 or constitute exact Preview.12 archive acceptance.
 
+## Preview.14 Provider readiness gate
+
+Preview.14 is `GATED_UNRELEASED`. It is not an installable release, source
+checkout, or permission to infer a command or flag from an earlier preview.
+Its public command reference remains deliberately empty until the exact
+Linux/x64 archive, `SHA256SUMS`, runtime contract, and canonical packaged CLI
+surface are bound together. The release gate then requires an independent
+clean-host Provider-to-Buyer lifecycle report, including real image pulls,
+container SSH readiness, Buyer stop/revocation, cleanup, and capacity release.
+
+The Preview.14 provider setup state is `PENDING_AGENT` until a fresh signed
+pre-list proof and supervised service readiness can advance it to `LISTED`.
+Normal setup owns dependency consent/install, immutable image proof, one-use
+Provider NetBird enrollment, canonical config generation, hardened systemd
+installation/start, and the activation heartbeat in one confirmed CLI session.
+Provider identity and its public onboarding packet precede the bound invitation.
+Buyer join resumes until the exact NetBird binding is confirmed. Guided TTY use
+may prompt for `sudo`; direct non-interactive setup requires cached `sudo`.
+Multiple supervised Providers are supported, every order requires an eligible
+offer, and the authorized window is capped at `259200` seconds. Manual NetBird setup and a
+hand-written `--agent-config` are not the normal Preview.14 path.
+The candidate retains the supervised invitation-only, owner-targeted `$0`
+policy; it does not activate payment, payout, settlement, or refunds. See
+[Preview.14](PREVIEW14.md) and its
+[runtime contract](preview14-runtime-contract.json).
+
+Release is additionally blocked unless the packaged Provider help, packaged
+Buyer help, release-contract command lists, generated public command contract,
+and guided forwarding surface describe the same commands and flags.
+
 ## Preview.13 Provider serve correction
 
 Preview.13 supersedes Preview.12 for Provider serving. Preview.12's immutable

@@ -5,7 +5,9 @@ Punch CLI is the public command-line interface for the invite-only Punch Compute
 It provides two commands:
 
 - `punch-buyer` — discover offers, order compute, inspect jobs, open brokered SSH sessions, and download output.
-- `punch-provider` — join as a provider, inventory the local execution node, publish bounded capacity, and run the resident provider agent.
+- `punch-provider` — join as a provider and run the supervised setup that
+  verifies the host, enrolls narrow access, proves the execution surface, and
+  starts the resident provider service.
 
 The documented preview configuration uses the public Punch HTTPS endpoint. Buyers are not given a provider IP address, Docker socket, or host credential. Providers connect outbound to Punch.
 
@@ -19,6 +21,14 @@ does not make a version installable. `v0.1.0-preview.11` remains an immutable
 historical release for rollback evidence, not the current Provider package.
 Use only release assets together with the matching immutable image set in
 [Release and verification policy](docs/RELEASES.md).
+
+`v0.1.0-preview.14` is currently `GATED_UNRELEASED`. Its candidate docs replace
+manual Provider NetBird/config/service assembly with one resumable `setup`
+operation. A Provider creates its machine identity and public onboarding packet
+before Punch issues the bound invitation. These candidate docs do not make
+Preview.14 installable. The generated command reference remains empty until the
+exact archive, checksum manifest, runtime contract, and packaged CLI surface
+agree.
 
 ## What is public
 
@@ -70,6 +80,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Preview.11 supervised Buyer bootstrap](docs/PREVIEW11.md) (gated and unreleased)
 - [Preview.12 guided Punch home](docs/PREVIEW12.md) (superseded for Provider serving)
 - [Preview.13 Provider serve packaging correction](docs/PREVIEW13.md)
+- [Preview.14 Provider readiness gate](docs/PREVIEW14.md) (gated and unreleased)
 - [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (included in the gated Preview.11 release source)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)

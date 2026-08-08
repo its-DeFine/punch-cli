@@ -16,5 +16,7 @@ jobs:
         run: |
           node scripts/generate-command-reference.mjs --self-test
           node scripts/run-docs-smoke.mjs --self-test
+          node scripts/generate-preview14-command-reference.mjs --self-test
+          sh tests/preview14-release-gate.sh
       - name: Validate public surface without ripgrep
         run: ./tests/validate-without-rg.sh

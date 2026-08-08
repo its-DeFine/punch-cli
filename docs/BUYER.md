@@ -2,9 +2,10 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.11 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
+> **Preview.14 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
 > `order`, `status`, `output`, `ssh`, and `stop`. It is supported only from the
-> non-draft `v0.1.0-preview.11` release archive with its matching checksum. The
+> non-draft `v0.1.0-preview.14` release archive with its matching checksum. Until
+> that archive exists, Preview.14 remains `GATED_UNRELEASED`. The
 > proven pilot used an owner-targeted zero-price offer and no payment,
 > settlement, payout, or refund path.
 
@@ -57,7 +58,10 @@ the setup key to NetBird through a temporary mode-`0600` file, verifies startup
 connectivity, and removes the local file immediately. The Buyer does not need a
 NetBird dashboard, login, or second code, and must never receive or paste the
 setup-key value. If NetBird is already connected, the CLI does not request a new
-enrollment. Successful JSON output includes `"netBird": "CONNECTED"`.
+enrollment. Join is resumable until the exact Buyer/NetBird peer binding is
+confirmed: rerun the same command and invitation path after a retryable failure,
+and the CLI reconciles the stored join state instead of creating another Buyer
+or enrollment. Successful JSON output includes `"netBird": "CONNECTED"`.
 
 The CLI stores the resulting Punch session reference in the configured private
 path. Do not move or edit it manually.
@@ -69,6 +73,15 @@ punch-buyer offers \
   --config /absolute/path/.config/punch/buyer/buyer.json \
   --json
 ```
+
+The state-aware `punch` home renders only fields returned by the Buyer
+projection: offer ID, workload mode, optional Provider label, CPU/GPU/RAM/disk,
+required/available/reserved capacity, access duration, price, availability, and
+eligibility. A targeted `$0` offer is labelled as a supervised test offer and
+as visible only to the designated Buyer. Missing fields are shown as not
+supplied; the home does not infer capacity or eligibility. Punch can supervise
+multiple approved Providers, so eligible offers may come from different
+Provider machines without exposing their host addresses.
 
 ## 4. Order compute
 
@@ -111,7 +124,10 @@ match, not an unfunded standing queue. See [Conditional orders](CONDITIONAL_ORDE
 In the supervised pilot, an authorized zero-price offer appears only to its
 designated Buyer. The Buyer still uses the normal `order` command and never
 passes a price, zero-value, authorization, or Provider identity flag. A visible
-offer is not permission to alter its terms.
+offer is not permission to alter its terms. The maximum authorized access
+window is `259200` seconds. An offer whose projection says it is ineligible
+cannot be selected or ordered; the guided home blocks confirmation and Control
+rejects a direct command fail-closed.
 
 Record the job identifier returned by the order result. A successful order does
 not itself prove that access is ready, that a container is running, or that a
@@ -127,12 +143,17 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.11 uses zero-price supervised offers and does not
+container preparation. Preview.14 uses zero-price supervised offers and does not
 exercise payment, settlement, payout, or refund behavior.
 
-For Preview.11 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.14 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
+
+The guided home renders returned `state`, `phase`, and access readiness, plus
+contract ID, task ID, generation, history, and sanitized failure/retry guidance
+when Control supplies them. It explicitly reports unavailable history rather
+than constructing one locally.
 
 ## 6. Brokered SSH
 
@@ -151,13 +172,13 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.11 carries SSH bytes through a
+accepting the replacement. Preview.14 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
 ## 7. Stop and release
 
-Preview.11 preserves the approved asynchronous Buyer stop command:
+Preview.14 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \

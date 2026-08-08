@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "punch.preview14-clean-host-e2e-report.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "purpose": "Release-gate evidence for a real clean-host Provider-to-Buyer lifecycle.",
+  "requiredTopLevelKeys": [
+    "schemaVersion",
+    "releaseVersion",
+    "proofLabel",
+    "status",
+    "sanitized",
+    "credentialsCaptured",
+    "execution",
+    "artifact",
+    "provider",
+    "buyer",
+    "cleanup",
+    "substitutionGuards"
+  ],
+  "requiredExecution": {
+    "platform": "linux-x64",
+    "environment": "DISPOSABLE_CLEAN_VM",
+    "control": "CONTROL_COMPATIBLE_RUNTIME",
+    "containerEngine": "REAL_DOCKER_ENGINE",
+    "registry": "REAL_REGISTRY_DIGEST_PULL",
+    "ssh": "REAL_SSH_DATA_PLANE"
+  },
+  "requiredProviderSteps": [
+    "hostPreflight",
+    "images",
+    "validation",
+    "interactiveCanary",
+    "listed"
+  ],
+  "requiredBuyerSteps": [
+    "join",
+    "offers",
+    "order",
+    "provisioning",
+    "access",
+    "ssh",
+    "stop"
+  ],
+  "requiredCleanupSteps": [
+    "sessionClosed",
+    "newConnectionRejected",
+    "containerRemoved",
+    "capacityReleased"
+  ],
+  "requiredSubstitutionGuards": {
+    "fakeDocker": false,
+    "fakeFetch": false,
+    "inMemoryControl": false,
+    "sourceCli": false,
+    "mockSsh": false
+  },
+  "acceptanceRule": "Every required step is PASS; a fake or substituted seam rejects release acceptance.",
+  "authorityBoundary": "A syntactically valid report is necessary release evidence, not proof by itself. The release owner must retain the exact archive, runtime binding, and execution receipt."
+}
