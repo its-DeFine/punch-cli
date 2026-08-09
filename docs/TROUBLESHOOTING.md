@@ -1,12 +1,12 @@
 # Troubleshooting
 
-> **Version boundary:** this page describes the published Preview.16 Linux/x64
+> **Version boundary:** this page describes the published Preview.17 Linux/x64
 > prerelease. Use recovery commands only from its exact non-draft archive after
 > verifying the same-release checksum.
 
 ## Guided onboarding is waiting
 
-`WAITING_FOR_INVITE` is a normal durable Preview.16 Provider state, not a
+`WAITING_FOR_INVITE` is a normal durable Preview.17 Provider state, not a
 failure. Preserve the local identity and onboarding request, then resume the
 same `punch` → **Provider** flow when the separately approved invitation
 arrives. Do not create another identity or request, guess an invitation, or
@@ -31,9 +31,17 @@ replacement identity or request.
   invitation to bypass the rejection.
 - Return only the sanitized public error code to the Punch operator.
 
+## Buyer join dependency authorization stopped
+
+After guided Buyer join confirmation, Preview.17 first probes `sudo -n true`.
+If that capability is unavailable, it falls back to interactive `sudo -v`.
+Failed authorization leaves dependency installation and join unstarted; correct
+sudo access and resume the same invitation and local Buyer state. Direct
+non-interactive join still requires `--yes` and cached `sudo`.
+
 ## Provider setup stopped
 
-Preview.16 setup errors include a sanitized `stage` and `retryable` decision.
+Preview.17 setup errors include a sanitized `stage` and `retryable` decision.
 Preserve the exact machine identity, state directory, credential, generated
 config, and `--idempotency-key`, correct that stage, and retry the same setup.
 Do not begin another setup merely because NetBird, image pulling, systemd, or
@@ -68,7 +76,7 @@ container-runtime endpoint.
 
 ## Order response timed out
 
-Retry the exact order using the same `--order-ref`. The Preview.16 CLI first
+Retry the exact order using the same `--order-ref`. The Preview.17 CLI first
 reconciles that reference, so an interrupted response does not authorize a
 second order or reservation.
 
@@ -90,7 +98,7 @@ punch-provider service-logs --machine-id MACHINE_ID --lines 80 --json
 
 Use `service-start --yes` only after reviewing the consequence. `serve` is a
 foreground diagnostic mode; replacing the supervised service with a manual
-long-running shell is not normal Preview.16 recovery.
+long-running shell is not normal Preview.17 recovery.
 
 ## NetBird or brokered SSH is not ready
 
@@ -128,7 +136,7 @@ must be rejected.
 
 ## Payment or refund question
 
-Preview.16 uses owner-targeted zero-price offers. Payment, settlement, payout,
+Preview.17 uses owner-targeted zero-price offers. Payment, settlement, payout,
 refunds, and paid offer economics were not activated or accepted by this
 release. Do not infer financial behavior from the lifecycle result.
 

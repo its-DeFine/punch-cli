@@ -1,15 +1,15 @@
 # Command reference
 
-> **Version boundary:** this reference describes the published Preview.16
+> **Version boundary:** this reference describes the published Preview.17
 > Linux/x64 prerelease. Exact flags are release-bound in the generated
-> [Preview.16 command reference](PREVIEW16_COMMAND_REFERENCE.md) and apply only
+> [Preview.17 command reference](PREVIEW17_COMMAND_REFERENCE.md) and apply only
 > to its matching archive and `SHA256SUMS` in the non-draft release.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.16 adds a state-aware `punch` home without removing either role
+Preview.17 adds a state-aware `punch` home without removing either role
 command. Its release boundary and behavior are documented in
 [Guided `punch` home](GUIDED_CLI.md).
 
@@ -35,13 +35,18 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.16 Buyers do not pass a zero-price flag. An operator-approved
+Preview.17 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
+For guided Buyer join only, after confirmation Preview.17 probes passwordless
+capability with `sudo -n true` before falling back to interactive `sudo -v`.
+Failed authorization stops before dependency installation or join. Direct
+non-interactive join still requires `--yes` and cached `sudo`.
+
 ## Provider
 
-The Preview.16 public Provider commands are:
+The Preview.17 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -66,7 +71,7 @@ The Preview.16 public Provider commands are:
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.16 Provider command reference](PREVIEW16_COMMAND_REFERENCE.md#provider)
+[Preview.17 Provider command reference](PREVIEW17_COMMAND_REFERENCE.md#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
@@ -112,7 +117,7 @@ orderable through either the guided or direct Buyer command.
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14
-and remain in Preview.16. They do not alter the Buyer command surface.
+and remain in Preview.17. They do not alter the Buyer command surface.
 
 All three require `--machine-id`, `--state-dir`, `--agent-config`, and
 `--offer-id`. `offer-unlist` and `offer-retire` also require a stable
@@ -158,7 +163,7 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.16 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.17 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound generated
-reference is [PREVIEW16_COMMAND_REFERENCE.md](PREVIEW16_COMMAND_REFERENCE.md).
+reference is [PREVIEW17_COMMAND_REFERENCE.md](PREVIEW17_COMMAND_REFERENCE.md).

@@ -2,8 +2,8 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.16 boundary:** use only the published Linux/x64
-> [`v0.1.0-preview.16`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.16)
+> **Preview.17 boundary:** use only the published Linux/x64
+> [`v0.1.0-preview.17`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.17)
 > archive with its same-release `SHA256SUMS`. The Buyer CLI exposes `doctor`,
 > `join`, `offers`, `order`, `status`, `output`, `ssh`, and `stop`. The accepted
 > preview path is owner-targeted `$0` only; payment, settlement, payout, and
@@ -51,6 +51,13 @@ On Linux/x64, `join` validates the Punch invitation and then checks the official
 NetBird client. If NetBird is missing, the CLI explains the privileged package
 change and asks for confirmation. For supervised automation, `--yes` is the
 explicit confirmation; it is accepted only by `join`.
+
+In the guided `punch` → **Buyer** flow, Preview.17 first probes passwordless
+capability with `sudo -n true` after join confirmation. A successful probe
+continues without a password prompt; otherwise the CLI falls back to interactive
+`sudo -v`. Failed authorization stops before dependency installation or join.
+Direct non-interactive `punch-buyer join --yes` continues to require cached
+`sudo`. Preview.16 lacks this guided Buyer probe and is historical.
 
 After Buyer authentication, Control can issue one one-off, ephemeral enrollment
 bound to that approved Buyer and the existing narrow Buyer group. The CLI gives
@@ -143,10 +150,10 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.16 uses zero-price supervised offers and does not
+container preparation. Preview.17 uses zero-price supervised offers and does not
 exercise payment, settlement, payout, or refund behavior.
 
-For Preview.16 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.17 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -172,13 +179,13 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.16 carries SSH bytes through a
+accepting the replacement. Preview.17 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
 ## 7. Stop and release
 
-Preview.16 preserves the approved asynchronous Buyer stop command:
+Preview.17 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \

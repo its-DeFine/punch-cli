@@ -193,25 +193,26 @@ for active_release_doc in \
 done
 
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
-  grep -F 'Preview.16' "$current_boundary_doc" > /dev/null && \
+  grep -F 'Preview.17' "$current_boundary_doc" > /dev/null && \
     grep -F 'published' "$current_boundary_doc" > /dev/null || {
-    printf 'Preview.16 published boundary is missing from %s\n' "$current_boundary_doc" >&2
+    printf 'Preview.17 published boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done
 
 for published_boundary_doc in README.md docs/RELEASES.md; do
-  grep -F 'v0.1.0-preview.16' "$published_boundary_doc" > /dev/null && \
+  grep -F 'v0.1.0-preview.17' "$published_boundary_doc" > /dev/null && \
     grep -F 'current published' "$published_boundary_doc" > /dev/null || {
-    printf 'Preview.16 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
+    printf 'Preview.17 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
     exit 1
   }
 done
 
 for historical_defect_doc in README.md docs/RELEASES.md; do
-  grep -F 'Preview.15' "$historical_defect_doc" > /dev/null && \
+  grep -F 'Preview.16' "$historical_defect_doc" > /dev/null && \
+    grep -F 'guided Buyer' "$historical_defect_doc" > /dev/null && \
     grep -F '`sudo -n true`' "$historical_defect_doc" > /dev/null || {
-    printf 'Preview.15 historical sudo-defect boundary is missing from %s\n' "$historical_defect_doc" >&2
+    printf 'Preview.16 historical Buyer sudo-defect boundary is missing from %s\n' "$historical_defect_doc" >&2
     exit 1
   }
 done

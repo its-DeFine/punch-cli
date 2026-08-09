@@ -8,10 +8,10 @@
     "controlArchiveSha256": "sha256:33fcb27b312c346540075df64a8598133eb32b1bdce81378cb3b22026d5f8d1e"
   },
   "artifact": {
-    "archiveSha256": "PENDING_DETERMINISTIC_BUILD",
-    "sha256SumsSha256": "PENDING_DETERMINISTIC_BUILD",
-    "runtimeContractSha256": "PENDING_DETERMINISTIC_BUILD",
-    "packagedCliSurfaceSha256": "PENDING_DETERMINISTIC_BUILD"
+    "archiveSha256": "sha256:76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c",
+    "sha256SumsSha256": "sha256:807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52",
+    "runtimeContractSha256": "sha256:a59c807fc41cd8f8c1f3c21f0e8ef2d49b52bd0a072e33ae2171b105ffb8fcdc",
+    "packagedCliSurfaceSha256": "sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a"
   },
   "commands": [
     { "role": "provider", "executable": "punch-provider", "name": "prepare-host", "purpose": "Inspect the supported host and optionally apply only the exact reviewed dependency plan after explicit consent.", "flags": [

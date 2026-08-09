@@ -1,6 +1,6 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the published Preview.16 Linux/x64
+> **Release boundary:** this page documents the published Preview.17 Linux/x64
 > prerelease. Use only its matching non-draft archive and same-release
 > `SHA256SUMS`; Preview.14 does not contain the interactive Provider onboarding
 > flow below.
@@ -53,8 +53,8 @@ is confirmed. Direct non-interactive setup requires explicit confirmation and
 cached `sudo`; otherwise it fails with a recovery instruction. Neither path
 requires manual `serve`, a copied agent config, or a separate NetBird command.
 
-Preview.16 repairs guided authorization without changing the direct command
-surface: after plan confirmation it first probes passwordless capability with
+Preview.16 repaired guided Provider authorization without changing the direct
+command surface: after plan confirmation it first probes passwordless capability with
 `sudo -n true`, then falls back to interactive `sudo -v` only when needed. A
 failed fallback stops before dependency installation.
 
@@ -77,10 +77,10 @@ use must follow the separate custody, approval, retry, and state rules in the
 [Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
 interactive prompts.
 
-## Preview.16 interactive Provider onboarding contract
+## Preview.17 interactive Provider onboarding contract
 
 > **Published contract.** This flow is bound to the matching non-draft
-> Preview.16 archive and `SHA256SUMS`; it cannot be installed from this source
+> Preview.17 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
 
 The normal Provider journey starts from one obvious interactive entry point:

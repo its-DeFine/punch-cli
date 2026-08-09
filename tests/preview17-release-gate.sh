@@ -15,7 +15,8 @@ const privateSource = {
 };
 if (!contract || typeof contract !== 'object' || Array.isArray(contract)
     || contract.schemaVersion !== 'punch.preview17-runtime-contract.v1'
-    || contract.releaseVersion !== version || contract.platform !== 'linux-x64'
+    || contract.releaseVersion !== version || contract.releaseStatus !== 'PUBLISHED_PRERELEASE'
+    || contract.platform !== 'linux-x64'
     || contract.privateReleaseSource?.commit !== privateSource.commit
     || contract.privateReleaseSource?.tree !== privateSource.tree
     || contract.accessTransport !== 'NETBIRD_CONTRACT_SCOPED_GATEWAY'
@@ -25,6 +26,13 @@ if (!contract || typeof contract !== 'object' || Array.isArray(contract)
 }
 if (contract.controlArchiveSha256 !== 'sha256:33fcb27b312c346540075df64a8598133eb32b1bdce81378cb3b22026d5f8d1e') {
   throw new Error('Public Preview.17 runtime contract lost the reviewed Control archive binding.');
+}
+if (contract.artifactBinding?.authority !== 'AUTHORITATIVE_PACKAGED_CLI_SURFACE'
+    || contract.artifactBinding.archiveSha256 !== 'sha256:76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c'
+    || contract.artifactBinding.sha256SumsSha256 !== 'sha256:807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52'
+    || contract.artifactBinding.packagedCliSurfaceSha256 !== 'sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a'
+    || contract.guidedCli?.directCommands !== contract.artifactBinding.packagedCliSurfaceSha256) {
+  throw new Error('Public Preview.17 runtime contract lost the authoritative packaged artifact binding.');
 }
 process.stdout.write('Preview.17 private-builder runtime-contract compatibility: PASS\n');
 NODE
@@ -59,15 +67,29 @@ if grep -F -- 'PENDING_VALIDATION' docs/PREVIEW17.md docs/preview17-runtime-cont
   exit 1
 fi
 
+if grep -F -- 'GATED_UNRELEASED' \
+  docs/PREVIEW17.md docs/PREVIEW17_COMMAND_REFERENCE.md \
+  docs/preview17-runtime-contract.json \
+  docs/preview17-public-command-contract.template.json \
+  docs/preview17-public-command-contract.json \
+  docs/schemas/preview17-clean-host-e2e-execution-receipt.v1.json \
+  docs/schemas/preview17-clean-host-e2e-report.v1.json \
+  docs/schemas/preview17-public-command-contract-format.v1.json > /dev/null; then
+  printf '%s\n' 'Preview.17 published surfaces retain a gated contradiction' >&2
+  exit 1
+fi
+
 for required in \
-  'AUTHORITATIVE_PACKAGED_CLI_SURFACE_REQUIRED' \
+  'AUTHORITATIVE_PACKAGED_CLI_SURFACE' \
   'privateReleaseSource' \
   'NETBIRD_CONTRACT_SCOPED_GATEWAY' \
   'OWNER_TARGETED_ZERO_ONLY' \
   '5a2e9d4f4e4e38ce4dcd782891533a67c2a51768' \
   '2e4439d38ded6679afbafc4ad2e16cb282308eb7' \
   'sha256:33fcb27b312c346540075df64a8598133eb32b1bdce81378cb3b22026d5f8d1e' \
-  'REVIEWED_FINAL_COMMAND_MAP_PUBLIC_ARTIFACT_BINDING_PENDING' \
+  'sha256:76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c' \
+  'sha256:807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52' \
+  'sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a' \
   'GUIDED_PROVIDER_ONBOARDING' \
   'providerPreflightBeforeIdentity' \
   'WAITING_FOR_INVITE' \
@@ -197,20 +219,21 @@ for required in \
 done
 
 contract=docs/preview17-public-command-contract.json
-if [ -e "$contract" ]; then
-  node scripts/generate-preview17-command-reference.mjs \
-    --contract "$contract" \
-    --target docs/PREVIEW17_COMMAND_REFERENCE.md
-else
-  for required in \
-    '5a2e9d4f4e4e38ce4dcd782891533a67c2a51768' \
-    '2e4439d38ded6679afbafc4ad2e16cb282308eb7' \
-    'sha256:33fcb27b312c346540075df64a8598133eb32b1bdce81378cb3b22026d5f8d1e' \
-    'public artifact binding pending deterministic build'; do
-    grep -F -- "$required" docs/PREVIEW17_COMMAND_REFERENCE.md > /dev/null || {
-      printf 'Preview.17 pending command reference is missing source/artifact boundary: %s\n' "$required" >&2
-      exit 1
-    }
-  done
-fi
+[ -e "$contract" ] || {
+  printf '%s\n' 'Preview.17 bound public command contract is missing' >&2
+  exit 1
+}
+for required in \
+  '76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c' \
+  '807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52' \
+  'a59c807fc41cd8f8c1f3c21f0e8ef2d49b52bd0a072e33ae2171b105ffb8fcdc' \
+  '8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a'; do
+  grep -F -- "$required" "$contract" > /dev/null || {
+    printf 'Preview.17 bound command contract is missing artifact digest: %s\n' "$required" >&2
+    exit 1
+  }
+done
+node scripts/generate-preview17-command-reference.mjs \
+  --contract "$contract" \
+  --target docs/PREVIEW17_COMMAND_REFERENCE.md
 printf '%s\n' 'Preview.17 public release-gate contract: PASS'

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "punch.preview17-clean-host-e2e-report.v1",
   "artifactKind": "public-format-description",
-  "releaseStatus": "GATED_UNRELEASED",
+  "releaseStatus": "PUBLISHED_PRERELEASE",
   "purpose": "Release-gate evidence for a real clean-host Provider-to-Buyer lifecycle.",
   "requiredTopLevelKeys": [
     "schemaVersion",

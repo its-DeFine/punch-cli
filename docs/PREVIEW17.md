@@ -73,23 +73,33 @@ are protocol schema versions, not the Preview.17 package version.
 
 ## Exact release binding
 
-This artifact-source candidate binds private commit
+The published artifact binds private commit
 `5a2e9d4f4e4e38ce4dcd782891533a67c2a51768`, tree
 `2e4439d38ded6679afbafc4ad2e16cb282308eb7`, and deterministic Control
 archive
 `sha256:33fcb27b312c346540075df64a8598133eb32b1bdce81378cb3b22026d5f8d1e`.
-Public archive hashes remain `PENDING_DETERMINISTIC_BUILD` until the CLI is
-built twice from this exact source and Control binding.
+Its 43,804,706-byte public archive is
+`sha256:76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c`;
+the same-release `SHA256SUMS` is
+`sha256:807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52`.
+The immutable packaged `RELEASE-BINDING.json` is
+`sha256:cf655a61bec9aca787a3fc2773d182b0900228b035606ea88328d1d8928fa801`,
+the packaged `BUILD-MANIFEST.txt` is
+`sha256:e5af88ad7d85ed956d97473787647b1bacf2cdfb5a1f5fa7bcddf049940a14ed`,
+and the embedded `RELEASE-CONTRACT.json` is
+`sha256:2445353d76428057401481243edfa58e9fc37f4cd9a478a3a1a9b0a7bf6252ad`.
 
 The static v1 [command-contract template](preview17-public-command-contract.template.json)
-and pending [command reference](PREVIEW17_COMMAND_REFERENCE.md) declare the
-public commands and flags. They do not introduce or promote another metadata
-framework and are not exhaustive mechanical semantic/output parity. The exact
-packaged help and real acceptance remain authoritative.
+preserves its four `PENDING_DETERMINISTIC_BUILD` sentinels. The separate
+[bound command contract](preview17-public-command-contract.json) and generated
+[command reference](PREVIEW17_COMMAND_REFERENCE.md) declare the public commands
+and flags for the published artifact. They do not introduce or promote another
+metadata framework and are not exhaustive mechanical semantic/output parity.
+The exact packaged help and real acceptance remain authoritative.
 
-## Release acceptance
+## Owner-readiness acceptance
 
-Release requires all of the following, with no unresolved error:
+`OWNER-READY` requires all of the following, with no unresolved error:
 
 - deterministic Control and public archives built twice with byte-identical
   archive, binding, manifest, and sums;

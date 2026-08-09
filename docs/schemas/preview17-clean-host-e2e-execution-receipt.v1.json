@@ -1,7 +1,7 @@
 {
   "schemaVersion": "punch.preview17-clean-host-e2e-execution-receipt.v1",
   "artifactKind": "public-format-description",
-  "releaseStatus": "GATED_UNRELEASED",
+  "releaseStatus": "PUBLISHED_PRERELEASE",
   "purpose": "Sanitized correlated assertions from one real clean-host Provider-to-Buyer execution.",
   "requiredTopLevelKeys": [
     "schemaVersion",
