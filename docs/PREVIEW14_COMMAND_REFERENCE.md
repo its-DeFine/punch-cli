@@ -1,12 +1,13 @@
 # Preview.14 command reference
 
-> **Status: `GATED_UNRELEASED`.** The reviewed command map is bound to private
+> **Status: `PUBLISHED_PRERELEASE`.** The reviewed command map is bound to private
 > runtime commit `ff99837cfa9fd7ff0683335cd5dd917db3dad90a`, tree
 > `e753ee79e69678e495c133fb503bddbe2d9544dc`, and deterministic Control archive
 > `sha256:9853db9ad522df45f237519909166b195258b43fc9102049659c8f37c91288d6`.
 > The deterministic public archive, `SHA256SUMS`, runtime-contract digest, and
-> canonical packaged CLI surface are now bound below. Publication remains gated;
-> these bytes are not installable until the matching non-draft prerelease exists.
+> canonical packaged CLI surface are bound below and published in the matching
+> non-draft [`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14)
+> prerelease. A different archive or checksum is not this command surface.
 > This static v1 binding covers the declared public command, flag, and workflow
 > surface, not exhaustive mechanical semantic/output parity; exact-artifact E2E
 > remains the release authority.

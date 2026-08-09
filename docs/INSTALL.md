@@ -37,10 +37,11 @@ User installation:
 ~/.config/punch/
 ```
 
-The Punch archive installer makes no privileged or system-service changes. It carries
-a reference Provider service unit and agent configuration under `provider/`,
-but does not install or enable them. A Punch operator must render, review, and
-install those files during supervised Provider onboarding.
+The Punch archive installer makes no privileged or system-service changes. In
+Preview.14, the later supervised Provider `setup` operation owns reviewed
+dependency changes, generated configuration, and service installation only
+after explicit consent. Do not manually install or edit the reference files
+carried under `provider/` as a substitute for that flow.
 
 Preview.11 Buyer `join` is different from archive installation: on supported
 Linux/x64, if the official NetBird client is missing, `join` explains the

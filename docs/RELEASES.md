@@ -8,10 +8,10 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-`v0.1.0-preview.13` is the supported Linux/x64 supervised-pilot package only when
-GitHub shows its non-draft prerelease with both versioned archive and checksum
-assets. This source commit alone is not an installable release. The package
-must be used with this exact public image set:
+[`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14)
+is the current published Linux/x64 supervised-pilot package. Install only its
+matching versioned archive and `SHA256SUMS`; this source commit alone is not an
+installable release. The package must be used with this exact public image set:
 
 | Kind | Immutable policy and runtime reference |
 | --- | --- |
@@ -72,14 +72,13 @@ It becomes installable only after the matching Linux/x64 archive and
 local acceptance does not replace the separate Preview.11 NetBird/SSH proof
 or constitute exact Preview.12 archive acceptance.
 
-## Preview.14 Provider readiness gate
+## Preview.14 Provider readiness release
 
-Preview.14 is `GATED_UNRELEASED`. It is not an installable release, source
-checkout, or permission to infer a command or flag from an earlier preview.
-Its public command reference is bound to the exact Linux/x64 archive,
-`SHA256SUMS`, runtime contract, and canonical packaged CLI surface. Publication
-remains gated until those exact bytes are present in a non-draft prerelease. The
-release gate also requires an independent
+Preview.14 is a published Linux/x64 prerelease, not permission to install a
+source checkout or infer a command or flag from an earlier preview. Its public
+command reference is bound to the exact Linux/x64 archive, `SHA256SUMS`, runtime
+contract, and canonical packaged CLI surface now present in the non-draft
+prerelease. The release gate also required an independent
 clean-host Provider-to-Buyer lifecycle report, including real image pulls,
 container SSH readiness, Buyer stop/revocation, cleanup, and capacity release.
 
@@ -94,7 +93,7 @@ may prompt for `sudo`; direct non-interactive setup requires cached `sudo`.
 Multiple supervised Providers are supported, every order requires an eligible
 offer, and the authorized window is capped at `259200` seconds. Manual NetBird setup and a
 hand-written `--agent-config` are not the normal Preview.14 path.
-The candidate retains the supervised invitation-only, owner-targeted `$0`
+The release retains the supervised invitation-only, owner-targeted `$0`
 policy; it does not activate payment, payout, settlement, or refunds. See
 [Preview.14](PREVIEW14.md) and its
 [runtime contract](preview14-runtime-contract.json).

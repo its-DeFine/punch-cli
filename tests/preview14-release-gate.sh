@@ -37,7 +37,7 @@ process.stdout.write('Preview.14 private-builder runtime-contract compatibility:
 NODE
 
 for required in \
-  'GATED_UNRELEASED' \
+  'PUBLISHED_PRERELEASE' \
   'PENDING_AGENT' \
   'LISTED' \
   'public onboarding packet' \

@@ -1,9 +1,10 @@
 # Command reference
 
-> **Version boundary:** this reference describes the `GATED_UNRELEASED`
-> Preview.14 candidate. Exact flags become authoritative only when the generated
-> reference is bound to the matching non-draft prerelease archive and both that
-> archive and its `SHA256SUMS` checksum are published.
+> **Version boundary:** this reference describes the published Preview.14
+> Linux/x64 prerelease. Exact flags are release-bound in the generated
+> [Preview.14 command reference](PREVIEW14_COMMAND_REFERENCE.md) and apply only
+> to its matching archive and `SHA256SUMS`. The matching non-draft prerelease
+> archive and checksum are published at the linked Preview.14 release.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
@@ -60,9 +61,10 @@ The Preview.14 public Provider commands are:
 | `status` | Read local agent status |
 | `drain` | Stop accepting new work before maintenance |
 
-Use `punch-provider <command> --help` from the installed release for exact
-flags. The Provider cannot approve its own identity, authorize a free offer, or
-publish an offer.
+Use `punch-provider --help` for the packaged overview and the release-bound
+[Preview.14 Provider command reference](PREVIEW14_COMMAND_REFERENCE.md#provider)
+for declared command flags. The Provider cannot approve its own identity,
+authorize a free offer, or publish an offer.
 
 The normal direct setup form is:
 

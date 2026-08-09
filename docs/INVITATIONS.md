@@ -1,7 +1,8 @@
 # Invitations and credentials
 
-> **Version boundary:** this page applies to `v0.1.0-preview.9` when its
-> non-draft prerelease archive and checksum are published.
+> **Version boundary:** this page applies to the published
+> `v0.1.0-preview.14` invitation-only flow. Use only the invitation bound to
+> the exact public identity packet and installed release role.
 
 Punch Compute is invitation-only during the public preview.
 

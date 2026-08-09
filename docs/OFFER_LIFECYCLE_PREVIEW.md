@@ -1,10 +1,10 @@
 # Provider offer lifecycle preview
 
-> **Preview.14 release source — gated and not published:** `offer-status`,
-> `offer-unlist`, and `offer-retire` are included in the supervised Preview.14
-> runtime source and reviewed Preview.14 command map. They are not in the published `v0.1.0-preview.9` archive
-> and are not installed or supported until
-> the matching non-draft Preview.14 archive and `SHA256SUMS` are published.
+> **Published in Preview.14:** `offer-status`, `offer-unlist`, and
+> `offer-retire` are included in the supervised Preview.14 runtime and its
+> release-bound command map. They are not in the published
+> `v0.1.0-preview.9` archive; use only the matching Preview.14 archive and
+> `SHA256SUMS`.
 
 This Preview.14 release source does not change the published Preview.9 Provider
 surface or any Buyer command, order, access, stop, or cleanup behavior.
@@ -49,10 +49,9 @@ to invalidate an accepted Buyer contract.
 Retirement is separate from unlisting. It requires `UNLISTED`, zero reserved
 capacity, terminal direct lifecycle records, and fenced access. It retains auditable terminal offer and environment rows; it does not delete, relist, or recreate either record.
 
-## Release gate
+## Release binding
 
-This source stays gated until all of the following bind to the same Preview.14
-release:
+The published Preview.14 release binds all of the following:
 
 1. A matching private runtime artifact implements the contract.
 2. Focused integration proof covers Provider ownership/non-enumeration,
@@ -62,6 +61,6 @@ release:
 3. A release-bound public archive exposes the exact commands and passes the
    public documentation drift gate.
 
-Until then, use only the commands in the installed release's `--help` output.
-This page is a fail-closed release-source contract, not a Preview.9 or
-Preview.14 deployment or release claim.
+Use only the commands in the installed release's `--help` output. This page is
+a fail-closed command contract, not a deployment or self-service onboarding
+claim.

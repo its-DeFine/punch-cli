@@ -191,9 +191,9 @@ for active_release_doc in \
 done
 
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
-  grep -F 'non-draft prerelease archive' "$current_boundary_doc" > /dev/null && \
-    grep -F 'checksum are published' "$current_boundary_doc" > /dev/null || {
-    printf 'preview.9 publication boundary is missing from %s\n' "$current_boundary_doc" >&2
+  grep -E 'Preview\.14|v0\.1\.0-preview\.14' "$current_boundary_doc" > /dev/null && \
+    grep -F 'published' "$current_boundary_doc" > /dev/null || {
+    printf 'Preview.14 publication boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done

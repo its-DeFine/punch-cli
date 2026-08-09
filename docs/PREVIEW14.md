@@ -1,10 +1,9 @@
 # Preview.14 Provider reliability gate
 
-> **Status: `GATED_UNRELEASED`.** This page is a release gate, not a claim that
-> Preview.14 exists, is published, or is safe to install. The exact Provider and
-> Buyer command contract will be generated only from the reviewed private
-> runtime handoff and the exact release archive. This page does not authorize a
-> source checkout, guessed flag, or an earlier preview command.
+> **Status: `PUBLISHED_PRERELEASE`.** Preview.14 is published for Linux/x64 at
+> [`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14).
+> Install only the matching archive and same-release `SHA256SUMS`; this page does
+> not authorize a source checkout, guessed flag, or an earlier preview command.
 
 Preview.14 is reserved for the minimum Provider-readiness correction identified
 by the first external Provider-to-Buyer attempt. Its release may proceed only
@@ -96,8 +95,8 @@ but keeps every artifact hash explicitly `PENDING_DETERMINISTIC_BUILD`; it is
 not release authority. The separate
 [bound command contract](preview14-public-command-contract.json) records the
 exact archive, sums, runtime contract, and packaged surface used to generate the
-[reference](PREVIEW14_COMMAND_REFERENCE.md). Publication remains gated until the
-matching archive and `SHA256SUMS` are published in a non-draft prerelease.
+[reference](PREVIEW14_COMMAND_REFERENCE.md). Those exact bytes are published in
+the non-draft Preview.14 prerelease; any different archive remains unauthorized.
 
 This static v1 binding covers the declared public command, flag, and workflow
 surface; it is not exhaustive mechanical semantic/output parity. Exact-artifact

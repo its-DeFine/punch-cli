@@ -1,8 +1,10 @@
-# Provider guide
+# Preview.14 Provider guide
 
-> **Preview.14 boundary:** this page documents the `GATED_UNRELEASED`
-> Linux/x64 candidate. It becomes usable only when the matching non-draft prerelease archive
-> and its `SHA256SUMS` checksum are published after the release gate passes.
+> **Current release:** use only the published Linux/x64
+> [`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14)
+> archive and its same-release `SHA256SUMS`. This remains invitation-only,
+> owner-targeted `$0` preview software; publication does not authorize
+> self-service onboarding.
 
 The Provider agent runs on the execution node and connects outbound to Punch.
 It does not expose a public SSH port, host SSH, or Docker over the Internet. Contract SSH is
@@ -12,6 +14,51 @@ TCP `22222`.
 Provider onboarding remains supervised. A Provider cannot approve itself,
 choose a Buyer, issue a targeted-zero authorization, or create a publicly
 claimable free offer.
+
+## Published release entry
+
+On an Ubuntu 22.04 or 24.04 Linux/x64 host, download the two exact assets from
+the same release, verify the checksum, and install the Provider role:
+
+```bash
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.14/punch-cli-0.1.0-preview.14-linux-x64.tar.gz
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.14/SHA256SUMS
+sha256sum -c SHA256SUMS --ignore-missing
+tar -xzf punch-cli-0.1.0-preview.14-linux-x64.tar.gz
+cd punch-cli-0.1.0-preview.14-linux-x64
+./install.sh --role provider
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Require the archive line to report `OK`. Its published SHA-256 is
+`bea2829770919a68ac3f0bf69f4a5d510875fca65efe742027a822b214d587ce`.
+Before onboarding, these installed commands only display the release surface
+and inspect local host readiness:
+
+```bash
+punch-provider --help
+punch-provider doctor \
+  --machine-id PROVIDER_MACHINE_ID \
+  --state-dir "$HOME/.local/state/punch-provider" \
+  --json
+punch-provider inventory --json
+```
+
+`doctor` and `inventory` are read-only: they do not create a Provider identity,
+redeem an invitation, install dependencies, create an offer, or start a service.
+
+**State-creating boundary:** stop here until supervised onboarding is approved.
+`identity-init` creates the local private Provider identity and public
+onboarding packet. Punch must bind a single-use Provider invitation to that
+public packet before `join`; `setup` comes only after a successful join. Do not
+run guided `punch`, `identity-init`, `join`, or `setup` as an install or
+diagnostic check, and never substitute guessed invitation or configuration
+values.
+
+After that prerequisite is satisfied, continue with
+[private state, identity, and join](#2-private-state-identity-and-join), the
+[Preview.14 release flow](PREVIEW14.md), and the exact
+[Preview.14 Provider command reference](PREVIEW14_COMMAND_REFERENCE.md#provider).
 
 ## 1. Supported host
 

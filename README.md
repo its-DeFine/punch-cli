@@ -13,22 +13,19 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-`v0.1.0-preview.13` is the supported Linux/x64 package only when GitHub shows
-its non-draft prerelease with the matching archive and checksum assets.
-`v0.1.0-preview.12` must not be used for Provider serving because its immutable archive
-contains the documented ESM/CommonJS packaging defect. A source commit alone
-does not make a version installable. `v0.1.0-preview.11` remains an immutable
-historical release for rollback evidence, not the current Provider package.
-Use only release assets together with the matching immutable image set in
-[Release and verification policy](docs/RELEASES.md).
+[`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14)
+is the current published Linux/x64 prerelease. Install only its matching
+`punch-cli-0.1.0-preview.14-linux-x64.tar.gz` and `SHA256SUMS` assets; a source
+commit alone is not an installable release. Preview.14 replaces manual Provider
+NetBird/config/service assembly with one resumable `setup` operation. A
+Provider creates its machine identity and public onboarding packet before Punch
+issues the bound invitation.
 
-`v0.1.0-preview.14` is currently `GATED_UNRELEASED`. Its candidate docs replace
-manual Provider NetBird/config/service assembly with one resumable `setup`
-operation. A Provider creates its machine identity and public onboarding packet
-before Punch issues the bound invitation. These candidate docs do not make
-Preview.14 installable. The generated command reference remains empty until the
-exact archive, checksum manifest, runtime contract, and packaged CLI surface
-agree.
+`v0.1.0-preview.13`, `v0.1.0-preview.12`, and `v0.1.0-preview.11` remain
+immutable historical releases. Preview.12 must not be used for Provider serving
+because its archive contains the documented ESM/CommonJS packaging defect. Use
+only release assets together with the matching immutable image set in
+[Release and verification policy](docs/RELEASES.md).
 
 ## What is public
 
@@ -48,10 +45,10 @@ agree.
 
 ## Quick start
 
-1. Download the current supported Linux/x64 package from the repository's Releases page and verify its checksum.
-2. Obtain a single-use Buyer or Provider invitation from Punch.
-3. Install the matching CLI from that verified release; see [Installation](docs/INSTALL.md).
-4. Follow the documentation tagged for the exact installed release.
+1. Download the Preview.14 Linux/x64 archive and `SHA256SUMS` from the [published release](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14), then verify the checksum.
+2. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
+3. For Provider onboarding, follow the [Preview.14 Provider guide](docs/PROVIDER.md): its local public identity packet precedes the bound invitation. Buyer invitations follow the separate [invitation guide](docs/INVITATIONS.md).
+4. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.
 
 ```bash
 punch-buyer --help
@@ -80,8 +77,8 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Preview.11 supervised Buyer bootstrap](docs/PREVIEW11.md) (gated and unreleased)
 - [Preview.12 guided Punch home](docs/PREVIEW12.md) (superseded for Provider serving)
 - [Preview.13 Provider serve packaging correction](docs/PREVIEW13.md)
-- [Preview.14 Provider readiness gate](docs/PREVIEW14.md) (gated and unreleased)
-- [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (included in the gated, unpublished Preview.14 supervised source; not installed or supported by published Preview.9)
+- [Preview.14 Provider readiness and release flow](docs/PREVIEW14.md)
+- [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (published in Preview.14; unavailable in Preview.9)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)
 - [Targeted zero-price test contract](docs/TARGETED_ZERO_TEST.md) (supervised Preview.9 only)
