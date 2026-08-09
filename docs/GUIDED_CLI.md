@@ -65,3 +65,48 @@ For scripts and automation, keep using `punch-buyer ...` and
 use must follow the separate custody, approval, retry, and state rules in the
 [Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
 interactive prompts.
+
+## Unreleased interactive Provider onboarding implementation contract
+
+> **UNRELEASED IMPLEMENTATION CONTRACT**
+> **Release authority: false.** This flow is not present in
+> `v0.1.0-preview.14` or its published archive. It describes behavior being
+> implemented for a later release candidate and does not change the shipped
+> Preview.14 commands or release record.
+
+The normal Provider journey starts from one obvious interactive entry point:
+run `punch`, then select **Provider**. Direct `punch-provider ...` commands
+remain an advanced, non-interactive path; a Provider following the guided path
+does not need to discover or assemble them.
+
+The guided flow proceeds in this order:
+
+1. **Preflight before identity.** The CLI inspects the host and reports whether
+   it is ready before it creates a Provider identity or sends an onboarding
+   request. If reviewed prerequisites are missing, it shows the
+   exact dependency-install plan and asks for explicit consent to that plan
+   before making any privileged change. A declined or failed plan leaves the
+   identity boundary uncrossed and provides a recovery action.
+2. **Friendly Provider choices.** The CLI asks for a human-facing Provider
+   label, CPU, RAM, disk, and which detected GPUs to make available. It does not
+   ask the Provider to construct or paste a Punch origin, filesystem or
+   credential path, machine ID, GPU UUID, CDI selector, setup reference, or raw
+   setup flag.
+3. **Explicit identity boundary.** The CLI explains the durable local state and
+   public request it is about to create, then requires confirmation. Only after
+   that confirmation does it generate and retain the private identity locally
+   and submit a signed, public-only onboarding request. Private key material and
+   internal credentials are never sent or displayed.
+4. **Durable wait and resume.** After the request is accepted, the home displays
+   `WAITING_FOR_INVITE` and preserves that state across relaunch. The Provider
+   returns to the same `punch` flow and supplies the one-time invitation artifact
+   when it arrives; no server handoff or placeholder flags have to be inferred.
+5. **Automatic setup through listing.** After invitation confirmation, the CLI
+   resumes the authenticated join, uses trusted Control-derived configuration,
+   completes NetBird enrollment, generates local config, installs and validates
+   the service with approval for consequential local changes, validates the
+   selected capacity, and activates the bounded offer through `LISTED`.
+6. **One status and recovery surface.** Subsequent interactive homes show the
+   Provider and onboarding state, offer/listing state, orders and contracts,
+   selected capacity, service health, and a clear recovery action when work is
+   required.
