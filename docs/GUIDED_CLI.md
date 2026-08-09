@@ -1,6 +1,6 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the published Preview.15 Linux/x64
+> **Release boundary:** this page documents the published Preview.16 Linux/x64
 > prerelease. Use only its matching non-draft archive and same-release
 > `SHA256SUMS`; Preview.14 does not contain the interactive Provider onboarding
 > flow below.
@@ -72,10 +72,10 @@ use must follow the separate custody, approval, retry, and state rules in the
 [Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
 interactive prompts.
 
-## Preview.15 interactive Provider onboarding contract
+## Preview.16 interactive Provider onboarding contract
 
 > **Published contract.** This flow is bound to the matching non-draft
-> Preview.15 archive and `SHA256SUMS`; it cannot be installed from this source
+> Preview.16 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
 
 The normal Provider journey starts from one obvious interactive entry point:

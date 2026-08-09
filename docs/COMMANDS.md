@@ -1,15 +1,15 @@
 # Command reference
 
-> **Version boundary:** this reference describes the published Preview.15
+> **Version boundary:** this reference describes the published Preview.16
 > Linux/x64 prerelease. Exact flags are release-bound in the generated
-> [Preview.15 command reference](PREVIEW15_COMMAND_REFERENCE.md) and apply only
+> [Preview.16 command reference](PREVIEW16_COMMAND_REFERENCE.md) and apply only
 > to its matching archive and `SHA256SUMS` in the non-draft release.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.15 adds a state-aware `punch` home without removing either role
+Preview.16 adds a state-aware `punch` home without removing either role
 command. Its release boundary and behavior are documented in
 [Guided `punch` home](GUIDED_CLI.md).
 
@@ -35,13 +35,13 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.15 Buyers do not pass a zero-price flag. An operator-approved
+Preview.16 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
 ## Provider
 
-The Preview.15 public Provider commands are:
+The Preview.16 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -66,7 +66,7 @@ The Preview.15 public Provider commands are:
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.15 Provider command reference](PREVIEW15_COMMAND_REFERENCE.md#provider)
+[Preview.16 Provider command reference](PREVIEW16_COMMAND_REFERENCE.md#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
@@ -100,9 +100,10 @@ images; runs the real local pre-list container/SSH/cleanup proof; creates the
 non-discoverable `PENDING_AGENT` offer; consumes one machine/setup-bound
 NetBird enrollment; writes the canonical private config; installs and starts
 systemd; and activates `LISTED` only after a fresh signed heartbeat.
-This is one guided/direct CLI session. Guided TTY use may prompt for `sudo`
-after consent; direct non-interactive use requires explicit confirmation and
-cached `sudo`. Normal onboarding does not require `serve` or manual config.
+This is one guided/direct CLI session. After consent, guided TTY use probes
+`sudo -n true` before falling back to interactive `sudo -v`; direct
+non-interactive use requires explicit confirmation and cached `sudo`. Normal
+onboarding does not require `serve` or manual config.
 
 Punch supports multiple independently supervised Provider machines and offers.
 Each order still reserves one eligible offer. An ineligible offer is not
@@ -111,7 +112,7 @@ orderable through either the guided or direct Buyer command.
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14
-and remain in Preview.15. They do not alter the Buyer command surface.
+and remain in Preview.16. They do not alter the Buyer command surface.
 
 All three require `--machine-id`, `--state-dir`, `--agent-config`, and
 `--offer-id`. `offer-unlist` and `offer-retire` also require a stable
@@ -157,7 +158,7 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.15 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.16 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound generated
-reference is [PREVIEW15_COMMAND_REFERENCE.md](PREVIEW15_COMMAND_REFERENCE.md).
+reference is [PREVIEW16_COMMAND_REFERENCE.md](PREVIEW16_COMMAND_REFERENCE.md).

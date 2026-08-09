@@ -8,7 +8,7 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-[`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15)
+[`v0.1.0-preview.16`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.16)
 is the current published Linux/x64 prerelease. Install only its
 matching versioned archive and `SHA256SUMS`; this source commit alone is not an
 installable release. The package must be used with this exact public image set:
@@ -24,16 +24,30 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.15 guided Provider onboarding release
+## Preview.16 guided Provider sudo repair release
 
-Preview.15 is a published Linux/x64 prerelease. Install authority comes only
-from its matching non-draft GitHub prerelease after the exact archive verifies
-against the same-release `SHA256SUMS`; source identity or documentation alone
-does not authorize installation. Publication alone is not `OWNER-READY` until
-the released archive and version-matched docs pass both independent clean
+Preview.16 is the current published Linux/x64 prerelease. Install authority
+comes only from its matching non-draft GitHub prerelease after the exact archive
+verifies against the same-release `SHA256SUMS`; source identity or documentation
+alone does not authorize installation. Publication alone is not `OWNER-READY`
+until the released archive and version-matched docs pass both independent clean
 Provider and Buyer journeys.
 
-The release promotes `punch` then **Provider** as the normal entry point:
+The guided Provider flow is unchanged except for the accepted authorization
+repair: after dependency-plan confirmation it probes passwordless capability
+with `sudo -n true`, then falls back to interactive `sudo -v` only when needed.
+A failed fallback stops before dependency installation. Direct non-interactive
+commands continue to require cached sudo. See [Preview.16](PREVIEW16.md), its
+[runtime contract](preview16-runtime-contract.json), and the release-bound
+[command reference](PREVIEW16_COMMAND_REFERENCE.md).
+
+## Preview.15 historical guided Provider onboarding release
+
+Preview.15 is an immutable historical Linux/x64 prerelease. It lacks the
+Preview.16 guided `sudo -n true` capability probe before interactive fallback;
+use Preview.16 for guided Provider onboarding.
+
+Preview.15 introduced `punch` then **Provider** as the normal entry point:
 preflight before identity, exact dependency-plan consent, friendly capacity
 selection, explicit local identity consent, a signed public-only onboarding
 request, durable `WAITING_FOR_INVITE`, supervised `INVITE_READY`, secure

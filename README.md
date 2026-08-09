@@ -13,21 +13,24 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-[`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15)
+[`v0.1.0-preview.16`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.16)
 is the current published Linux/x64 prerelease. Install only its matching
-`punch-cli-0.1.0-preview.15-linux-x64.tar.gz` and `SHA256SUMS` assets; a source
-commit alone is not an installable release. Preview.15 promotes guided Provider
+`punch-cli-0.1.0-preview.16-linux-x64.tar.gz` and `SHA256SUMS` assets; a source
+commit alone is not an installable release. Preview.16 promotes guided Provider
 onboarding from `punch`, with host preflight before identity, explicit identity
 consent, durable `WAITING_FOR_INVITE`, supervised `INVITE_READY`, secure
 invitation resume, automatic supervised setup, and one Provider overview.
 Publication alone is not `OWNER-READY`; that requires the separate clean
-Provider and Buyer acceptance in the [Preview.15 flow](docs/PREVIEW15.md).
+Provider and Buyer acceptance in the [Preview.16 flow](docs/PREVIEW16.md).
 
-`v0.1.0-preview.14`, `v0.1.0-preview.13`, `v0.1.0-preview.12`, and
-`v0.1.0-preview.11` remain immutable historical releases. Preview.12 must not be
-used for Provider serving because its archive contains the documented
-ESM/CommonJS packaging defect. Use only release assets together with the
-matching immutable image set in [Release and verification policy](docs/RELEASES.md).
+`v0.1.0-preview.15`, `v0.1.0-preview.14`, `v0.1.0-preview.13`,
+`v0.1.0-preview.12`, and `v0.1.0-preview.11` remain immutable historical
+releases. Preview.15 lacks the repaired guided `sudo -n true` capability probe
+before interactive fallback; use Preview.16 for guided Provider onboarding.
+Preview.12 must not be used for Provider serving because its archive contains
+the documented ESM/CommonJS packaging defect. Use only release assets together
+with the matching immutable image set in
+[Release and verification policy](docs/RELEASES.md).
 
 ## What is public
 
@@ -47,9 +50,9 @@ matching immutable image set in [Release and verification policy](docs/RELEASES.
 
 ## Quick start
 
-1. Download the Preview.15 Linux/x64 archive and `SHA256SUMS` from the [published release](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15), then verify the checksum.
+1. Download the Preview.16 Linux/x64 archive and `SHA256SUMS` from the [published release](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.16), then verify the checksum.
 2. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
-3. For guided Provider onboarding, follow the version-matched [Preview.15 Provider guide](docs/PROVIDER.md). Buyer invitations follow the separate [invitation guide](docs/INVITATIONS.md).
+3. For guided Provider onboarding, follow the version-matched [Preview.16 Provider guide](docs/PROVIDER.md). Buyer invitations follow the separate [invitation guide](docs/INVITATIONS.md).
 4. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.
 
 ```bash
@@ -80,7 +83,8 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Preview.12 guided Punch home](docs/PREVIEW12.md) (superseded for Provider serving)
 - [Preview.13 Provider serve packaging correction](docs/PREVIEW13.md)
 - [Preview.14 Provider readiness and release flow](docs/PREVIEW14.md)
-- [Preview.15 guided Provider onboarding and owner-readiness flow](docs/PREVIEW15.md)
+- [Preview.15 historical guided Provider onboarding](docs/PREVIEW15.md)
+- [Preview.16 guided Provider onboarding and owner-readiness flow](docs/PREVIEW16.md)
 - [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (published in Preview.14; unavailable in Preview.9)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)

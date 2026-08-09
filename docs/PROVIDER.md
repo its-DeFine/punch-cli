@@ -1,7 +1,7 @@
-# Preview.15 Provider guide
+# Preview.16 Provider guide
 
 > **Status: `PUBLISHED_PRERELEASE`.** Use only the published Linux/x64
-> [`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15)
+> [`v0.1.0-preview.16`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.16)
 > archive and its same-release `SHA256SUMS`. Do not use a source checkout,
 > private build, guessed URL, or earlier archive for this guided flow. The
 > network remains invitation-only and owner-targeted `$0`; publication does not
@@ -22,16 +22,16 @@ On an Ubuntu 22.04 or 24.04 Linux/x64 host, download the two exact assets from
 the same non-draft release, verify the checksum, and install the Provider role:
 
 ```bash
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.15/punch-cli-0.1.0-preview.15-linux-x64.tar.gz
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.15/SHA256SUMS
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.16/punch-cli-0.1.0-preview.16-linux-x64.tar.gz
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.16/SHA256SUMS
 sha256sum -c SHA256SUMS --ignore-missing
-tar -xzf punch-cli-0.1.0-preview.15-linux-x64.tar.gz
-cd punch-cli-0.1.0-preview.15-linux-x64
+tar -xzf punch-cli-0.1.0-preview.16-linux-x64.tar.gz
+cd punch-cli-0.1.0-preview.16-linux-x64
 ./install.sh --role provider
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-Require the exact Preview.15 archive line to report `OK`. A missing release,
+Require the exact Preview.16 archive line to report `OK`. A missing release,
 asset, checksum line, or `OK` result is a hard stop. Its published SHA-256 is
 `672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468`.
 Before onboarding, confirm the installed release surface:
@@ -57,8 +57,8 @@ be an owned mode-`0600` file before the guided home imports it. Never substitute
 guessed invitation or configuration values.
 
 Continue with [guided onboarding](#2-guided-provider-onboarding),
-the [Preview.15 release flow](PREVIEW15.md), and the exact
-[Preview.15 Provider command reference](PREVIEW15_COMMAND_REFERENCE.md#provider).
+the [Preview.16 release flow](PREVIEW16.md), and the exact
+[Preview.16 Provider command reference](PREVIEW16_COMMAND_REFERENCE.md#provider).
 
 ## 1. Supported host
 
@@ -66,7 +66,7 @@ the [Preview.15 release flow](PREVIEW15.md), and the exact
 - A private, owner-controlled state directory and sufficient storage for the
   three immutable Punch images plus one bounded workload.
 - For GPU capacity, a compatible NVIDIA driver and stable UUID/CDI identity.
-  Preview.15 may install the reviewed container toolkit after consent, but it
+  Preview.16 may install the reviewed container toolkit after consent, but it
   never replaces the GPU driver or kernel and never reboots the host.
 
 The exact immutable image identities are:
@@ -194,14 +194,15 @@ flags. For 2–8 GPUs, use aligned comma-separated `--gpu-uuids` and
 
 If `doctor` reports missing reviewed dependencies, include
 `--install-dependencies`. In a guided TTY session Punch shows the exact plan,
-asks for confirmation, may prompt for `sudo`, and then continues the same setup
-through activation. A direct non-interactive invocation requires both `--yes`
-and an already cached `sudo` authorization; it fails with a recovery action
-instead of opening a hidden prompt. Consent never authorizes an unlisted
-package, driver, kernel, reboot, or unrelated daemon-policy change. The required
-Docker user-namespace boundary is `userns-remap=default`; Punch preserves all
-other daemon settings and retains an exact rollback artifact when it enables
-that setting.
+asks for confirmation, probes `sudo -n true`, and falls back to interactive
+`sudo -v` only when needed before continuing the same setup through
+activation. A direct non-interactive invocation requires both `--yes` and an
+already cached `sudo` authorization; it fails with a recovery action instead
+of opening a hidden prompt. Consent never authorizes an unlisted package,
+driver, kernel, reboot, or unrelated daemon-policy change. The required Docker
+user-namespace boundary is `userns-remap=default`; Punch preserves all other
+daemon settings and retains an exact rollback artifact when it enables that
+setting.
 
 The Buyer identity, owner-targeted `$0` authorization, access window, offer ID,
 and price come from authenticated Control. They are not normal Provider input.
@@ -219,14 +220,14 @@ config is generated at `STATE_DIR/provider-agent.json`.
 
 ## 5. NetBird and config custody
 
-Normal Preview.15 setup requests one short-lived, single-use enrollment from
+Normal Preview.16 setup requests one short-lived, single-use enrollment from
 Control only after Provider authorization. Punch passes it to NetBird through a
 temporary mode-`0600` file, verifies the resulting peer/address binding, records
 the non-secret receipt, and removes the one-time material.
 The Provider never receives the NetBird management token or pastes a setup key.
 
 Manual NetBird enrollment and manual editing/copying of
-`provider-agent.example.json` are obsolete for normal Preview.15 onboarding.
+`provider-agent.example.json` are obsolete for normal Preview.16 onboarding.
 `--agent-config` remains an advanced exact-match recovery/diagnostic override;
 it cannot change authenticated image, Buyer, offer, window, price, or
 authorization bindings.
@@ -277,5 +278,5 @@ For maintenance, unlist an unaccepted offer or allow accepted contracts to
 finish, then retire only after obligations are terminal. Preserve credentials,
 identity keys, state, generated config, and receipts across a program rollback.
 
-Preview.15 remains owner-targeted `$0` only. Payment, settlement, payout,
+Preview.16 remains owner-targeted `$0` only. Payment, settlement, payout,
 refunds, and paid-offer economics are outside its acceptance boundary.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "punch.preview16-public-command-contract-format.v1",
   "artifactKind": "public-format-description",
-  "releaseStatus": "GATED_UNRELEASED",
+  "releaseStatus": "PUBLISHED_PRERELEASE",
   "runtimeMatchRequired": true,
   "contractSchema": "punch.preview16-public-command-contract.v1",
   "requiredTopLevelKeys": [

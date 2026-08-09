@@ -8,8 +8,8 @@ See [Platform support](PLATFORMS.md). Provider execution is currently limited to
 
 ## Install from a release
 
-Preview.15 is published for Linux/x64. Install only
-`punch-cli-0.1.0-preview.15-linux-x64.tar.gz` after its exact line in the
+Preview.16 is published for Linux/x64. Install only
+`punch-cli-0.1.0-preview.16-linux-x64.tar.gz` after its exact line in the
 same-release `SHA256SUMS` reports `OK`. This source checkout is not an
 installable release; never infer an archive from its branch or documentation.
 
@@ -43,7 +43,7 @@ User installation:
 ```
 
 The Punch archive installer makes no privileged or system-service changes. In
-Preview.15, the later supervised Provider flow owns reviewed
+Preview.16, the later supervised Provider flow owns reviewed
 dependency changes, generated configuration, and service installation only
 after explicit consent. Do not manually install or edit the reference files
 carried under `provider/` as a substitute for that flow.
