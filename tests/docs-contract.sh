@@ -194,6 +194,20 @@ require docs/preview15-public-command-contract.template.json '"name": "onboardin
 require docs/preview15-public-command-contract.template.json '"name": "onboarding-status"'
 require docs/preview15-public-command-contract.template.json '"name": "overview"'
 require docs/preview15-public-command-contract.template.json '"provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "join", "overview", "doctor", "setup", "service-status", "offer-status"]'
+require docs/PREVIEW16.md 'Status: `PUBLISHED_PRERELEASE`'
+require docs/PREVIEW16.md 'v0.1.0-preview.16'
+require docs/PREVIEW16.md '`sudo -n true`'
+require docs/PREVIEW16.md 'interactive `sudo -v`'
+require docs/PREVIEW16.md 'PENDING_DETERMINISTIC_BUILD'
+require docs/PREVIEW16_COMMAND_REFERENCE.md 'public artifact binding pending deterministic build'
+require docs/preview16-runtime-contract.json 'punch.preview16-runtime-contract.v1'
+require docs/preview16-runtime-contract.json 'c0cabb6f18e7eba6c3c9910abe4e76ad814c05d2'
+require docs/preview16-runtime-contract.json '7d67f0967ac2cfab5b47a92716fe5bbda069d08e'
+require docs/preview16-runtime-contract.json 'ba7d8c32ba2cdad2d7bdef32739ca4d8b2a1d03c26f0b5a4c946249d68f3b28b'
+require docs/preview16-public-command-contract.template.json 'PENDING_DETERMINISTIC_BUILD'
+require docs/GUIDED_CLI.md 'Preview.16 repairs guided authorization'
+require docs/GUIDED_CLI.md '`sudo -n true`'
+require docs/GUIDED_CLI.md 'interactive `sudo -v`'
 
 node scripts/validate-targeted-zero-contract.js --self-test
 node scripts/generate-command-reference.mjs \
@@ -206,5 +220,6 @@ node scripts/scan-public-material.mjs --self-test
 node --test tests/agent-runbook-contract.mjs
 sh tests/preview14-release-gate.sh
 sh tests/preview15-release-gate.sh
+sh tests/preview16-release-gate.sh
 
 printf '%s\n' 'public docs command/proof contract: PASS'

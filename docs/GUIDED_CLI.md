@@ -48,6 +48,11 @@ is confirmed. Direct non-interactive setup requires explicit confirmation and
 cached `sudo`; otherwise it fails with a recovery instruction. Neither path
 requires manual `serve`, a copied agent config, or a separate NetBird command.
 
+Preview.16 repairs guided authorization without changing the direct command
+surface: after plan confirmation it first probes passwordless capability with
+`sudo -n true`, then falls back to interactive `sudo -v` only when needed. A
+failed fallback stops before dependency installation.
+
 The Buyer home renders the selected offer's returned capacity, duration, price,
 availability, and eligibility before final confirmation. It stores the stable
 order reference before submission. The home refuses confirmation for an

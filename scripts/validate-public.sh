@@ -8,6 +8,7 @@ sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   images/interactive/punch-interactive images/interactive/punch-ssh-stdio \
   images/validation/validate.sh images/workload/workload.sh \
   tests/buyer-stop-contract.sh tests/docs-contract.sh tests/preview15-release-gate.sh \
+  tests/preview16-release-gate.sh \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
