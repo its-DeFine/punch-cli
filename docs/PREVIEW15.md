@@ -1,9 +1,10 @@
 # Preview.15 guided Provider onboarding release gate
 
-> **Status: `GATED_UNRELEASED`.** Preview.15 has no install authority until the
-> exact private source, deterministic Control archive, Linux/x64 public archive,
-> `SHA256SUMS`, and sanitized clean-host Provider and Buyer receipts are bound
-> here and published together in a non-draft prerelease.
+> **Status: `PUBLISHED_PRERELEASE`.** Preview.15 is published for Linux/x64 at
+> [`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15).
+> Install authority comes only from that matching non-draft GitHub prerelease
+> after verifying the exact archive against its same-release `SHA256SUMS`; this
+> page does not authorize a source checkout or different bytes.
 
 Preview.15 promotes the guided Provider onboarding implementation described in
 [Guided `punch` home](GUIDED_CLI.md). The normal Provider entry is `punch`, then
