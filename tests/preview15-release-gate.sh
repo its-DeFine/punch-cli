@@ -15,7 +15,8 @@ const privateSource = {
 };
 if (!contract || typeof contract !== 'object' || Array.isArray(contract)
     || contract.schemaVersion !== 'punch.preview15-runtime-contract.v1'
-    || contract.releaseVersion !== version || contract.platform !== 'linux-x64'
+    || contract.releaseVersion !== version || contract.releaseStatus !== 'PUBLISHED_PRERELEASE'
+    || contract.platform !== 'linux-x64'
     || contract.privateReleaseSource?.commit !== privateSource.commit
     || contract.privateReleaseSource?.tree !== privateSource.tree
     || contract.accessTransport !== 'NETBIRD_CONTRACT_SCOPED_GATEWAY'
@@ -25,6 +26,13 @@ if (!contract || typeof contract !== 'object' || Array.isArray(contract)
 }
 if (contract.controlArchiveSha256 !== 'sha256:11271fd5454c993b6389af9c1833d0e9c380b2ea7fd6ffde731d02cec4cda0e3') {
   throw new Error('Public Preview.15 runtime contract lost the reviewed Control archive binding.');
+}
+if (contract.artifactBinding?.authority !== 'AUTHORITATIVE_PACKAGED_CLI_SURFACE'
+    || contract.artifactBinding.archiveSha256 !== 'sha256:672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468'
+    || contract.artifactBinding.sha256SumsSha256 !== 'sha256:2e3e8d75451c3e9356bd26549ebe26b7bbe3e627cca23c8b914fa092f99f697d'
+    || contract.artifactBinding.packagedCliSurfaceSha256 !== 'sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a'
+    || contract.guidedCli?.directCommands !== contract.artifactBinding.packagedCliSurfaceSha256) {
+  throw new Error('Public Preview.15 runtime contract lost the authoritative packaged artifact binding.');
 }
 process.stdout.write('Preview.15 private-builder runtime-contract compatibility: PASS\n');
 NODE
@@ -56,14 +64,16 @@ if grep -F -- 'PENDING_VALIDATION' docs/PREVIEW15.md docs/preview15-runtime-cont
 fi
 
 for required in \
-  'AUTHORITATIVE_PACKAGED_CLI_SURFACE_REQUIRED' \
+  'AUTHORITATIVE_PACKAGED_CLI_SURFACE' \
   'privateReleaseSource' \
   'NETBIRD_CONTRACT_SCOPED_GATEWAY' \
   'OWNER_TARGETED_ZERO_ONLY' \
   '7867a5f101180b231e24d2b87bc4e86ef90b9b38' \
   '7ded34759e139fb54b3f15fabf8992bdd3943628' \
   'sha256:11271fd5454c993b6389af9c1833d0e9c380b2ea7fd6ffde731d02cec4cda0e3' \
-  'REVIEWED_FINAL_COMMAND_MAP_PUBLIC_ARTIFACT_BINDING_PENDING' \
+  'sha256:672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468' \
+  'sha256:2e3e8d75451c3e9356bd26549ebe26b7bbe3e627cca23c8b914fa092f99f697d' \
+  'sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a' \
   'GUIDED_PROVIDER_ONBOARDING' \
   'providerPreflightBeforeIdentity' \
   'WAITING_FOR_INVITE' \
@@ -190,20 +200,21 @@ for required in \
 done
 
 contract=docs/preview15-public-command-contract.json
-if [ -e "$contract" ]; then
-  node scripts/generate-preview15-command-reference.mjs \
-    --contract "$contract" \
-    --target docs/PREVIEW15_COMMAND_REFERENCE.md
-else
-  for required in \
-    '7867a5f101180b231e24d2b87bc4e86ef90b9b38' \
-    '7ded34759e139fb54b3f15fabf8992bdd3943628' \
-    'sha256:11271fd5454c993b6389af9c1833d0e9c380b2ea7fd6ffde731d02cec4cda0e3' \
-    'public artifact binding pending deterministic build'; do
-    grep -F -- "$required" docs/PREVIEW15_COMMAND_REFERENCE.md > /dev/null || {
-      printf 'Preview.15 pending command reference is missing source/artifact boundary: %s\n' "$required" >&2
-      exit 1
-    }
-  done
-fi
+[ -e "$contract" ] || {
+  printf '%s\n' 'Preview.15 bound public command contract is missing' >&2
+  exit 1
+}
+for required in \
+  '672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468' \
+  '2e3e8d75451c3e9356bd26549ebe26b7bbe3e627cca23c8b914fa092f99f697d' \
+  'f58aeff56e9109b15ffeae9c95bcdab36e90dd64c65b306b181b578c5471a0c7' \
+  '8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a'; do
+  grep -F -- "$required" "$contract" > /dev/null || {
+    printf 'Preview.15 bound command contract is missing artifact digest: %s\n' "$required" >&2
+    exit 1
+  }
+done
+node scripts/generate-preview15-command-reference.mjs \
+  --contract "$contract" \
+  --target docs/PREVIEW15_COMMAND_REFERENCE.md
 printf '%s\n' 'Preview.15 public release-gate contract: PASS'

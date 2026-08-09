@@ -1,11 +1,11 @@
 # Preview.15 Provider guide
 
-> **Status: `GATED_UNRELEASED`.** Preview.15 has no install authority until its
-> exact Linux/x64 archive and same-release `SHA256SUMS` are published together
-> in a non-draft release. Preview.14 remains the current published release. Do
-> not use a source checkout, private build, guessed URL, or earlier archive for
-> this guided flow. The network remains invitation-only and owner-targeted `$0`;
-> publication does not authorize self-service approval.
+> **Status: `PUBLISHED_PRERELEASE`.** Use only the published Linux/x64
+> [`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15)
+> archive and its same-release `SHA256SUMS`. Do not use a source checkout,
+> private build, guessed URL, or earlier archive for this guided flow. The
+> network remains invitation-only and owner-targeted `$0`; publication does not
+> authorize self-service approval.
 
 The Provider agent runs on the execution node and connects outbound to Punch.
 It does not expose a public SSH port, host SSH, or Docker over the Internet. Contract SSH is
@@ -16,12 +16,10 @@ Provider onboarding remains supervised. A Provider cannot approve itself,
 choose a Buyer, issue a targeted-zero authorization, or create a publicly
 claimable free offer.
 
-## Release gate and installation
+## Published release and installation
 
-The commands below become valid only after the non-draft
-`v0.1.0-preview.15` release publishes both named assets. Until then, stop here.
 On an Ubuntu 22.04 or 24.04 Linux/x64 host, download the two exact assets from
-that same release, verify the checksum, and install the Provider role:
+the same non-draft release, verify the checksum, and install the Provider role:
 
 ```bash
 curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.15/punch-cli-0.1.0-preview.15-linux-x64.tar.gz
@@ -34,8 +32,9 @@ export PATH="$HOME/.local/bin:$PATH"
 ```
 
 Require the exact Preview.15 archive line to report `OK`. A missing release,
-asset, checksum line, or `OK` result is a hard stop. Before onboarding, confirm
-the installed release surface:
+asset, checksum line, or `OK` result is a hard stop. Its published SHA-256 is
+`672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468`.
+Before onboarding, confirm the installed release surface:
 
 ```bash
 punch --help
@@ -57,7 +56,7 @@ private local identity and public-only request and stops at
 be an owned mode-`0600` file before the guided home imports it. Never substitute
 guessed invitation or configuration values.
 
-After publication, continue with [guided onboarding](#2-guided-provider-onboarding),
+Continue with [guided onboarding](#2-guided-provider-onboarding),
 the [Preview.15 release flow](PREVIEW15.md), and the exact
 [Preview.15 Provider command reference](PREVIEW15_COMMAND_REFERENCE.md#provider).
 

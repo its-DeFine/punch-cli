@@ -1,10 +1,9 @@
 # Command reference
 
-> **Version boundary:** this reference describes the Preview.15 Linux/x64
-> candidate, currently `GATED_UNRELEASED`. Exact flags are release-bound in the
-> pending [Preview.15 command reference](PREVIEW15_COMMAND_REFERENCE.md) and
-> apply only after its matching archive and `SHA256SUMS` are published in a
-> non-draft release. Preview.14 remains the current published release.
+> **Version boundary:** this reference describes the published Preview.15
+> Linux/x64 prerelease. Exact flags are release-bound in the generated
+> [Preview.15 command reference](PREVIEW15_COMMAND_REFERENCE.md) and apply only
+> to its matching archive and `SHA256SUMS` in the non-draft release.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
@@ -112,9 +111,7 @@ orderable through either the guided or direct Buyer command.
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14
-and remain in the Preview.15 candidate. The Preview.15 forms remain unavailable
-until its matching archive is published and do not alter the Buyer command
-surface.
+and remain in Preview.15. They do not alter the Buyer command surface.
 
 All three require `--machine-id`, `--state-dir`, `--agent-config`, and
 `--offer-id`. `offer-unlist` and `offer-retire` also require a stable

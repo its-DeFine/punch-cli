@@ -1,9 +1,9 @@
 # Invitations and credentials
 
-> **Version boundary:** this page describes the Preview.15 invitation-only
-> flow, currently `GATED_UNRELEASED`. Use it only after the matching non-draft
-> Preview.15 archive and checksum are published, and only with an invitation
-> bound to the exact public identity packet and installed release role.
+> **Version boundary:** this page describes the published Preview.15
+> invitation-only flow. Use it only with the matching non-draft archive and
+> checksum, and only with an invitation bound to the exact public identity
+> packet and installed release role.
 
 Punch Compute is invitation-only during the public preview.
 

@@ -2,13 +2,12 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.15 boundary:** Preview.15 is `GATED_UNRELEASED`. The Linux/x64
-> Buyer CLI continues to expose `doctor`, `join`, `offers`, `order`, `status`,
-> `output`, `ssh`, and `stop`, but these Preview.15 instructions gain install
-> authority only when the matching archive and `SHA256SUMS` are published in a
-> non-draft release. Preview.14 remains the current published release. The
-> accepted preview path is owner-targeted `$0` only; payment, settlement,
-> payout, and refund behavior is not enabled.
+> **Preview.15 boundary:** use only the published Linux/x64
+> [`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15)
+> archive with its same-release `SHA256SUMS`. The Buyer CLI exposes `doctor`,
+> `join`, `offers`, `order`, `status`, `output`, `ssh`, and `stop`. The accepted
+> preview path is owner-targeted `$0` only; payment, settlement, payout, and
+> refund behavior is not enabled.
 
 ## 1. Prepare private configuration
 

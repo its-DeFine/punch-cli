@@ -1,4 +1,4 @@
-# Preview.15 guided Provider onboarding release gate
+# Preview.15 guided Provider onboarding release
 
 > **Status: `PUBLISHED_PRERELEASE`.** Preview.15 is published for Linux/x64 at
 > [`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15).
@@ -63,24 +63,34 @@ are protocol schema versions, not the Preview.15 package version.
 
 ## Exact release binding
 
-This artifact-source candidate binds private commit
+The published artifact binds private commit
 `7867a5f101180b231e24d2b87bc4e86ef90b9b38`, tree
 `7ded34759e139fb54b3f15fabf8992bdd3943628`, 44,037,198-byte deterministic Control archive
 `sha256:11271fd5454c993b6389af9c1833d0e9c380b2ea7fd6ffde731d02cec4cda0e3`,
 and Control checksum manifest
 `sha256:26477622f39de3324443d45bdbba2d34967c8a50f4658a1491054ad60f75a8d0`.
-Public archive hashes remain `PENDING_DETERMINISTIC_BUILD` until the CLI is
-built twice from this exact source and Control binding.
+Its 43,804,747-byte public archive is
+`sha256:672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468`;
+the same-release `SHA256SUMS` is
+`sha256:2e3e8d75451c3e9356bd26549ebe26b7bbe3e627cca23c8b914fa092f99f697d`.
+The immutable packaged `RELEASE-BINDING.json` is
+`sha256:9d4cdb49214d0f08f8afeb22b83bc321ce3daddadd0fa195d258e1eb53c3701c`,
+the packaged `BUILD-MANIFEST.json` is
+`sha256:d0a0c6ef3cdd35f89b26fd34176b05da52d90714c6f99e199410b3e782f01e1d`,
+and the embedded `RELEASE-CONTRACT.json` is
+`sha256:91527b4531855111102944bb7b6e130b9b2e7efa1154b85add988205655cff44`.
 
 The static v1 [command-contract template](preview15-public-command-contract.template.json)
-and pending [command reference](PREVIEW15_COMMAND_REFERENCE.md) declare the
-public commands and flags. They do not introduce or promote another metadata
-framework and are not exhaustive mechanical semantic/output parity. The exact
-packaged help and real acceptance remain authoritative.
+preserves its four `PENDING_DETERMINISTIC_BUILD` sentinels. The separate
+[bound command contract](preview15-public-command-contract.json) and generated
+[command reference](PREVIEW15_COMMAND_REFERENCE.md) declare the public commands
+and flags for the published artifact. They do not introduce or promote another
+metadata framework and are not exhaustive mechanical semantic/output parity.
+The exact packaged help and real acceptance remain authoritative.
 
-## Release acceptance
+## Owner-readiness acceptance
 
-Release requires all of the following, with no unresolved error:
+`OWNER-READY` requires all of the following, with no unresolved error:
 
 - deterministic Control and public archives built twice with byte-identical
   archive, binding, manifest, and sums;

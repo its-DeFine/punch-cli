@@ -8,11 +8,10 @@ See [Platform support](PLATFORMS.md). Provider execution is currently limited to
 
 ## Install from a release
 
-Preview.15 is currently `GATED_UNRELEASED`; this source checkout is not an
-installable Preview.15 release. Until its non-draft release contains both
-`punch-cli-0.1.0-preview.15-linux-x64.tar.gz` and `SHA256SUMS`, use the current
-published Preview.14 assets or stop. Never infer a Preview.15 archive from its
-source branch or documentation.
+Preview.15 is published for Linux/x64. Install only
+`punch-cli-0.1.0-preview.15-linux-x64.tar.gz` after its exact line in the
+same-release `SHA256SUMS` reports `OK`. This source checkout is not an
+installable release; never infer an archive from its branch or documentation.
 
 1. Open a published, non-draft release from this repository's **Releases** page.
 2. Download exactly one archive for your operating system and architecture.

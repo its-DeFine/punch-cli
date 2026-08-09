@@ -1,10 +1,9 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the Preview.15 candidate, currently
-> `GATED_UNRELEASED`. It is not installable until the exact Preview.15 archive
-> and checksum are published in a non-draft prerelease. Preview.14 remains the
-> current published release and does not contain the interactive Provider
-> onboarding flow below.
+> **Release boundary:** this page documents the published Preview.15 Linux/x64
+> prerelease. Use only its matching non-draft archive and same-release
+> `SHA256SUMS`; Preview.14 does not contain the interactive Provider onboarding
+> flow below.
 
 Run `punch` in a terminal to open the interactive home. It is a continuous,
 local navigation layer over the existing role commands, not a one-time setup
@@ -70,11 +69,9 @@ interactive prompts.
 
 ## Preview.15 interactive Provider onboarding contract
 
-> **Candidate contract; release authority: false until publication.** This flow
-> is implemented for Preview.15 but cannot be used from this source checkout.
-> Only the matching non-draft Preview.15 archive and `SHA256SUMS`, after the
-> [Preview.15 release gate](PREVIEW15.md) passes, may promote it to released
-> behavior.
+> **Published contract.** This flow is bound to the matching non-draft
+> Preview.15 archive and `SHA256SUMS`; it cannot be installed from this source
+> checkout or inferred from another preview.
 
 The normal Provider journey starts from one obvious interactive entry point:
 run `punch`, then select **Provider**. Direct `punch-provider ...` commands

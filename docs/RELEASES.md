@@ -8,8 +8,8 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-[`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14)
-is the current published Linux/x64 supervised-pilot package. Install only its
+[`v0.1.0-preview.15`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.15)
+is the current published Linux/x64 prerelease. Install only its
 matching versioned archive and `SHA256SUMS`; this source commit alone is not an
 installable release. The package must be used with this exact public image set:
 
@@ -24,15 +24,16 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.15 guided Provider onboarding gate
+## Preview.15 guided Provider onboarding release
 
-Preview.15 is `GATED_UNRELEASED`. It has no install authority until the exact
-private source, deterministic Control archive, Linux/x64 public archive,
-`SHA256SUMS`, static command contract, and separate sanitized clean Provider and
-Buyer receipts are bound and published together in a non-draft prerelease.
-There is currently no versioned Preview.15 archive or published checksum to use.
+Preview.15 is a published Linux/x64 prerelease. Install authority comes only
+from its matching non-draft GitHub prerelease after the exact archive verifies
+against the same-release `SHA256SUMS`; source identity or documentation alone
+does not authorize installation. Publication alone is not `OWNER-READY` until
+the released archive and version-matched docs pass both independent clean
+Provider and Buyer journeys.
 
-The candidate promotes `punch` then **Provider** as the normal entry point:
+The release promotes `punch` then **Provider** as the normal entry point:
 preflight before identity, exact dependency-plan consent, friendly capacity
 selection, explicit local identity consent, a signed public-only onboarding
 request, durable `WAITING_FOR_INVITE`, supervised `INVITE_READY`, secure
@@ -40,7 +41,7 @@ owner-delivered invitation import, automatic setup through `LISTED`, and one
 authenticated overview. Direct
 `punch-provider ...` commands remain advanced automation and recovery surfaces.
 See [Preview.15](PREVIEW15.md), its
-[runtime contract](preview15-runtime-contract.json), and the pending
+[runtime contract](preview15-runtime-contract.json), and the release-bound
 [command reference](PREVIEW15_COMMAND_REFERENCE.md).
 
 ## Preview.10 superseded
@@ -91,7 +92,7 @@ It becomes installable only after the matching Linux/x64 archive and
 local acceptance does not replace the separate Preview.11 NetBird/SSH proof
 or constitute exact Preview.12 archive acceptance.
 
-## Preview.14 Provider readiness release
+## Preview.14 historical Provider readiness release
 
 Preview.14 is a published Linux/x64 prerelease, not permission to install a
 source checkout or infer a command or flag from an earlier preview. Its public
@@ -117,7 +118,7 @@ policy; it does not activate payment, payout, settlement, or refunds. See
 [Preview.14](PREVIEW14.md) and its
 [runtime contract](preview14-runtime-contract.json).
 
-Release is additionally blocked unless the packaged Provider help, packaged
+The Preview.14 release was additionally blocked unless the packaged Provider help, packaged
 Buyer help, release-contract command lists, generated public command contract,
 and guided forwarding surface describe the same commands and flags.
 

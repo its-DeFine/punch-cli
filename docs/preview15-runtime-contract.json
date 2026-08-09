@@ -1,17 +1,17 @@
 {
   "schemaVersion": "punch.preview15-runtime-contract.v1",
   "releaseVersion": "0.1.0-preview.15",
-  "releaseStatus": "GATED_UNRELEASED",
+  "releaseStatus": "PUBLISHED_PRERELEASE",
   "privateReleaseSource": {
     "commit": "7867a5f101180b231e24d2b87bc4e86ef90b9b38",
     "tree": "7ded34759e139fb54b3f15fabf8992bdd3943628"
   },
   "controlArchiveSha256": "sha256:11271fd5454c993b6389af9c1833d0e9c380b2ea7fd6ffde731d02cec4cda0e3",
   "artifactBinding": {
-    "authority": "AUTHORITATIVE_PACKAGED_CLI_SURFACE_REQUIRED",
-    "archiveSha256": null,
-    "sha256SumsSha256": null,
-    "packagedCliSurfaceSha256": null
+    "authority": "AUTHORITATIVE_PACKAGED_CLI_SURFACE",
+    "archiveSha256": "sha256:672b8998f9465a1a49fe9eb1cb54df934ee11199250f549e1317c2450a2bd468",
+    "sha256SumsSha256": "sha256:2e3e8d75451c3e9356bd26549ebe26b7bbe3e627cca23c8b914fa092f99f697d",
+    "packagedCliSurfaceSha256": "sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a"
   },
   "platform": "linux-x64",
   "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
@@ -39,7 +39,7 @@
     "invitationResumeSameFlow": true,
     "providerSetupSingleSession": true,
     "authenticatedOverview": true,
-    "directCommands": "REVIEWED_FINAL_COMMAND_MAP_PUBLIC_ARTIFACT_BINDING_PENDING"
+    "directCommands": "sha256:8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a"
   },
   "providerOfferAdmission": {
     "initialState": "PENDING_AGENT",

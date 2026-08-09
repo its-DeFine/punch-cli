@@ -1,8 +1,8 @@
 # Troubleshooting
 
-> **Version boundary:** this page describes the Preview.15 Linux/x64 candidate,
-> currently `GATED_UNRELEASED`. Do not use Preview.15 recovery commands until
-> its exact non-draft archive and checksum are published.
+> **Version boundary:** this page describes the published Preview.15 Linux/x64
+> prerelease. Use recovery commands only from its exact non-draft archive after
+> verifying the same-release checksum.
 
 ## Guided onboarding is waiting
 

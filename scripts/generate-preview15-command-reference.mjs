@@ -81,7 +81,7 @@ function validateFormat() {
   exactKeys(format, formatKeys, 'Preview.15 command-contract format');
   assert.equal(format.schemaVersion, 'punch.preview15-public-command-contract-format.v1');
   assert.equal(format.artifactKind, 'public-format-description');
-  assert.equal(format.releaseStatus, 'GATED_UNRELEASED');
+  assert.equal(format.releaseStatus, 'PUBLISHED_PRERELEASE');
   assert.equal(format.runtimeMatchRequired, true);
   assert.equal(format.contractSchema, 'punch.preview15-public-command-contract.v1');
   assert.deepEqual(format.requiredTopLevelKeys, ['schemaVersion', 'releaseVersion', 'releaseStatus', 'privateRuntimeBinding', 'artifact', 'commands', 'workflows', 'security']);
@@ -107,7 +107,7 @@ function validate(contract) {
   exactKeys(contract, format.requiredTopLevelKeys, 'Preview.15 command contract');
   assert.equal(contract.schemaVersion, 'punch.preview15-public-command-contract.v1');
   assert.equal(contract.releaseVersion, '0.1.0-preview.15');
-  assert.equal(contract.releaseStatus, 'GATED_UNRELEASED');
+  assert.equal(contract.releaseStatus, 'PUBLISHED_PRERELEASE');
   exactKeys(contract.privateRuntimeBinding, format.privateRuntimeBindingKeys, 'private runtime binding');
   assert.deepEqual(contract.privateRuntimeBinding, expectedPrivateRuntimeBinding, 'private runtime binding drift');
   exactKeys(contract.artifact, format.artifactKeys, 'artifact');

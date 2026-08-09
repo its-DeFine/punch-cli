@@ -192,16 +192,16 @@ done
 
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
   grep -F 'Preview.15' "$current_boundary_doc" > /dev/null && \
-    grep -F 'GATED_UNRELEASED' "$current_boundary_doc" > /dev/null || {
-    printf 'Preview.15 gated boundary is missing from %s\n' "$current_boundary_doc" >&2
+    grep -F 'published' "$current_boundary_doc" > /dev/null || {
+    printf 'Preview.15 published boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done
 
 for published_boundary_doc in README.md docs/RELEASES.md; do
-  grep -F 'v0.1.0-preview.14' "$published_boundary_doc" > /dev/null && \
+  grep -F 'v0.1.0-preview.15' "$published_boundary_doc" > /dev/null && \
     grep -F 'current published' "$published_boundary_doc" > /dev/null || {
-    printf 'Preview.14 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
+    printf 'Preview.15 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
     exit 1
   }
 done
