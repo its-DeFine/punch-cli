@@ -24,6 +24,25 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
+## Preview.15 guided Provider onboarding gate
+
+Preview.15 is `GATED_UNRELEASED`. It has no install authority until the exact
+private source, deterministic Control archive, Linux/x64 public archive,
+`SHA256SUMS`, static command contract, and separate sanitized clean Provider and
+Buyer receipts are bound and published together in a non-draft prerelease.
+There is currently no versioned Preview.15 archive or published checksum to use.
+
+The candidate promotes `punch` then **Provider** as the normal entry point:
+preflight before identity, exact dependency-plan consent, friendly capacity
+selection, explicit local identity consent, a signed public-only onboarding
+request, durable `WAITING_FOR_INVITE`, supervised `INVITE_READY`, secure
+owner-delivered invitation import, automatic setup through `LISTED`, and one
+authenticated overview. Direct
+`punch-provider ...` commands remain advanced automation and recovery surfaces.
+See [Preview.15](PREVIEW15.md), its
+[runtime contract](preview15-runtime-contract.json), and the pending
+[command reference](PREVIEW15_COMMAND_REFERENCE.md).
+
 ## Preview.10 superseded
 
 Preview.10 was never publicly promoted: exact archive acceptance found that the

@@ -1,18 +1,18 @@
 # Command reference
 
-> **Version boundary:** this reference describes the published Preview.14
-> Linux/x64 prerelease. Exact flags are release-bound in the generated
-> [Preview.14 command reference](PREVIEW14_COMMAND_REFERENCE.md) and apply only
-> to its matching archive and `SHA256SUMS`. The matching non-draft prerelease
-> archive and checksum are published at the linked Preview.14 release.
+> **Version boundary:** this reference describes the Preview.15 Linux/x64
+> candidate, currently `GATED_UNRELEASED`. Exact flags are release-bound in the
+> pending [Preview.15 command reference](PREVIEW15_COMMAND_REFERENCE.md) and
+> apply only after its matching archive and `SHA256SUMS` are published in a
+> non-draft release. Preview.14 remains the current published release.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-The isolated guided-CLI branch also adds a state-aware `punch` home without
-changing either role command. Its release boundary and behavior are documented
-in [Guided `punch` home](GUIDED_CLI.md).
+Preview.15 adds a state-aware `punch` home without removing either role
+command. Its release boundary and behavior are documented in
+[Guided `punch` home](GUIDED_CLI.md).
 
 ## Buyer
 
@@ -36,18 +36,22 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.14 Buyers do not pass a zero-price flag. An operator-approved
+Preview.15 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
 ## Provider
 
-The Preview.14 public Provider commands are:
+The Preview.15 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
+| `prepare-host` | Inspect the host and optionally apply only the exact consented dependency plan |
 | `identity-init` | Create the local signing identity and public onboarding packet before invitation issuance |
+| `onboarding-request` | Submit the signed public-only onboarding request with the selected capacity |
+| `onboarding-status` | Read the durable onboarding projection, including `WAITING_FOR_INVITE` or `INVITE_READY` |
 | `join` | Redeem the Provider invitation bound to that public packet and write the local credential |
+| `overview` | Read Provider, onboarding, offer, contract, capacity, service, and recovery status |
 | `doctor` | Report platform, dependency, NetBird, pinned-image, and supervised-service readiness |
 | `inventory` | Inspect locally visible CPU, RAM, disk, and optional GPU resources |
 | `setup` | Run the complete resumable Provider bootstrap and activate the authorized offer |
@@ -61,12 +65,13 @@ The Preview.14 public Provider commands are:
 | `status` | Read local agent status |
 | `drain` | Stop accepting new work before maintenance |
 
-Use `punch-provider --help` for the packaged overview and the release-bound
-[Preview.14 Provider command reference](PREVIEW14_COMMAND_REFERENCE.md#provider)
-for declared command flags. The Provider cannot approve its own identity,
-authorize a free offer, or publish an offer.
+The normal Provider path is `punch`, then **Provider**. Use
+`punch-provider --help` and the release-bound
+[Preview.15 Provider command reference](PREVIEW15_COMMAND_REFERENCE.md#provider)
+only for advanced automation or recovery flags. The Provider cannot approve its
+own identity, authorize a free offer, or publish an offer.
 
-The normal direct setup form is:
+The advanced direct setup form is:
 
 ```text
 punch-provider setup --machine-id ID --state-dir DIR --punch-origin ORIGIN
@@ -106,9 +111,10 @@ orderable through either the guided or direct Buyer command.
 
 ### Provider offer lifecycle
 
-`offer-status`, `offer-unlist`, and `offer-retire` are part of the Preview.14
-candidate. They remain unavailable until the matching archive is published and
-do not alter the Buyer command surface.
+`offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14
+and remain in the Preview.15 candidate. The Preview.15 forms remain unavailable
+until its matching archive is published and do not alter the Buyer command
+surface.
 
 All three require `--machine-id`, `--state-dir`, `--agent-config`, and
 `--offer-id`. `offer-unlist` and `offer-retire` also require a stable
@@ -154,7 +160,7 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.14 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.15 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound generated
-reference is [PREVIEW14_COMMAND_REFERENCE.md](PREVIEW14_COMMAND_REFERENCE.md).
+reference is [PREVIEW15_COMMAND_REFERENCE.md](PREVIEW15_COMMAND_REFERENCE.md).

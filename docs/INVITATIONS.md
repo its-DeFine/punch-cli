@@ -1,8 +1,9 @@
 # Invitations and credentials
 
-> **Version boundary:** this page applies to the published
-> `v0.1.0-preview.14` invitation-only flow. Use only the invitation bound to
-> the exact public identity packet and installed release role.
+> **Version boundary:** this page describes the Preview.15 invitation-only
+> flow, currently `GATED_UNRELEASED`. Use it only after the matching non-draft
+> Preview.15 archive and checksum are published, and only with an invitation
+> bound to the exact public identity packet and installed release role.
 
 Punch Compute is invitation-only during the public preview.
 
@@ -11,6 +12,13 @@ Punch Compute is invitation-only during the public preview.
 - A **Buyer invitation** can create one Buyer session.
 - A **Provider invitation** can create one Provider credential.
 - The invitation role is fixed by Punch Control. A CLI flag cannot change it.
+
+Preview.15 Provider onboarding first submits a signed public-only request and
+shows `WAITING_FOR_INVITE`. That request is not an invitation and cannot approve
+the Provider. After supervised approval, signed status may advance to
+`INVITE_READY`; that state contains no invitation secret. The guided `punch`
+flow resumes the same request and local identity only after it imports the
+owner-delivered one-time Provider invitation from an owned mode-`0600` file.
 
 ## Single use
 

@@ -1,7 +1,22 @@
 # Troubleshooting
 
-> **Version boundary:** this page applies to `v0.1.0-preview.14` when its
-> non-draft prerelease archive and checksum are published for Linux/x64.
+> **Version boundary:** this page describes the Preview.15 Linux/x64 candidate,
+> currently `GATED_UNRELEASED`. Do not use Preview.15 recovery commands until
+> its exact non-draft archive and checksum are published.
+
+## Guided onboarding is waiting
+
+`WAITING_FOR_INVITE` is a normal durable Preview.15 Provider state, not a
+failure. Preserve the local identity and onboarding request, then resume the
+same `punch` → **Provider** flow when the separately approved invitation
+arrives. Do not create another identity or request, guess an invitation, or
+switch to raw flags to bypass the approval boundary.
+
+`INVITE_READY` means supervised approval has completed; it does not carry the
+invitation secret. Keep the owner-delivered one-time invitation as an owned
+mode-`0600` file and let the same guided home import it. If that file is absent
+or insecure, preserve state and correct only its custody instead of creating a
+replacement identity or request.
 
 ## Invitation or setup rejected
 
@@ -18,7 +33,7 @@
 
 ## Provider setup stopped
 
-Preview.14 setup errors include a sanitized `stage` and `retryable` decision.
+Preview.15 setup errors include a sanitized `stage` and `retryable` decision.
 Preserve the exact machine identity, state directory, credential, generated
 config, and `--idempotency-key`, correct that stage, and retry the same setup.
 Do not begin another setup merely because NetBird, image pulling, systemd, or
@@ -53,7 +68,7 @@ container-runtime endpoint.
 
 ## Order response timed out
 
-Retry the exact order using the same `--order-ref`. The Preview.14 CLI first
+Retry the exact order using the same `--order-ref`. The Preview.15 CLI first
 reconciles that reference, so an interrupted response does not authorize a
 second order or reservation.
 
@@ -75,7 +90,7 @@ punch-provider service-logs --machine-id MACHINE_ID --lines 80 --json
 
 Use `service-start --yes` only after reviewing the consequence. `serve` is a
 foreground diagnostic mode; replacing the supervised service with a manual
-long-running shell is not normal Preview.14 recovery.
+long-running shell is not normal Preview.15 recovery.
 
 ## NetBird or brokered SSH is not ready
 
@@ -113,7 +128,7 @@ must be rejected.
 
 ## Payment or refund question
 
-Preview.14 uses owner-targeted zero-price offers. Payment, settlement, payout,
+Preview.15 uses owner-targeted zero-price offers. Payment, settlement, payout,
 refunds, and paid offer economics were not activated or accepted by this
 release. Do not infer financial behavior from the lifecycle result.
 

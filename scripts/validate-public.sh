@@ -7,7 +7,7 @@ cd "$repo_dir"
 sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   images/interactive/punch-interactive images/interactive/punch-ssh-stdio \
   images/validation/validate.sh images/workload/workload.sh \
-  tests/buyer-stop-contract.sh tests/docs-contract.sh \
+  tests/buyer-stop-contract.sh tests/docs-contract.sh tests/preview15-release-gate.sh \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
@@ -191,9 +191,17 @@ for active_release_doc in \
 done
 
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
-  grep -E 'Preview\.14|v0\.1\.0-preview\.14' "$current_boundary_doc" > /dev/null && \
-    grep -F 'published' "$current_boundary_doc" > /dev/null || {
-    printf 'Preview.14 publication boundary is missing from %s\n' "$current_boundary_doc" >&2
+  grep -F 'Preview.15' "$current_boundary_doc" > /dev/null && \
+    grep -F 'GATED_UNRELEASED' "$current_boundary_doc" > /dev/null || {
+    printf 'Preview.15 gated boundary is missing from %s\n' "$current_boundary_doc" >&2
+    exit 1
+  }
+done
+
+for published_boundary_doc in README.md docs/RELEASES.md; do
+  grep -F 'v0.1.0-preview.14' "$published_boundary_doc" > /dev/null && \
+    grep -F 'current published' "$published_boundary_doc" > /dev/null || {
+    printf 'Preview.14 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
     exit 1
   }
 done

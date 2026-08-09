@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "punch.preview15-public-command-contract-format.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "runtimeMatchRequired": true,
+  "contractSchema": "punch.preview15-public-command-contract.v1",
+  "requiredTopLevelKeys": [
+    "schemaVersion",
+    "releaseVersion",
+    "releaseStatus",
+    "privateRuntimeBinding",
+    "artifact",
+    "commands",
+    "workflows",
+    "security"
+  ],
+  "privateRuntimeBindingKeys": ["commit", "tree", "controlArchiveSha256"],
+  "artifactKeys": ["archiveSha256", "sha256SumsSha256", "runtimeContractSha256", "packagedCliSurfaceSha256"],
+  "commandKeys": ["role", "executable", "name", "purpose", "flags"],
+  "flagKeys": ["name", "valueType", "required", "description"],
+  "workflowKeys": ["provider", "buyer"],
+  "securityKeys": [
+    "supportedPlatforms",
+    "privilegedInstallConfirmationRequired",
+    "nonInteractivePrivilegedInstallRequiresCachedSudo",
+    "multipleSupervisedProviders",
+    "maxAuthorizedWindowSeconds",
+    "ineligibleOffersOrderable",
+    "paymentSettlementEnabled"
+  ],
+  "generationRule": "The reference must be regenerated from the exact release-bound contract. The command surface, archive, SHA256SUMS, and runtime contract bindings must agree. A stale reference fails CI."
+}

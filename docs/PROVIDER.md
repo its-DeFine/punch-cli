@@ -1,10 +1,11 @@
-# Preview.14 Provider guide
+# Preview.15 Provider guide
 
-> **Current release:** use only the published Linux/x64
-> [`v0.1.0-preview.14`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14)
-> archive and its same-release `SHA256SUMS`. This remains invitation-only,
-> owner-targeted `$0` preview software; publication does not authorize
-> self-service onboarding.
+> **Status: `GATED_UNRELEASED`.** Preview.15 has no install authority until its
+> exact Linux/x64 archive and same-release `SHA256SUMS` are published together
+> in a non-draft release. Preview.14 remains the current published release. Do
+> not use a source checkout, private build, guessed URL, or earlier archive for
+> this guided flow. The network remains invitation-only and owner-targeted `$0`;
+> publication does not authorize self-service approval.
 
 The Provider agent runs on the execution node and connects outbound to Punch.
 It does not expose a public SSH port, host SSH, or Docker over the Internet. Contract SSH is
@@ -15,50 +16,50 @@ Provider onboarding remains supervised. A Provider cannot approve itself,
 choose a Buyer, issue a targeted-zero authorization, or create a publicly
 claimable free offer.
 
-## Published release entry
+## Release gate and installation
 
+The commands below become valid only after the non-draft
+`v0.1.0-preview.15` release publishes both named assets. Until then, stop here.
 On an Ubuntu 22.04 or 24.04 Linux/x64 host, download the two exact assets from
-the same release, verify the checksum, and install the Provider role:
+that same release, verify the checksum, and install the Provider role:
 
 ```bash
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.14/punch-cli-0.1.0-preview.14-linux-x64.tar.gz
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.14/SHA256SUMS
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.15/punch-cli-0.1.0-preview.15-linux-x64.tar.gz
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.15/SHA256SUMS
 sha256sum -c SHA256SUMS --ignore-missing
-tar -xzf punch-cli-0.1.0-preview.14-linux-x64.tar.gz
-cd punch-cli-0.1.0-preview.14-linux-x64
+tar -xzf punch-cli-0.1.0-preview.15-linux-x64.tar.gz
+cd punch-cli-0.1.0-preview.15-linux-x64
 ./install.sh --role provider
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-Require the archive line to report `OK`. Its published SHA-256 is
-`bea2829770919a68ac3f0bf69f4a5d510875fca65efe742027a822b214d587ce`.
-Before onboarding, these installed commands only display the release surface
-and inspect local host readiness:
+Require the exact Preview.15 archive line to report `OK`. A missing release,
+asset, checksum line, or `OK` result is a hard stop. Before onboarding, confirm
+the installed release surface:
 
 ```bash
+punch --help
 punch-provider --help
-punch-provider doctor \
-  --machine-id PROVIDER_MACHINE_ID \
-  --state-dir "$HOME/.local/state/punch-provider" \
-  --json
 punch-provider inventory --json
 ```
 
-`doctor` and `inventory` are read-only: they do not create a Provider identity,
-redeem an invitation, install dependencies, create an offer, or start a service.
+`--help` and `inventory` are read-only: they do not create a Provider identity,
+submit onboarding, redeem an invitation, install dependencies, create an offer,
+or start a service.
 
-**State-creating boundary:** stop here until supervised onboarding is approved.
-`identity-init` creates the local private Provider identity and public
-onboarding packet. Punch must bind a single-use Provider invitation to that
-public packet before `join`; `setup` comes only after a successful join. Do not
-run guided `punch`, `identity-init`, `join`, or `setup` as an install or
-diagnostic check, and never substitute guessed invitation or configuration
-values.
+**State-creating boundary:** the normal guided path begins with read-only host
+preflight, then explains the durable local identity and public onboarding
+request before asking for explicit confirmation. Decline that confirmation to
+leave the identity boundary uncrossed. After confirmation, the CLI creates the
+private local identity and public-only request and stops at
+`WAITING_FOR_INVITE`. Following supervised approval, signed status may show
+`INVITE_READY`, but the owner-delivered one-time Provider invitation must still
+be an owned mode-`0600` file before the guided home imports it. Never substitute
+guessed invitation or configuration values.
 
-After that prerequisite is satisfied, continue with
-[private state, identity, and join](#2-private-state-identity-and-join), the
-[Preview.14 release flow](PREVIEW14.md), and the exact
-[Preview.14 Provider command reference](PREVIEW14_COMMAND_REFERENCE.md#provider).
+After publication, continue with [guided onboarding](#2-guided-provider-onboarding),
+the [Preview.15 release flow](PREVIEW15.md), and the exact
+[Preview.15 Provider command reference](PREVIEW15_COMMAND_REFERENCE.md#provider).
 
 ## 1. Supported host
 
@@ -66,7 +67,7 @@ After that prerequisite is satisfied, continue with
 - A private, owner-controlled state directory and sufficient storage for the
   three immutable Punch images plus one bounded workload.
 - For GPU capacity, a compatible NVIDIA driver and stable UUID/CDI identity.
-  Preview.14 may install the reviewed container toolkit after consent, but it
+  Preview.15 may install the reviewed container toolkit after consent, but it
   never replaces the GPU driver or kernel and never reboots the host.
 
 The exact immutable image identities are:
@@ -77,16 +78,43 @@ The exact immutable image identities are:
 | `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` |
 | `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311` |
 
+## 2. Guided Provider onboarding
+
 Run the state-aware home for the normal path:
 
 ```bash
 punch
 ```
 
-Choose **Provider**. The home delegates to the same direct commands documented
-below; it does not have separate marketplace behavior.
+Choose **Provider**. The home then:
 
-## 2. Private state, identity, and join
+1. inspects the host before creating identity and shows any missing reviewed
+   prerequisites;
+2. asks for explicit consent before applying the exact displayed dependency
+   plan;
+3. asks only for a friendly Provider label and bounded CPU, RAM, disk, and
+   detected GPU choices;
+4. explains the private local identity boundary and asks for confirmation;
+5. creates the identity only after confirmation, sends only the signed public
+   onboarding request, and displays durable `WAITING_FOR_INVITE`;
+6. displays `INVITE_READY` after supervised approval and resumes the same flow
+   only when the owner-delivered mode-`0600` one-time invitation is supplied;
+   and
+7. completes trusted configuration, authenticated NetBird enrollment,
+   pre-list validation, supervised service setup, and bounded activation
+   through `LISTED`, then presents the Provider overview.
+
+The guided user does not construct a machine ID, state or credential path,
+Punch origin, GPU UUID/CDI selector, setup reference, or raw CLI flag. The CLI
+does not ask for a Provider SSH key or SSH file; Buyer contract access is
+brokered later. Consequential local install or configuration changes remain
+explicit approval boundaries.
+
+## 3. Advanced direct identity and join
+
+The commands in this and later direct sections are for reviewed automation and
+recovery. They are not the normal external Provider journey and must not be
+used to bypass `WAITING_FOR_INVITE` or the invitation approval boundary.
 
 Keep the invitation, credential, identity, and state directory private. Example
 paths are illustrative; the installed process must own them.
@@ -126,7 +154,7 @@ local state. Preserve the credential path, machine ID, identity key, state
 directory, and every setup reference. Deleting local state is not a valid
 recovery action.
 
-## 3. One Provider setup operation
+## 4. Advanced direct Provider setup
 
 Inspect the exact host first:
 
@@ -190,21 +218,21 @@ Successful JSON has schema `punch.provider-setup.preview14.v1` and includes
 `agentConfig`, `service`, and `activation` receipts. The canonical private
 config is generated at `STATE_DIR/provider-agent.json`.
 
-## 4. NetBird and config custody
+## 5. NetBird and config custody
 
-Normal Preview.14 setup requests one short-lived, single-use enrollment from
+Normal Preview.15 setup requests one short-lived, single-use enrollment from
 Control only after Provider authorization. Punch passes it to NetBird through a
 temporary mode-`0600` file, verifies the resulting peer/address binding, records
 the non-secret receipt, and removes the one-time material.
 The Provider never receives the NetBird management token or pastes a setup key.
 
 Manual NetBird enrollment and manual editing/copying of
-`provider-agent.example.json` are obsolete for normal Preview.14 onboarding.
+`provider-agent.example.json` are obsolete for normal Preview.15 onboarding.
 `--agent-config` remains an advanced exact-match recovery/diagnostic override;
 it cannot change authenticated image, Buyer, offer, window, price, or
 authorization bindings.
 
-## 5. Resident service and recovery
+## 6. Resident service and recovery
 
 Successful setup installs, enables, starts, and verifies the hardened
 machine-scoped systemd service. `serve` remains available for foreground
@@ -223,7 +251,7 @@ offer. Public setup errors use
 `punch.provider-error.preview14.v1` with `code`, `stage`, `retryable`, and a
 sanitized `error` message.
 
-## 6. Offer lifecycle
+## 7. Offer lifecycle
 
 ```text
 punch-provider offer-status --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --json
@@ -235,7 +263,7 @@ Unlist prevents new orders but cannot revoke or alter an accepted contract.
 Retirement requires an already-unlisted offer, terminal contracts, released
 capacity, and fenced access. Exact retries return the same durable result.
 
-## 7. Acceptance and rollback
+## 8. Acceptance and rollback
 
 Before retaining a Provider, prove the exact release archive performs:
 
@@ -250,5 +278,5 @@ For maintenance, unlist an unaccepted offer or allow accepted contracts to
 finish, then retire only after obligations are terminal. Preserve credentials,
 identity keys, state, generated config, and receipts across a program rollback.
 
-Preview.14 remains owner-targeted `$0` only. Payment, settlement, payout,
+Preview.15 remains owner-targeted `$0` only. Payment, settlement, payout,
 refunds, and paid-offer economics are outside its acceptance boundary.

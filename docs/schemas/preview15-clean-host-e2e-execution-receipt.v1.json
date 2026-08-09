@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "punch.preview15-clean-host-e2e-execution-receipt.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "purpose": "Sanitized correlated assertions from one real clean-host Provider-to-Buyer execution.",
+  "requiredTopLevelKeys": [
+    "schemaVersion",
+    "receiptKind",
+    "releaseVersion",
+    "status",
+    "sanitized",
+    "credentialsCaptured",
+    "onboarding",
+    "setup",
+    "buyerJoin",
+    "order",
+    "restart",
+    "buyerSsh",
+    "stop",
+    "cleanup",
+    "provenance"
+  ],
+  "requiredReceiptKind": "SANITIZED_CLEAN_HOST_E2E_EXECUTION",
+  "requiredOnboarding": {
+    "preflightBeforeIdentity": true,
+    "identityCreatedAfterConsent": true,
+    "publicRequestOnly": true,
+    "waitingForInviteObserved": true,
+    "inviteReadyObserved": true,
+    "ownerDeliveredInvitationMode0600": true,
+    "sameRequestRef": true,
+    "sameIdentity": true,
+    "invitationResumed": true,
+    "privateMaterialCaptured": false
+  },
+  "requiredSetup": {
+    "firstSetupCompleted": true,
+    "sameMachineId": true,
+    "sameSetupRef": true,
+    "sameOfferId": true,
+    "activationReplayed": true,
+    "duplicateIdentities": 0,
+    "duplicatePeers": 0,
+    "duplicateConfigs": 0,
+    "duplicateServices": 0,
+    "duplicateOffers": 0
+  },
+  "requiredBuyerJoin": {
+    "firstJoinCompleted": true,
+    "joinReplayCompleted": true,
+    "sameBuyerIdentity": true,
+    "duplicateBuyerPeers": 0
+  },
+  "requiredOrder": {
+    "sameOrderRefSameJob": true,
+    "oneContract": true,
+    "oneReservation": true
+  },
+  "requiredRestart": {
+    "sameTaskBinding": true,
+    "sameContractGeneration": true,
+    "sameSpecBinding": true,
+    "sameContainerBinding": true,
+    "duplicateContainers": 0
+  },
+  "requiredBuyerSsh": {
+    "archiveInstalledCli": true,
+    "realOpenSsh": true,
+    "commandSucceeded": true
+  },
+  "requiredStop": {
+    "sameOperationId": true,
+    "sameCorrelationId": true,
+    "sameContractBinding": true,
+    "sameTerminalReceiptDigest": true,
+    "state": "SUCCEEDED",
+    "phase": "COMPLETED",
+    "retryable": false,
+    "cleanupState": "RELEASED"
+  },
+  "requiredCleanup": {
+    "signedCleanupDigestPresent": true,
+    "heldSessionClosed": true,
+    "newConnectionRejected": true,
+    "containerRemoved": true,
+    "networkRemoved": true,
+    "tempStateRemoved": true,
+    "gatewayAbsent": true,
+    "relayAbsent": true,
+    "activeSessions": 0,
+    "activeTickets": 0,
+    "capacityReleased": true
+  },
+  "requiredProvenanceKeys": [
+    "archiveSha256",
+    "noFixtureTransport",
+    "noDependencyInjection"
+  ],
+  "requiredProvenanceAssertions": {
+    "noFixtureTransport": true,
+    "noDependencyInjection": true
+  },
+  "privacyBoundary": "Raw machine, setup, offer, order, job, contract, reservation, operation, correlation, container, session, ticket, peer, and credential values are excluded.",
+  "acceptanceRule": "Every required invariant must match exactly, provenance.archiveSha256 must match the summary archive digest, and the summary must bind the exact receipt bytes by SHA-256."
+}

@@ -2,12 +2,13 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.14 boundary:** the Linux/x64 Buyer CLI exposes `join`, `offers`,
-> `order`, `status`, `output`, `ssh`, and `stop`. It is supported only from the
-> non-draft `v0.1.0-preview.14` release archive with its matching checksum. Until
-> that archive exists, Preview.14 remains `GATED_UNRELEASED`. The
-> proven pilot used an owner-targeted zero-price offer and no payment,
-> settlement, payout, or refund path.
+> **Preview.15 boundary:** Preview.15 is `GATED_UNRELEASED`. The Linux/x64
+> Buyer CLI continues to expose `doctor`, `join`, `offers`, `order`, `status`,
+> `output`, `ssh`, and `stop`, but these Preview.15 instructions gain install
+> authority only when the matching archive and `SHA256SUMS` are published in a
+> non-draft release. Preview.14 remains the current published release. The
+> accepted preview path is owner-targeted `$0` only; payment, settlement,
+> payout, and refund behavior is not enabled.
 
 ## 1. Prepare private configuration
 
@@ -143,10 +144,10 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.14 uses zero-price supervised offers and does not
+container preparation. Preview.15 uses zero-price supervised offers and does not
 exercise payment, settlement, payout, or refund behavior.
 
-For Preview.14 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.15 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -172,13 +173,13 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.14 carries SSH bytes through a
+accepting the replacement. Preview.15 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
 ## 7. Stop and release
 
-Preview.14 preserves the approved asynchronous Buyer stop command:
+Preview.15 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \

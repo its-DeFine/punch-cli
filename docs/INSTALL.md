@@ -8,6 +8,12 @@ See [Platform support](PLATFORMS.md). Provider execution is currently limited to
 
 ## Install from a release
 
+Preview.15 is currently `GATED_UNRELEASED`; this source checkout is not an
+installable Preview.15 release. Until its non-draft release contains both
+`punch-cli-0.1.0-preview.15-linux-x64.tar.gz` and `SHA256SUMS`, use the current
+published Preview.14 assets or stop. Never infer a Preview.15 archive from its
+source branch or documentation.
+
 1. Open a published, non-draft release from this repository's **Releases** page.
 2. Download exactly one archive for your operating system and architecture.
 3. Download `SHA256SUMS` from the same release.
@@ -38,7 +44,7 @@ User installation:
 ```
 
 The Punch archive installer makes no privileged or system-service changes. In
-Preview.14, the later supervised Provider `setup` operation owns reviewed
+Preview.15, the later supervised Provider flow owns reviewed
 dependency changes, generated configuration, and service installation only
 after explicit consent. Do not manually install or edit the reference files
 carried under `provider/` as a substitute for that flow.

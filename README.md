@@ -2,7 +2,7 @@
 
 Punch CLI is the public command-line interface for the invite-only Punch Compute network.
 
-It provides two commands:
+It provides a guided `punch` entry point and two role-specific commands:
 
 - `punch-buyer` — discover offers, order compute, inspect jobs, open brokered SSH sessions, and download output.
 - `punch-provider` — join as a provider and run the supervised setup that
@@ -20,6 +20,15 @@ commit alone is not an installable release. Preview.14 replaces manual Provider
 NetBird/config/service assembly with one resumable `setup` operation. A
 Provider creates its machine identity and public onboarding packet before Punch
 issues the bound invitation.
+
+Preview.15 is the next Linux/x64 candidate and is currently
+`GATED_UNRELEASED`. It promotes guided Provider onboarding from `punch`, with
+host preflight before identity, explicit identity consent, a durable
+`WAITING_FOR_INVITE` state, supervised `INVITE_READY`, secure invitation resume,
+automatic supervised setup, and one Provider overview. Its source documentation
+is not install authority: do not download or run a Preview.15 CLI until the
+exact archive and `SHA256SUMS` are published together in a non-draft release. See the
+[Preview.15 release gate](docs/PREVIEW15.md).
 
 `v0.1.0-preview.13`, `v0.1.0-preview.12`, and `v0.1.0-preview.11` remain
 immutable historical releases. Preview.12 must not be used for Provider serving
@@ -47,7 +56,7 @@ only release assets together with the matching immutable image set in
 
 1. Download the Preview.14 Linux/x64 archive and `SHA256SUMS` from the [published release](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.14), then verify the checksum.
 2. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
-3. For Provider onboarding, follow the [Preview.14 Provider guide](docs/PROVIDER.md): its local public identity packet precedes the bound invitation. Buyer invitations follow the separate [invitation guide](docs/INVITATIONS.md).
+3. For the current Preview.14 direct Provider flow, use the immutable [Preview.14 release flow](docs/PREVIEW14.md). For the upcoming guided Preview.15 flow, follow the [Provider guide](docs/PROVIDER.md) only after its release gate reports a published archive. Buyer invitations follow the separate [invitation guide](docs/INVITATIONS.md).
 4. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.
 
 ```bash
@@ -78,6 +87,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Preview.12 guided Punch home](docs/PREVIEW12.md) (superseded for Provider serving)
 - [Preview.13 Provider serve packaging correction](docs/PREVIEW13.md)
 - [Preview.14 Provider readiness and release flow](docs/PREVIEW14.md)
+- [Preview.15 guided Provider onboarding release gate](docs/PREVIEW15.md) (gated and unreleased)
 - [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (published in Preview.14; unavailable in Preview.9)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)

@@ -1,8 +1,10 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the gated Preview.14 candidate. It
-> is not installable until the exact Preview.14 archive and checksum are
-> published in a non-draft prerelease.
+> **Release boundary:** this page documents the Preview.15 candidate, currently
+> `GATED_UNRELEASED`. It is not installable until the exact Preview.15 archive
+> and checksum are published in a non-draft prerelease. Preview.14 remains the
+> current published release and does not contain the interactive Provider
+> onboarding flow below.
 
 Run `punch` in a terminal to open the interactive home. It is a continuous,
 local navigation layer over the existing role commands, not a one-time setup
@@ -66,13 +68,13 @@ use must follow the separate custody, approval, retry, and state rules in the
 [Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
 interactive prompts.
 
-## Unreleased interactive Provider onboarding implementation contract
+## Preview.15 interactive Provider onboarding contract
 
-> **UNRELEASED IMPLEMENTATION CONTRACT**
-> **Release authority: false.** This flow is not present in
-> `v0.1.0-preview.14` or its published archive. It describes behavior being
-> implemented for a later release candidate and does not change the shipped
-> Preview.14 commands or release record.
+> **Candidate contract; release authority: false until publication.** This flow
+> is implemented for Preview.15 but cannot be used from this source checkout.
+> Only the matching non-draft Preview.15 archive and `SHA256SUMS`, after the
+> [Preview.15 release gate](PREVIEW15.md) passes, may promote it to released
+> behavior.
 
 The normal Provider journey starts from one obvious interactive entry point:
 run `punch`, then select **Provider**. Direct `punch-provider ...` commands
@@ -98,9 +100,11 @@ The guided flow proceeds in this order:
    and submit a signed, public-only onboarding request. Private key material and
    internal credentials are never sent or displayed.
 4. **Durable wait and resume.** After the request is accepted, the home displays
-   `WAITING_FOR_INVITE` and preserves that state across relaunch. The Provider
-   returns to the same `punch` flow and supplies the one-time invitation artifact
-   when it arrives; no server handoff or placeholder flags have to be inferred.
+   `WAITING_FOR_INVITE` and preserves that state across relaunch. Following
+   supervised approval, signed status may advance to `INVITE_READY`. The home
+   then imports only the owner-delivered, mode-`0600` one-time invitation and
+   resumes the same identity and request; status never carries the invitation
+   secret, and no server handoff or placeholder flags have to be inferred.
 5. **Automatic setup through listing.** After invitation confirmation, the CLI
    resumes the authenticated join, uses trusted Control-derived configuration,
    completes NetBird enrollment, generates local config, installs and validates
