@@ -81,7 +81,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Preview.12 guided Punch home](docs/PREVIEW12.md) (superseded for Provider serving)
 - [Preview.13 Provider serve packaging correction](docs/PREVIEW13.md)
 - [Preview.14 Provider readiness gate](docs/PREVIEW14.md) (gated and unreleased)
-- [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (included in the gated Preview.11 release source)
+- [Provider offer lifecycle](docs/OFFER_LIFECYCLE_PREVIEW.md) (included in the gated, unpublished Preview.14 supervised source; not installed or supported by published Preview.9)
 - [NetBird connectivity](docs/NETBIRD_PREVIEW.md)
 - [Preview.8 Provider offer and whole-node GPU UX contract](docs/PREVIEW8.md)
 - [Targeted zero-price test contract](docs/TARGETED_ZERO_TEST.md) (supervised Preview.9 only)
