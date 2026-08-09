@@ -221,6 +221,22 @@ require docs/preview16-public-command-contract.json '8d9de3adaf3e0753c87d12f9b13
 require docs/GUIDED_CLI.md 'Preview.16 repairs guided authorization'
 require docs/GUIDED_CLI.md '`sudo -n true`'
 require docs/GUIDED_CLI.md 'interactive `sudo -v`'
+require docs/PREVIEW17.md 'Status: `PUBLISHED_PRERELEASE`'
+require docs/PREVIEW17.md 'v0.1.0-preview.17'
+require docs/PREVIEW17.md 'Guided Buyer authorization repair'
+require docs/PREVIEW17.md '`sudo -n true`'
+require docs/PREVIEW17.md 'interactive `sudo -v`'
+require docs/PREVIEW17.md 'PENDING_DETERMINISTIC_BUILD'
+require docs/PREVIEW17_COMMAND_REFERENCE.md 'public artifact binding pending deterministic build'
+require docs/preview17-runtime-contract.json 'punch.preview17-runtime-contract.v1'
+require docs/preview17-runtime-contract.json '5a2e9d4f4e4e38ce4dcd782891533a67c2a51768'
+require docs/preview17-runtime-contract.json '2e4439d38ded6679afbafc4ad2e16cb282308eb7'
+require docs/preview17-runtime-contract.json '33fcb27b312c346540075df64a8598133eb32b1bdce81378cb3b22026d5f8d1e'
+require docs/preview17-runtime-contract.json 'guidedInstallPasswordlessProbe'
+require docs/preview17-runtime-contract.json 'guidedInstallInteractiveFallback'
+require docs/preview17-runtime-contract.json 'guidedInstallAuthorizationFailureStopsBeforeJoin'
+require docs/preview17-public-command-contract.template.json 'PENDING_DETERMINISTIC_BUILD'
+require docs/GUIDED_CLI.md 'Preview.17 repairs guided Buyer authorization'
 
 node scripts/validate-targeted-zero-contract.js --self-test
 node scripts/generate-command-reference.mjs \
@@ -234,5 +250,6 @@ node --test tests/agent-runbook-contract.mjs
 sh tests/preview14-release-gate.sh
 sh tests/preview15-release-gate.sh
 sh tests/preview16-release-gate.sh
+sh tests/preview17-release-gate.sh
 
 printf '%s\n' 'public docs command/proof contract: PASS'

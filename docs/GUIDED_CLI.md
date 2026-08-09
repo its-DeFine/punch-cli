@@ -37,6 +37,11 @@ may show the normal TTY `sudo` prompt, but it does not hide the privilege
 boundary, create a second enrollment code, or bypass a failed setup. Join is
 resumable until the exact Buyer/NetBird binding is confirmed.
 
+Preview.17 repairs guided Buyer authorization without changing the direct
+command surface: after join confirmation it first probes passwordless
+capability with `sudo -n true`, then falls back to interactive `sudo -v` only
+when needed. Failed authorization stops before dependency installation or join.
+
 Provider setup similarly owns its narrow one-time NetBird bootstrap. It does
 not ask the Provider for a setup key or management login. It also pulls the
 authenticated immutable images, runs the pre-list proof while the offer is
