@@ -28,11 +28,13 @@
     { "role": "provider", "executable": "punch-provider", "name": "doctor", "purpose": "Inspect clean-host platform, dependencies, NetBird, images, and service readiness.", "flags": [
       { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
       { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": false, "description": "Canonical generated agent config when available." },
       { "name": "--punch-origin", "valueType": "string", "required": false, "description": "Required before generated config exists." },
       { "name": "--credential-file", "valueType": "path", "required": false, "description": "Required before generated config exists." },
       { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit punch.provider-doctor.preview14.v1." }
     ] },
     { "role": "provider", "executable": "punch-provider", "name": "inventory", "purpose": "Read locally observed CPU, GPU, memory, storage, OS, runtime, and capabilities.", "flags": [
+      { "name": "--observed-at", "valueType": "string", "required": false, "description": "Canonical UTC observation timestamp override." },
       { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit machine-readable inventory." }
     ] },
     { "role": "provider", "executable": "punch-provider", "name": "setup", "purpose": "In one confirmed CLI session, install required dependencies, enroll NetBird, prove readiness, start the hardened service, and activate the authenticated offer.", "flags": [
@@ -41,6 +43,11 @@
       { "name": "--punch-origin", "valueType": "string", "required": true, "description": "Approved Punch HTTPS origin." },
       { "name": "--credential-file", "valueType": "path", "required": true, "description": "Absolute private Provider credential path." },
       { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable setup reference reused for recovery." },
+      { "name": "--offer-id", "valueType": "string", "required": false, "description": "Exact Control-authorized offer identity." },
+      { "name": "--window-seconds", "valueType": "integer", "required": false, "description": "Exact Control-authorized access window." },
+      { "name": "--price-minor", "valueType": "integer", "required": false, "description": "Exact Control-authorized zero price." },
+      { "name": "--targeted-zero-authorization-id", "valueType": "string", "required": false, "description": "Exact targeted-zero authorization identity." },
+      { "name": "--targeted-buyer-actor-id", "valueType": "string", "required": false, "description": "Exact designated Buyer actor identity." },
       { "name": "--cpu-cores", "valueType": "integer", "required": false, "description": "Advertised CPU capacity." },
       { "name": "--gpu-units", "valueType": "integer", "required": false, "description": "Advertised GPU count; zero selects CPU-only." },
       { "name": "--gpu-uuid", "valueType": "string", "required": false, "description": "Exact single-GPU UUID." },
@@ -120,6 +127,10 @@
       { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable retire operation key." },
       { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the durable operation receipt." }
     ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "doctor", "purpose": "Inspect supported platform and Buyer NetBird dependency/connectivity state.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit punch.buyer-doctor.preview14.v1." }
+    ] },
     { "role": "buyer", "executable": "punch-buyer", "name": "join", "purpose": "Resumably redeem one Buyer invitation, bootstrap narrow NetBird, and finish only after the exact peer binding is confirmed.", "flags": [
       { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
       { "name": "--invitation", "valueType": "path", "required": true, "description": "Absolute private Buyer invitation JSON." },
@@ -161,8 +172,8 @@
     ] }
   ],
   "workflows": {
-    "provider": ["identity-init", "join", "doctor", "inventory", "setup", "service-status", "offer-status"],
-    "buyer": ["join", "offers", "order", "status", "ssh", "stop"]
+    "provider": ["identity-init", "join", "doctor", "setup", "service-status", "offer-status"],
+    "buyer": ["doctor", "join", "offers", "order", "status", "ssh", "stop"]
   },
   "security": {
     "supportedPlatforms": ["linux-x64"],

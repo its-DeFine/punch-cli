@@ -143,6 +143,22 @@ node scripts/generate-preview14-command-reference.mjs --self-test
 node scripts/generate-preview14-command-reference.mjs \
   --template docs/preview14-public-command-contract.template.json
 
+for required in \
+  '"name": "--agent-config"' \
+  '"name": "--observed-at"' \
+  '"name": "--offer-id"' \
+  '"name": "--window-seconds"' \
+  '"name": "--price-minor"' \
+  '"name": "--targeted-zero-authorization-id"' \
+  '"name": "--targeted-buyer-actor-id"' \
+  '"provider": ["identity-init", "join", "doctor", "setup", "service-status", "offer-status"]' \
+  '"buyer": ["doctor", "join", "offers", "order", "status", "ssh", "stop"]'; do
+  grep -F -- "$required" docs/preview14-public-command-contract.template.json > /dev/null || {
+    printf 'Preview.14 static command contract missing: %s\n' "$required" >&2
+    exit 1
+  }
+done
+
 contract=docs/preview14-public-command-contract.json
 if [ -e "$contract" ]; then
   node scripts/generate-preview14-command-reference.mjs \

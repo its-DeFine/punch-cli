@@ -2,7 +2,8 @@
 
 > **Version boundary:** this reference describes the `GATED_UNRELEASED`
 > Preview.14 candidate. Exact flags become authoritative only when the generated
-> reference is bound to the matching non-draft archive and `SHA256SUMS`.
+> reference is bound to the matching non-draft prerelease archive and both that
+> archive and its `SHA256SUMS` checksum are published.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
@@ -15,12 +16,13 @@ in [Guided `punch` home](GUIDED_CLI.md).
 ## Buyer
 
 ```text
-punch-buyer join|offers|order|status|output|ssh|stop \
+punch-buyer doctor|join|offers|order|status|output|ssh|stop \
   --config ABSOLUTE_PUBLIC_CONFIG [command flags]
 ```
 
 | Command | Purpose | Important flags |
 | --- | --- | --- |
+| `doctor` | Inspect supported platform and Buyer NetBird dependency/connectivity state | `--json` |
 | `join` | Redeem one Buyer invitation, bootstrap NetBird, and create a local session | `--invitation`, optional explicit install confirmation `--yes`, `--json` |
 | `offers` | List capacity visible to this Buyer | `--json` |
 | `order` | Create or replay an idempotent direct or conditional order | exactly one of `--offer-id` or `--request-file`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |

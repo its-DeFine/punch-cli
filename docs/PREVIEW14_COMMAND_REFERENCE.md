@@ -7,6 +7,9 @@
 > This reference stays empty until the deterministic public archive,
 > `SHA256SUMS`, runtime-contract digest, and canonical packaged CLI surface are
 > also bound. Do not infer missing artifact hashes from source identity.
+> This static v1 binding covers the declared public command, flag, and workflow
+> surface, not exhaustive mechanical semantic/output parity; exact-artifact E2E
+> remains the release authority.
 
 <!-- GENERATED PREVIEW14 COMMAND REFERENCE:BEGIN -->
 <!-- private-runtime-commit: 830160e9b4209baa18745c948505c8d9731d9ccc -->

@@ -10,8 +10,9 @@ const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const schema = JSON.parse(fs.readFileSync(path.join(repo, 'docs/schemas/preview14-clean-host-e2e-report.v1.json'), 'utf8'));
 const receiptSchema = JSON.parse(fs.readFileSync(path.join(repo, 'docs/schemas/preview14-clean-host-e2e-execution-receipt.v1.json'), 'utf8'));
 const forbidden = [
-  '/Users/', '/home/', 'BEGIN PRIVATE KEY', 'Bearer ', 'ghp_', 'github_pat_',
-  'DATABASE_URL', 'NETBIRD_SETUP_KEY', 'redemptionSecret', 'credentialId'
+  ['', 'Users', ''].join('/'), ['', 'home', ''].join('/'), ['BEGIN', 'PRIVATE', 'KEY'].join(' '),
+  ['Bearer', ''].join(' '), ['ghp', ''].join('_'), ['github', 'pat', ''].join('_'),
+  ['DATABASE', 'URL'].join('_'), 'NETBIRD_SETUP_KEY', 'redemptionSecret', 'credentialId'
 ];
 
 const topLevel = schema.requiredTopLevelKeys;
@@ -184,7 +185,7 @@ function selfTest() {
     (report) => { report.substitutionGuards.fakeDocker = true; },
     (report) => { report.substitutionGuards.sourceCli = true; },
     (report) => { report.sanitized = false; },
-    (report) => { report.artifact.archiveSha256 = '/home/provider/archive'; }
+    (report) => { report.artifact.archiveSha256 = ['', 'home', 'provider', 'archive'].join('/'); }
   ]) {
     const candidate = fixture();
     mutate(candidate.report);

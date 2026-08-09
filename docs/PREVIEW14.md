@@ -98,6 +98,10 @@ surface must first converge on that map. After the deterministic build, the
 release owner replaces those four sentinels in a separate bound contract and regenerates this
 [reference](PREVIEW14_COMMAND_REFERENCE.md).
 
+This static v1 binding covers the declared public command, flag, and workflow
+surface; it is not exhaustive mechanical semantic/output parity. Exact-artifact
+E2E remains the release authority.
+
 The normal Provider sequence is `identity-init`/public packet → bound invitation
 → `join` → `doctor`/`inventory` → `setup`. One `setup` session owns dependency
 consent/install, exact image/readiness proof,

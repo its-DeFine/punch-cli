@@ -45,6 +45,34 @@ function commandSurfaceDigest(contract) {
   return sha256(JSON.stringify({ commands: contract.commands, workflows: contract.workflows, security: contract.security }));
 }
 
+function commandById(contract, role, name) {
+  const command = contract.commands.find((candidate) => candidate.role === role && candidate.name === name);
+  assert.ok(command, `required public command is missing: ${role}:${name}`);
+  return command;
+}
+
+function requireFlags(contract, role, name, expected) {
+  const flags = new Set(commandById(contract, role, name).flags.map((flag) => flag.name));
+  for (const flag of expected) assert.ok(flags.has(flag), `${role}:${name} is missing ${flag}`);
+}
+
+function validateStaticReleaseSurface(contract) {
+  commandById(contract, 'buyer', 'doctor');
+  requireFlags(contract, 'buyer', 'doctor', ['--config', '--json']);
+  requireFlags(contract, 'provider', 'doctor', ['--agent-config']);
+  requireFlags(contract, 'provider', 'inventory', ['--observed-at']);
+  requireFlags(contract, 'provider', 'setup', [
+    '--offer-id', '--window-seconds', '--price-minor',
+    '--targeted-zero-authorization-id', '--targeted-buyer-actor-id'
+  ]);
+  assert.deepEqual(contract.workflows.provider,
+    ['identity-init', 'join', 'doctor', 'setup', 'service-status', 'offer-status'],
+    'Provider guided workflow drift');
+  assert.deepEqual(contract.workflows.buyer,
+    ['doctor', 'join', 'offers', 'order', 'status', 'ssh', 'stop'],
+    'Buyer guided workflow drift');
+}
+
 function validateFormat() {
   exactKeys(format, formatKeys, 'Preview.14 command-contract format');
   assert.equal(format.schemaVersion, 'punch.preview14-public-command-contract-format.v1');
@@ -112,6 +140,7 @@ function validate(contract) {
       assert.ok(commandIds.has(`${role}:${name}`), `${role} workflow names an undocumented command: ${name}`);
     }
   }
+  validateStaticReleaseSurface(contract);
   exactKeys(contract.security, format.securityKeys, 'security');
   assert.deepEqual(contract.security.supportedPlatforms, ['linux-x64']);
   assert.equal(contract.security.privilegedInstallConfirmationRequired, true);
@@ -151,10 +180,10 @@ function markdown(contract) {
     ''
   ];
   for (const role of ['provider', 'buyer']) {
-    lines.push(`## ${role === 'provider' ? 'Provider' : 'Buyer'}`, '', '| Command | Purpose | Required flags |', '| --- | --- | --- |');
+    lines.push(`## ${role === 'provider' ? 'Provider' : 'Buyer'}`, '', '| Command | Purpose | Flags |', '| --- | --- | --- |');
     for (const command of contract.commands.filter((candidate) => candidate.role === role)) {
-      const required = command.flags.filter((flag) => flag.required).map((flag) => `\`${flag.name}\``).join(', ') || '—';
-      lines.push(`| \`${command.executable} ${command.name}\` | ${command.purpose} | ${required} |`);
+      const flags = command.flags.map((flag) => `\`${flag.name}\`${flag.required ? ' (required)' : ''}`).join(', ') || '—';
+      lines.push(`| \`${command.executable} ${command.name}\` | ${command.purpose} | ${flags} |`);
     }
     lines.push('', `Workflow: ${contract.workflows[role].map((name) => `\`${name}\``).join(' → ')}.`, '');
   }
@@ -205,28 +234,10 @@ function update(target, generated, write) {
 }
 
 function fixture() {
-  const hash = (text) => `sha256:${crypto.createHash('sha256').update(text).digest('hex')}`;
-  return {
-    schemaVersion: 'punch.preview14-public-command-contract.v1',
-    releaseVersion: '0.1.0-preview.14',
-    releaseStatus: 'GATED_UNRELEASED',
-    privateRuntimeBinding: structuredClone(expectedPrivateRuntimeBinding),
-    artifact: { archiveSha256: hash('archive'), sha256SumsSha256: hash('sums'), runtimeContractSha256: hash('runtime'), packagedCliSurfaceSha256: '' },
-    commands: [
-      { role: 'provider', executable: 'punch-provider', name: 'doctor', purpose: 'verify local prerequisites', flags: [{ name: '--json', valueType: 'boolean', required: false, description: 'emit JSON' }] },
-      { role: 'buyer', executable: 'punch-buyer', name: 'offers', purpose: 'list eligible offers', flags: [{ name: '--config', valueType: 'path', required: true, description: 'private public configuration' }] }
-    ],
-    workflows: { provider: ['doctor'], buyer: ['offers'] },
-    security: {
-      supportedPlatforms: ['linux-x64'],
-      privilegedInstallConfirmationRequired: true,
-      nonInteractivePrivilegedInstallRequiresCachedSudo: true,
-      multipleSupervisedProviders: true,
-      maxAuthorizedWindowSeconds: 259200,
-      ineligibleOffersOrderable: false,
-      paymentSettlementEnabled: false
-    }
-  };
+  const candidate = structuredClone(load(path.join(repo, 'docs/preview14-public-command-contract.template.json')));
+  for (const key of format.artifactKeys) candidate.artifact[key] = sha256(`preview14-fixture-${key}`);
+  candidate.artifact.packagedCliSurfaceSha256 = commandSurfaceDigest(candidate);
+  return candidate;
 }
 
 function selfTest() {
@@ -239,6 +250,10 @@ function selfTest() {
   for (const mutate of [
     (contract) => { contract.commands[0].name = 'bad_name'; },
     (contract) => { contract.commands[0].flags.push(structuredClone(contract.commands[0].flags[0])); },
+    (contract) => { contract.commands = contract.commands.filter(({ role, name }) => role !== 'buyer' || name !== 'doctor'); },
+    (contract) => { commandById(contract, 'provider', 'doctor').flags = commandById(contract, 'provider', 'doctor').flags.filter(({ name }) => name !== '--agent-config'); },
+    (contract) => { commandById(contract, 'provider', 'inventory').flags = commandById(contract, 'provider', 'inventory').flags.filter(({ name }) => name !== '--observed-at'); },
+    (contract) => { commandById(contract, 'provider', 'setup').flags = commandById(contract, 'provider', 'setup').flags.filter(({ name }) => name !== '--offer-id'); },
     (contract) => { contract.workflows.provider = ['serve']; },
     (contract) => { contract.security.paymentSettlementEnabled = true; },
     (contract) => { contract.security.maxAuthorizedWindowSeconds = 259201; },

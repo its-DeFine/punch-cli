@@ -1,8 +1,8 @@
 # Provider guide
 
 > **Preview.14 boundary:** this page documents the `GATED_UNRELEASED`
-> Linux/x64 candidate. It becomes usable only from a matching non-draft
-> `v0.1.0-preview.14` archive and `SHA256SUMS` after the release gate passes.
+> Linux/x64 candidate. It becomes usable only when the matching non-draft prerelease archive
+> and its `SHA256SUMS` checksum are published after the release gate passes.
 
 The Provider agent runs on the execution node and connects outbound to Punch.
 It does not expose a public SSH port, host SSH, or Docker over the Internet. Contract SSH is
@@ -21,6 +21,14 @@ claimable free offer.
 - For GPU capacity, a compatible NVIDIA driver and stable UUID/CDI identity.
   Preview.14 may install the reviewed container toolkit after consent, but it
   never replaces the GPU driver or kernel and never reboots the host.
+
+The exact immutable image identities are:
+
+| Kind | Immutable policy and runtime reference |
+| --- | --- |
+| `VALIDATION` | `ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86` |
+| `WORKLOAD` | `ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce` |
+| `INTERACTIVE` | `ghcr.io/its-define/punch-interactive@sha256:ba8c40d0e2610c43f306db04e3235442606bbec2fdcb3d37c745b23ecdaf9311` |
 
 Run the state-aware home for the normal path:
 
