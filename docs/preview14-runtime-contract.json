@@ -8,10 +8,10 @@
   },
   "controlArchiveSha256": "sha256:9853db9ad522df45f237519909166b195258b43fc9102049659c8f37c91288d6",
   "artifactBinding": {
-    "authority": "AUTHORITATIVE_PACKAGED_CLI_SURFACE_REQUIRED",
-    "archiveSha256": null,
-    "sha256SumsSha256": null,
-    "packagedCliSurfaceSha256": null
+    "authority": "AUTHORITATIVE_PACKAGED_CLI_SURFACE",
+    "archiveSha256": "sha256:bea2829770919a68ac3f0bf69f4a5d510875fca65efe742027a822b214d587ce",
+    "sha256SumsSha256": "sha256:04c3800011fb5041fa81abc858a3493199b26135fcdee68d90603951f261fd11",
+    "packagedCliSurfaceSha256": "sha256:d90f5d73e3838ff0ed391033dc71ecb751861243ad0d4806c3bdaa5d95b347b9"
   },
   "platform": "linux-x64",
   "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
@@ -26,7 +26,7 @@
     "launcher": "punch",
     "mode": "STATE_AWARE_HOME",
     "providerSetupSingleSession": true,
-    "directCommands": "REVIEWED_FINAL_COMMAND_MAP_PUBLIC_ARTIFACT_BINDING_PENDING"
+    "directCommands": "sha256:d90f5d73e3838ff0ed391033dc71ecb751861243ad0d4806c3bdaa5d95b347b9"
   },
   "providerOfferAdmission": {
     "initialState": "PENDING_AGENT",

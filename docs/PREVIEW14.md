@@ -93,10 +93,11 @@ archive, `SHA256SUMS`, runtime contract, and canonical packaged command surface.
 The checked-in [command-contract template](preview14-public-command-contract.template.json)
 records the expected inputs extracted from the candidate help and guided UX,
 but keeps every artifact hash explicitly `PENDING_DETERMINISTIC_BUILD`; it is
-not release authority. The private help, parser, builder metadata, and packaged
-surface must first converge on that map. After the deterministic build, the
-release owner replaces those four sentinels in a separate bound contract and regenerates this
-[reference](PREVIEW14_COMMAND_REFERENCE.md).
+not release authority. The separate
+[bound command contract](preview14-public-command-contract.json) records the
+exact archive, sums, runtime contract, and packaged surface used to generate the
+[reference](PREVIEW14_COMMAND_REFERENCE.md). Publication remains gated until the
+matching archive and `SHA256SUMS` are published in a non-draft prerelease.
 
 This static v1 binding covers the declared public command, flag, and workflow
 surface; it is not exhaustive mechanical semantic/output parity. Exact-artifact

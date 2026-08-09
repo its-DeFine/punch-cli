@@ -76,9 +76,10 @@ or constitute exact Preview.12 archive acceptance.
 
 Preview.14 is `GATED_UNRELEASED`. It is not an installable release, source
 checkout, or permission to infer a command or flag from an earlier preview.
-Its public command reference remains deliberately empty until the exact
-Linux/x64 archive, `SHA256SUMS`, runtime contract, and canonical packaged CLI
-surface are bound together. The release gate then requires an independent
+Its public command reference is bound to the exact Linux/x64 archive,
+`SHA256SUMS`, runtime contract, and canonical packaged CLI surface. Publication
+remains gated until those exact bytes are present in a non-draft prerelease. The
+release gate also requires an independent
 clean-host Provider-to-Buyer lifecycle report, including real image pulls,
 container SSH readiness, Buyer stop/revocation, cleanup, and capacity release.
 

@@ -26,6 +26,13 @@ if (!contract || typeof contract !== 'object' || Array.isArray(contract)
 if (contract.controlArchiveSha256 !== 'sha256:9853db9ad522df45f237519909166b195258b43fc9102049659c8f37c91288d6') {
   throw new Error('Public Preview.14 runtime contract lost the reviewed Control archive binding.');
 }
+if (contract.artifactBinding?.authority !== 'AUTHORITATIVE_PACKAGED_CLI_SURFACE'
+    || contract.artifactBinding.archiveSha256 !== 'sha256:bea2829770919a68ac3f0bf69f4a5d510875fca65efe742027a822b214d587ce'
+    || contract.artifactBinding.sha256SumsSha256 !== 'sha256:04c3800011fb5041fa81abc858a3493199b26135fcdee68d90603951f261fd11'
+    || contract.artifactBinding.packagedCliSurfaceSha256 !== 'sha256:d90f5d73e3838ff0ed391033dc71ecb751861243ad0d4806c3bdaa5d95b347b9'
+    || contract.guidedCli?.directCommands !== contract.artifactBinding.packagedCliSurfaceSha256) {
+  throw new Error('Public Preview.14 runtime contract lost the authoritative packaged artifact binding.');
+}
 process.stdout.write('Preview.14 private-builder runtime-contract compatibility: PASS\n');
 NODE
 
@@ -54,14 +61,16 @@ if grep -F -- 'PENDING_VALIDATION' docs/PREVIEW14.md docs/preview14-runtime-cont
 fi
 
 for required in \
-  'AUTHORITATIVE_PACKAGED_CLI_SURFACE_REQUIRED' \
+  'AUTHORITATIVE_PACKAGED_CLI_SURFACE' \
   'privateReleaseSource' \
   'NETBIRD_CONTRACT_SCOPED_GATEWAY' \
   'OWNER_TARGETED_ZERO_ONLY' \
   'ff99837cfa9fd7ff0683335cd5dd917db3dad90a' \
   'e753ee79e69678e495c133fb503bddbe2d9544dc' \
   '9853db9ad522df45f237519909166b195258b43fc9102049659c8f37c91288d6' \
-  'REVIEWED_FINAL_COMMAND_MAP_PUBLIC_ARTIFACT_BINDING_PENDING' \
+  'bea2829770919a68ac3f0bf69f4a5d510875fca65efe742027a822b214d587ce' \
+  '04c3800011fb5041fa81abc858a3493199b26135fcdee68d90603951f261fd11' \
+  'd90f5d73e3838ff0ed391033dc71ecb751861243ad0d4806c3bdaa5d95b347b9' \
   'STATE_AWARE_HOME' \
   'PENDING_AGENT' \
   'prelistProofRequired' \
@@ -160,20 +169,21 @@ for required in \
 done
 
 contract=docs/preview14-public-command-contract.json
-if [ -e "$contract" ]; then
-  node scripts/generate-preview14-command-reference.mjs \
-    --contract "$contract" \
-    --target docs/PREVIEW14_COMMAND_REFERENCE.md
-else
-  for required in \
-    'ff99837cfa9fd7ff0683335cd5dd917db3dad90a' \
-    'e753ee79e69678e495c133fb503bddbe2d9544dc' \
-    '9853db9ad522df45f237519909166b195258b43fc9102049659c8f37c91288d6' \
-    'public artifact binding pending deterministic build'; do
-    grep -F -- "$required" docs/PREVIEW14_COMMAND_REFERENCE.md > /dev/null || {
-      printf 'Preview.14 pending command reference is missing source/artifact boundary: %s\n' "$required" >&2
-      exit 1
-    }
-  done
-fi
+[ -e "$contract" ] || {
+  printf '%s\n' 'Preview.14 bound public command contract is missing' >&2
+  exit 1
+}
+for required in \
+  'bea2829770919a68ac3f0bf69f4a5d510875fca65efe742027a822b214d587ce' \
+  '04c3800011fb5041fa81abc858a3493199b26135fcdee68d90603951f261fd11' \
+  '99a294c6c2db751bb10e8d281604205f8fb78f35180d741a387d894bb961c0fc' \
+  'd90f5d73e3838ff0ed391033dc71ecb751861243ad0d4806c3bdaa5d95b347b9'; do
+  grep -F -- "$required" "$contract" > /dev/null || {
+    printf 'Preview.14 bound command contract is missing artifact digest: %s\n' "$required" >&2
+    exit 1
+  }
+done
+node scripts/generate-preview14-command-reference.mjs \
+  --contract "$contract" \
+  --target docs/PREVIEW14_COMMAND_REFERENCE.md
 printf '%s\n' 'Preview.14 public release-gate contract: PASS'
