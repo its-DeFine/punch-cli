@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "punch.preview18-public-command-contract-format.v1",
+  "artifactKind": "public-format-description",
+  "releaseStatus": "GATED_UNRELEASED",
+  "runtimeMatchRequired": true,
+  "contractSchema": "punch.preview18-public-command-contract.v1",
+  "requiredTopLevelKeys": [
+    "schemaVersion",
+    "releaseVersion",
+    "releaseStatus",
+    "privateRuntimeBinding",
+    "artifact",
+    "commands",
+    "workflows",
+    "security"
+  ],
+  "privateRuntimeBindingKeys": ["commit", "tree", "controlArchiveSha256"],
+  "artifactKeys": ["archiveSha256", "sha256SumsSha256", "runtimeContractSha256", "packagedCliSurfaceSha256"],
+  "commandKeys": ["role", "executable", "name", "purpose", "flags"],
+  "flagKeys": ["name", "valueType", "required", "description"],
+  "workflowKeys": ["provider", "buyer"],
+  "securityKeys": [
+    "supportedPlatforms",
+    "privilegedInstallConfirmationRequired",
+    "nonInteractivePrivilegedInstallRequiresCachedSudo",
+    "multipleSupervisedProviders",
+    "appendOnlyProviderOnboarding",
+    "sequentialOfferReplacementOnly",
+    "guidedTargetedCanonicalZeroOnly",
+    "scopedBuyerSshEgressConsentRequired",
+    "guidedSshSpawnsChild",
+    "osc52ClipboardExplicitConsentRequired",
+    "maxAuthorizedWindowSeconds",
+    "ineligibleOffersOrderable",
+    "paymentSettlementEnabled"
+  ],
+  "generationRule": "Before publication the generated reference must match the exact GATED_UNRELEASED template and every artifact binding remains pending. At release binding it must be regenerated from the exact built contract; command surface, archive, SHA256SUMS, and runtime contract bindings must agree."
+}

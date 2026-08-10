@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "punch.preview18-public-command-contract.v1",
+  "releaseVersion": "0.1.0-preview.18",
+  "releaseStatus": "GATED_UNRELEASED",
+  "privateRuntimeBinding": {
+    "commit": "4e4aae1bb335092d69dc467a74651ad9527c4c17",
+    "tree": "a0fbb1491130d179b602c64e9b7fe170c7011de6",
+    "controlArchiveSha256": "sha256:fcaa8d0c28d48f68bf940811457cfcd2ff594c9d14139dae33301749d6c0ae5a"
+  },
+  "artifact": {
+    "archiveSha256": "PENDING_DETERMINISTIC_BUILD",
+    "sha256SumsSha256": "PENDING_DETERMINISTIC_BUILD",
+    "runtimeContractSha256": "PENDING_DETERMINISTIC_BUILD",
+    "packagedCliSurfaceSha256": "PENDING_DETERMINISTIC_BUILD"
+  },
+  "commands": [
+    { "role": "provider", "executable": "punch-provider", "name": "prepare-host", "purpose": "Inspect the supported host and optionally apply only the exact reviewed dependency plan after explicit consent.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Generated Provider machine identity; supplied internally by the guided flow." },
+      { "name": "--agent-config", "valueType": "path", "required": false, "description": "Advanced exact-match agent configuration override." },
+      { "name": "--observed-at", "valueType": "string", "required": false, "description": "Canonical UTC inventory observation override." },
+      { "name": "--install-dependencies", "valueType": "boolean", "required": false, "description": "Apply the displayed reviewed dependency plan." },
+      { "name": "--plan-digest", "valueType": "string", "required": false, "description": "Exact dependency-plan SHA-256 required when installing." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit non-interactive consent; privileged work still requires cached sudo." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the host preflight receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "identity-init", "purpose": "Create the machine-bound signing identity and public onboarding packet before invitation issuance.", "flags": [
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit only the public identity onboarding packet." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "onboarding-request", "purpose": "Submit the signed public-only Provider onboarding request after explicit identity consent.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Generated Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Owner-private Provider state directory." },
+      { "name": "--punch-origin", "valueType": "string", "required": true, "description": "Trusted Punch HTTPS origin supplied by the guided flow." },
+      { "name": "--provider-label", "valueType": "string", "required": true, "description": "Human-facing Provider label." },
+      { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable onboarding request reference." },
+      { "name": "--cpu-cores", "valueType": "integer", "required": true, "description": "Selected CPU capacity." },
+      { "name": "--gpu-units", "valueType": "integer", "required": true, "description": "Selected GPU count; zero selects CPU-only." },
+      { "name": "--vram-mib", "valueType": "integer", "required": true, "description": "Selected total GPU memory." },
+      { "name": "--ram-mib", "valueType": "integer", "required": true, "description": "Selected RAM capacity." },
+      { "name": "--disk-gib", "valueType": "integer", "required": true, "description": "Selected storage capacity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the public onboarding receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "onboarding-status", "purpose": "Read the signed onboarding projection and preserve WAITING_FOR_INVITE or INVITE_READY across relaunch.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Generated Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Owner-private Provider state directory." },
+      { "name": "--punch-origin", "valueType": "string", "required": true, "description": "Trusted Punch HTTPS origin supplied by the guided flow." },
+      { "name": "--request-ref", "valueType": "string", "required": true, "description": "Bound onboarding request reference." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the onboarding status receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "join", "purpose": "Redeem the Provider invitation bound to the public identity packet and install the private credential reference.", "flags": [
+      { "name": "--invitation", "valueType": "path", "required": true, "description": "Absolute private Provider invitation JSON." },
+      { "name": "--punch-origin", "valueType": "string", "required": true, "description": "Approved Punch HTTPS origin." },
+      { "name": "--credential-file", "valueType": "path", "required": true, "description": "Absolute private Provider credential path." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit machine-readable output." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "overview", "purpose": "Read the authenticated Provider, onboarding, offer, contract, capacity, and service recovery projection.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Generated Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Owner-private Provider state directory." },
+      { "name": "--punch-origin", "valueType": "string", "required": true, "description": "Trusted Punch HTTPS origin supplied by the guided flow." },
+      { "name": "--credential-file", "valueType": "path", "required": true, "description": "Owner-private Provider credential reference." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the authenticated overview." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "doctor", "purpose": "Inspect clean-host platform, dependencies, NetBird, images, and service readiness.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": false, "description": "Canonical generated agent config when available." },
+      { "name": "--punch-origin", "valueType": "string", "required": false, "description": "Required before generated config exists." },
+      { "name": "--credential-file", "valueType": "path", "required": false, "description": "Required before generated config exists." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit punch.provider-doctor.preview14.v1." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "inventory", "purpose": "Read locally observed CPU, GPU, memory, storage, OS, runtime, and capabilities.", "flags": [
+      { "name": "--observed-at", "valueType": "string", "required": false, "description": "Canonical UTC observation timestamp override." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit machine-readable inventory." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "setup", "purpose": "In one confirmed CLI session, install required dependencies, enroll NetBird, prove readiness, start the hardened service, and activate the authenticated offer.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--punch-origin", "valueType": "string", "required": true, "description": "Approved Punch HTTPS origin." },
+      { "name": "--credential-file", "valueType": "path", "required": true, "description": "Absolute private Provider credential path." },
+      { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable setup reference reused for recovery." },
+      { "name": "--offer-id", "valueType": "string", "required": false, "description": "Exact Control-authorized offer identity." },
+      { "name": "--window-seconds", "valueType": "integer", "required": false, "description": "Exact Control-authorized access window." },
+      { "name": "--price-minor", "valueType": "integer", "required": false, "description": "Exact Control-authorized zero price." },
+      { "name": "--targeted-zero-authorization-id", "valueType": "string", "required": false, "description": "Exact targeted-zero authorization identity." },
+      { "name": "--targeted-buyer-actor-id", "valueType": "string", "required": false, "description": "Exact designated Buyer actor identity." },
+      { "name": "--cpu-cores", "valueType": "integer", "required": false, "description": "Advertised CPU capacity." },
+      { "name": "--gpu-units", "valueType": "integer", "required": false, "description": "Advertised GPU count; zero selects CPU-only." },
+      { "name": "--gpu-uuid", "valueType": "string", "required": false, "description": "Exact single-GPU UUID." },
+      { "name": "--gpu-cdi", "valueType": "string", "required": false, "description": "Exact single-GPU CDI name." },
+      { "name": "--gpu-uuids", "valueType": "string", "required": false, "description": "Aligned comma-separated multi-GPU UUIDs." },
+      { "name": "--gpu-cdis", "valueType": "string", "required": false, "description": "Aligned comma-separated multi-GPU CDI names." },
+      { "name": "--gpu-communication", "valueType": "string", "required": false, "description": "SAME_NODE or P2P_REQUIRED for multiple GPUs." },
+      { "name": "--vram-mib", "valueType": "integer", "required": false, "description": "Advertised total GPU memory." },
+      { "name": "--ram-mib", "valueType": "integer", "required": false, "description": "Advertised RAM capacity." },
+      { "name": "--disk-gib", "valueType": "integer", "required": false, "description": "Advertised storage capacity." },
+      { "name": "--install-dependencies", "valueType": "boolean", "required": false, "description": "Allow the reviewed dependency plan and continue the same setup session." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit non-interactive confirmation; direct use still requires cached sudo for privileged installation." },
+      { "name": "--activation-timeout-seconds", "valueType": "integer", "required": false, "description": "Bounded 10-300 second service-heartbeat wait." },
+      { "name": "--agent-config", "valueType": "path", "required": false, "description": "Advanced exact-match recovery/diagnostic override only." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit punch.provider-setup.preview14.v1." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "service-install", "purpose": "Advanced recovery: install and enable the generated machine-scoped service.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit service-install confirmation." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the install receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "service-start", "purpose": "Start the supervised Provider service.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit service-start confirmation." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the service action receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "service-stop", "purpose": "Stop the supervised Provider service without cancelling accepted contracts.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit service-stop confirmation." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the service action receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "service-status", "purpose": "Read the machine-scoped supervised service state.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the service action receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "service-logs", "purpose": "Read a bounded sanitized service log tail.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--lines", "valueType": "integer", "required": false, "description": "One to 500 lines; default 80." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the service action receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "serve", "purpose": "Run the Provider agent in foreground diagnostic mode.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": true, "description": "Canonical generated agent config." },
+      { "name": "--interval-ms", "valueType": "integer", "required": false, "description": "Diagnostic polling interval of at least 100ms." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "status", "purpose": "Read local machine identity and service state.", "flags": [
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit machine-readable state." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "drain", "purpose": "Set the local Provider service state to DRAINING.", "flags": [
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit machine-readable state." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "offer-list", "purpose": "List every offer owned by this Provider machine with lifecycle state and bounded core characteristics.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": true, "description": "Canonical generated agent config." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit punch.provider-offer-list.v1." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "offer-status", "purpose": "Read one owned clean-state offer receipt.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": true, "description": "Canonical generated agent config." },
+      { "name": "--offer-id", "valueType": "string", "required": true, "description": "Owned offer identity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the offer lifecycle receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "offer-unlist", "purpose": "Prevent new orders for one owned offer without altering accepted contracts.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": true, "description": "Canonical generated agent config." },
+      { "name": "--offer-id", "valueType": "string", "required": true, "description": "Owned offer identity." },
+      { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable unlist operation key." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the durable operation receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "offer-retire", "purpose": "Retire an eligible unlisted offer after terminal obligations and fenced access.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": true, "description": "Canonical generated agent config." },
+      { "name": "--offer-id", "valueType": "string", "required": true, "description": "Owned offer identity." },
+      { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable retire operation key." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the durable operation receipt." }
+    ] },
+    { "role": "provider", "executable": "punch-provider", "name": "offer-replace", "purpose": "Create and activate one distinct successor for an eligible retired offer while preserving the predecessor and exact terms.", "flags": [
+      { "name": "--machine-id", "valueType": "string", "required": true, "description": "Provider machine identity." },
+      { "name": "--state-dir", "valueType": "path", "required": true, "description": "Absolute private Provider state directory." },
+      { "name": "--agent-config", "valueType": "path", "required": true, "description": "Canonical generated agent config." },
+      { "name": "--offer-id", "valueType": "string", "required": true, "description": "Eligible retired predecessor offer identity." },
+      { "name": "--idempotency-key", "valueType": "string", "required": true, "description": "Stable replacement operation key." },
+      { "name": "--activation-timeout-seconds", "valueType": "integer", "required": false, "description": "Bounded service-heartbeat activation wait." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit confirmation for service reuse/start." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the replacement and activation receipt." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "doctor", "purpose": "Inspect supported platform and Buyer NetBird dependency/connectivity state.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit punch.buyer-doctor.preview14.v1." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "join", "purpose": "Resumably redeem one Buyer invitation, bootstrap narrow NetBird, and finish only after the exact peer binding is confirmed.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--invitation", "valueType": "path", "required": true, "description": "Absolute private Buyer invitation JSON." },
+      { "name": "--yes", "valueType": "boolean", "required": false, "description": "Explicit confirmation for the reviewed NetBird dependency install." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit join/session/NetBird status." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "offers", "purpose": "List supervised-Provider offers with their returned visibility and eligibility; ineligible offers cannot be ordered.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the Control Buyer projection." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "order", "purpose": "Create or reconcile one idempotent direct or conditional order for an eligible offer only.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--offer-id", "valueType": "string", "required": false, "description": "Direct offer; exactly one of offer-id or request-file." },
+      { "name": "--request-file", "valueType": "path", "required": false, "description": "Conditional request; exactly one of request-file or offer-id." },
+      { "name": "--order-ref", "valueType": "string", "required": true, "description": "Stable Buyer order reference reused after ambiguity." },
+      { "name": "--ssh-public-key-file", "valueType": "path", "required": false, "description": "Absolute Ed25519 public key for interactive access." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the Control order projection." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "status", "purpose": "Read lifecycle phase, state, access readiness, history, and safe failure projection.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--job-id", "valueType": "string", "required": true, "description": "Buyer-owned job or contract identity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the Control status projection." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "output", "purpose": "Download and digest-verify one completed task output.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--job-id", "valueType": "string", "required": true, "description": "Buyer-owned job identity." },
+      { "name": "--task-id", "valueType": "string", "required": true, "description": "Completed task identity." },
+      { "name": "--output", "valueType": "path", "required": true, "description": "New absolute output path." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit outputFile and byte count." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "ssh", "purpose": "Carry contract-scoped SSH bytes for OpenSSH ProxyCommand.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--job", "valueType": "string", "required": true, "description": "ACTIVE Buyer-owned job identity." }
+    ] },
+    { "role": "buyer", "executable": "punch-buyer", "name": "stop", "purpose": "Reconcile one Buyer-owned revocation-first stop through cleanup.", "flags": [
+      { "name": "--config", "valueType": "path", "required": true, "description": "Absolute Buyer public config." },
+      { "name": "--job", "valueType": "string", "required": true, "description": "Buyer-owned job identity." },
+      { "name": "--json", "valueType": "boolean", "required": false, "description": "Emit the durable stop operation projection." }
+    ] }
+  ],
+  "workflows": {
+    "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "join", "overview", "doctor", "setup", "service-status", "offer-list", "offer-status", "offer-unlist", "offer-retire", "offer-replace"],
+    "buyer": ["doctor", "join", "offers", "order", "status", "ssh", "stop"]
+  },
+  "security": {
+    "supportedPlatforms": ["linux-x64"],
+    "privilegedInstallConfirmationRequired": true,
+    "nonInteractivePrivilegedInstallRequiresCachedSudo": true,
+    "multipleSupervisedProviders": true,
+    "appendOnlyProviderOnboarding": true,
+    "sequentialOfferReplacementOnly": true,
+    "guidedTargetedCanonicalZeroOnly": true,
+    "scopedBuyerSshEgressConsentRequired": true,
+    "guidedSshSpawnsChild": false,
+    "osc52ClipboardExplicitConsentRequired": true,
+    "maxAuthorizedWindowSeconds": 259200,
+    "ineligibleOffersOrderable": false,
+    "paymentSettlementEnabled": false
+  }
+}

@@ -1,9 +1,10 @@
 # Invitations and credentials
 
-> **Version boundary:** this page describes the published Preview.17
-> invitation-only flow. Use it only with the matching non-draft archive and
-> checksum, and only with an invitation bound to the exact public identity
-> packet and installed release role.
+> **Version boundary:** this page describes the Preview.18 invitation-only flow.
+> Use it only after the matching non-draft archive exists and its
+> same-release checksum verifies, and only with an invitation bound to the
+> exact public identity packet and installed release role. This source page is
+> not install authority.
 
 Punch Compute is invitation-only during the public preview.
 
@@ -13,12 +14,18 @@ Punch Compute is invitation-only during the public preview.
 - A **Provider invitation** can create one Provider credential.
 - The invitation role is fixed by Punch Control. A CLI flag cannot change it.
 
-Preview.17 Provider onboarding first submits a signed public-only request and
+Preview.18 Provider onboarding first submits a signed public-only request and
 shows `WAITING_FOR_INVITE`. That request is not an invitation and cannot approve
 the Provider. After supervised approval, signed status may advance to
 `INVITE_READY`; that state contains no invitation secret. The guided `punch`
 flow resumes the same request and local identity only after it imports the
 owner-delivered one-time Provider invitation from an owned mode-`0600` file.
+
+Supervised approval of another Provider is append-only. It creates a distinct
+Provider actor, machine, invitation, offer authority, and narrow route and must
+preserve every existing Provider and Buyer authority. The public CLI cannot
+select replacement authority, mutate Control administration, or obtain another
+Provider's invitation.
 
 ## Single use
 

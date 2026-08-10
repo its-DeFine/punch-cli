@@ -1,8 +1,9 @@
-# Preview.17 Provider guide
+# Preview.18 Provider guide
 
-> **Status: `PUBLISHED_PRERELEASE`.** Use only the published Linux/x64
-> [`v0.1.0-preview.17`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.17)
-> archive and its same-release `SHA256SUMS`. Do not use a source checkout,
+> **Status: `PUBLISHED_PRERELEASE` release guide.** Use only the Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive after the matching non-draft release and same-release `SHA256SUMS`
+> exist and the exact archive reports `OK`. Until then, do not use a source checkout,
 > private build, guessed URL, or earlier archive for this guided flow. The
 > network remains invitation-only and owner-targeted `$0`; publication does not
 > authorize self-service approval.
@@ -16,24 +17,29 @@ Provider onboarding remains supervised. A Provider cannot approve itself,
 choose a Buyer, issue a targeted-zero authorization, or create a publicly
 claimable free offer.
 
+Approval of another Provider is append-only: it binds one distinct Provider
+actor, machine, invitation, offer authority, and narrow route without replacing
+or deleting an existing Provider or Buyer authority. This does not expose the
+Control operator procedure or weaken the invitation boundary.
+
 ## Published release and installation
 
 On an Ubuntu 22.04 or 24.04 Linux/x64 host, download the two exact assets from
 the same non-draft release, verify the checksum, and install the Provider role:
 
 ```bash
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.17/punch-cli-0.1.0-preview.17-linux-x64.tar.gz
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.17/SHA256SUMS
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.18/punch-cli-0.1.0-preview.18-linux-x64.tar.gz
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.18/SHA256SUMS
 sha256sum -c SHA256SUMS --ignore-missing
-tar -xzf punch-cli-0.1.0-preview.17-linux-x64.tar.gz
-cd punch-cli-0.1.0-preview.17-linux-x64
+tar -xzf punch-cli-0.1.0-preview.18-linux-x64.tar.gz
+cd punch-cli-0.1.0-preview.18-linux-x64
 ./install.sh --role provider
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-Require the exact Preview.17 archive line to report `OK`. A missing release,
-asset, checksum line, or `OK` result is a hard stop. Its published SHA-256 is
-`76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c`.
+Require the exact Preview.18 archive line to report `OK`. A missing release,
+asset, checksum line, or `OK` result is a hard stop. The digest comes only from
+the same-release `SHA256SUMS`; this source candidate does not predeclare it.
 Before onboarding, confirm the installed release surface:
 
 ```bash
@@ -57,8 +63,8 @@ be an owned mode-`0600` file before the guided home imports it. Never substitute
 guessed invitation or configuration values.
 
 Continue with [guided onboarding](#2-guided-provider-onboarding),
-the [Preview.17 release flow](PREVIEW17.md), and the exact
-[Preview.17 Provider command reference](PREVIEW17_COMMAND_REFERENCE.md#provider).
+the [Preview.18 release flow](PREVIEW18.md), and the exact
+[Preview.18 Provider command reference](PREVIEW18_COMMAND_REFERENCE.md#provider).
 
 ## 1. Supported host
 
@@ -66,7 +72,7 @@ the [Preview.17 release flow](PREVIEW17.md), and the exact
 - A private, owner-controlled state directory and sufficient storage for the
   three immutable Punch images plus one bounded workload.
 - For GPU capacity, a compatible NVIDIA driver and stable UUID/CDI identity.
-  Preview.17 may install the reviewed container toolkit after consent, but it
+  Preview.18 may install the reviewed container toolkit after consent, but it
   never replaces the GPU driver or kernel and never reboots the host.
 
 The exact immutable image identities are:
@@ -220,14 +226,14 @@ config is generated at `STATE_DIR/provider-agent.json`.
 
 ## 5. NetBird and config custody
 
-Normal Preview.17 setup requests one short-lived, single-use enrollment from
+Normal Preview.18 setup requests one short-lived, single-use enrollment from
 Control only after Provider authorization. Punch passes it to NetBird through a
 temporary mode-`0600` file, verifies the resulting peer/address binding, records
 the non-secret receipt, and removes the one-time material.
 The Provider never receives the NetBird management token or pastes a setup key.
 
 Manual NetBird enrollment and manual editing/copying of
-`provider-agent.example.json` are obsolete for normal Preview.17 onboarding.
+`provider-agent.example.json` are obsolete for normal Preview.18 onboarding.
 `--agent-config` remains an advanced exact-match recovery/diagnostic override;
 it cannot change authenticated image, Buyer, offer, window, price, or
 authorization bindings.
@@ -254,20 +260,37 @@ sanitized `error` message.
 ## 7. Offer lifecycle
 
 ```text
+punch-provider offer-list --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --json
 punch-provider offer-status --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --json
 punch-provider offer-unlist --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY --json
 punch-provider offer-retire --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY --json
+punch-provider offer-replace --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id RETIRED_ID --idempotency-key KEY --yes --json
 ```
 
-Unlist prevents new orders but cannot revoke or alter an accepted contract.
-Retirement requires an already-unlisted offer, terminal contracts, released
-capacity, and fenced access. Exact retries return the same durable result.
+The normal guided path is **View offers**, select the exact offer ID, then use
+**Unlist offer**, **Retire offer**, and **Create replacement offer** as each
+state becomes eligible. `offer-list` returns ID, state, core characteristics,
+environment state, and predecessor binding without exposing other Providers.
+
+Unlist prevents new orders but cannot revoke or alter an accepted contract and
+leaves the supervised local service installed and runnable. Retirement requires
+an already-unlisted offer, terminal contracts, released capacity, and fenced
+access and is terminal for that predecessor.
+
+`offer-replace` preserves the retired predecessor, creates a distinct successor
+with the exact same capacity, target, window, and price, reuses the supervised
+service, and activates only after readiness reaches `LISTED`. A pending
+successor is resumed idempotently. Preview.18 allows one nonterminal offer per
+machine; concurrent multi-offer and multi-profile use are not supported.
+Exact retries return the same durable result.
 
 ## 8. Acceptance and rollback
 
 Before retaining a Provider, prove the exact release archive performs:
 
 - setup through `PENDING_AGENT` to `LISTED` on the advertised CPU/GPU surface;
+- offer list, exact selection, unlist with service still runnable, retirement,
+  and one distinct `LISTED` replacement with the predecessor preserved;
 - designated-Buyer discovery and exact order replay;
 - automatic container and gateway readiness;
 - OpenSSH access from a separate Buyer environment;
@@ -278,5 +301,5 @@ For maintenance, unlist an unaccepted offer or allow accepted contracts to
 finish, then retire only after obligations are terminal. Preserve credentials,
 identity keys, state, generated config, and receipts across a program rollback.
 
-Preview.17 remains owner-targeted `$0` only. Payment, settlement, payout,
+Preview.18 remains owner-targeted `$0` only. Payment, settlement, payout,
 refunds, and paid-offer economics are outside its acceptance boundary.

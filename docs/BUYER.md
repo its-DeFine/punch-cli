@@ -2,9 +2,11 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.17 boundary:** use only the published Linux/x64
-> [`v0.1.0-preview.17`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.17)
-> archive with its same-release `SHA256SUMS`. The Buyer CLI exposes `doctor`,
+> **Preview.18 boundary:** use only the Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive after its matching non-draft release and same-release `SHA256SUMS`
+> exist and the exact archive reports `OK`. This source page alone is not
+> install authority. The Buyer CLI exposes `doctor`,
 > `join`, `offers`, `order`, `status`, `output`, `ssh`, and `stop`. The accepted
 > preview path is owner-targeted `$0` only; payment, settlement, payout, and
 > refund behavior is not enabled.
@@ -52,7 +54,7 @@ NetBird client. If NetBird is missing, the CLI explains the privileged package
 change and asks for confirmation. For supervised automation, `--yes` is the
 explicit confirmation; it is accepted only by `join`.
 
-In the guided `punch` → **Buyer** flow, Preview.17 first probes passwordless
+In the guided `punch` → **Buyer** flow, Preview.18 first probes passwordless
 capability with `sudo -n true` after join confirmation. A successful probe
 continues without a password prompt; otherwise the CLI falls back to interactive
 `sudo -v`. Failed authorization stops before dependency installation or join.
@@ -136,6 +138,12 @@ window is `259200` seconds. An offer whose projection says it is ineligible
 cannot be selected or ordered; the guided home blocks confirmation and Control
 rejects a direct command fail-closed.
 
+The guided home is stricter before it creates local order state: the offer must
+be explicitly eligible, targeted to the current Buyer, and carry
+`priceMinor` as canonical numeric +0. Missing, string, nested-only,
+nonzero, and negative-zero values stop before SSH-key selection, confirmation,
+or Control submission. No payment setup or transaction is attempted.
+
 Record the job identifier returned by the order result. A successful order does
 not itself prove that access is ready, that a container is running, or that a
 payment has settled.
@@ -150,10 +158,10 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.17 uses zero-price supervised offers and does not
+container preparation. Preview.18 uses zero-price supervised offers and does not
 exercise payment, settlement, payout, or refund behavior.
 
-For Preview.17 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.18 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -166,11 +174,30 @@ than constructing one locally.
 
 `punch-buyer ssh` is a byte-stream proxy for OpenSSH's `ProxyCommand`; it is not an interactive terminal by itself. Use the same private key whose public half was bound to the order, a job-specific private known-hosts file, and the fixed container user `punch`:
 
+For the normal guided path, run `punch`, open the ACTIVE contract, and choose
+**Prepare SSH command**. Punch first validates the selected owner-private key,
+fixed OpenSSH client, authenticated contract gateway, exact NetBird
+route/source, and persistent/live Buyer firewall ordering. If the local
+private-range policy blocks this one gateway, Punch displays the exact TCP
+destination, port, interface, and persistent rule and requires explicit
+consent before applying only that exception.
+
+After validation, Punch prints the exact shell-quoted command. It does not
+spawn SSH or the ProxyCommand. The visible command is authoritative: copy it,
+exit Punch, and run it from the Buyer VM shell. The optional OSC 52 prompt is
+default-no and, after explicit consent, can copy only this just-generated
+command. `SENT` is not terminal acknowledgment; `UNSUPPORTED`, decline, or
+failure leaves the visible command as the fallback. No private-key, invitation,
+session, credential, or config contents are copied.
+
+The equivalent advanced direct shape is:
+
 ```bash
 install -d -m 0700 "$HOME/.config/punch/buyer/known-hosts"
 
-ssh -i /absolute/path/to/id_ed25519 \
+/usr/bin/ssh -tt -i /absolute/path/to/id_ed25519 \
   -o IdentitiesOnly=yes \
+  -o BatchMode=yes \
   -o 'ProxyCommand=punch-buyer ssh --config /absolute/path/.config/punch/buyer/buyer.json --job JOB_ID' \
   -o UserKnownHostsFile=/absolute/path/.config/punch/buyer/known-hosts/JOB_ID \
   -o StrictHostKeyChecking=accept-new \
@@ -179,13 +206,16 @@ ssh -i /absolute/path/to/id_ed25519 \
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.17 carries SSH bytes through a
+accepting the replacement. Preview.18 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
+The preparation gate proves the local key, route, and egress policy; gateway
+reachability and SSH key exchange begin only when the owner runs the command.
+
 ## 7. Stop and release
 
-Preview.17 preserves the approved asynchronous Buyer stop command:
+Preview.18 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \

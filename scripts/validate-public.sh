@@ -10,6 +10,7 @@ sh -n install.sh uninstall.sh packaging/punch-buyer packaging/punch-provider \
   tests/buyer-stop-contract.sh tests/docs-contract.sh tests/preview15-release-gate.sh \
   tests/preview16-release-gate.sh \
   tests/preview17-release-gate.sh \
+  tests/preview18-release-gate.sh \
   tests/install-uninstall.sh tests/interactive-image-contract.sh \
   tests/interactive-image-runtime-canary.sh tests/validate-without-rg.sh
 
@@ -193,9 +194,9 @@ for active_release_doc in \
 done
 
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
-  grep -F 'Preview.17' "$current_boundary_doc" > /dev/null && \
-    grep -F 'published' "$current_boundary_doc" > /dev/null || {
-    printf 'Preview.17 published boundary is missing from %s\n' "$current_boundary_doc" >&2
+  grep -F 'Preview.18' "$current_boundary_doc" > /dev/null && \
+    grep -F 'non-draft' "$current_boundary_doc" > /dev/null || {
+    printf 'Preview.18 conditional release boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done

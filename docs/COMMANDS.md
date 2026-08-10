@@ -1,15 +1,16 @@
 # Command reference
 
-> **Version boundary:** this reference describes the published Preview.17
-> Linux/x64 prerelease. Exact flags are release-bound in the generated
-> [Preview.17 command reference](PREVIEW17_COMMAND_REFERENCE.md) and apply only
-> to its matching archive and `SHA256SUMS` in the non-draft release.
+> **Version boundary:** this reference describes Preview.18 for its matching
+> Linux/x64 archive. Exact flags are release-bound in the generated
+> [Preview.18 command reference](PREVIEW18_COMMAND_REFERENCE.md) and apply only
+> after the exact non-draft release and same-release `SHA256SUMS` exist. This
+> source reference alone is not install authority.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.17 adds a state-aware `punch` home without removing either role
+Preview.18 adds a state-aware `punch` home without removing either role
 command. Its release boundary and behavior are documented in
 [Guided `punch` home](GUIDED_CLI.md).
 
@@ -35,18 +36,27 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.17 Buyers do not pass a zero-price flag. An operator-approved
+Preview.18 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
-For guided Buyer join only, after confirmation Preview.17 probes passwordless
+The guided Buyer accepts only an explicitly eligible and targeted offer whose
+`priceMinor` is canonical numeric `+0`. It stops before key selection
+or local order creation for missing, string, nested-only, nonzero, or
+negative-zero values. For ACTIVE access, **Prepare SSH command** validates the
+exact Buyer key/route/egress boundary, requires consent for one scoped firewall
+exception when needed, prints the contract-bound command, and never spawns SSH.
+OSC 52 copy is optional and explicit-consent-only; the visible command remains
+the fallback.
+
+For guided Buyer join only, after confirmation Preview.18 probes passwordless
 capability with `sudo -n true` before falling back to interactive `sudo -v`.
 Failed authorization stops before dependency installation or join. Direct
 non-interactive join still requires `--yes` and cached `sudo`.
 
 ## Provider
 
-The Preview.17 public Provider commands are:
+The Preview.18 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -62,16 +72,18 @@ The Preview.17 public Provider commands are:
 | `service-install` | Advanced recovery: install/enable the generated machine-scoped service |
 | `service-start` / `service-stop` | Explicitly start or stop the supervised service |
 | `service-status` / `service-logs` | Read supervised service state or bounded logs |
+| `offer-list` | List every offer owned by this Provider machine with state and bounded core characteristics |
 | `offer-status` | Read one owned offer's lifecycle receipt |
 | `offer-unlist` | Stop new orders for one owned unaccepted offer |
 | `offer-retire` | Retire one eligible unlisted offer and environment |
+| `offer-replace` | Preserve a retired offer and activate one distinct exact-term sequential successor |
 | `serve` | Run the outbound agent in foreground diagnostic mode |
 | `status` | Read local agent status |
 | `drain` | Stop accepting new work before maintenance |
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.17 Provider command reference](PREVIEW17_COMMAND_REFERENCE.md#provider)
+[Preview.18 Provider command reference](PREVIEW18_COMMAND_REFERENCE.md#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
@@ -111,17 +123,22 @@ non-interactive use requires explicit confirmation and cached `sudo`. Normal
 onboarding does not require `serve` or manual config.
 
 Punch supports multiple independently supervised Provider machines and offers.
+Approval of a new Provider appends distinct authority without replacing an
+existing Provider or Buyer.
 Each order still reserves one eligible offer. An ineligible offer is not
 orderable through either the guided or direct Buyer command.
 
 ### Provider offer lifecycle
 
-`offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14
-and remain in Preview.17. They do not alter the Buyer command surface.
+`offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14.
+Preview.18 adds `offer-list` and `offer-replace`. They do not alter the Buyer
+direct command surface.
 
-All three require `--machine-id`, `--state-dir`, `--agent-config`, and
-`--offer-id`. `offer-unlist` and `offer-retire` also require a stable
-`--idempotency-key`. The complete lifecycle and archive-release gate are in
+All lifecycle commands require `--machine-id`, `--state-dir`, and
+`--agent-config`; commands acting on one offer also require `--offer-id`.
+`offer-unlist`, `offer-retire`, and `offer-replace` require a stable
+`--idempotency-key`; replacement also requires explicit `--yes` for service
+reuse/start. The complete lifecycle and archive-release gate are in
 [Provider offer lifecycle](OFFER_LIFECYCLE_PREVIEW.md).
 
 ### Machine-readable results
@@ -163,7 +180,7 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.17 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.18 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound generated
-reference is [PREVIEW17_COMMAND_REFERENCE.md](PREVIEW17_COMMAND_REFERENCE.md).
+reference is [PREVIEW18_COMMAND_REFERENCE.md](PREVIEW18_COMMAND_REFERENCE.md).

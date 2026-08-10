@@ -1,9 +1,10 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the published Preview.17 Linux/x64
-> prerelease. Use only its matching non-draft archive and same-release
-> `SHA256SUMS`; Preview.14 does not contain the interactive Provider onboarding
-> flow below.
+> **Release boundary:** this page documents Preview.18 for inclusion in its
+> matching Linux/x64 archive. It becomes install authority only when the exact
+> non-draft `v0.1.0-preview.18` release and same-release `SHA256SUMS` exist;
+> this source page alone is not installable. Preview.14 does not contain the
+> interactive Provider onboarding flow below.
 
 Run `punch` in a terminal to open the interactive home. It is a continuous,
 local navigation layer over the existing role commands, not a one-time setup
@@ -14,18 +15,24 @@ and the authenticated status of jobs created from that profile.
   Provider join, it creates the machine identity and public onboarding packet;
   the supervised operator binds the invitation to that packet.
 - A joined Buyer sees offers, local orders, profile information, and direct
-  status/connect/stop actions for locally recorded active contracts.
+  status/SSH-preparation/stop actions for locally recorded active contracts.
 - A joined Provider without a locally recorded offer sees readiness and one
   complete setup action. Setup proposes bounded capacity from real inventory,
   asks before the overall operation and again before any privileged dependency
   install, persists one stable setup reference, and continues in that same CLI
   session through NetBird enrollment, immutable image/readiness proof,
   generated config, hardened service start, and `LISTED`.
-- A configured Provider sees machine readiness, machine and offer status,
-  unlist/retire, and supervised-service start/stop/status/log actions. Foreground
-  `serve` remains a direct diagnostic command rather than the normal home path.
+- A configured Provider sees machine readiness and the authenticated offer
+  list, selects an exact offer for status/unlist/retire, can create or resume
+  one sequential replacement after retirement, and retains supervised-service
+  start/stop/status/log actions. Foreground `serve` remains a direct diagnostic
+  command rather than the normal home path.
 
 The Buyer reviews the complete selected offer before confirming an order. The
+guided path accepts only an explicitly eligible, targeted offer whose
+`priceMinor` is canonical numeric +0; any missing, string, nested,
+nonzero, or negative-zero value stops before key selection or local order
+creation. No payment setup or transaction is attempted. The
 home can select an existing owned Ed25519 key pair or, with explicit approval,
 create a protected local key. It stores only key paths; it never reads or
 prints the private key. A stable order reference is written locally before the
@@ -37,7 +44,7 @@ may show the normal TTY `sudo` prompt, but it does not hide the privilege
 boundary, create a second enrollment code, or bypass a failed setup. Join is
 resumable until the exact Buyer/NetBird binding is confirmed.
 
-Preview.17 repairs guided Buyer authorization without changing the direct
+Preview.18 repairs guided Buyer authorization without changing the direct
 command surface: after join confirmation it first probes passwordless
 capability with `sudo -n true`, then falls back to interactive `sudo -v` only
 when needed. Failed authorization stops before dependency installation or join.
@@ -70,6 +77,47 @@ Multiple supervised Providers may be active. The home lists their separately
 eligible offers, while each order still reserves exactly one offer/machine and
 does not reveal a Provider host address.
 
+Supervised approval of another Provider is append-only. It binds a distinct
+actor, machine, invitation, offer authority, and narrow route while preserving
+every existing Provider and Buyer authority and durable record.
+
+## Preview.18 Provider offer handling
+
+The Provider home renders each owned offer with its ID, state, CPU, RAM, disk,
+GPU count, window, price, and targeted status. Status, unlist, and retire never
+act on an implicit first offer: the Provider selects one eligible offer.
+Unlisting prevents new orders but leaves the supervised service installed and
+runnable and does not alter accepted contracts. Retirement is terminal for the
+selected offer.
+
+When no nonterminal offer remains, **Create replacement offer** preserves the
+retired predecessor and clones its exact capacity, target, window, and price
+into one distinct successor. The existing service is reused and the guided
+flow waits for `LISTED`. A `PENDING_AGENT` successor is resumed rather than
+duplicated. Preview.18 permits one nonterminal offer per machine; it does not
+claim concurrent multi-offer or multi-profile orchestration.
+
+## Preview.18 Buyer SSH preparation
+
+After status is `ACTIVE` with `accessEffective: true`, choose **Prepare SSH command**.
+Punch validates the selected private key, fixed OpenSSH client,
+authenticated contract gateway, one NetBird route/source, and exact persistent
+and live Buyer firewall policy. If one scoped TCP exception is required, Punch
+shows the destination, port, interface, and rule and asks for explicit consent.
+It does not apply broad Docker, network, or private-range cleanup.
+
+On success Punch prints one shell-quoted command bound to the existing Buyer
+config, selected key, active contract, per-contract known-hosts file, forced
+TTY, batch mode, fixed ProxyCommand, and `punch@punch-job`. It does not launch
+SSH or the proxy. Copy the visible command, exit Punch, and run it from the
+Buyer VM shell. Gateway reachability and key exchange begin only then.
+
+The optional OSC 52 prompt is default-no. After explicit consent it copies
+only the just-generated command. `SENT` means a terminal request was emitted,
+not acknowledged; `UNSUPPORTED`, decline, or failure leaves the visible
+command as the fallback. `exit` or Ctrl-D returns to the Buyer VM but does not
+stop the contract; use **Stop** for revocation and cleanup.
+
 For scripts and automation, keep using `punch-buyer ...` and
 `punch-provider ...`, or use the equivalent `punch buyer ...` and
 `punch provider ...` forwarding forms. Exit codes are preserved. Autonomous
@@ -77,10 +125,10 @@ use must follow the separate custody, approval, retry, and state rules in the
 [Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
 interactive prompts.
 
-## Preview.17 interactive Provider onboarding contract
+## Preview.18 interactive Provider onboarding contract
 
 > **Published contract.** This flow is bound to the matching non-draft
-> Preview.17 archive and `SHA256SUMS`; it cannot be installed from this source
+> Preview.18 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
 
 The normal Provider journey starts from one obvious interactive entry point:

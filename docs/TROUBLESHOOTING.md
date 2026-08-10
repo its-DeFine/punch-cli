@@ -1,12 +1,13 @@
 # Troubleshooting
 
-> **Version boundary:** this page describes the published Preview.17 Linux/x64
-> prerelease. Use recovery commands only from its exact non-draft archive after
-> verifying the same-release checksum.
+> **Version boundary:** this page describes Preview.18 for its matching
+> Linux/x64 archive. Use these recovery actions only after the exact non-draft
+> release exists and its same-release checksum verifies; this source page is
+> not install authority.
 
 ## Guided onboarding is waiting
 
-`WAITING_FOR_INVITE` is a normal durable Preview.17 Provider state, not a
+`WAITING_FOR_INVITE` is a normal durable Preview.18 Provider state, not a
 failure. Preserve the local identity and onboarding request, then resume the
 same `punch` → **Provider** flow when the separately approved invitation
 arrives. Do not create another identity or request, guess an invitation, or
@@ -33,7 +34,7 @@ replacement identity or request.
 
 ## Buyer join dependency authorization stopped
 
-After guided Buyer join confirmation, Preview.17 first probes `sudo -n true`.
+After guided Buyer join confirmation, Preview.18 first probes `sudo -n true`.
 If that capability is unavailable, it falls back to interactive `sudo -v`.
 Failed authorization leaves dependency installation and join unstarted; correct
 sudo access and resume the same invitation and local Buyer state. Direct
@@ -41,7 +42,7 @@ non-interactive join still requires `--yes` and cached `sudo`.
 
 ## Provider setup stopped
 
-Preview.17 setup errors include a sanitized `stage` and `retryable` decision.
+Preview.18 setup errors include a sanitized `stage` and `retryable` decision.
 Preserve the exact machine identity, state directory, credential, generated
 config, and `--idempotency-key`, correct that stage, and retry the same setup.
 Do not begin another setup merely because NetBird, image pulling, systemd, or
@@ -76,7 +77,7 @@ container-runtime endpoint.
 
 ## Order response timed out
 
-Retry the exact order using the same `--order-ref`. The Preview.17 CLI first
+Retry the exact order using the same `--order-ref`. The Preview.18 CLI first
 reconciles that reference, so an interrupted response does not authorize a
 second order or reservation.
 
@@ -98,7 +99,26 @@ punch-provider service-logs --machine-id MACHINE_ID --lines 80 --json
 
 Use `service-start --yes` only after reviewing the consequence. `serve` is a
 foreground diagnostic mode; replacing the supervised service with a manual
-long-running shell is not normal Preview.17 recovery.
+long-running shell is not normal Preview.18 recovery.
+
+## Provider offer replacement is not ready
+
+Open `punch` → **Provider** → **View offers**. Preserve every offer row and use
+the displayed state instead of deleting local profile or Control data.
+
+- `LISTED` must be unlisted before retirement. Unlisting leaves the supervised
+  service installed and runnable and cannot alter an accepted contract.
+- `UNLISTED` must have terminal obligations, released capacity, and fenced
+  access before retirement.
+- `RETIRED` is preserved permanently. Choose **Create replacement offer**;
+  Preview.18 creates one distinct exact-term successor.
+- `PENDING_AGENT` with a predecessor binding means **Resume replacement
+  listing**, not create another successor.
+
+If another nonterminal offer exists, replacement fails closed. Preview.18 does
+not support concurrent multiple offers on one machine. Retry the same direct
+`offer-replace` idempotency key or the same guided replacement; do not create a
+new Provider identity, config, or service.
 
 ## NetBird or brokered SSH is not ready
 
@@ -115,11 +135,27 @@ long-running shell is not normal Preview.17 recovery.
 - Confirm there is no default full-mesh policy.
 - Wait for Buyer status `state: ACTIVE` and `accessEffective: true`.
 - Use the same private key whose public half was attached to the order.
+- In guided Punch choose **Prepare SSH command**. `BUYER_SSH_PREFLIGHT_BLOCKED`
+  means the exact key, OpenSSH client, authenticated descriptor, NetBird
+  route/source, or persistent/live firewall boundary did not validate. No SSH
+  connection was attempted and the order remains intact.
+- If one exact Buyer-local TCP egress rule is displayed, review its destination,
+  port, NetBird interface, and placement, then explicitly approve or decline it.
+  A decline changes nothing. `BUYER_SSH_EGRESS_ROLLBACK_UNPROVEN` is a hard stop
+  until the local firewall is inspected; do not retry SSH blindly.
 - Do not expose host SSH, publish a container port, disable host-key checking,
   or bypass Punch with a Provider address.
 
 The Punch gateway uses Provider TCP `22222` only on the NetBird overlay. It does
 not use NetBird's host-SSH feature.
+
+A successful preparation proves the local key, route, and exact egress policy;
+gateway reachability and key exchange begin only when the owner runs the
+visible command. Punch does not spawn SSH. If OSC 52 reports `SENT`, the
+terminal did not acknowledge the clipboard contents; verify the paste. If it
+reports `UNSUPPORTED`, is declined, or fails, use the still-visible command.
+Never copy terminal output, invitation contents, session material, or key
+contents as a substitute.
 
 ## OpenSSH closed but the job is still active
 
@@ -136,7 +172,7 @@ must be rejected.
 
 ## Payment or refund question
 
-Preview.17 uses owner-targeted zero-price offers. Payment, settlement, payout,
+Preview.18 uses owner-targeted zero-price offers. Payment, settlement, payout,
 refunds, and paid offer economics were not activated or accepted by this
 release. Do not infer financial behavior from the lifecycle result.
 
