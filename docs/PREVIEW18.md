@@ -1,11 +1,9 @@
 # Preview.18 Provider lifecycle and Buyer SSH handoff
 
-> **Status: `PUBLISHED_PRERELEASE` release note.** Preview.18 is installable
-> only from the matching non-draft
+> **Status: `PUBLISHED_PRERELEASE`.** Preview.18 is installable only from the matching non-draft
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 > after the exact Linux/x64 archive verifies against its same-release
-> `SHA256SUMS`. Until those assets are bound and published, this source candidate
-> and its pending metadata are not install authority.
+> `SHA256SUMS`; this source commit alone is not install authority.
 
 Preview.18 preserves the Preview.17 guided Provider and Buyer onboarding
 contracts and adds the bounded lifecycle and SSH handoff repairs below. Direct
@@ -40,10 +38,10 @@ and fenced access.
 
 After retirement, the Provider may create one sequential replacement. The
 retired predecessor remains preserved; the successor receives a distinct
-offer/environment/setup identity, clones the predecessor's exact capacity,
-target, window, and price, reuses the existing supervised service, and must
-reach `LISTED`. Preview.18 permits only one nonterminal offer per Provider
-machine; it does not claim concurrent multi-offer, multi-profile, or
+offer ID, clones the predecessor's exact capacity, target, window, and price,
+and reuses the same environment ID, setup reference, and supervised service
+before it must reach `LISTED`. Preview.18 permits only one nonterminal offer
+per Provider machine; it does not claim concurrent multi-offer, multi-profile, or
 multi-machine orchestration.
 
 The advanced public command surface adds `offer-list` and `offer-replace`
@@ -100,18 +98,33 @@ refunds, public Provider addresses, host SSH, Docker exposure, NetBird
 management credentials, Control administrator credentials, or self-approved
 Provider onboarding.
 
-## Pre-build source binding
+## Exact release binding
 
-This candidate binds private source commit
+The published artifact binds private source commit
 `4e4aae1bb335092d69dc467a74651ad9527c4c17`, tree
 `a0fbb1491130d179b602c64e9b7fe170c7011de6`, and deterministic Control
 archive
 `sha256:fcaa8d0c28d48f68bf940811457cfcd2ff594c9d14139dae33301749d6c0ae5a`.
 
-The public archive, `SHA256SUMS`, runtime-contract, and packaged CLI-surface
-digests remain pending in the versioned static/runtime metadata until the
-deterministic build and final binding commit. A pending value, source commit,
-tree, Control archive, or this page alone cannot authorize installation.
+Its 43,811,105-byte public archive is
+`sha256:d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`;
+the same-release `SHA256SUMS` is
+`sha256:094b1acb686b7daec071af97370be749b003579343e432c8c026dc80980d4da7`.
+The immutable packaged `RELEASE-BINDING.json` is
+`sha256:1f5c009a84f15262da8c1075140fcf463229a5d4bf6aa3ad0f2e5844ef5a028a`,
+the packaged `BUILD-MANIFEST.txt` is
+`sha256:b86cb81697183e31b8fa53529a617be07266e3ad892d50c312bcad09d0de6625`,
+and the embedded `RELEASE-CONTRACT.json` is
+`sha256:1d7b13e6ce39526cf99b8795291dcb3d0f5e85a76df346d0f60f1066d2d2ebd1`.
+
+The static
+[command-contract template](preview18-public-command-contract.template.json)
+preserves its four `PENDING_DETERMINISTIC_BUILD` sentinels. The separate
+[bound command contract](preview18-public-command-contract.json),
+[runtime contract](preview18-runtime-contract.json), and generated
+[command reference](PREVIEW18_COMMAND_REFERENCE.md) bind the archive,
+`SHA256SUMS`, runtime contract, and canonical packaged CLI surface. The exact
+packaged help and clean-host acceptance remain authoritative.
 
 ## Release acceptance
 

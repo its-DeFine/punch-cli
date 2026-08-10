@@ -1,26 +1,26 @@
 # Preview.18 command reference
 
-> **Status: `GATED_UNRELEASED`.** The exact private runtime source and reviewed
-> deterministic Control archive are fixed below; the public archive,
-> `SHA256SUMS`, runtime-contract digest, and packaged CLI surface remain
-> `PENDING_DETERMINISTIC_BUILD`. Install authority can come only from the later
-> matching non-draft GitHub prerelease after checksum verification.
+> **Status: `PUBLISHED_PRERELEASE`.** The exact private runtime source,
+> deterministic Control archive, public archive, `SHA256SUMS`, runtime-contract
+> digest, and canonical packaged CLI surface are bound below. Install authority
+> comes only from the matching non-draft GitHub prerelease after checksum
+> verification.
 > This static v1 binding covers the declared public command, flag, and workflow
 > surface, not exhaustive mechanical semantic/output parity; exact-artifact E2E
 > remains the release authority.
 
 <!-- GENERATED PREVIEW18 COMMAND REFERENCE:BEGIN -->
-<!-- contract-sha256: sha256:89b9a31da91847e3d98c1143ed3c3230a76fcf4691d57399db5ca7699b61e4a4 -->
+<!-- contract-sha256: sha256:0f3d966a57d4a30b151470b7e208f25a206d07d781906753b4a7b67e5ac125cd -->
 <!-- private-runtime-commit: 4e4aae1bb335092d69dc467a74651ad9527c4c17 -->
 <!-- private-runtime-tree: a0fbb1491130d179b602c64e9b7fe170c7011de6 -->
 <!-- control-archive-sha256: sha256:fcaa8d0c28d48f68bf940811457cfcd2ff594c9d14139dae33301749d6c0ae5a -->
-<!-- release-archive-sha256: PENDING_DETERMINISTIC_BUILD -->
-<!-- sha256sums-sha256: PENDING_DETERMINISTIC_BUILD -->
-<!-- runtime-contract-sha256: PENDING_DETERMINISTIC_BUILD -->
-<!-- packaged-cli-surface-sha256: PENDING_DETERMINISTIC_BUILD -->
+<!-- release-archive-sha256: sha256:d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423 -->
+<!-- sha256sums-sha256: sha256:094b1acb686b7daec071af97370be749b003579343e432c8c026dc80980d4da7 -->
+<!-- runtime-contract-sha256: sha256:2d98a4ccdf3cc33936f7bc2f1b7856229f86fb12c9e473a4145c2e452593e94d -->
+<!-- packaged-cli-surface-sha256: sha256:29f38b0fe4011ce91106ffff66c06b7710f2e24a77b78738e0d4abeb4529c50f -->
 # Preview.18 generated command reference
 
-> **Status: `GATED_UNRELEASED`.** This reference is generated from the exact pre-build public command template. It is not install authority and every public artifact binding remains pending until a matching non-draft release and `SHA256SUMS` exist.
+> This reference is generated from the release-bound public command contract. It is not release authority without the matching published archive and `SHA256SUMS`.
 
 ## Provider
 

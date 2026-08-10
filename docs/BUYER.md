@@ -4,8 +4,8 @@ The Buyer CLI is `punch-buyer`. The preview configuration below points it to the
 
 > **Preview.18 boundary:** use only the Linux/x64
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive after its matching non-draft release and same-release `SHA256SUMS`
-> exist and the exact archive reports `OK`. This source page alone is not
+> archive after its same-release `SHA256SUMS` reports `OK`; its exact SHA-256 is
+> `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. This source page alone is not
 > install authority. The Buyer CLI exposes `doctor`,
 > `join`, `offers`, `order`, `status`, `output`, `ssh`, and `stop`. The accepted
 > preview path is owner-targeted `$0` only; payment, settlement, payout, and

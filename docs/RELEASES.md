@@ -8,7 +8,7 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-[`v0.1.0-preview.17`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.17)
+[`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 is the current published Linux/x64 prerelease. Install only its
 matching versioned archive and `SHA256SUMS`; this source commit alone is not an
 installable release. The package must be used with this exact public image set:
@@ -24,9 +24,27 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.17 guided Buyer sudo repair release
+## Preview.18 Provider lifecycle and Buyer SSH handoff release
 
-Preview.17 is the current published Linux/x64 prerelease. Install authority
+Preview.18 is the current published Linux/x64 prerelease. It preserves the
+guided onboarding contract and adds authenticated Provider offer selection,
+sequential replacement using the same environment/setup binding, a strict
+targeted canonical-zero Buyer gate, scoped SSH egress consent, and a visible
+copy-ready SSH command that Punch does not execute. Optional OSC 52 delivery is
+affirmative-only and retains the visible fallback; `Stop` remains the distinct
+contract revocation and cleanup action.
+
+Install only the exact 43,811,105-byte
+`punch-cli-0.1.0-preview.18-linux-x64.tar.gz` whose SHA-256 is
+`d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`
+after verifying it against the matching release `SHA256SUMS`. See
+[Preview.18](PREVIEW18.md), its
+[runtime contract](preview18-runtime-contract.json), and release-bound
+[command reference](PREVIEW18_COMMAND_REFERENCE.md).
+
+## Preview.17 historical guided Buyer sudo repair release
+
+Preview.17 is an immutable historical Linux/x64 prerelease. Install authority
 comes only from its matching non-draft GitHub prerelease after the exact archive
 verifies against the same-release `SHA256SUMS`; source identity or documentation
 alone does not authorize installation. Publication alone is not `OWNER-READY`

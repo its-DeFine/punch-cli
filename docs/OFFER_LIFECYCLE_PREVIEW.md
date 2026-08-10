@@ -2,7 +2,11 @@
 
 > **Preview.18 release boundary:** `offer-list`, `offer-status`,
 > `offer-unlist`, `offer-retire`, and `offer-replace` are usable only from the
-> matching non-draft `v0.1.0-preview.18` archive after its same-release
+> matching non-draft
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256
+> `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`,
+> after its same-release
 > `SHA256SUMS` verifies. This source page alone is not install authority.
 
 Preview.18 preserves the original Preview.14 unlist/retire safety contract and
@@ -31,9 +35,9 @@ include a stable `operationId` and `replayed` flag. Ownership failure is
 non-enumerating: it returns `NOT_FOUND` rather than revealing another
 Provider's offer.
 
-Replacement returns a distinct successor offer/environment/setup identity and
-the preserved predecessor identity. Use one stable idempotency key per
-mutation. Reusing it with different request content fails with
+Replacement returns a distinct successor offer ID, preserves the predecessor,
+and reuses the same environment ID and setup reference. Use one stable
+idempotency key per mutation. Reusing it with different request content fails with
 `IDEMPOTENCY_CONFLICT`. Exact replay returns the original durable receipt.
 
 ## Safety rules

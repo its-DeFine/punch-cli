@@ -1,8 +1,10 @@
 # Invitations and credentials
 
 > **Version boundary:** this page describes the Preview.18 invitation-only flow.
-> Use it only after the matching non-draft archive exists and its
-> same-release checksum verifies, and only with an invitation bound to the
+> Use it only with the published Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`,
+> after its same-release checksum verifies, and only with an invitation bound to the
 > exact public identity packet and installed release role. This source page is
 > not install authority.
 

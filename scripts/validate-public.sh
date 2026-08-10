@@ -195,16 +195,16 @@ done
 
 for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
   grep -F 'Preview.18' "$current_boundary_doc" > /dev/null && \
-    grep -F 'non-draft' "$current_boundary_doc" > /dev/null || {
-    printf 'Preview.18 conditional release boundary is missing from %s\n' "$current_boundary_doc" >&2
+    grep -F 'd144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423' "$current_boundary_doc" > /dev/null || {
+    printf 'Preview.18 published release boundary is missing from %s\n' "$current_boundary_doc" >&2
     exit 1
   }
 done
 
 for published_boundary_doc in README.md docs/RELEASES.md; do
-  grep -F 'v0.1.0-preview.17' "$published_boundary_doc" > /dev/null && \
+  grep -F 'v0.1.0-preview.18' "$published_boundary_doc" > /dev/null && \
     grep -F 'current published' "$published_boundary_doc" > /dev/null || {
-    printf 'Preview.17 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
+    printf 'Preview.18 current published boundary is missing from %s\n' "$published_boundary_doc" >&2
     exit 1
   }
 done

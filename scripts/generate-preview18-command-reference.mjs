@@ -86,7 +86,7 @@ function validateFormat() {
   exactKeys(format, formatKeys, 'Preview.18 command-contract format');
   assert.equal(format.schemaVersion, 'punch.preview18-public-command-contract-format.v1');
   assert.equal(format.artifactKind, 'public-format-description');
-  assert.equal(format.releaseStatus, 'GATED_UNRELEASED');
+  assert.equal(format.releaseStatus, 'PUBLISHED_PRERELEASE');
   assert.equal(format.runtimeMatchRequired, true);
   assert.equal(format.contractSchema, 'punch.preview18-public-command-contract.v1');
   assert.deepEqual(format.requiredTopLevelKeys, ['schemaVersion', 'releaseVersion', 'releaseStatus', 'privateRuntimeBinding', 'artifact', 'commands', 'workflows', 'security']);
@@ -115,7 +115,7 @@ function validate(contract) {
   exactKeys(contract, format.requiredTopLevelKeys, 'Preview.18 command contract');
   assert.equal(contract.schemaVersion, 'punch.preview18-public-command-contract.v1');
   assert.equal(contract.releaseVersion, '0.1.0-preview.18');
-  assert.equal(contract.releaseStatus, 'GATED_UNRELEASED');
+  assert.equal(contract.releaseStatus, 'PUBLISHED_PRERELEASE');
   exactKeys(contract.privateRuntimeBinding, format.privateRuntimeBindingKeys, 'private runtime binding');
   assert.deepEqual(contract.privateRuntimeBinding, expectedPrivateRuntimeBinding, 'private runtime binding drift');
   exactKeys(contract.artifact, format.artifactKeys, 'artifact');
@@ -194,7 +194,7 @@ function markdown(contract) {
     `<!-- packaged-cli-surface-sha256: ${contract.artifact.packagedCliSurfaceSha256} -->`,
     '# Preview.18 generated command reference',
     '',
-    '> **Status: `GATED_UNRELEASED`.** This reference is generated from the exact pre-build public command template. It is not install authority and every public artifact binding remains pending until a matching non-draft release and `SHA256SUMS` exist.',
+    '> This reference is generated from the release-bound public command contract. It is not release authority without the matching published archive and `SHA256SUMS`.',
     ''
   ];
   for (const role of ['provider', 'buyer']) {

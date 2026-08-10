@@ -1,9 +1,10 @@
 # Command reference
 
 > **Version boundary:** this reference describes Preview.18 for its matching
-> Linux/x64 archive. Exact flags are release-bound in the generated
+> Linux/x64 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. Exact flags are release-bound in the generated
 > [Preview.18 command reference](PREVIEW18_COMMAND_REFERENCE.md) and apply only
-> after the exact non-draft release and same-release `SHA256SUMS` exist. This
+> after the exact non-draft release and same-release `SHA256SUMS` verify. This
 > source reference alone is not install authority.
 
 Punch exposes two role-specific commands. The invitation and server-side

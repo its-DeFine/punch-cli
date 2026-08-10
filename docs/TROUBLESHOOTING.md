@@ -1,8 +1,9 @@
 # Troubleshooting
 
 > **Version boundary:** this page describes Preview.18 for its matching
-> Linux/x64 archive. Use these recovery actions only after the exact non-draft
-> release exists and its same-release checksum verifies; this source page is
+> Linux/x64 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+> Use these recovery actions only after its same-release checksum verifies; this source page is
 > not install authority.
 
 ## Guided onboarding is waiting

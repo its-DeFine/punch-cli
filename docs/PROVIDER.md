@@ -2,9 +2,9 @@
 
 > **Status: `PUBLISHED_PRERELEASE` release guide.** Use only the Linux/x64
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive after the matching non-draft release and same-release `SHA256SUMS`
-> exist and the exact archive reports `OK`. Until then, do not use a source checkout,
-> private build, guessed URL, or earlier archive for this guided flow. The
+> archive after its same-release `SHA256SUMS` reports `OK`. Its exact archive
+> SHA-256 is `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+> Do not use a source checkout, private build, guessed URL, or earlier archive. The
 > network remains invitation-only and owner-targeted `$0`; publication does not
 > authorize self-service approval.
 
@@ -38,8 +38,8 @@ export PATH="$HOME/.local/bin:$PATH"
 ```
 
 Require the exact Preview.18 archive line to report `OK`. A missing release,
-asset, checksum line, or `OK` result is a hard stop. The digest comes only from
-the same-release `SHA256SUMS`; this source candidate does not predeclare it.
+asset, checksum line, or `OK` result is a hard stop. The archive must match
+`d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 Before onboarding, confirm the installed release surface:
 
 ```bash

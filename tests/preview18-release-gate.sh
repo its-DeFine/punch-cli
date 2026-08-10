@@ -11,19 +11,19 @@ import { readFileSync } from 'node:fs';
 const runtime = JSON.parse(readFileSync('docs/preview18-runtime-contract.json', 'utf8'));
 assert.equal(runtime.schemaVersion, 'punch.preview18-runtime-contract.v1');
 assert.equal(runtime.releaseVersion, '0.1.0-preview.18');
-assert.equal(runtime.releaseStatus, 'GATED_UNRELEASED');
+assert.equal(runtime.releaseStatus, 'PUBLISHED_PRERELEASE');
 assert.deepEqual(runtime.privateReleaseSource, {
   commit: '4e4aae1bb335092d69dc467a74651ad9527c4c17',
   tree: 'a0fbb1491130d179b602c64e9b7fe170c7011de6'
 });
 assert.equal(runtime.controlArchiveSha256, 'sha256:fcaa8d0c28d48f68bf940811457cfcd2ff594c9d14139dae33301749d6c0ae5a');
 assert.deepEqual(runtime.artifactBinding, {
-  authority: 'PENDING_DETERMINISTIC_BUILD',
-  archiveSha256: null,
-  sha256SumsSha256: null,
-  packagedCliSurfaceSha256: null
+  authority: 'AUTHORITATIVE_PACKAGED_CLI_SURFACE',
+  archiveSha256: 'sha256:d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423',
+  sha256SumsSha256: 'sha256:094b1acb686b7daec071af97370be749b003579343e432c8c026dc80980d4da7',
+  packagedCliSurfaceSha256: 'sha256:29f38b0fe4011ce91106ffff66c06b7710f2e24a77b78738e0d4abeb4529c50f'
 });
-assert.equal(runtime.guidedCli.directCommands, null);
+assert.equal(runtime.guidedCli.directCommands, runtime.artifactBinding.packagedCliSurfaceSha256);
 assert.equal(runtime.guidedCli.appendOnlyProviderOnboarding, true);
 assert.equal(runtime.guidedCli.explicitOfferSelection, true);
 assert.equal(runtime.guidedCli.sequentialOfferReplacement, true);
@@ -38,7 +38,7 @@ assert.equal(runtime.buyer.osc52UnsupportedKeepsVisibleFallback, true);
 const template = JSON.parse(readFileSync('docs/preview18-public-command-contract.template.json', 'utf8'));
 assert.equal(template.schemaVersion, 'punch.preview18-public-command-contract.v1');
 assert.equal(template.releaseVersion, '0.1.0-preview.18');
-assert.equal(template.releaseStatus, 'GATED_UNRELEASED');
+assert.equal(template.releaseStatus, 'PUBLISHED_PRERELEASE');
 assert.deepEqual(template.privateRuntimeBinding, {
   commit: runtime.privateReleaseSource.commit,
   tree: runtime.privateReleaseSource.tree,
@@ -54,13 +54,27 @@ assert.equal(template.security.guidedTargetedCanonicalZeroOnly, true);
 assert.equal(template.security.scopedBuyerSshEgressConsentRequired, true);
 assert.equal(template.security.guidedSshSpawnsChild, false);
 assert.equal(template.security.osc52ClipboardExplicitConsentRequired, true);
-process.stdout.write('Preview.18 pending runtime/static binding: PASS\n');
-NODE
-
-[ ! -e docs/preview18-public-command-contract.json ] || {
-  printf '%s\n' 'Preview.18 must not carry a pseudo-bound public command contract before build' >&2
-  exit 1
+const bound = JSON.parse(readFileSync('docs/preview18-public-command-contract.json', 'utf8'));
+assert.equal(bound.releaseStatus, 'PUBLISHED_PRERELEASE');
+assert.deepEqual(bound.privateRuntimeBinding, template.privateRuntimeBinding);
+assert.deepEqual(bound.artifact, {
+  archiveSha256: runtime.artifactBinding.archiveSha256,
+  sha256SumsSha256: runtime.artifactBinding.sha256SumsSha256,
+  runtimeContractSha256: 'sha256:2d98a4ccdf3cc33936f7bc2f1b7856229f86fb12c9e473a4145c2e452593e94d',
+  packagedCliSurfaceSha256: runtime.artifactBinding.packagedCliSurfaceSha256
+});
+assert.deepEqual(bound.commands, template.commands);
+assert.deepEqual(bound.workflows, template.workflows);
+assert.deepEqual(bound.security, template.security);
+for (const file of [
+  'docs/schemas/preview18-public-command-contract-format.v1.json',
+  'docs/schemas/preview18-clean-host-e2e-report.v1.json',
+  'docs/schemas/preview18-clean-host-e2e-execution-receipt.v1.json'
+]) {
+  assert.equal(JSON.parse(readFileSync(file, 'utf8')).releaseStatus, 'PUBLISHED_PRERELEASE');
 }
+process.stdout.write('Preview.18 published runtime/static binding: PASS\n');
+NODE
 
 preview17_files='
 docs/PREVIEW17.md
@@ -83,20 +97,20 @@ git diff --quiet bb7da95 -- $preview17_files || {
 }
 
 for file in README.md docs/RELEASES.md; do
-  grep -F 'v0.1.0-preview.17' "$file" >/dev/null || {
-    printf 'Current-release pointer changed before Preview.18 publication: %s\n' "$file" >&2
+  grep -F 'v0.1.0-preview.18' "$file" >/dev/null || {
+    printf 'Preview.18 current-release pointer missing from %s\n' "$file" >&2
     exit 1
   }
 done
-grep -F 'punch-cli-0.1.0-preview.17-linux-x64.tar.gz' docs/INSTALL.md >/dev/null || {
-  printf '%s\n' 'Install current-release pointer changed before Preview.18 publication' >&2
+grep -F 'punch-cli-0.1.0-preview.18-linux-x64.tar.gz' docs/INSTALL.md >/dev/null || {
+  printf '%s\n' 'Preview.18 install current-release pointer missing' >&2
   exit 1
 }
 
 for required in \
   'PUBLISHED_PRERELEASE' \
   'matching non-draft' \
-  'and its pending metadata are not install authority' \
+  'Exact release binding' \
   'Append-only Provider onboarding' \
   'permits only one nonterminal offer' \
   'canonical numeric +0' \
@@ -112,6 +126,18 @@ for required in \
   }
 done
 
+for digest in \
+  'd144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423' \
+  '094b1acb686b7daec071af97370be749b003579343e432c8c026dc80980d4da7' \
+  '1f5c009a84f15262da8c1075140fcf463229a5d4bf6aa3ad0f2e5844ef5a028a' \
+  'b86cb81697183e31b8fa53529a617be07266e3ad892d50c312bcad09d0de6625' \
+  '1d7b13e6ce39526cf99b8795291dcb3d0f5e85a76df346d0f60f1066d2d2ebd1'; do
+  grep -F "$digest" docs/PREVIEW18.md >/dev/null || {
+    printf 'Preview.18 exact artifact binding missing: %s\n' "$digest" >&2
+    exit 1
+  }
+done
+
 for pair in \
   'docs/GUIDED_CLI.md|Prepare SSH command' \
   'docs/GUIDED_CLI.md|one nonterminal offer per machine' \
@@ -120,6 +146,7 @@ for pair in \
   'docs/BUYER.md|canonical numeric +0' \
   'docs/BUYER.md|BatchMode=yes' \
   'docs/OFFER_LIFECYCLE_PREVIEW.md|distinct PENDING_AGENT successor' \
+  'docs/OFFER_LIFECYCLE_PREVIEW.md|same environment ID and setup reference' \
   'docs/TROUBLESHOOTING.md|BUYER_SSH_EGRESS_ROLLBACK_UNPROVEN' \
   'docs/INVITATIONS.md|append-only' \
   'docs/COMMANDS.md|offer-replace'; do
@@ -139,7 +166,7 @@ fi
 
 node scripts/generate-preview18-command-reference.mjs --self-test
 node scripts/generate-preview18-command-reference.mjs \
-  --template docs/preview18-public-command-contract.template.json \
+  --contract docs/preview18-public-command-contract.json \
   --target docs/PREVIEW18_COMMAND_REFERENCE.md
 node scripts/verify-preview18-clean-host-e2e.mjs --self-test
 node --test tests/preview18-clean-host-e2e-verifier.mjs

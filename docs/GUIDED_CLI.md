@@ -1,8 +1,9 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents Preview.18 for inclusion in its
-> matching Linux/x64 archive. It becomes install authority only when the exact
-> non-draft `v0.1.0-preview.18` release and same-release `SHA256SUMS` exist;
+> **Release boundary:** this page documents the published Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+> Install only after the same-release `SHA256SUMS` verifies;
 > this source page alone is not installable. Preview.14 does not contain the
 > interactive Provider onboarding flow below.
 
