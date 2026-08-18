@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "punch.preview19-runtime-contract.v1",
+  "releaseVersion": "0.1.0-preview.19",
+  "platform": "linux-x64",
+  "privateReleaseSource": {"repository": "its-DeFine/punch-compute", "commit": "7526c3c47201895ba4f24673965da58cdc11b7ee", "tree": "35f4e4d3c7c21f050e78b6c02fcadbf1d03f62b0"},
+  "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
+  "buyerNetBirdBootstrap": "PUNCH_JOIN_ONE_OFF_NARROW_GROUP",
+  "gatewayPort": 22222,
+  "offerPolicy": "PUBLIC_OR_TARGETED_ZERO_ONLY",
+  "priceMinor": 0,
+  "paymentSettlementEnabled": false,
+  "selfServiceProviderOnboarding": false,
+  "onboardingApproval": "OPERATOR_APPROVAL_SEALED_PICKUP_WITH_INVITATION_FILE_FALLBACK",
+  "offerContractSchema": "punch.offer.v2",
+  "resourceSnapshotSchema": "punch.resource-snapshot.v2",
+  "researcherImage": "ghcr.io/its-define/punch-researcher@sha256:2691768001f0b9a6eaad53bd14e5046feccf75d354d8b0415a991f943fff5059",
+  "researcherImageBinding": "EXPLICIT_IMMUTABLE_OCI_DIGEST",
+  "durationPolicy": {"kinds": ["FIXED", "RANGE"], "maximumSeconds": 31536000},
+  "resourcePolicy": {"workspaceType": "QUOTA_DISK", "networkPolicies": ["NONE", "RESEARCH_EGRESS"], "gpuBinding": "UUID_AND_CDI_REQUIRED"},
+  "providerSubstrate": {
+    "schemaVersion": "punch.provider-host-substrate.v1",
+    "archiveFiles": ["bin/punch-provider-host-helper.mjs", "src/v0/providerHostSubstrate.js", "src/v0/strict.js", "packaging/clean-v4/punch-provider-host.socket", "packaging/clean-v4/punch-provider-host@.service", "packaging/clean-v4/provider-host-substrate.example.json"]
+  },
+  "publicCommands": {
+    "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "overview", "doctor", "inventory", "setup", "service-install", "service-start", "service-stop", "service-status", "service-logs", "serve", "status", "drain", "offer-list", "offer-status", "offer-unlist", "offer-retire", "offer-replace", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"],
+    "buyer": ["doctor", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "offers", "order", "status", "output", "ssh", "stop", "resales", "resale-create", "resale-claim", "resale-cancel", "extension-exercise", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"]
+  },
+  "commandMetadataSchemaVersion": "punch.public-cli-contract.v2",
+  "proofBoundary": {"localDeterministic": "LOCAL_DETERMINISTIC_PASS", "releasedArtifact": "RELEASE_ARTIFACT_PROOF", "liveE2E": "LIVE_E2E_PROOF"}
+}

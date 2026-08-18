@@ -1,0 +1,30 @@
+[Unit]
+Description=Punch Compute Preview.19 provider agent
+After=network-online.target docker.service netbird.service
+Wants=network-online.target docker.service netbird.service
+
+[Service]
+Type=simple
+User=punch-provider
+Group=punch-provider
+SupplementaryGroups=docker
+Environment=HOME=/var/lib/punch-provider
+EnvironmentFile=-/etc/punch-provider.env
+ExecStart=/usr/local/bin/punch-provider serve --state-dir /var/lib/punch-provider/preview19 --machine-id ${PUNCH_MACHINE_ID} --agent-config ${PUNCH_AGENT_CONFIG} --interval-ms 1000
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=read-only
+ProtectSystem=strict
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+LockPersonality=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/var/lib/punch-provider/preview19 /var/lib/punch/workspaces /var/lib/punch/provider-substrate
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

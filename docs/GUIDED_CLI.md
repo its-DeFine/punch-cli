@@ -1,11 +1,9 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the published Linux/x64
-> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
-> Install only after the same-release `SHA256SUMS` verifies;
-> this source page alone is not installable. Preview.14 does not contain the
-> interactive Provider onboarding flow below.
+> **Release boundary:** this page documents the Preview.19 Linux/x64 public
+> source contract. Install only from the matching archive after its same-release
+> `SHA256SUMS` verifies; this source page alone is not install authority.
+> Preview.19 adds the immutable resource snapshot and marketplace extension terms.
 
 Run `punch` in a terminal to open the interactive home. It is a continuous,
 local navigation layer over the existing role commands, not a one-time setup
@@ -45,7 +43,7 @@ may show the normal TTY `sudo` prompt, but it does not hide the privilege
 boundary, create a second enrollment code, or bypass a failed setup. Join is
 resumable until the exact Buyer/NetBird binding is confirmed.
 
-Preview.18 repairs guided Buyer authorization without changing the direct
+Preview.19 repairs guided Buyer authorization without changing the direct
 command surface: after join confirmation it first probes passwordless
 capability with `sudo -n true`, then falls back to interactive `sudo -v` only
 when needed. Failed authorization stops before dependency installation or join.
@@ -82,7 +80,7 @@ Supervised approval of another Provider is append-only. It binds a distinct
 actor, machine, invitation, offer authority, and narrow route while preserving
 every existing Provider and Buyer authority and durable record.
 
-## Preview.18 Provider offer handling
+## Preview.19 Provider offer handling
 
 The Provider home renders each owned offer with its ID, state, CPU, RAM, disk,
 GPU count, window, price, and targeted status. Status, unlist, and retire never
@@ -95,10 +93,10 @@ When no nonterminal offer remains, **Create replacement offer** preserves the
 retired predecessor and clones its exact capacity, target, window, and price
 into one distinct successor. The existing service is reused and the guided
 flow waits for `LISTED`. A `PENDING_AGENT` successor is resumed rather than
-duplicated. Preview.18 permits one nonterminal offer per machine; it does not
+duplicated. Preview.19 permits one nonterminal offer per machine; it does not
 claim concurrent multi-offer or multi-profile orchestration.
 
-## Preview.18 Buyer SSH preparation
+## Preview.19 Buyer SSH preparation
 
 After status is `ACTIVE` with `accessEffective: true`, choose **Prepare SSH command**.
 Punch validates the selected private key, fixed OpenSSH client,
@@ -126,10 +124,10 @@ use must follow the separate custody, approval, retry, and state rules in the
 [Punch agent runbook](AGENT_RUNBOOK.md); it must not answer the human home's
 interactive prompts.
 
-## Preview.18 interactive Provider onboarding contract
+## Preview.19 interactive Provider onboarding contract
 
 > **Published contract.** This flow is bound to the matching non-draft
-> Preview.18 archive and `SHA256SUMS`; it cannot be installed from this source
+> Preview.19 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
 
 The normal Provider journey starts from one obvious interactive entry point:
@@ -170,3 +168,16 @@ The guided flow proceeds in this order:
    Provider and onboarding state, offer/listing state, orders and contracts,
    selected capacity, service health, and a clear recovery action when work is
    required.
+
+
+## Preview.19 resource and marketplace choices
+
+The Provider chooses bounded CPU, RAM, quota-backed workspace disk, and zero or
+more GPUs with exact UUID/CDI identities. The signed snapshot also records the
+pinned researcher image and `NONE` or `RESEARCH_EGRESS` outbound policy. The
+Buyer sees capacity and the fixed or ranged duration before confirming an order.
+
+`resales`, `resale-create`, `resale-claim`, `resale-cancel`,
+`extension-exercise`, `extension-propose`, `extension-inbox`,
+`extension-accept`, and `extension-reject` preserve the same owner gates,
+idempotency rules, and zero-settlement boundary.

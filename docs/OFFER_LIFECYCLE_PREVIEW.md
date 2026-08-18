@@ -1,15 +1,10 @@
 # Provider offer lifecycle preview
 
-> **Preview.18 release boundary:** `offer-list`, `offer-status`,
-> `offer-unlist`, `offer-retire`, and `offer-replace` are usable only from the
-> matching non-draft
-> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive, SHA-256
-> `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`,
-> after its same-release
-> `SHA256SUMS` verifies. This source page alone is not install authority.
+> **Preview.19 release boundary:** Provider offer lifecycle is available only
+> from the matching Linux/x64 archive after its same-release `SHA256SUMS`
+> verifies. This source page alone is not install authority.
 
-Preview.18 preserves the original Preview.14 unlist/retire safety contract and
+Preview.19 preserves the original Preview.14 unlist/retire safety contract and
 adds authenticated offer enumeration, explicit guided selection, and one
 sequential replacement after retirement. It does not change Buyer access,
 Stop, or cleanup authority.
@@ -74,7 +69,7 @@ Replacement is permitted only when the predecessor is `RETIRED` and no other
 nonterminal offer exists for that Provider machine. It clones the predecessor's
 exact capacity, target Buyer, window, and price; these are not user inputs. The
 retired predecessor remains auditable, and a pending successor is resumed
-instead of duplicated. Preview.18 does not support concurrent multiple offers,
+instead of duplicated. Preview.19 does not support concurrent multiple offers,
 multiple local Provider profiles, or multi-machine orchestration.
 
 The guided home always shows the authenticated offer list and requires the
@@ -83,7 +78,7 @@ It never acts ambiguously on an implicit first offer.
 
 ## Release binding
 
-The matching Preview.18 release must bind all of the following:
+The matching Preview.19 release must bind all of the following:
 
 1. A matching private runtime artifact implements the contract.
 2. Focused integration proof covers Provider ownership/non-enumeration,
@@ -97,3 +92,16 @@ The matching Preview.18 release must bind all of the following:
 Use only the commands in the installed release's `--help` output. This page is
 a fail-closed command contract, not a deployment or self-service onboarding
 claim.
+
+
+## Preview.19 resale and extension operations
+
+Buyer `resales`, `resale-create`, `resale-claim`, and `resale-cancel` expose only
+authenticated owner projections. A resale keeps the signed resource snapshot
+and transfer policy and never exposes a Provider address or creates a second
+active environment.
+
+The extension commands are `extension-exercise`, `extension-propose`,
+`extension-inbox`, `extension-accept`, and `extension-reject`. Every extension
+is zero-price, bounded by the signed option and maximum uses, and idempotent. An
+expired or exhausted contract is not revived by replay.
