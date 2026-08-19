@@ -1,0 +1,47 @@
+name: publish researcher preview19 image
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish-linux-amd64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Authenticate to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Build and publish the commit-bound researcher image
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: images/researcher
+          file: images/researcher/Dockerfile
+          platforms: linux/amd64
+          push: true
+          provenance: mode=max
+          sbom: true
+          tags: ghcr.io/its-define/punch-researcher-preview19:sha-${{ github.sha }}
+
+      - name: Record immutable release input
+        env:
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          printf '%s\n' "$IMAGE_DIGEST" | grep -Eq '^sha256:[0-9a-f]{64}$' || {
+            echo "Build did not return an immutable sha256 digest." >&2
+            exit 1
+          }
+          printf 'source_commit=%s\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          printf 'researcher_image=ghcr.io/its-define/punch-researcher-preview19@%s\n' "$IMAGE_DIGEST" >> "$GITHUB_STEP_SUMMARY"

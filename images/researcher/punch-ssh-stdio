@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+exec /usr/bin/socat STDIO TCP4:127.0.0.1:2222,connect-timeout=1,retry=10,interval=1

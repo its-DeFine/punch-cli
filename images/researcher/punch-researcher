@@ -1,0 +1,35 @@
+#!/bin/sh
+set -eu
+
+umask 077
+test -n "${PUNCH_BUYER_AUTHORIZED_KEY_BASE64:-}" || exit 64
+authorized_key="$(printf '%s' "$PUNCH_BUYER_AUTHORIZED_KEY_BASE64" | base64 -d)" || exit 64
+unset PUNCH_BUYER_AUTHORIZED_KEY_BASE64
+
+set -- $authorized_key
+test "$#" -eq 2 || exit 64
+test "$1" = "ssh-ed25519" || exit 64
+case "$2" in
+  ''|*[!A-Za-z0-9+/=]*) exit 64 ;;
+esac
+canonical_blob="$(printf '%s' "$2" | base64 -d | base64 | tr -d '\n')" || exit 64
+test "$canonical_blob" = "$2" || exit 64
+unset canonical_blob
+
+install -d -m 0700 /workspace/.ssh
+if [ -e /workspace/.ssh/authorized_keys ]; then
+  test -f /workspace/.ssh/authorized_keys || exit 64
+  test ! -L /workspace/.ssh/authorized_keys || exit 64
+else
+  (umask 077; : > /workspace/.ssh/authorized_keys)
+fi
+printf '%s %s\n' "$1" "$2" > /workspace/.ssh/authorized_keys.pending
+chmod 0600 /workspace/.ssh/authorized_keys.pending
+mv -f /workspace/.ssh/authorized_keys.pending /workspace/.ssh/authorized_keys
+unset authorized_key
+
+runtime_dir=/tmp/punch-runtime
+install -d -m 0700 "$runtime_dir"
+/usr/bin/dropbearkey -t ed25519 -f "$runtime_dir/dropbear_ed25519_host_key" >/dev/null 2>&1
+exec /usr/sbin/dropbear -F -s -g -w -j -k -I 300 -P "$runtime_dir/dropbear.pid" \
+  -p 127.0.0.1:2222 -r "$runtime_dir/dropbear_ed25519_host_key" >/dev/null 2>&1
