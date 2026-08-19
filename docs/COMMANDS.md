@@ -1,12 +1,16 @@
 # Command reference
 
-> **Version boundary:** this reference describes the Preview.19 public
-> source contract for Linux/x64 `v0.1.0-preview.19`. Exact flags are bound in
+> **Version boundary:** this reference describes the Preview.19.1 public
+> source contract for Linux/x64 `v0.1.0-preview.19.1`. Exact flags are bound in
 > `docs/preview19-runtime-contract.json` and the matching archive. This source
 > reference alone is not install authority; install only from the matching
 > non-draft release after verifying its checksum.
 
-> **Previous published boundary:** Preview.18 remains bound to its Linux/x64
+> **Previous published boundary:** Preview.19 remains bound to its Linux/x64
+> [`v0.1.0-preview.19`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19)
+> archive, SHA-256 `6d5d8f34d640643ca604bc61f5ae7ee8270617ecac0b06299d064eed38724484`.
+
+> **Earlier published boundary:** Preview.18 remains bound to its Linux/x64
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 > archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 

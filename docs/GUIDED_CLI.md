@@ -1,11 +1,16 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the Preview.19 Linux/x64 public
+> **Release boundary:** this page documents the Preview.19.1 Linux/x64 public
 > source contract. Install only from the matching archive after its same-release
 > `SHA256SUMS` verifies; this source page alone is not install authority.
-> Preview.19 adds the immutable resource snapshot and marketplace extension terms.
+> Preview.19.1 preserves the Preview.19 behavior and corrects the packaged
+> documentation and provenance binding.
 
-> **Previous published boundary:** Preview.18 remains bound to its Linux/x64
+> **Previous published boundary:** Preview.19 remains bound to its Linux/x64
+> [`v0.1.0-preview.19`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19)
+> archive, SHA-256 `6d5d8f34d640643ca604bc61f5ae7ee8270617ecac0b06299d064eed38724484`.
+
+> **Earlier published boundary:** Preview.18 remains bound to its Linux/x64
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 > archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 
@@ -131,7 +136,7 @@ interactive prompts.
 ## Preview.19 interactive Provider onboarding contract
 
 > **Published contract.** This flow is bound to the matching non-draft
-> Preview.19 archive and `SHA256SUMS`; it cannot be installed from this source
+> Preview.19.1 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
 
 The Preview.18 interactive Provider onboarding contract is carried forward
