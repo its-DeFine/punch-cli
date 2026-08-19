@@ -3,7 +3,12 @@
 > **Version boundary:** this reference describes the Preview.19 public
 > source contract for Linux/x64 `v0.1.0-preview.19`. Exact flags are bound in
 > `docs/preview19-runtime-contract.json` and the matching archive. This source
-> reference alone is not install authority.
+> reference alone is not install authority; install only from the matching
+> non-draft release after verifying its checksum.
+
+> **Previous published boundary:** Preview.18 remains bound to its Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
@@ -82,7 +87,7 @@ The Preview.19 public Provider commands are:
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.19 Provider command reference](PREVIEW19_COMMAND_REFERENCE.md#provider)
+[Preview.19 Provider command reference](#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
@@ -181,8 +186,8 @@ a new reference merely because the first response was interrupted.
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
 Buyer-stop proof. Preview.19 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
-multi-Provider scheduling, or general availability. Its release-bound generated
-reference is [PREVIEW19_COMMAND_REFERENCE.md](PREVIEW19_COMMAND_REFERENCE.md).
+multi-Provider scheduling, or general availability. Its release-bound public
+reference is the [Provider section of this document](#provider).
 
 ## Preview.19 resource and marketplace additions
 

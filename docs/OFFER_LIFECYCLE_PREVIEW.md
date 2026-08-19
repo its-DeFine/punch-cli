@@ -4,10 +4,14 @@
 > from the matching Linux/x64 archive after its same-release `SHA256SUMS`
 > verifies. This source page alone is not install authority.
 
-Preview.19 preserves the original Preview.14 unlist/retire safety contract and
-adds authenticated offer enumeration, explicit guided selection, and one
-sequential replacement after retirement. It does not change Buyer access,
-Stop, or cleanup authority.
+> **Previous published boundary:** Preview.18 remains bound to its Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+
+Preview.18 preserves the original Preview.14 unlist/retire safety contract and
+introduces sequential replacement after retirement. Preview.19 keeps that
+contract and adds authenticated offer enumeration and explicit guided
+selection. It does not change Buyer access, Stop, or cleanup authority.
 
 ## Provider-only contract
 

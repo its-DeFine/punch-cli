@@ -5,6 +5,10 @@
 > `SHA256SUMS` verifies; this source page alone is not install authority.
 > Preview.19 adds the immutable resource snapshot and marketplace extension terms.
 
+> **Previous published boundary:** Preview.18 remains bound to its Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+
 Run `punch` in a terminal to open the interactive home. It is a continuous,
 local navigation layer over the existing role commands, not a one-time setup
 wizard. Every later launch reads only the owner-controlled local Punch profile
@@ -43,7 +47,7 @@ may show the normal TTY `sudo` prompt, but it does not hide the privilege
 boundary, create a second enrollment code, or bypass a failed setup. Join is
 resumable until the exact Buyer/NetBird binding is confirmed.
 
-Preview.19 repairs guided Buyer authorization without changing the direct
+Preview.18 repairs guided Buyer authorization without changing the direct
 command surface: after join confirmation it first probes passwordless
 capability with `sudo -n true`, then falls back to interactive `sudo -v` only
 when needed. Failed authorization stops before dependency installation or join.
@@ -129,6 +133,9 @@ interactive prompts.
 > **Published contract.** This flow is bound to the matching non-draft
 > Preview.19 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
+
+The Preview.18 interactive Provider onboarding contract is carried forward
+here and extended for Preview.19; this source page alone is not installable.
 
 The normal Provider journey starts from one obvious interactive entry point:
 run `punch`, then select **Provider**. Direct `punch-provider ...` commands

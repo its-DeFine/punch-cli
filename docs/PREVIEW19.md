@@ -7,9 +7,9 @@ that capacity. Payment settlement is disabled for this preview.
 
 ## Release binding
 
-This public closure is paired with private `its-DeFine/punch-compute` commit
-`7526c3c47201895ba4f24673965da58cdc11b7ee`, tree
-`35f4e4d3c7c21f050e78b6c02fcadbf1d03f62b0`, and release
+This public closure is paired with release-builder source commit
+`7637a56db6a85b9fab021cc4dd031d3796aa2d88`, tree
+`ae2143ddb4274e7cc166ca78b5d2ee740beccdb3`, and release
 `0.1.0-preview.19`. It contains public launchers, documentation, Provider
 configuration, and the reviewed Provider-host substrate package. It does not
 contain proprietary runtime source, credentials, invitations, or host

@@ -158,7 +158,7 @@ for pair in \
   }
 done
 
-if rg -n '76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c|807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52|8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a' \
+if grep -E -n '76648c0bd4d9b96399fe52b553151ad8594e49af9c46aba565e23217ee56f10c|807ba2bac9b9d8324dc7aac9942d92f4f5ad2a366c590a023df58d747b0eed52|8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a' \
   docs/PREVIEW18.md docs/PREVIEW18_COMMAND_REFERENCE.md docs/preview18-* docs/schemas/preview18-* >/dev/null; then
   printf '%s\n' 'Preview.18 candidate contains a stale Preview.17 artifact digest' >&2
   exit 1
