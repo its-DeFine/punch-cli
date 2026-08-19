@@ -1,17 +1,20 @@
 # Command reference
 
-> **Version boundary:** this reference describes Preview.18 for its matching
-> Linux/x64 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. Exact flags are release-bound in the generated
-> [Preview.18 command reference](PREVIEW18_COMMAND_REFERENCE.md) and apply only
-> after the exact non-draft release and same-release `SHA256SUMS` verify. This
-> source reference alone is not install authority.
+> **Version boundary:** this reference describes the Preview.19 public
+> source contract for Linux/x64 `v0.1.0-preview.19`. Exact flags are bound in
+> `docs/preview19-runtime-contract.json` and the matching archive. This source
+> reference alone is not install authority; install only from the matching
+> non-draft release after verifying its checksum.
+
+> **Previous published boundary:** Preview.18 remains bound to its Linux/x64
+> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.18 adds a state-aware `punch` home without removing either role
+Preview.19 adds a state-aware `punch` home without removing either role
 command. Its release boundary and behavior are documented in
 [Guided `punch` home](GUIDED_CLI.md).
 
@@ -37,7 +40,7 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.18 Buyers do not pass a zero-price flag. An operator-approved
+Preview.19 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer is already bound to its designated Buyer and appears only in
 that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
@@ -50,14 +53,14 @@ exception when needed, prints the contract-bound command, and never spawns SSH.
 OSC 52 copy is optional and explicit-consent-only; the visible command remains
 the fallback.
 
-For guided Buyer join only, after confirmation Preview.18 probes passwordless
+For guided Buyer join only, after confirmation Preview.19 probes passwordless
 capability with `sudo -n true` before falling back to interactive `sudo -v`.
 Failed authorization stops before dependency installation or join. Direct
 non-interactive join still requires `--yes` and cached `sudo`.
 
 ## Provider
 
-The Preview.18 public Provider commands are:
+The Preview.19 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -84,7 +87,7 @@ The Preview.18 public Provider commands are:
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.18 Provider command reference](PREVIEW18_COMMAND_REFERENCE.md#provider)
+[Preview.19 Provider command reference](#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
@@ -132,7 +135,7 @@ orderable through either the guided or direct Buyer command.
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14.
-Preview.18 adds `offer-list` and `offer-replace`. They do not alter the Buyer
+Preview.19 adds `offer-list` and `offer-replace`. They do not alter the Buyer
 direct command surface.
 
 All lifecycle commands require `--machine-id`, `--state-dir`, and
@@ -181,7 +184,21 @@ a new reference merely because the first response was interrupted.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.18 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.19 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
-multi-Provider scheduling, or general availability. Its release-bound generated
-reference is [PREVIEW18_COMMAND_REFERENCE.md](PREVIEW18_COMMAND_REFERENCE.md).
+multi-Provider scheduling, or general availability. Its release-bound public
+reference is the [Provider section of this document](#provider).
+
+## Preview.19 resource and marketplace additions
+
+Provider onboarding and setup carry the selected CPU, GPU UUID/CDI, VRAM, RAM,
+quota-backed disk, duration, audience, transfer, and network-policy terms. The
+signed `punch.resource-snapshot.v2` is checked again before a task starts.
+
+`onboarding-pickup` resumes the same approved invitation and durable request.
+
+Buyer `order` may select `--duration-seconds` only within the signed fixed or
+ranged policy. `resales`, `resale-create`, `resale-claim`, `resale-cancel`,
+`extension-exercise`, `extension-propose`, `extension-inbox`,
+`extension-accept`, and `extension-reject` are zero-price, bounded, idempotent
+operations; they do not enable payment or unbounded access.
