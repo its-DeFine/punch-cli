@@ -2,7 +2,7 @@
   "schemaVersion": "punch.preview19-runtime-contract.v1",
   "releaseVersion": "0.1.0-preview.19.1",
   "platform": "linux-x64",
-  "privateReleaseSource": {"commit": "215f743a078c231ff4e6d89c454290ded0df9af0", "tree": "11a0db445e1f84e774f26812c9af215c874dca1d"},
+  "privateReleaseSource": {"commit": "33392b2c16ee88c62f283514dc83da6d9389af66", "tree": "b982d57d1f779b0bea1bcd418f5c4fa8a0db0b3b"},
   "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
   "buyerNetBirdBootstrap": "PUNCH_JOIN_ONE_OFF_NARROW_GROUP",
   "gatewayPort": 22222,
