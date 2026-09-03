@@ -2,7 +2,7 @@
   "schemaVersion": "punch.preview19-runtime-contract.v1",
   "releaseVersion": "0.1.0-preview.19.1",
   "platform": "linux-x64",
-  "privateReleaseSource": {"commit": "2edd019ec86357eb3a6d48a80bc9825537bea2ef", "tree": "b6d5299d1cbb1ae6c0ea071e9668a0f94fd52993"},
+  "privateReleaseSource": {"commit": "215f743a078c231ff4e6d89c454290ded0df9af0", "tree": "11a0db445e1f84e774f26812c9af215c874dca1d"},
   "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
   "buyerNetBirdBootstrap": "PUNCH_JOIN_ONE_OFF_NARROW_GROUP",
   "gatewayPort": 22222,
@@ -22,7 +22,7 @@
     "archiveFiles": ["bin/punch-provider-host-helper.mjs", "src/v0/providerHostSubstrate.js", "src/v0/strict.js", "packaging/clean-v4/punch-provider-host.socket", "packaging/clean-v4/punch-provider-host@.service", "packaging/clean-v4/provider-host-substrate.example.json"]
   },
   "publicCommands": {
-    "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "overview", "doctor", "inventory", "setup", "service-install", "service-start", "service-stop", "service-status", "service-logs", "serve", "status", "drain", "offer-list", "offer-status", "offer-unlist", "offer-retire", "offer-replace", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"],
+    "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "overview", "doctor", "inventory", "setup", "service-install", "service-start", "service-stop", "service-status", "service-logs", "serve", "status", "drain", "offer-create", "offer-list", "offer-status", "offer-unlist", "offer-retire", "offer-replace", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"],
     "buyer": ["doctor", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "offers", "order", "status", "output", "ssh", "stop", "resales", "resale-create", "resale-claim", "resale-cancel", "extension-exercise", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"]
   },
   "commandMetadataSchemaVersion": "punch.public-cli-contract.v2",
