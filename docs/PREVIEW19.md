@@ -9,8 +9,8 @@ Payment settlement is disabled for this preview.
 ## Release binding
 
 This public closure is paired with release-builder source commit
-`2edd019ec86357eb3a6d48a80bc9825537bea2ef`, tree
-`b6d5299d1cbb1ae6c0ea071e9668a0f94fd52993`, and release
+`95b529135133253a3395bfa61e2402f14631379e`, tree
+`e7fb2148499f5f82ac96da7a83182aaf5387fa90`, and release
 `0.1.0-preview.19.1`. It contains public launchers, documentation, Provider
 configuration, and the reviewed Provider-host substrate package. It does not
 contain proprietary runtime source, credentials, invitations, or host
@@ -33,8 +33,10 @@ addresses.
 
 The complete v2 Provider/Buyer command names are in
 `docs/preview19-runtime-contract.json`; use the matching archive's `--help`
-output for exact flags. Provider offer lifecycle is append-only and
-owner-gated. Buyer stop revokes access and drives cleanup.
+output for exact flags. Setup-generated Provider configuration is reused by the
+offer lifecycle, and create/unlist/retire manage retry identities automatically.
+Provider offer lifecycle is append-only and owner-gated. Buyer stop revokes
+access and drives cleanup.
 
 ## Proof boundary
 

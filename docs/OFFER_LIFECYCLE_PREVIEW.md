@@ -25,11 +25,11 @@ and offer bindings:
 
 | Command | Intended result |
 | --- | --- |
-| `punch-provider offer-create --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --idempotency-key KEY [resource flags] --yes` | Create and activate one distinct offer within the machine's remaining slot and verified resource capacity. |
-| `punch-provider offer-list --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON` | List every offer owned by the exact Provider machine with ID, state, core characteristics, and predecessor binding. |
-| `punch-provider offer-status --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID` | Read the Provider-owned offer's lifecycle status. |
-| `punch-provider offer-unlist --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY` | Change a `LISTED` offer to `UNLISTED` only when it has no accepted obligation. |
-| `punch-provider offer-retire --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id ID --idempotency-key KEY` | Irreversibly retire an eligible `UNLISTED` offer, releasing its slot and resources while the machine remains ready. |
+| `punch-provider offer-create --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] [--idempotency-key KEY] [resource flags] --yes` | Create and activate one distinct offer within the machine's remaining slot and verified resource capacity. |
+| `punch-provider offer-list --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON]` | List every offer owned by the exact Provider machine with ID, state, core characteristics, and predecessor binding. |
+| `punch-provider offer-status --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] --offer-id ID` | Read the Provider-owned offer's lifecycle status. |
+| `punch-provider offer-unlist --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] --offer-id ID [--idempotency-key KEY]` | Change a `LISTED` offer to `UNLISTED` only when it has no accepted obligation. |
+| `punch-provider offer-retire --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] --offer-id ID [--idempotency-key KEY]` | Irreversibly retire an eligible `UNLISTED` offer, releasing its slot and resources while the machine remains ready. |
 | `punch-provider offer-replace --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id RETIRED_ID --idempotency-key KEY --yes` | Compatibility shortcut for an exact-term successor; normal new allocation uses `offer-create`. |
 
 The list receipt uses `punch.provider-offer-list.v1` and returns at most the
@@ -44,9 +44,17 @@ Creation returns a distinct offer ID and preserves every existing offer. The
 requested resources must fit both the admin-assigned slot limit and the signed
 physical resource pool. Replacement remains a compatibility shortcut that
 preserves its predecessor and reuses the same environment ID and setup reference.
-Use one stable idempotency key per mutation. Reusing
-it with different request content fails with `IDEMPOTENCY_CONFLICT`. Exact
-replay returns the original durable receipt.
+
+Setup's canonical `STATE_DIR/provider-agent.json` is reused automatically;
+`--agent-config` is only an advanced exact-match override. Create stores one
+automatic retry identity in `STATE_DIR/offer-create.pending.json`. After an
+ambiguous failure, rerunning the same inputs resumes that operation instead of
+creating a duplicate; a different intent fails closed while it is pending.
+Unlist and retire derive deterministic operation identities from the machine,
+offer, and action. An explicit `--idempotency-key` is an optional advanced
+override for these three commands. Reusing any key with different request
+content fails with `IDEMPOTENCY_CONFLICT`; exact replay returns the original durable receipt.
+Compatibility-only replace retains its explicit key and config.
 
 ## Safety rules
 
