@@ -18,7 +18,7 @@ Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.19 adds a state-aware `punch` home without removing either role
+Preview.19.2 carries the state-aware `punch` home without removing either role
 command. Preview.19.2's guided Provider entry point is `punch`, then
 **Provider**; the direct Provider entry point remains `punch-provider` for
 preflight, setup, and recovery. Its release boundary and behavior are documented in
@@ -27,30 +27,43 @@ preflight, setup, and recovery. Its release boundary and behavior are documented
 ## Buyer
 
 ```text
-punch-buyer doctor|join|offers|order|status|output|ssh|stop \
+punch-buyer doctor|onboarding-request|onboarding-status|onboarding-pickup|join|offers|order|status|output|ssh|stop|resales|resale-create|resale-claim|resale-cancel|extension-exercise|extension-propose|extension-inbox|extension-accept|extension-reject \
   --config ABSOLUTE_PUBLIC_CONFIG [command flags]
 ```
 
 | Command | Purpose | Important flags |
 | --- | --- | --- |
 | `doctor` | Inspect supported platform and Buyer NetBird dependency/connectivity state | `--json` |
+| `onboarding-request` | Submit a public Buyer access request and preserve its local pickup identity | `--username`, `--organization-id`, `--idempotency-key`, `--json` |
+| `onboarding-status` | Read the durable Buyer onboarding projection | `--json` |
+| `onboarding-pickup` | Redeem an approved invitation and install the Buyer session/NetBird state | `--yes`, `--json` |
 | `join` | Redeem one Buyer invitation, bootstrap NetBird, and create a local session | `--invitation`, optional explicit install confirmation `--yes`, `--json` |
 | `offers` | List capacity visible to this Buyer | `--json` |
 | `order` | Create or replay an idempotent direct or conditional order | exactly one of `--offer-id` or `--request-file`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |
 | `status` | Read the current job state and access readiness | `--job-id`, `--json` |
+| `output` | Download and verify a completed task output | `--job-id`, `--task-id`, `--output`, `--json` |
 | `ssh` | Carry SSH bytes as OpenSSH's `ProxyCommand` | `--job` |
 | `stop` | Reconcile one idempotent Buyer-owned stop through cleanup | `--job`, optional `--json` |
-| `output` | Download and verify a completed task output | `--job-id`, `--task-id`, `--output`, `--json` |
+| `resales` | List resales visible to this Buyer | `--json` |
+| `resale-create` | Create a bounded zero-price resale listing | `--contract-id`, `--audience`, `--target-buyer`, `--transfer-mode`, `--idempotency-key`, `--json` |
+| `resale-claim` | Claim an eligible resale and bind the replacement Buyer key | `--resale-id`, `--ssh-public-key-file`, `--json` |
+| `resale-cancel` | Cancel one Buyer-owned resale listing | `--resale-id`, `--json` |
+| `extension-exercise` | Exercise a bounded zero-price extension on an owned contract | `--contract-id`, `--idempotency-key`, `--json` |
+| `extension-propose` | Propose a bounded zero-price contract extension | `--contract-id`, `--duration-seconds`, `--idempotency-key`, `--json` |
+| `extension-inbox` | List extension proposals for this Buyer | `--json` |
+| `extension-accept` | Accept one pending extension proposal | `--proposal-id`, `--json` |
+| `extension-reject` | Reject one pending extension proposal | `--proposal-id`, `--json` |
 
 Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.19 Buyers do not pass a zero-price flag. An operator-approved
-zero-price offer is already bound to its designated Buyer and appears only in
-that Buyer's `offers` result. See [Targeted zero-price test](TARGETED_ZERO_TEST.md).
+Preview.19.2 Buyers do not pass a zero-price flag. An operator-approved
+zero-price offer may be public or targeted: public offers appear to eligible
+Buyers, while targeted offers appear only to the designated Buyer. See
+[Targeted zero-price test](TARGETED_ZERO_TEST.md).
 
-The guided Buyer accepts only an explicitly eligible and targeted offer whose
+The guided Buyer accepts only an explicitly eligible public or targeted offer whose
 `priceMinor` is canonical numeric `+0`. It stops before key selection
 or local order creation for missing, string, nested-only, nonzero, or
 negative-zero values. For ACTIVE access, **Prepare SSH command** validates the
@@ -59,7 +72,7 @@ exception when needed, prints the contract-bound command, and never spawns SSH.
 OSC 52 copy is optional and explicit-consent-only; the visible command remains
 the fallback.
 
-For guided Buyer join only, after confirmation Preview.19 probes passwordless
+For guided Buyer join only, after confirmation Preview.19.2 probes passwordless
 capability with `sudo -n true` before falling back to interactive `sudo -v`.
 Failed authorization stops before dependency installation or join. Direct
 non-interactive join still requires `--yes` and cached `sudo`.
@@ -74,6 +87,7 @@ The Preview.19.2 public Provider commands are:
 | `identity-init` | Create the local signing identity and public onboarding packet before invitation issuance |
 | `onboarding-request` | Submit the signed public-only onboarding request with the selected capacity |
 | `onboarding-status` | Read the durable onboarding projection, including `WAITING_FOR_INVITE` or `INVITE_READY` |
+| `onboarding-pickup` | Redeem the approved invitation sealed to the same onboarding request |
 | `join` | Redeem the Provider invitation bound to that public packet and write the local credential |
 | `overview` | Read Provider, onboarding, offer, contract, capacity, service, and recovery status |
 | `doctor` | Report platform, dependency, NetBird, pinned-image, and supervised-service readiness |
@@ -177,16 +191,17 @@ This is one guided/direct CLI session. After consent, guided TTY use probes
 non-interactive use requires explicit confirmation and cached `sudo`. Normal
 onboarding does not require `serve` or manual config.
 
-Punch supports multiple independently supervised Provider machines and offers.
-Approval of a new Provider appends distinct authority without replacing an
-existing Provider or Buyer.
+The Preview.19.2 source contract supports multiple independently supervised
+Provider machines and offers. Approval of a new Provider appends distinct
+authority without replacing an existing Provider or Buyer; full live
+multi-Provider scheduling and acceptance remain outside this source proof.
 Each order still reserves one eligible offer. An ineligible offer is not
 orderable through either the guided or direct Buyer command.
 
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14.
-Preview.19 adds `offer-list`, resource-aware `offer-create`, and the compatible
+Preview.19.2 includes `offer-list`, resource-aware `offer-create`, and the compatible
 `offer-replace` shortcut. They do not alter the Buyer direct command surface.
 
 All lifecycle commands require `--machine-id` and `--state-dir`; they reuse the
@@ -248,12 +263,12 @@ is rejected until that pending operation reaches an authoritative result.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.19 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.19.2 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound public
 reference is the [Provider section of this document](#provider).
 
-## Preview.19 resource and marketplace additions
+## Preview.19.2 resource and marketplace additions
 
 Provider onboarding and setup carry the selected CPU, GPU UUID/CDI, VRAM, RAM,
 quota-backed disk, duration, audience, transfer, and network-policy terms. The

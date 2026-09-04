@@ -4,16 +4,21 @@ Punch CLI installable packages are distributed only through versioned GitHub Rel
 
 ## Supported preview platforms
 
-See [Platform support](PLATFORMS.md). Provider execution is currently limited to supported Linux nodes. Buyer support may cover additional platforms release by release.
+See [Platform support](PLATFORMS.md). For Preview.19.2, the public contract is
+Linux/x64 and the Provider target host is Ubuntu 24.04 LTS. Buyer support is
+role-specific and does not expand the Provider host scope.
 
 ## Install from a release
 
-Preview.18 is published for Linux/x64. Install only
-`punch-cli-0.1.0-preview.18-linux-x64.tar.gz` after its exact line in the
-same-release `SHA256SUMS` reports `OK`. This source checkout is not an
-installable release; never infer an archive from its branch or documentation.
-The verified archive SHA-256 must be
-`d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+Preview.19.2's Provider scope is Ubuntu 24.04 LTS on Linux/x64. Install only
+the matching non-draft `punch-cli-0.1.0-preview.19.2-linux-x64.tar.gz` after its
+exact line in the same-release `SHA256SUMS` reports `OK`. This source checkout
+is not an installable release; never infer an archive from its branch or
+documentation. This page does not claim live Control or Provider-to-Buyer
+acceptance.
+
+The older `punch-cli-0.1.0-preview.18-linux-x64.tar.gz` name is retained only
+as historical release provenance; it is not a Preview.19.2 install target.
 
 1. Open a published, non-draft release from this repository's **Releases** page.
 2. Download exactly one archive for your operating system and architecture.
@@ -45,12 +50,12 @@ User installation:
 ```
 
 The Punch archive installer makes no privileged or system-service changes. In
-Preview.18, the later supervised Provider flow owns reviewed
+Preview.19.2, the later supervised Provider flow owns reviewed
 dependency changes, generated configuration, and service installation only
 after explicit consent. Do not manually install or edit the reference files
 carried under `provider/` as a substitute for that flow.
 
-Preview.11 Buyer `join` is different from archive installation: on supported
+Preview.19.2 Buyer `join` is different from archive installation: on supported
 Linux/x64, if the official NetBird client is missing, `join` explains the
 privileged package change and requires interactive confirmation or explicit
 `--yes` before downloading the official installer. The script is downloaded to

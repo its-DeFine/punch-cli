@@ -1,12 +1,18 @@
-# Preview.18 Provider guide
+# Preview.19.2 Provider guide
 
-> **Status: `PUBLISHED_PRERELEASE` release guide.** Use only the Linux/x64
-> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive after its same-release `SHA256SUMS` reports `OK`. Its exact archive
-> SHA-256 is `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
-> Do not use a source checkout, private build, guessed URL, or earlier archive. The
-> network remains invitation-only and owner-targeted `$0`; publication does not
-> authorize self-service approval.
+> **Status: `PREVIEW19.2_PUBLIC_SOURCE_CONTRACT`.** This guide targets the
+> Ubuntu 24.04 LTS Linux/x64 Provider path. Install only the matching non-draft
+> `v0.1.0-preview.19.2` archive after its same-release `SHA256SUMS` reports
+> `OK`. This source checkout is not install authority, and this page does not
+> claim live Control or Provider-to-Buyer acceptance. The network remains
+> invitation-only and operator-approved zero-price; offers may be public or
+> targeted, and publication does not authorize self-service approval.
+
+> **Previous published boundary (historical):** Preview.18 remains bound to its
+> Linux/x64 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> archive `punch-cli-0.1.0-preview.18-linux-x64.tar.gz`, SHA-256
+> `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. This
+> is historical provenance, not this guide's active release or platform contract.
 
 The Provider agent runs on the execution node and connects outbound to Punch.
 It does not expose a public SSH port, host SSH, or Docker over the Internet. Contract SSH is
@@ -14,8 +20,8 @@ served by a gateway bound to the Provider's narrow NetBird overlay address on
 TCP `22222`.
 
 Provider onboarding remains supervised. A Provider cannot approve itself,
-choose a Buyer, issue a targeted-zero authorization, or create a publicly
-claimable free offer.
+choose a Buyer, or widen the Control-authorized audience, zero-price terms, or
+other offer authority.
 
 Approval of another Provider is append-only: it binds one distinct Provider
 actor, machine, invitation, offer authority, and narrow route without replacing
@@ -24,22 +30,23 @@ Control operator procedure or weaken the invitation boundary.
 
 ## Published release and installation
 
-On an Ubuntu 22.04 or 24.04 Linux/x64 host, download the two exact assets from
-the same non-draft release, verify the checksum, and install the Provider role:
+When the matching non-draft Preview.19.2 release is available, on an Ubuntu
+24.04 LTS Linux/x64 host download the two exact assets from that release, verify
+the checksum, and install the Provider role:
 
 ```bash
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.18/punch-cli-0.1.0-preview.18-linux-x64.tar.gz
-curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.18/SHA256SUMS
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.19.2/punch-cli-0.1.0-preview.19.2-linux-x64.tar.gz
+curl -fLO https://github.com/its-DeFine/punch-cli/releases/download/v0.1.0-preview.19.2/SHA256SUMS
 sha256sum -c SHA256SUMS --ignore-missing
-tar -xzf punch-cli-0.1.0-preview.18-linux-x64.tar.gz
-cd punch-cli-0.1.0-preview.18-linux-x64
+tar -xzf punch-cli-0.1.0-preview.19.2-linux-x64.tar.gz
+cd punch-cli-0.1.0-preview.19.2-linux-x64
 ./install.sh --role provider
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-Require the exact Preview.18 archive line to report `OK`. A missing release,
-asset, checksum line, or `OK` result is a hard stop. The archive must match
-`d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+Require the exact Preview.19.2 archive line to report `OK`. A missing release,
+asset, checksum line, or `OK` result is a hard stop. Do not infer archive bytes
+or acceptance from this source checkout.
 Before onboarding, confirm the installed release surface:
 
 ```bash
@@ -63,16 +70,16 @@ be an owned mode-`0600` file before the guided home imports it. Never substitute
 guessed invitation or configuration values.
 
 Continue with [guided onboarding](#2-guided-provider-onboarding),
-the [Preview.18 release flow](PREVIEW18.md), and the exact
-[Preview.18 Provider command reference](PREVIEW18_COMMAND_REFERENCE.md#provider).
+the [Preview.19.2 release flow](PREVIEW19.md), and the exact
+[Preview.19.2 Provider command reference](COMMANDS.md#provider).
 
 ## 1. Supported host
 
-- Ubuntu 22.04 or 24.04 on Linux x64.
+- Ubuntu 24.04 LTS on Linux/x64.
 - A private, owner-controlled state directory and sufficient storage for the
   three immutable Punch images plus one bounded workload.
 - For GPU capacity, a compatible NVIDIA driver and stable UUID/CDI identity.
-  Preview.18 may install the reviewed container toolkit after consent, but it
+  Preview.19.2 may install the reviewed container toolkit after consent, but it
   never replaces the GPU driver or kernel and never reboots the host.
 
 The exact immutable image identities are:
@@ -115,11 +122,14 @@ does not ask for a Provider SSH key or SSH file; Buyer contract access is
 brokered later. Consequential local install or configuration changes remain
 explicit approval boundaries.
 
-## 3. Advanced direct identity and join
+## 3. Advanced direct identity and onboarding
 
 The commands in this and later direct sections are for reviewed automation and
 recovery. They are not the normal external Provider journey and must not be
-used to bypass `WAITING_FOR_INVITE` or the invitation approval boundary.
+used to bypass `WAITING_FOR_INVITE` or the invitation approval boundary. The
+current direct onboarding sequence is `identity-init`, `onboarding-request`,
+`onboarding-status`, and `onboarding-pickup`; `join` remains available for an
+owner-delivered invitation file in an advanced recovery path.
 
 Keep the invitation, credential, identity, and state directory private. Example
 paths are illustrative; the installed process must own them.
@@ -134,8 +144,46 @@ punch-provider identity-init \
   --json
 ```
 
-Send the resulting public onboarding packet through the supervised onboarding
-channel. After Punch returns the invitation bound to that packet:
+Submit the signed public onboarding request with the selected capacity and
+offer terms:
+
+```bash
+punch-provider onboarding-request \
+  --machine-id MACHINE_ID \
+  --state-dir /absolute/path/.local/state/punch-provider \
+  --punch-origin https://api-punch.embody.zone \
+  --provider-label PROVIDER_LABEL \
+  --idempotency-key STABLE_ONBOARDING_REFERENCE \
+  --cpu-cores 4 --gpu-units 0 --vram-mib 0 --ram-mib 8192 --disk-gib 40 \
+  --duration-seconds 86400 \
+  --sale-audience PUBLIC \
+  --transfer-mode CLEAN_REPROVISION \
+  --network-outbound NONE \
+  --json
+
+punch-provider onboarding-status \
+  --machine-id MACHINE_ID \
+  --state-dir /absolute/path/.local/state/punch-provider \
+  --punch-origin https://api-punch.embody.zone \
+  --request-ref REQUEST_REFERENCE \
+  --json
+```
+
+When status reports `INVITE_READY`, redeem the approved invitation sealed to
+that same request. This is the normal direct replacement for manually moving
+an invitation file:
+
+```bash
+punch-provider onboarding-pickup \
+  --machine-id MACHINE_ID \
+  --state-dir /absolute/path/.local/state/punch-provider \
+  --punch-origin https://api-punch.embody.zone \
+  --credential-file /absolute/path/.config/punch/provider/credential.json \
+  --request-ref REQUEST_REFERENCE \
+  --yes --json
+```
+
+For the advanced invitation-file recovery path, use the owner-delivered file:
 
 ```bash
 chmod 0600 /absolute/path/to/provider-invitation.json
@@ -149,10 +197,11 @@ punch-provider join \
 
 `identity-init` happens before invitation issuance. It creates the local private
 signing key and prints a public onboarding packet containing only the machine
-identity, credential identifier, fingerprint, and public key. Send only that
-public packet through the supervised onboarding channel; never send the private
-state directory or key. Punch binds the resulting invitation to that packet,
-and `join` rejects a different machine identity.
+identity, credential identifier, fingerprint, and public key. The current
+`onboarding-request` flow sends only that public packet and its selected terms;
+never send the private state directory or key. Punch binds the resulting
+invitation to that packet, and file-based `join` rejects a different machine
+identity.
 
 Invitations are single-use, but join/setup recovery is resumable from the same
 local state. Preserve the credential path, machine ID, identity key, state
@@ -210,12 +259,14 @@ user-namespace boundary is `userns-remap=default`; Punch preserves all other
 daemon settings and retains an exact rollback artifact when it enables that
 setting.
 
-The Buyer identity, owner-targeted `$0` authorization, access window, offer ID,
-and price come from authenticated Control. They are not normal Provider input.
+The Buyer identity (when an offer is targeted), Control-authorized audience and
+zero-price terms, access window, offer ID, and price come from authenticated
+Control. They are not normal Provider input.
 The maximum authorized access window is `259200` seconds; a Provider cannot
-raise it. Punch may supervise multiple approved Providers, but each machine,
-identity, offer, capacity record, NetBird binding, and setup reference remains
-independent.
+raise it. The Preview.19.2 source contract permits multiple approved Providers,
+but full live multi-Provider scheduling and acceptance remain outside this
+guide's proof boundary. Each machine, identity, offer, capacity record, NetBird
+binding, and setup reference remains independent.
 The offer stays `PENDING_AGENT` while setup completes. Only the signed pre-list
 proof and a fresh heartbeat from the installed service can move it to `LISTED`.
 
@@ -226,14 +277,14 @@ config is generated at `STATE_DIR/provider-agent.json`.
 
 ## 5. NetBird and config custody
 
-Normal Preview.18 setup requests one short-lived, single-use enrollment from
+Normal Preview.19.2 setup requests one short-lived, single-use enrollment from
 Control only after Provider authorization. Punch passes it to NetBird through a
 temporary mode-`0600` file, verifies the resulting peer/address binding, records
 the non-secret receipt, and removes the one-time material.
 The Provider never receives the NetBird management token or pastes a setup key.
 
 Manual NetBird enrollment and manual editing/copying of
-`provider-agent.example.json` are obsolete for normal Preview.18 onboarding.
+`provider-agent.example.json` are obsolete for normal Preview.19.2 onboarding.
 `--agent-config` remains an advanced exact-match recovery/diagnostic override;
 it cannot change authenticated image, Buyer, offer, window, price, or
 authorization bindings.
@@ -280,8 +331,10 @@ access and is terminal for that predecessor.
 `offer-replace` preserves the retired predecessor, creates a distinct successor
 with the exact same capacity, target, window, and price, reuses the supervised
 service, and activates only after readiness reaches `LISTED`. A pending
-successor is resumed idempotently. Preview.18 allows one nonterminal offer per
-machine; concurrent multi-offer and multi-profile use are not supported.
+successor is resumed idempotently. Preview.19.2 allows multiple nonterminal
+offers only while the admin-assigned slot and aggregate resource limits remain
+satisfied; each offer and Provider machine retains independent state. Concurrent
+multi-profile use is not supported.
 Exact retries return the same durable result.
 
 ## 8. Acceptance and rollback
@@ -301,5 +354,6 @@ For maintenance, unlist an unaccepted offer or allow accepted contracts to
 finish, then retire only after obligations are terminal. Preserve credentials,
 identity keys, state, generated config, and receipts across a program rollback.
 
-Preview.18 remains owner-targeted `$0` only. Payment, settlement, payout,
+Preview.19.2 supports operator-approved public or targeted zero-price offers.
+Payment, settlement, payout,
 refunds, and paid-offer economics are outside its acceptance boundary.
