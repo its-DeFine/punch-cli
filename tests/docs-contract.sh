@@ -262,7 +262,7 @@ require docs/preview17-public-command-contract.json '807ba2bac9b9d8324dc7aac9942
 require docs/preview17-public-command-contract.json 'a59c807fc41cd8f8c1f3c21f0e8ef2d49b52bd0a072e33ae2171b105ffb8fcdc'
 require docs/preview17-public-command-contract.json '8d9de3adaf3e0753c87d12f9b1300fda60f74727e5638dfa93ed161ebee2db2a'
 require docs/GUIDED_CLI.md 'Preview.18 repairs guided Buyer authorization'
-require docs/BUYER.md 'Preview.18 first probes passwordless'
+require docs/BUYER.md 'Preview.19.2 first probes passwordless'
 require docs/BUYER.md 'Failed authorization stops before dependency installation or join'
 require docs/PREVIEW18.md 'Status: `PUBLISHED_PRERELEASE`'
 require docs/PREVIEW18.md '4e4aae1bb335092d69dc467a74651ad9527c4c17'
