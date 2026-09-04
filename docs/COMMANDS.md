@@ -102,13 +102,7 @@ The normal Provider path is `punch`, then **Provider**. Use
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
-The Preview.19.2 live acceptance matrix validates Ubuntu 24.04 LTS on
-Linux/x64, which is the recommended Provider path. The current private
-integration also carries compatibility entries for five Linux/x64 distribution
-families: Ubuntu 22.04/24.04/26.04, Debian 12/13, Rocky Linux 9, Amazon Linux
-2023, and Fedora 43/44. Those compatibility entries are not separate live
-acceptance claims. RPM families use reviewed DNF repositories under
-`/etc/yum.repos.d`.
+The Preview.19.2 live acceptance target is Ubuntu 24.04 LTS on Linux/x64.
 
 The direct host-preparation entry point is read-only unless installation is
 requested explicitly:
