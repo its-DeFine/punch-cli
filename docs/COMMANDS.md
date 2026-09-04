@@ -19,7 +19,9 @@ identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
 Preview.19 adds a state-aware `punch` home without removing either role
-command. Its release boundary and behavior are documented in
+command. Preview.19.2's guided Provider entry point is `punch`, then
+**Provider**; the direct Provider entry point remains `punch-provider` for
+preflight, setup, and recovery. Its release boundary and behavior are documented in
 [Guided `punch` home](GUIDED_CLI.md).
 
 ## Buyer
@@ -64,7 +66,7 @@ non-interactive join still requires `--yes` and cached `sudo`.
 
 ## Provider
 
-The Preview.19 public Provider commands are:
+The Preview.19.2 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -86,24 +88,74 @@ The Preview.19 public Provider commands are:
 | `offer-unlist` | Stop new orders for one owned unaccepted offer |
 | `offer-retire` | Retire one eligible unlisted offer and release its slot and resources |
 | `offer-replace` | Compatibility shortcut that retires and recreates exact terms; normal creation uses `offer-create` |
+| `extension-propose` | Propose a bounded zero-price extension for an owned contract |
+| `extension-inbox` | List extension proposals for owned contracts |
+| `extension-accept` | Accept one owned pending extension proposal |
+| `extension-reject` | Reject one owned pending extension proposal |
 | `serve` | Run the outbound agent in foreground diagnostic mode |
 | `status` | Read local agent status |
 | `drain` | Stop accepting new work before maintenance |
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.19 Provider command reference](#provider)
+[Preview.19.2 Provider command reference](#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
-The advanced direct setup form is:
+The Preview.19.2 live acceptance matrix validates Ubuntu 24.04 LTS on
+Linux/x64, which is the recommended Provider path. The current private
+integration also carries compatibility entries for five Linux/x64 distribution
+families: Ubuntu 22.04/24.04/26.04, Debian 12/13, Rocky Linux 9, Amazon Linux
+2023, and Fedora 43/44. Those compatibility entries are not separate live
+acceptance claims. RPM families use reviewed DNF repositories under
+`/etc/yum.repos.d`.
+
+The direct host-preparation entry point is read-only unless installation is
+requested explicitly:
+
+```text
+punch-provider prepare-host --machine-id ID --punch-origin HTTPS_ORIGIN
+  [--install-dependencies --plan-digest SHA256 --yes]
+```
+
+When substrate installation is requested, `--punch-origin` must resolve to the
+current Control IPv4 deny set; otherwise it fails with
+`PROVIDER_PUNCH_ORIGIN_REQUIRED` before any host mutation.
+
+The direct Provider pre-setup check requires the following contract flags:
+
+```text
+punch-provider doctor --machine-id ID --state-dir DIR
+  --punch-origin ORIGIN --credential-file ABSOLUTE_JSON [--json]
+```
+
+The direct non-interactive setup form requires `--yes` in addition to its
+identity, state, origin, credential, and idempotency flags:
 
 ```text
 punch-provider setup --machine-id ID --state-dir DIR --punch-origin ORIGIN
   --credential-file ABSOLUTE_JSON --idempotency-key KEY
-  [capacity flags] [--install-dependencies] [--yes]
+  [--install-dependencies] --yes
   [--activation-timeout-seconds N] [--json]
 ```
+
+Provider extension operations use the generated exact-match agent config:
+
+```text
+punch-provider extension-propose --contract-id ID --duration-seconds N
+  --idempotency-key KEY --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON
+punch-provider extension-inbox --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON
+punch-provider extension-accept --proposal-id ID
+  --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON
+punch-provider extension-reject --proposal-id ID
+  --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON
+```
+
+Mutating extension operations are owner-gated; `extension-inbox` is read-only.
+All four are bounded and zero-price. They do not widen the signed contract or
+expose private Provider routes.
+
+Capacity flags may be added to the setup form as documented below.
 
 Setup obtains the Buyer, offer, owner-targeted `$0` authorization, price, and
 access window from authenticated Control. Providers do not normally retype
