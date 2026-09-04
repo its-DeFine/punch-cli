@@ -1,9 +1,9 @@
 # Guided `punch` home
 
-> **Release boundary:** this page documents the Preview.19.1 Linux/x64 public
+> **Release boundary:** this page documents the Preview.19.2 Linux/x64 public
 > source contract. Install only from the matching archive after its same-release
 > `SHA256SUMS` verifies; this source page alone is not install authority.
-> Preview.19.1 preserves the Preview.19 behavior and corrects the packaged
+> Preview.19.2 preserves the Preview.19 behavior and corrects the packaged
 > documentation and provenance binding.
 
 > **Previous published boundary:** Preview.19 remains bound to its Linux/x64
@@ -136,7 +136,7 @@ interactive prompts.
 ## Preview.19 interactive Provider onboarding contract
 
 > **Published contract.** This flow is bound to the matching non-draft
-> Preview.19.1 archive and `SHA256SUMS`; it cannot be installed from this source
+> Preview.19.2 archive and `SHA256SUMS`; it cannot be installed from this source
 > checkout or inferred from another preview.
 
 The Preview.18 interactive Provider onboarding contract is carried forward

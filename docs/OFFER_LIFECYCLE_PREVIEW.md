@@ -1,6 +1,6 @@
 # Provider offer lifecycle preview
 
-> **Preview.19.1 release boundary:** Provider offer lifecycle is available only
+> **Preview.19.2 release boundary:** Provider offer lifecycle is available only
 > from the matching Linux/x64 archive after its same-release `SHA256SUMS`
 > verifies. This source page alone is not install authority.
 
@@ -12,7 +12,7 @@
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 > archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 
-Preview.19.1 adds resource-aware offer creation to the original unlist/retire
+Preview.19.2 adds resource-aware offer creation to the original unlist/retire
 contract. Control assigns each Provider machine an offer-slot limit, while the
 machine's signed inventory defines its aggregate CPU, GPU, VRAM, RAM, and disk
 pool. Multiple offers are allowed only while both limits remain satisfied. It
@@ -25,7 +25,7 @@ and offer bindings:
 
 | Command | Intended result |
 | --- | --- |
-| `punch-provider offer-create --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] [--idempotency-key KEY] [resource flags] --yes` | Create and activate one distinct offer within the machine's remaining slot and verified resource capacity. |
+| `punch-provider offer-create --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] [--idempotency-key KEY] --cpu-cores N --gpu-units N --vram-mib N --ram-mib N --disk-gib N --yes` | Create and activate one distinct offer within the machine's remaining slot and verified resource capacity. |
 | `punch-provider offer-list --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON]` | List every offer owned by the exact Provider machine with ID, state, core characteristics, and predecessor binding. |
 | `punch-provider offer-status --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] --offer-id ID` | Read the Provider-owned offer's lifecycle status. |
 | `punch-provider offer-unlist --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] --offer-id ID [--idempotency-key KEY]` | Change a `LISTED` offer to `UNLISTED` only when it has no accepted obligation. |

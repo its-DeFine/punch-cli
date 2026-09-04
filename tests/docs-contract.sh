@@ -65,7 +65,7 @@ require docs/PUNCH_PUBLIC_SAFE_ASYNC_STOP_CONTRACT_20260804.md '300-second overa
 require docs/schemas/buyer-stop-operation.v1.json 'punch.buyer-stop-operation.v1'
 require docs/NEXT_COMMAND_REFERENCE.md 'LOCAL_DETERMINISTIC_PASS'
 require docs/NEXT_COMMAND_REFERENCE.md 'release-authority: false'
-require docs/OFFER_LIFECYCLE_PREVIEW.md 'Preview.19.1 adds resource-aware offer creation'
+require docs/OFFER_LIFECYCLE_PREVIEW.md 'Preview.19.2 adds resource-aware offer creation'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'Multiple offers are allowed only while both limits remain satisfied.'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'It never stops, revokes, fences, or cleans up an'
 require docs/OFFER_LIFECYCLE_PREVIEW.md 'replay returns the original durable receipt.'

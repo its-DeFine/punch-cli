@@ -1,7 +1,7 @@
 # Command reference
 
-> **Version boundary:** this reference describes the Preview.19.1 public
-> source contract for Linux/x64 `v0.1.0-preview.19.1`. Exact flags are bound in
+> **Version boundary:** this reference describes the Preview.19.2 public
+> source contract for Linux/x64 `v0.1.0-preview.19.2`. Exact flags are bound in
 > `docs/preview19-runtime-contract.json` and the matching archive. This source
 > reference alone is not install authority; install only from the matching
 > non-draft release after verifying its checksum.

@@ -1,6 +1,6 @@
-# Punch Preview.19.1
+# Punch Preview.19.2
 
-Preview.19.1 is the corrected public packaging revision of the Preview.19
+Preview.19.2 is the corrected public packaging revision of the Preview.19
 zero-price resource and lifecycle contract for the Punch Compute pilot.
 Providers offer bounded CPU, RAM, quota-backed workspace disk, and optional GPU
 capacity; Buyers can order, use, extend, transfer, and stop that capacity.
@@ -9,9 +9,9 @@ Payment settlement is disabled for this preview.
 ## Release binding
 
 This public closure is paired with release-builder source commit
-`95b529135133253a3395bfa61e2402f14631379e`, tree
-`e7fb2148499f5f82ac96da7a83182aaf5387fa90`, and release
-`0.1.0-preview.19.1`. It contains public launchers, documentation, Provider
+`4e8e0f3c138db22e349b183f1306b511e8705c48`, tree
+`c9fe15a5bb62e4cb27787a90099a076f8b9d2bed`, and release
+`0.1.0-preview.19.2`. It contains public launchers, documentation, Provider
 configuration, and the reviewed Provider-host substrate package. It does not
 contain proprietary runtime source, credentials, invitations, or host
 addresses.
