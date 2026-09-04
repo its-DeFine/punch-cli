@@ -126,9 +126,11 @@ punch-provider prepare-host --machine-id ID --punch-origin HTTPS_ORIGIN
   [--install-dependencies --plan-digest SHA256 --yes]
 ```
 
-When substrate installation is requested, `--punch-origin` must resolve to the
-current Control IPv4 deny set; otherwise it fails with
-`PROVIDER_PUNCH_ORIGIN_REQUIRED` before any host mutation.
+When substrate installation is requested, supply the Control HTTPS origin with
+`--punch-origin`. Its resolved IPv4 addresses are added to the **workload egress
+deny set**, preventing workload containers from reaching Control. This is not a
+list of forbidden origins for the Provider CLI itself. Without a usable origin,
+the command fails with `PROVIDER_PUNCH_ORIGIN_REQUIRED` before host mutation.
 
 The direct Provider pre-setup check requires the following contract flags:
 
