@@ -105,6 +105,19 @@ long-running shell is not normal Preview.19.2 recovery.
 
 ## Provider offer replacement is not ready
 
+### `CAPACITY_CONFLICT` for a GPU that looks available
+
+GPU UUID/CDI reservations are global, while **View offers** shows only the
+current Provider identity. An older identity can therefore still have an offer
+reserving the same physical GPU. Unlist **and retire** that exact old offer;
+unlisting alone does not release its resources. Retirement requires terminal
+jobs and fenced access and preserves history. If the old identity is no longer
+accessible, ask the Control operator to retire the obsolete offer. Do not reset
+or rotate the current identity. Once retirement releases the GPU, retry the
+same pending `offer-create` operation with the intended resource selection.
+
+### Replacement lifecycle
+
 Open `punch` → **Provider** → **View offers**. Preserve every offer row and use
 the displayed state instead of deleting local profile or Control data.
 
