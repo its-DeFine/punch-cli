@@ -212,6 +212,13 @@ is an optional advanced exact-match override. Commands acting on one offer also
 require `--offer-id`. `offer-create` requires explicit CPU/GPU/VRAM/RAM/disk
 capacity flags and `--yes` for service reuse/start.
 
+With `--gpu-units 1`, also supply both `--gpu-uuid UUID` and `--gpu-cdi CDI`
+from fresh `inventory --json` on this machine. For multiple GPUs, use
+`--gpu-uuids UUID,... --gpu-cdis CDI,...` in matching order and
+`--gpu-communication SAME_NODE|P2P_REQUIRED`. Do not copy GPU identifiers from
+another machine or an earlier support message. `--gpu-units 0` requires no GPU
+identity flags.
+
 Normal lifecycle use does not require an idempotency key. `offer-create` stores
 one automatic retry identity in `STATE_DIR/offer-create.pending.json` and reuses
 it after an interrupted or ambiguous response when the same inputs are given.
