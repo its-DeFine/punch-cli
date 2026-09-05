@@ -32,6 +32,16 @@ and offer bindings:
 | `punch-provider offer-retire --machine-id ID --state-dir DIR [--agent-config ABSOLUTE_JSON] --offer-id ID [--idempotency-key KEY]` | Irreversibly retire an eligible `UNLISTED` offer, releasing its slot and resources while the machine remains ready. |
 | `punch-provider offer-replace --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON --offer-id RETIRED_ID --idempotency-key KEY --yes` | Compatibility shortcut for an exact-term successor; normal new allocation uses `offer-create`. |
 
+Provider extension operations are separate from offer lifecycle and use the
+canonical generated agent config:
+
+| Command | Intended result |
+| --- | --- |
+| `punch-provider extension-propose --contract-id ID --duration-seconds N --idempotency-key KEY --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON` | Propose a bounded zero-price extension for an owned contract. |
+| `punch-provider extension-inbox --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON` | List extension proposals for owned contracts. |
+| `punch-provider extension-accept --proposal-id ID --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON` | Accept one owned pending extension proposal. |
+| `punch-provider extension-reject --proposal-id ID --machine-id ID --state-dir DIR --agent-config ABSOLUTE_JSON` | Reject one owned pending extension proposal. |
+
 The list receipt uses `punch.provider-offer-list.v1` and returns at most the
 owned machine's bounded offer rows. The JSON status receipt uses schema version
 `punch.provider-offer-lifecycle.v1` and includes `offerId`, `environmentId`,

@@ -2,14 +2,23 @@
 
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
-> **Preview.18 boundary:** use only the Linux/x64
-> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+> **Preview.19.2 public-contract boundary:** use only the matching Linux/x64
+> [`v0.1.0-preview.19.2`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.2)
+> archive after its same-release `SHA256SUMS` reports `OK`. This source page
+> alone is not install authority. The Buyer CLI exposes `doctor`,
+> `onboarding-request`, `onboarding-status`, `onboarding-pickup`, `join`,
+> `offers`, `order`, `status`, `output`, `ssh`, `stop`, `resales`,
+> `resale-create`, `resale-claim`, `resale-cancel`, `extension-exercise`,
+> `extension-propose`, `extension-inbox`, `extension-accept`, and
+> `extension-reject`. Preview.19.2 supports operator-approved public or
+> targeted zero-price offers; payment, settlement, payout, and refund behavior
+> is not enabled.
+
+> **Earlier published boundary (historical):** Preview.18 remains bound to its
+> Linux/x64 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 > archive after its same-release `SHA256SUMS` reports `OK`; its exact SHA-256 is
-> `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. This source page alone is not
-> install authority. The Buyer CLI exposes `doctor`,
-> `join`, `offers`, `order`, `status`, `output`, `ssh`, and `stop`. The accepted
-> preview path is owner-targeted `$0` only; payment, settlement, payout, and
-> refund behavior is not enabled.
+> `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. This
+> historical release is not the active Buyer command or offer contract.
 
 ## 1. Prepare private configuration
 
@@ -52,9 +61,9 @@ punch-buyer join \
 On Linux/x64, `join` validates the Punch invitation and then checks the official
 NetBird client. If NetBird is missing, the CLI explains the privileged package
 change and asks for confirmation. For supervised automation, `--yes` is the
-explicit confirmation; it is accepted only by `join`.
+explicit confirmation; it is accepted only by `join` or `onboarding-pickup`.
 
-In the guided `punch` → **Buyer** flow, Preview.18 first probes passwordless
+In the guided `punch` → **Buyer** flow, Preview.19.2 first probes passwordless
 capability with `sudo -n true` after join confirmation. A successful probe
 continues without a password prompt; otherwise the CLI falls back to interactive
 `sudo -v`. Failed authorization stops before dependency installation or join.
@@ -86,11 +95,12 @@ punch-buyer offers \
 The state-aware `punch` home renders only fields returned by the Buyer
 projection: offer ID, workload mode, optional Provider label, CPU/GPU/RAM/disk,
 required/available/reserved capacity, access duration, price, availability, and
-eligibility. A targeted `$0` offer is labelled as a supervised test offer and
-as visible only to the designated Buyer. Missing fields are shown as not
-supplied; the home does not infer capacity or eligibility. Punch can supervise
-multiple approved Providers, so eligible offers may come from different
-Provider machines without exposing their host addresses.
+eligibility. A public zero-price offer is visible to eligible Buyers; a targeted
+zero-price offer is labelled as targeted and is visible only to its designated
+Buyer. Missing fields are shown as not supplied; the home does not infer
+capacity or eligibility. The Preview.19.2 source contract supports offers from
+multiple approved Provider machines without exposing their host addresses; full
+live multi-Provider scheduling and acceptance remain outside this guide's proof.
 
 ## 4. Order compute
 
@@ -130,19 +140,21 @@ punch-buyer order \
 Punch selects at most one complete alternative atomically. This is an immediate
 match, not an unfunded standing queue. See [Conditional orders](CONDITIONAL_ORDERS.md).
 
-In the supervised pilot, an authorized zero-price offer appears only to its
-designated Buyer. The Buyer still uses the normal `order` command and never
-passes a price, zero-value, authorization, or Provider identity flag. A visible
-offer is not permission to alter its terms. The maximum authorized access
-window is `259200` seconds. An offer whose projection says it is ineligible
-cannot be selected or ordered; the guided home blocks confirmation and Control
-rejects a direct command fail-closed.
+In Preview.19.2, an operator-approved zero-price offer may be public or
+targeted. Public offers are visible to eligible Buyers; targeted offers appear
+only to the designated Buyer. The Buyer still uses the normal `order` command
+and never passes a price, zero-value, authorization, or Provider identity flag.
+A visible offer is not permission to alter its terms. The maximum authorized
+access window is `31536000` seconds (one year). An offer whose projection says it is
+ineligible cannot be selected or ordered; the guided home blocks confirmation
+and Control rejects a direct command fail-closed.
 
 The guided home is stricter before it creates local order state: the offer must
-be explicitly eligible, targeted to the current Buyer, and carry
-`priceMinor` as canonical numeric +0. Missing, string, nested-only,
-nonzero, and negative-zero values stop before SSH-key selection, confirmation,
-or Control submission. No payment setup or transaction is attempted.
+be explicitly eligible, public or targeted, and carry `priceMinor` as
+canonical numeric +0. For a targeted offer, the current Buyer must be the designated
+Buyer. Missing, string, nested-only, nonzero, and negative-zero values stop
+before SSH-key selection, confirmation, or Control submission. No payment setup
+or transaction is attempted.
 
 Record the job identifier returned by the order result. A successful order does
 not itself prove that access is ready, that a container is running, or that a
@@ -158,10 +170,11 @@ punch-buyer status \
 ```
 
 Access starts from the first verified `READY`, not from offer listing or
-container preparation. Preview.18 uses zero-price supervised offers and does not
-exercise payment, settlement, payout, or refund behavior.
+container preparation. Preview.19.2 uses operator-approved public or targeted
+zero-price offers and does not exercise payment, settlement, payout, or refund
+behavior.
 
-For Preview.18 interactive jobs, wait until status reports `state: ACTIVE` and
+For Preview.19.2 interactive jobs, wait until status reports `state: ACTIVE` and
 `accessEffective: true` before opening SSH. Do not bypass this check with a
 Provider address or direct container connection.
 
@@ -206,7 +219,7 @@ install -d -m 0700 "$HOME/.config/punch/buyer/known-hosts"
 
 The isolated known-hosts file records the ephemeral job container key on first
 connection. If it changes during the same job generation, stop instead of
-accepting the replacement. Preview.18 carries SSH bytes through a
+accepting the replacement. Preview.19.2 carries SSH bytes through a
 contract-scoped NetBird gateway. The Buyer receives no public Provider address,
 host SSH credential, host SSH port, or Docker socket.
 
@@ -215,7 +228,7 @@ reachability and SSH key exchange begin only when the owner runs the command.
 
 ## 7. Stop and release
 
-Preview.18 preserves the approved asynchronous Buyer stop command:
+Preview.19.2 preserves the approved asynchronous Buyer stop command:
 
 ```bash
 punch-buyer stop \

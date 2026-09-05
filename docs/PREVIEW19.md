@@ -9,8 +9,8 @@ Payment settlement is disabled for this preview.
 ## Release binding
 
 This public closure is paired with release-builder source commit
-`4e8e0f3c138db22e349b183f1306b511e8705c48`, tree
-`c9fe15a5bb62e4cb27787a90099a076f8b9d2bed`, and release
+`2d376786734fe7f7dbfef0c095d791782667a9cb`, tree
+`9873bd56dbf3ff2ee167ef9e3b03f8e2520d889a`, and release
 `0.1.0-preview.19.2`. It contains public launchers, documentation, Provider
 configuration, and the reviewed Provider-host substrate package. It does not
 contain proprietary runtime source, credentials, invitations, or host
