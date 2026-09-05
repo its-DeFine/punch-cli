@@ -145,7 +145,7 @@ targeted. Public offers are visible to eligible Buyers; targeted offers appear
 only to the designated Buyer. The Buyer still uses the normal `order` command
 and never passes a price, zero-value, authorization, or Provider identity flag.
 A visible offer is not permission to alter its terms. The maximum authorized
-access window is `259200` seconds. An offer whose projection says it is
+access window is `31536000` seconds (one year). An offer whose projection says it is
 ineligible cannot be selected or ordered; the guided home blocks confirmation
 and Control rejects a direct command fail-closed.
 
