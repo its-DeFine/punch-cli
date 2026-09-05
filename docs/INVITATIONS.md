@@ -1,12 +1,11 @@
 # Invitations and credentials
 
-> **Version boundary:** this page describes the Preview.18 invitation-only flow.
-> Use it only with the published Linux/x64
-> [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-> archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`,
-> after its same-release checksum verifies, and only with an invitation bound to the
-> exact public identity packet and installed release role. This source page is
-> not install authority.
+> **Version boundary:** this page describes the Preview.19.2 candidate
+> invitation-only flow for Ubuntu 24.04 LTS Linux/x64 Providers. It is not a
+> published or installable release. After publication, use only the matching
+> non-draft archive after its same-release `SHA256SUMS` verifies; the bundled
+> `RELEASE-CONTRACT.json` and `RELEASE-BINDING.json` carry the exact release
+> identity. This source page is not install authority.
 
 Punch Compute is invitation-only during the public preview.
 
@@ -16,7 +15,7 @@ Punch Compute is invitation-only during the public preview.
 - A **Provider invitation** can create one Provider credential.
 - The invitation role is fixed by Punch Control. A CLI flag cannot change it.
 
-Preview.18 Provider onboarding first submits a signed public-only request and
+Preview.19.2 Provider onboarding first submits a signed public-only request and
 shows `WAITING_FOR_INVITE`. That request is not an invitation and cannot approve
 the Provider. After supervised approval, signed status may advance to
 `INVITE_READY`; that state contains no invitation secret. The guided `punch`

@@ -8,10 +8,15 @@ Payment settlement is disabled for this preview.
 
 ## Release binding
 
-This public closure is paired with release-builder source commit
-`2d376786734fe7f7dbfef0c095d791782667a9cb`, tree
-`9873bd56dbf3ff2ee167ef9e3b03f8e2520d889a`, and release
-`0.1.0-preview.19.2`. It contains public launchers, documentation, Provider
+This page describes the Preview.19.2 public candidate; it is not a published
+or installable release. The candidate archive carries the exact private and
+public source identities, archive digest, and release binding in its bundled
+`RELEASE-CONTRACT.json` and `RELEASE-BINDING.json`; use those records together
+with the matching `SHA256SUMS` after the final rebuild. This page intentionally
+does not duplicate a commit, tree, or archive digest that could become stale
+before publication.
+
+The candidate contains public launchers, documentation, Provider
 configuration, and the reviewed Provider-host substrate package. It does not
 contain proprietary runtime source, credentials, invitations, or host
 addresses.
@@ -41,5 +46,6 @@ access and drives cleanup.
 ## Proof boundary
 
 Source checks, released-archive checks, and live Provider-to-Buyer proof are
-separate claims. This source closure does not claim live AWS Control readiness,
-payment settlement, arbitrary networking, or general availability.
+separate claims. Final acceptance and publication remain pending; this source
+closure does not claim live AWS Control readiness, payment settlement, arbitrary
+networking, or general availability.
