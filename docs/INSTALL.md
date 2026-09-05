@@ -77,6 +77,22 @@ fresh CLI; do not reset identity or repeat onboarding merely because the CLI
 was reinstalled. Apply the separate clean-CLI recovery rule in the Preview.19.2
 contract when an old `PENDING` renewal is encountered.
 
+Updating the command link alone does not update a running systemd service.
+With no active jobs, use the newly installed CLI to regenerate the existing
+machine-scoped unit against the same state and configuration, then restart it:
+
+```bash
+punch-provider service-stop --machine-id MACHINE_ID --yes --json
+punch-provider service-install --machine-id MACHINE_ID --state-dir EXISTING_STATE_DIR --yes --json
+punch-provider service-start --machine-id MACHINE_ID --yes --json
+punch-provider service-status --machine-id MACHINE_ID --json
+```
+
+Use the actual existing machine ID and state directory, not these placeholders.
+Verify the service uses the new release paths and Control receives a fresh
+heartbeat. Keep the previous CLI payload and unit for rollback. This is an
+upgrade, not a new identity or onboarding request.
+
 ### Existing Preview.19 Provider host helper
 
 The CLI installer does not replace the root-owned host helper. For the quota-cleanup correction, also update `payload/provider-host/src/v0/providerHostSubstrate.js` from the same verified archive. Drain existing work, wait for terminal contracts, and stop the existing machine-scoped Provider service and `punch-provider-host.socket`. Preserve the machine identity, credentials, configuration, offers, and all state directories; do not repeat onboarding or substrate installation.
