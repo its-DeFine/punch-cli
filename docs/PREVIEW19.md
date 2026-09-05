@@ -8,16 +8,15 @@ Payment settlement is disabled for this preview.
 
 ## Release binding
 
-This page describes the Preview.19.2 public release-bound artifact. The final
-Linux/x64 archive used for scoped acceptance is bound to runtime source
-`9d7e73f`, public packaging source `77cd9f5`, and archive SHA-256
-`689ab42998509b5335663d174b616fc76a42022380529e2a3c0e08345f5ec8b3`; verify
-that exact archive against the matching same-release `SHA256SUMS` before
-installation. The archive's `RELEASE-CONTRACT.json` and
-`RELEASE-BINDING.json` carry the complete release binding. This page does not duplicate a commit
-or tree, or private runtime identifier beyond these short release references.
+This page describes the Preview.19.2 public contract. For each candidate or
+release archive, the exact runtime source, public packaging source, archive
+digest, and release binding are carried by its bundled
+`RELEASE-CONTRACT.json` and `RELEASE-BINDING.json`; verify the exact archive
+against the matching same-release `SHA256SUMS` before installation. This page
+does not duplicate a commit, tree, or private runtime identifier; do not infer
+release identity from prose here.
 
-The release archive contains public launchers, documentation, Provider
+A matching archive contains public launchers, documentation, Provider
 configuration, and the reviewed Provider-host substrate package. It does not
 contain proprietary runtime source, credentials, invitations, or host
 addresses.
@@ -44,26 +43,40 @@ offer lifecycle, and create/unlist/retire manage retry identities automatically.
 Provider offer lifecycle is append-only and owner-gated. Buyer stop revokes
 access and drives cleanup.
 
+With a valid existing Provider identity, a fresh CLI may recover a stale failed
+`PENDING` renewal only after authenticated Control proves that the prior request
+is expired and `UNCOMMITTED`. The CLI may refresh the signed proof once
+automatically. Never reset the identity. A generic HTTP `401`, an ambiguous
+response, or a journal already marked committed is not proof of expiry and must
+not trigger refresh; preserve local state and use the authoritative recovery
+result.
+
 Multiple simultaneous contracts on one machine share the configured gateway
 port but have separate workload bindings and SSH keys. Use the matching
 Preview.19.2 Linux/x64 archive on both Buyer and Provider for this path;
 contract selection is automatic in `punch-buyer ssh`. Stopping one contract
 must not interrupt another.
 
-Scoped live acceptance of the final archive passed on Ubuntu 24.04 LTS for the
-invitation-only, zero-price path: two same-machine concurrent jobs each using
-1 CPU, 1 GiB RAM, and 4 GiB workspace disk ran within the 9 GiB budget.
+A prior scoped live acceptance record on Ubuntu 24.04 LTS for the invitation-
+only, zero-price CPU path recorded two same-machine concurrent jobs each using
+1 CPU, 1 GiB RAM, and 4 GiB workspace disk within the 9 GiB budget.
 Per-contract SSH markers remained isolated; a direct connection with the wrong
 Buyer key and cross-contract status/stop attempts were denied. Stopping
 contract A preserved contract B's held SSH session, and stopping B then closed
 that session. In this run, Control reported 26 terminal contracts, 26 released
 reservations, and 22 access-fenced records; two approved Buyers, zero Provider
 containers, no `22222` listener, and an exact XFS project hard limit of zero.
-The results are run-scoped acceptance evidence, not a statistical 100% claim.
+This historical record is separate from existing-state renewal recovery.
+Stateful recovery tests cover an existing identity, retired offer, stale
+uncommitted renewal, renewed session, capacity refresh and a new listed offer.
+The release notes identify the exact archive and its deployment/live acceptance
+receipt. Results are run-scoped evidence, not a statistical 100% claim.
 
 ## Proof boundary
 
 Source checks, released-archive checks, and live Provider-to-Buyer proof remain
-separate claims. The measured acceptance above is limited to the Ubuntu 24.04
-LTS invitation-only, zero-price path; it does not claim paid settlement,
-arbitrary networking, broad GPU coverage, or general availability.
+separate claims. The historical acceptance above is limited to the Ubuntu
+24.04 LTS invitation-only, zero-price CPU path and does not establish proof for
+actual GPU host capacity, paid settlement, arbitrary networking, or general
+availability. Use the matching release notes for its final acceptance status;
+do not substitute a different archive's results.

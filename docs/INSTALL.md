@@ -66,6 +66,17 @@ The Buyer does not separately install, enroll, or log in to NetBird.
 
 Before extraction, the user verifies the compressed archive against the matching entry in `SHA256SUMS`. The installer then checks the release payload directory, bundled runtime, and command launchers, copies the versioned payload, and atomically changes each selected command link only after the copy succeeds. It must not overwrite invitation, session, identity, credential, or state files.
 
+### Clean install or upgrade from Preview.19.1
+
+Installing Preview.19.2 as a clean versioned CLI upgrade from Preview.19.1,
+including removing only the older program directory, preserves the existing
+Provider identity, credential, onboarding or renewal request, generated
+configuration, state, and offer records. A `RETIRED` offer remains retired and
+is not silently recreated. Reopen the same state and credential paths with the
+fresh CLI; do not reset identity or repeat onboarding merely because the CLI
+was reinstalled. Apply the separate clean-CLI recovery rule in the Preview.19.2
+contract when an old `PENDING` renewal is encountered.
+
 ### Existing Preview.19 Provider host helper
 
 The CLI installer does not replace the root-owned host helper. For the quota-cleanup correction, also update `payload/provider-host/src/v0/providerHostSubstrate.js` from the same verified archive. Drain existing work, wait for terminal contracts, and stop the existing machine-scoped Provider service and `punch-provider-host.socket`. Preserve the machine identity, credentials, configuration, offers, and all state directories; do not repeat onboarding or substrate installation.
