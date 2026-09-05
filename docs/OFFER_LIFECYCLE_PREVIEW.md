@@ -18,16 +18,20 @@ machine's signed inventory defines its aggregate CPU, GPU, VRAM, RAM, and disk
 pool. Multiple offers are allowed only while both limits remain satisfied. It
 does not change Buyer access, Stop, or cleanup authority.
 
-In the workspace-capacity candidate, quota-backed disk capacity comes from
+For workspace capacity, quota-backed disk capacity comes from
 the dedicated XFS `prjquota` (or `pquota`) filesystem mounted exactly at
 `/var/lib/punch/workspaces`: `floor(total filesystem bytes / 2^30)`, not root
 free space or current workspace free blocks. Root space for images is checked
 separately. Existing nonterminal offers, including unlisted offers, retain
 their allocations; eligible retirement releases them. A nominal 10 GiB device
 whose formatted filesystem exposes 9.937 GiB therefore has a 9 GiB offer budget:
-4+4 GiB fits, 2+8 GiB does not. Setup and resident refresh reject a missing
-dedicated quota mount. The generic `inventory` diagnostic is not an admission
-receipt. This candidate still requires live acceptance before release.
+4+4 GiB fits, while 4+6 GiB is rejected (and 2+8 GiB does not fit). Setup and
+resident refresh reject a missing dedicated quota mount. The generic
+`inventory` diagnostic is not an admission receipt. In scoped live acceptance
+on Ubuntu 24.04 LTS using the invitation-only, zero-price path, two
+same-machine concurrent 1 CPU/1 GiB/4 GiB jobs ran within that budget. The
+capacity checks are run-scoped evidence, not a statistical 100% claim or a
+general-availability promise.
 
 ## Provider-only contract
 
