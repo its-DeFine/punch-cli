@@ -66,6 +66,12 @@ The Buyer does not separately install, enroll, or log in to NetBird.
 
 Before extraction, the user verifies the compressed archive against the matching entry in `SHA256SUMS`. The installer then checks the release payload directory, bundled runtime, and command launchers, copies the versioned payload, and atomically changes each selected command link only after the copy succeeds. It must not overwrite invitation, session, identity, credential, or state files.
 
+### Existing Preview.19 Provider host helper
+
+The CLI installer does not replace the root-owned host helper. For the quota-cleanup correction, also update `payload/provider-host/src/v0/providerHostSubstrate.js` from the same verified archive. Drain existing work, wait for terminal contracts, and stop the existing machine-scoped Provider service and `punch-provider-host.socket`. Preserve the machine identity, credentials, configuration, offers, and all state directories; do not repeat onboarding or substrate installation.
+
+With administrator approval, retain the existing `/usr/local/lib/punch-provider-host/src/v0/providerHostSubstrate.js` as a versioned rollback copy. Stage the verified replacement beside it as root-owned mode `0644`, compare its SHA-256 to the extracted archive asset, then atomically rename it over that exact file. Do not change the substrate configuration, wrapper, systemd units, or workspace data. Restart the existing socket and Provider service; verify `doctor`, `service-status`, a fresh heartbeat, and normal job cleanup. If verification fails, stop the same service/socket and restore the retained helper and CLI versions before resuming.
+
 ## Uninstall
 
 Use the release's `uninstall.sh`. Provider operators must drain active capacity before stopping or removing an agent. Uninstalling the CLI does not revoke a server-side identity; request revocation separately when required.
