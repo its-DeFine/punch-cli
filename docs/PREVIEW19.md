@@ -43,6 +43,12 @@ offer lifecycle, and create/unlist/retire manage retry identities automatically.
 Provider offer lifecycle is append-only and owner-gated. Buyer stop revokes
 access and drives cleanup.
 
+Multiple simultaneous contracts on one machine share the configured gateway
+port but have separate workload bindings and SSH keys. Use the matching
+Preview.19.2 candidate on both Buyer and Provider for this path; contract
+selection is automatic in `punch-buyer ssh`. Stopping one contract must not
+interrupt another. Live acceptance of this candidate remains pending.
+
 ## Proof boundary
 
 Source checks, released-archive checks, and live Provider-to-Buyer proof are
