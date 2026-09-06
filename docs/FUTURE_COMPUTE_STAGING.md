@@ -7,6 +7,9 @@
 > notes explicitly include this feature. This page is not a production or
 > payment instruction.
 
+This guide is a draft on branch `feat/future-contracts-staging-20260906`; branch
+identity does not mean that the feature is deployed or available.
+
 This is a public-safe usage guide, not operative platform/provider/buyer terms,
 legal advice, or a compliance certification. Those terms remain internal until
 the responsible party completes product, privacy, and jurisdiction-specific
@@ -103,6 +106,19 @@ Buyer SSH public-key binding. Reusing a reference with changed input is an
 idempotency conflict; identical retries return the original result. Future
 reads and mutations are scoped to the authenticated Buyer.
 
+### Provider active interruption (staging only)
+
+The matched staging build exposes `PUT
+/api/v0/provider/contracts/:id/interruption` to an authenticated Provider only
+when future contracts are enabled. Its exact body is `generation` and a signed
+`punch.provider-task-failure.v1` `failure` receipt. Remaining time, bonus, and
+award fields are not Buyer-supplied. The receipt's signed `observedAt` must fall
+inside the active access window and be no later than receipt time. Control
+verifies the Provider signature and source task/machine/container binding,
+fences gateway access, records `STOPPING`, and queues Provider STOP cleanup.
+A successful report returns `202` with `STOPPING`, `stopTaskId`,
+`interruptionAt`, and `remainingSeconds`.
+
 ## Three clocks
 
 1. **Exercise window:** when the Buyer may submit the single claim.
@@ -123,7 +139,7 @@ rollover schedule without duplicating entitlement. The staged fixture is
 zero-price; fee, extension, capacity, and commercial policy are not approved
 by this page.
 
-## Recovery status: implementing, narrow eligibility
+## Recovery status: source semantics implemented; active end-to-end proof pending
 
 The matched staging build accepts `future-contract-recover` only for a committed
 future claim whose source execution has a confirmed terminal Provider-caused
@@ -132,28 +148,49 @@ be released and no workload or access window may have started. A qualifying
 request awards the accepted future compensation and creates one replacement full
 contiguous execution; identical requests replay the same recovery result.
 
-This is not active-job recovery. It does not resume a running workload, restore a
-checkpoint, or promise recovery of checkpoint/lost progress. Buyer-stop,
-access-expiry, non-Provider, retryable, unresolved, or incomplete-cleanup
-outcomes are not eligible.
+An active interruption follows a separate cleanup gate. After the signed
+interruption is accepted, the source contract must reach `FAILED`, Buyer access
+must be `FENCED`, and a terminal signed Provider STOP receipt must record cleanup
+as completed before the reservation is released and recovery becomes eligible.
+The normal STOP success receipt also carries gateway-close and container,
+network, temporary-state, and workspace cleanup evidence. Recovery computes
+`remainingSeconds` from the signed `interruptionAt` timestamp and adds the
+explicit `FIXTURE_ONLY` bonus once at most. The replacement execution gets
+`remainingSeconds + bonus`; it is not a second discretionary claim.
 
-## SLA status: pending, not a promise
+This does not resume the interrupted workload or restore a checkpoint, workload
+state, input/output data, or lost progress. A stale or missing heartbeat,
+buyer-visible SSH disconnect, natural access/runtime expiry, or Buyer stop is
+not by itself a qualifying Provider interruption and receives no active-
+interruption compensation. Non-Provider, retryable, unresolved, or incomplete-
+cleanup outcomes are not eligible. The route and recovery path remain disabled
+when the future-contract flag is absent or false, and this feature is staging-
+only.
+
+## SLA status: fixture path implemented; commercial policy pending
 
 The staged schema currently permits `slaCompensation.mode: "FIXTURE_ONLY"`
 with explicit fixture fields such as `additionalSeconds` and `maxAwards`. That
 is validation/test surface, not an approved commercial SLA.
 
-The intended product shape remains pending core accounting, access-readiness,
-capacity, replay, and incident reports: when a confirmed Provider-caused SLA
-breach occurs, unavailable time must not be consumed **and** additional free
-compute must be awarded. The formula, cap, delivery method, expiry, and
-repeat-incident rules remain unresolved. Core reports and internal legal/product
-drafts are required before any final approval or publication.
+The active-interruption source path records the verified Provider interruption
+and, after the cleanup gate, recovers signed remaining time plus one fixture-only
+additional-time award at most once. This remains validation/test behavior, not
+an approved commercial SLA. Core accounting, access-readiness, capacity,
+replay, and incident reports are still pending; the formula, cap, delivery
+method, expiry, and repeat-incident rules remain unresolved. No active-
+interruption compensation is inferred from heartbeat loss, SSH disconnect,
+natural expiry, or Buyer stop. Core reports and internal legal/product drafts
+are required before any final approval or publication.
 
 ## Verification boundary
 
 This page makes no claim that a stage Control is running, a public binary has
-these commands, a GPU or egress policy has been tested, or an end-to-end job,
-restart, accounting, compensation, recovery, checkpoint, or SLA scenario has
-passed. A matched staging release must provide its own versioned evidence and
-limitations. No production or Provider-environment procedure is described here.
+these commands, or external Buyer/NetBird transport or active full E2E has
+passed. Controlled staging checks have proven `RESEARCH_EGRESS` public HTTPS+DNS
+reachability while public port 80 and host port 443 are denied, and `NONE`
+outbound denial with GPU. These are bounded network/runtime checks, not full
+contract acceptance, active-interruption recovery, accounting, compensation,
+checkpoint, or SLA proof. A matched staging release must provide its own
+versioned evidence and limitations. No production or Provider-environment
+procedure is described here.
