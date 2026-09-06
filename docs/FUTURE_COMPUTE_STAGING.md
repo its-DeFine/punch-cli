@@ -74,11 +74,18 @@ punch-buyer future-contracts --config ABSOLUTE_PUBLIC_CONFIG [--json]
 punch-buyer future-contract-show --future-contract-id ID --config ABSOLUTE_PUBLIC_CONFIG [--json]
 punch-buyer future-contract-accept --offer-id ID --contract-ref REF --terms-digest SHA256_DIGEST --ssh-public-key-file ABSOLUTE_FILE --config ABSOLUTE_PUBLIC_CONFIG [--json]
 punch-buyer future-contract-claim --future-contract-id ID --config ABSOLUTE_PUBLIC_CONFIG [--json]
-punch-buyer future-contract-rollover --future-contract-id ID --config ABSOLUTE_PUBLIC_CONFIG [--json]
+punch-buyer future-contract-rollover --future-contract-id ID --quote --config ABSOLUTE_PUBLIC_CONFIG [--json]
+punch-buyer future-contract-rollover --future-contract-id ID --quote-digest SHA256 --config ABSOLUTE_PUBLIC_CONFIG [--json]
 punch-buyer future-contract-recover --future-contract-id ID --config ABSOLUTE_PUBLIC_CONFIG [--json]
 ```
 
 Recovery is bodyless; it takes only the owned future contract ID.
+
+For rollover, inspect the quote's previous/new deadline, extension and fixture-only
+zero price; then pass its exact `quoteDigest` to accept. `--quote` is an authenticated
+read and does not require execution bootstrap. Acceptance retains that prerequisite.
+A quote alone cannot mutate the contract; exact acceptance retries cannot grant
+a second extension.
 
 With an already-issued usable Buyer session, `offers`, `future-contracts`, and
 `future-contract-show` do not require local NetBird bootstrap. They still use
@@ -104,7 +111,8 @@ Do not paste session values into documentation, tickets, or shells.
 | `POST /api/v0/buyer/future-contracts` | `offerId`, `contractRef`, `termsDigest`, `accepted: true`, `buyerPublicKey`, `buyerPublicKeyFingerprint` | `201` first acceptance; `200` identical replay |
 | `GET /api/v0/buyer/future-contracts/:id` | none | `200`, `punch.future-contract-status.v1` |
 | `POST /api/v0/buyer/future-contracts/:id/claim` | `{}` | `202`, `punch.future-contract-claim.v1`, accepted or pending |
-| `POST /api/v0/buyer/future-contracts/:id/rollover` | `{}` | `200`, updated status snapshot; identical replay is safe |
+| `GET /api/v0/buyer/future-contracts/:id/rollover` | none | `200`, deadline/fixture-price quote and `quoteDigest` |
+| `POST /api/v0/buyer/future-contracts/:id/rollover` | `accepted: true`, `quoteDigest` | `200`, updated status snapshot; exact accepted-quote replay is safe |
 | `POST /api/v0/buyer/future-contracts/:id/recover` | `{}` | `202`, `punch.future-contract-recovery.v1`, `RECOVERY_ACCEPTED` or replay |
 
 The acceptance binds the exact offer terms digest, contract reference, and
@@ -124,6 +132,10 @@ verifies the Provider signature and source task/machine/container binding,
 fences gateway access, records `STOPPING`, and queues Provider STOP cleanup.
 A successful report returns `202` with `STOPPING`, `stopTaskId`,
 `interruptionAt`, and `remainingSeconds`.
+
+Outage timing is Provider-attested, not independently metered. Delayed signed
+reports preserve downtime recovery; they remain bound to the same Provider/Buyer
+and enforced capacity. No commercial SLA measurement guarantee is claimed.
 
 ## Three clocks
 
