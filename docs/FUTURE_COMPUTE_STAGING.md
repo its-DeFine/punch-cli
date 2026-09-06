@@ -80,6 +80,12 @@ punch-buyer future-contract-recover --future-contract-id ID --config ABSOLUTE_PU
 
 Recovery is bodyless; it takes only the owned future contract ID.
 
+With an already-issued usable Buyer session, `offers`, `future-contracts`, and
+`future-contract-show` do not require local NetBird bootstrap. They still use
+the configured HTTPS endpoint and authenticated, Buyer-scoped Control routes.
+Execution commands, including claim and SSH, retain their bootstrap checks.
+This does not bypass account enrollment or grant access to a workload.
+
 After a claim returns an ordinary job identifier, use the matched build's
 existing `status --job-id ID`, `ssh --job ID`, and `stop --job ID` commands.
 Inspect status for access readiness before SSH. A pending claim has no ordinary
