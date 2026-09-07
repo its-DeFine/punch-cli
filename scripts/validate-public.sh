@@ -193,7 +193,7 @@ for active_release_doc in \
   fi
 done
 
-for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
+for current_boundary_doc in docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHOOTING.md; do
   grep -F 'Preview.19.2' "$current_boundary_doc" > /dev/null && \
     grep -F 'not install authority' "$current_boundary_doc" > /dev/null || {
     printf 'Preview.19.2 candidate release boundary is missing from %s\n' "$current_boundary_doc" >&2
@@ -201,14 +201,27 @@ for current_boundary_doc in docs/COMMANDS.md docs/INVITATIONS.md docs/PROVIDER.m
   }
 done
 
-for candidate_boundary_doc in README.md docs/RELEASES.md; do
-  grep -F 'Preview.19.2' "$candidate_boundary_doc" > /dev/null && \
+grep -F 'Preview.19.2' README.md > /dev/null && \
+  grep -F 'candidate' README.md > /dev/null && \
+  grep -F 'not a published' README.md > /dev/null || {
+  printf '%s\n' 'Preview.19.2 existing candidate status is missing from README.md'
+  exit 1
+}
+
+for candidate_boundary_doc in docs/RELEASES.md; do
+  grep -F 'Preview.19.3' "$candidate_boundary_doc" > /dev/null && \
     grep -F 'candidate' "$candidate_boundary_doc" > /dev/null && \
     grep -F 'not a published' "$candidate_boundary_doc" > /dev/null || {
-    printf 'Preview.19.2 candidate status is missing from %s\n' "$candidate_boundary_doc" >&2
+    printf 'Preview.19.3 candidate status is missing from %s\n' "$candidate_boundary_doc" >&2
     exit 1
   }
 done
+
+grep -F 'Preview.19.3' docs/COMMANDS.md > /dev/null && \
+  grep -F 'not install authority' docs/COMMANDS.md > /dev/null || {
+  printf '%s\n' 'Preview.19.3 command reference release boundary is missing' >&2
+  exit 1
+}
 
 for historical_defect_doc in README.md docs/RELEASES.md; do
   grep -F 'Preview.16' "$historical_defect_doc" > /dev/null && \

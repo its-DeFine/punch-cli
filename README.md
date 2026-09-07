@@ -84,6 +84,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Invitations and credentials](docs/INVITATIONS.md)
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
+- [Future compute staging note](docs/FUTURE_COMPUTE_STAGING.md) (staging-only, unreleased)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Autonomous agent runbook](docs/AGENT_RUNBOOK.md)
