@@ -10,6 +10,12 @@
 This guide is a draft on branch `feat/future-contracts-staging-20260906`; branch
 identity does not mean that the feature is deployed or available.
 
+The [September7 staging validation checkpoint](FUTURE_STAGING_VALIDATION.md)
+records the measured native scenarios, version limits and read-only marketplace.
+The staging-only unauthenticated `GET /api/v0/marketplace/offers` exposes an
+explicit public projection, not the authenticated Buyer records listed below.
+The website only prepares a CLI command; actual acceptance remains authenticated.
+
 This is a public-safe usage guide, not operative platform/provider/buyer terms,
 legal advice, or a compliance certification. Those terms remain internal until
 the responsible party completes product, privacy, and jurisdiction-specific
