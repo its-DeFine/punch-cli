@@ -286,8 +286,8 @@ with mode `0600` (shown below as `/absolute/path/future-terms.json`):
 }
 ```
 
-The example offers one contiguous 600-second execution, exercisable within
-3600 seconds, with a 3600-second delivery deadline and one optional zero-price
+The example adds a 3600-second exercise window, a 3600-second delivery deadline
+and one optional zero-price
 rollover. The 60-second fixture recovery bonus is not a commercial guarantee.
 There is no billing or charge. Review and choose these terms before creating
 the offer; they become immutable and Buyer acceptance binds their exact digest.
@@ -302,13 +302,18 @@ nonterminal offer's binding.
 punch-provider offer-create --machine-id MACHINE_ID --state-dir STATE_DIR \
   --cpu-cores 2 --gpu-units 1 --gpu-uuid GPU_UUID --gpu-cdi GPU_CDI \
   --vram-mib 16384 --ram-mib 4096 --disk-gib 10 \
-  --duration-seconds 600 --sale-audience PUBLIC --transfer-mode CLEAN_REPROVISION \
-  --network-outbound NONE --future-terms-file /absolute/path/future-terms.json --yes
+  --future-terms-file /absolute/path/future-terms.json --yes
 ```
 
-`NONE` denies workload outbound internet. Choose `RESEARCH_EGRESS` instead only
-if you intend the configured restricted egress policy; it does not mean
-unrestricted internet. Fresh GPU inventory model/memory and the explicit
+Flat existing-provider `offer-create` inherits duration, audience, transfer and
+internet policy from the existing approved offer intent; it overlays only the
+future terms. Duration/network/audience flags do not change that authorization.
+Inspect `overview` and the resulting offer receipt before offering capacity:
+an approved 18000-second `RESEARCH_EGRESS` intent remains 18000 seconds with
+restricted egress. The native example used an already-approved 600-second
+`NONE` intent; it does not authorize changing another Provider's terms.
+`NONE` denies workload outbound internet; `RESEARCH_EGRESS` permits only the
+configured restricted egress, not unrestricted internet. Fresh GPU inventory model/memory and the explicit
 UUID/CDI are bound into the future offer. Omitting `--future-terms-file` keeps
 the spot path. Keep identical inputs on an interrupted create retry.
 
