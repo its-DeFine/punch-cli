@@ -1,7 +1,7 @@
 # Command reference
 
-> **Version boundary:** this reference describes the Preview.19.2 public
-> source contract for Linux/x64 `v0.1.0-preview.19.2`. Exact flags are bound in
+> **Version boundary:** this reference describes the Preview.19.3 public
+> source contract for Linux/x64 `v0.1.0-preview.19.3`. Exact flags are bound in
 > `docs/preview19-runtime-contract.json` and the matching archive. This source
 > reference alone is not install authority; install only from the matching
 > non-draft release after verifying its checksum.
@@ -18,8 +18,9 @@ Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.19.2 carries the state-aware `punch` home without removing either role
-command. Preview.19.2's guided Provider entry point is `punch`, then
+Preview.19.3 carries the state-aware `punch` home and the matched future-compute
+Buyer command surface without removing either role command. Preview.19.3's
+guided Provider entry point is `punch`, then
 **Provider**; the direct Provider entry point remains `punch-provider` for
 preflight, setup, and recovery. Its release boundary and behavior are documented in
 [Guided `punch` home](GUIDED_CLI.md).
@@ -27,7 +28,7 @@ preflight, setup, and recovery. Its release boundary and behavior are documented
 ## Buyer
 
 ```text
-punch-buyer doctor|onboarding-request|onboarding-status|onboarding-pickup|join|offers|order|status|output|ssh|stop|resales|resale-create|resale-claim|resale-cancel|extension-exercise|extension-propose|extension-inbox|extension-accept|extension-reject \
+punch-buyer doctor|onboarding-request|onboarding-status|onboarding-pickup|join|offers|future-contracts|future-contract-show|future-contract-accept|future-contract-claim|future-contract-recover|future-contract-rollover|order|status|output|ssh|stop|resales|resale-create|resale-claim|resale-cancel|extension-exercise|extension-propose|extension-inbox|extension-accept|extension-reject \
   --config ABSOLUTE_PUBLIC_CONFIG [command flags]
 ```
 
@@ -39,6 +40,12 @@ punch-buyer doctor|onboarding-request|onboarding-status|onboarding-pickup|join|o
 | `onboarding-pickup` | Redeem an approved invitation and install the Buyer session/NetBird state | `--yes`, `--json` |
 | `join` | Redeem one Buyer invitation, bootstrap NetBird, and create a local session | `--invitation`, optional explicit install confirmation `--yes`, `--json` |
 | `offers` | List capacity visible to this Buyer | `--json` |
+| `future-contracts` | List future-compute contracts owned by this Buyer | `--json` |
+| `future-contract-show` | Read one owned future-compute contract | `--future-contract-id`, `--json` |
+| `future-contract-accept` | Accept one eligible future offer with exact terms and Buyer SSH key binding | `--offer-id`, `--contract-ref`, `--terms-digest`, `--ssh-public-key-file`, `--json` |
+| `future-contract-claim` | Submit the single eligible claim for a future-compute contract | `--future-contract-id`, `--json` |
+| `future-contract-recover` | Request bounded future-contract recovery for an eligible future contract; candidate only and unpublished | `--future-contract-id`, `--json` |
+| `future-contract-rollover` | Read or accept one pre-activation rollover quote | `--future-contract-id`, one of `--quote` or `--quote-digest`, `--json` |
 | `order` | Create or replay an idempotent direct or conditional order | exactly one of `--offer-id` or `--request-file`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |
 | `status` | Read the current job state and access readiness | `--job-id`, `--json` |
 | `output` | Download and verify a completed task output | `--job-id`, `--task-id`, `--output`, `--json` |
@@ -58,7 +65,16 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-Preview.19.2 Buyers do not pass a zero-price flag. An operator-approved
+The six `future-contract-*` commands are exposed only by the matched Preview.19.3
+candidate surface and remain staging-only and unavailable in the published
+Preview.18 archive. They use the authenticated Buyer session and exact terms
+digest; they do not accept `--yes` or a Buyer-supplied retry key. See
+[Future compute staging](FUTURE_COMPUTE_STAGING.md) for the separate staging
+proof boundary. All current offer and future-contract paths remain zero-price;
+payment, settlement, payout, refunds, and commercial SLA guarantees are not
+enabled by this candidate.
+
+Preview.19.3 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer may be public or targeted: public offers appear to eligible
 Buyers, while targeted offers appear only to the designated Buyer. See
 [Targeted zero-price test](TARGETED_ZERO_TEST.md).
@@ -72,14 +88,14 @@ exception when needed, prints the contract-bound command, and never spawns SSH.
 OSC 52 copy is optional and explicit-consent-only; the visible command remains
 the fallback.
 
-For guided Buyer join only, after confirmation Preview.19.2 probes passwordless
+For guided Buyer join only, after confirmation Preview.19.3 probes passwordless
 capability with `sudo -n true` before falling back to interactive `sudo -v`.
 Failed authorization stops before dependency installation or join. Direct
 non-interactive join still requires `--yes` and cached `sudo`.
 
 ## Provider
 
-The Preview.19.2 public Provider commands are:
+The Preview.19.3 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -112,11 +128,22 @@ The Preview.19.2 public Provider commands are:
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.19.2 Provider command reference](#provider)
+[Preview.19.3 Provider command reference](#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
-The Preview.19.2 live acceptance target is Ubuntu 24.04 LTS on Linux/x64.
+The Preview.19.3 live acceptance target is Ubuntu 24.04 LTS on Linux/x64.
+
+For an existing Provider identity and state directory, the canonical service
+regeneration command is:
+
+```text
+punch-provider service-install --machine-id ID --state-dir DIR --yes
+```
+
+It reuses the existing machine identity, state, and generated configuration;
+preserve existing offers unless the Provider explicitly chooses a lifecycle
+action.
 
 The direct host-preparation entry point is read-only unless installation is
 requested explicitly:
@@ -193,7 +220,7 @@ This is one guided/direct CLI session. After consent, guided TTY use probes
 non-interactive use requires explicit confirmation and cached `sudo`. Normal
 onboarding does not require `serve` or manual config.
 
-The Preview.19.2 source contract supports multiple independently supervised
+The Preview.19.3 source contract supports multiple independently supervised
 Provider machines and offers. Approval of a new Provider appends distinct
 authority without replacing an existing Provider or Buyer; full live
 multi-Provider scheduling and acceptance remain outside this source proof.
@@ -203,7 +230,7 @@ orderable through either the guided or direct Buyer command.
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14.
-Preview.19.2 includes `offer-list`, resource-aware `offer-create`, and the compatible
+Preview.19.3 includes `offer-list`, resource-aware `offer-create`, and the compatible
 `offer-replace` shortcut. They do not alter the Buyer direct command surface.
 
 All lifecycle commands require `--machine-id` and `--state-dir`; they reuse the
@@ -272,12 +299,12 @@ is rejected until that pending operation reaches an authoritative result.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.19.2 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.19.3 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound public
 reference is the [Provider section of this document](#provider).
 
-## Preview.19.2 resource and marketplace additions
+## Preview.19.3 resource and marketplace additions
 
 Provider onboarding and setup carry the selected CPU, GPU UUID/CDI, VRAM, RAM,
 quota-backed disk, duration, audience, transfer, and network-policy terms. The

@@ -5,7 +5,8 @@
 > public preview commands do not support it. Use these commands only after
 > receiving a version-matched staging build and stage endpoint whose release
 > notes explicitly include this feature. This page is not a production or
-> payment instruction.
+> payment instruction. This is a free pilot: there are no charges, and no
+> commercial SLA or remedy is promised.
 
 This guide is a draft on branch `feat/future-contracts-staging-20260906`; branch
 identity does not mean that the feature is deployed or available.
@@ -27,7 +28,11 @@ A Buyer can accept an eligible future-compute offer, hold one defined execution
 for a later exercise window, and claim it through the existing Buyer → Control
 → Provider job path. Staging has no real billing, payment, automatic charge,
 refund, or account credit; displayed prices and compensation values are test
-fixtures only. Transfer and resale are not part of this first slice.
+fixtures only. This free pilot has no charges. Any displayed `USDC_TEST` amount
+is a test-token label only, not a payment request, balance, payout, refund, or
+commercial entitlement. `FIXTURE_ONLY` compensation is test accounting only;
+it does not create a commercial SLA or remedy. Transfer and resale are not part
+of this first slice.
 
 Each accepted future offer must expose a fixed duration, an exercise window,
 the claim-to-access delivery timeout, capacity, resource snapshot, rollover
@@ -196,16 +201,16 @@ cleanup outcomes are not eligible. The route and recovery path remain disabled
 when the future-contract flag is absent or false, and this feature is staging-
 only.
 
-## SLA status: fixture path implemented; commercial policy pending
+## SLA status: free pilot fixture path only; no commercial guarantee
 
 The staged schema currently permits `slaCompensation.mode: "FIXTURE_ONLY"`
 with explicit fixture fields such as `additionalSeconds` and `maxAwards`. That
-is validation/test surface, not an approved commercial SLA.
+is validation/test surface for this free pilot, not a commercial SLA or remedy.
 
 The active-interruption source path records the verified Provider interruption
 and, after the cleanup gate, recovers signed remaining time plus one fixture-only
 additional-time award at most once. This remains validation/test behavior, not
-an approved commercial SLA. Controlled staging has verified accounting,
+a commercial SLA or remedy. Controlled staging has verified accounting,
 access-readiness, capacity rejection, replay and an actual interruption/recovery
 scenario. The implemented fixture has explicit additional-time and award-cap
 values; commercial values and remedies remain unapproved. No active-

@@ -8,7 +8,7 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-[`Preview.19.2`](PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64
+[`Preview.19.3`](PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64
 public candidate. It is not a published or installable release, and this
 source checkout is not install authority. The candidate remains subject to
 final acceptance; do not infer completion or publication from this page.
@@ -31,11 +31,12 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.19.2 Ubuntu Provider candidate
+## Preview.19.3 Ubuntu Provider candidate
 
-Preview.19.2 narrows the candidate Provider target to Ubuntu 24.04 LTS on
-Linux/x64 and carries the resource-aware offer lifecycle and contract-scoped
-Buyer gateway described in [Preview.19.2](PREVIEW19.md). This section is a
+Preview.19.3 narrows the candidate Provider target to Ubuntu 24.04 LTS on
+Linux/x64 and carries the resource-aware offer lifecycle, future-compute
+command surface, and contract-scoped Buyer gateway described in
+[Preview.19.3](PREVIEW19.md). This section is a
 candidate contract only: no release asset, archive digest, or live acceptance
 claim is published here. Use the bundled release metadata as the exact source
 and archive identity after the final rebuild.

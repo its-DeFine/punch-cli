@@ -1,8 +1,8 @@
 {
   "schemaVersion": "punch.preview19-runtime-contract.v1",
-  "releaseVersion": "0.1.0-preview.19.2",
+  "releaseVersion": "0.1.0-preview.19.3",
   "platform": "linux-x64",
-  "privateReleaseSource": {"commit": "b3fa7991c8388788609f4de6aac71beb1e4159dd", "tree": "da8ea82502596d7c27f461683288623eb353fda6"},
+  "privateReleaseSource": {"commit": "3052551bc8b10bd2d0e3422b4e1c65af8048e7ff", "tree": "34894a5b621226e658e3bd111932571d0e772e3c"},
   "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
   "buyerNetBirdBootstrap": "PUNCH_JOIN_ONE_OFF_NARROW_GROUP",
   "gatewayPort": 22222,
@@ -23,7 +23,7 @@
   },
   "publicCommands": {
     "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "overview", "doctor", "inventory", "setup", "service-install", "service-start", "service-stop", "service-status", "service-logs", "serve", "status", "drain", "offer-create", "offer-list", "offer-status", "offer-unlist", "offer-retire", "offer-replace", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"],
-    "buyer": ["doctor", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "offers", "order", "status", "output", "ssh", "stop", "resales", "resale-create", "resale-claim", "resale-cancel", "extension-exercise", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"]
+    "buyer": ["doctor", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "offers", "future-contracts", "future-contract-show", "future-contract-accept", "future-contract-claim", "future-contract-recover", "future-contract-rollover", "order", "status", "output", "ssh", "stop", "resales", "resale-create", "resale-claim", "resale-cancel", "extension-exercise", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"]
   },
   "commandMetadataSchemaVersion": "punch.public-cli-contract.v2",
   "proofBoundary": {"localDeterministic": "LOCAL_DETERMINISTIC_PASS", "releasedArtifact": "RELEASE_ARTIFACT_PROOF", "liveE2E": "LIVE_E2E_PROOF"}
