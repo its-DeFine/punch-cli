@@ -176,6 +176,11 @@ network, temporary-state, and workspace cleanup evidence. Recovery computes
 explicit `FIXTURE_ONLY` bonus once at most. The replacement execution gets
 `remainingSeconds + bonus`; it is not a second discretionary claim.
 
+If that replacement is interrupted, the same fencing and completed-cleanup
+gate applies again. Its unused runtime can be recovered into another execution;
+prior receipts are retained and retries do not duplicate jobs. With fixture
+`maxAwards=1`, the second interruption does not add another bonus.
+
 This does not resume the interrupted workload or restore a checkpoint, workload
 state, input/output data, or lost progress. A stale or missing heartbeat,
 buyer-visible SSH disconnect, natural access/runtime expiry, or Buyer stop is
