@@ -44,7 +44,7 @@ punch-buyer doctor|onboarding-request|onboarding-status|onboarding-pickup|join|o
 | `future-contract-show` | Read one owned future-compute contract | `--future-contract-id`, `--json` |
 | `future-contract-accept` | Accept one eligible future offer with exact terms and Buyer SSH key binding | `--offer-id`, `--contract-ref`, `--terms-digest`, `--ssh-public-key-file`, `--json` |
 | `future-contract-claim` | Submit the single eligible claim for a future-compute contract | `--future-contract-id`, `--json` |
-| `future-contract-recover` | Request bounded future-contract recovery for an eligible future contract; candidate only and unpublished | `--future-contract-id`, `--json` |
+| `future-contract-recover` | Request bounded future-contract recovery after eligible failure and confirmed cleanup | `--future-contract-id`, `--json` |
 | `future-contract-rollover` | Read or accept one pre-activation rollover quote | `--future-contract-id`, one of `--quote` or `--quote-digest`, `--json` |
 | `order` | Create or replay an idempotent direct or conditional order | exactly one of `--offer-id` or `--request-file`, `--order-ref`, optional `--ssh-public-key-file`, `--json` |
 | `status` | Read the current job state and access readiness | `--job-id`, `--json` |
@@ -65,14 +65,15 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-The six `future-contract-*` commands are exposed only by the matched Preview.19.3
-candidate surface and remain staging-only and unavailable in the published
-Preview.18 archive. They use the authenticated Buyer session and exact terms
+The six `future-contract-*` commands require the matched Preview.19.3
+release and an enabled Control endpoint; older archives do not provide this
+feature. They use the authenticated Buyer session and exact terms
 digest; they do not accept `--yes` or a Buyer-supplied retry key. See
 [Future compute staging](FUTURE_COMPUTE_STAGING.md) for the separate staging
 proof boundary. All current offer and future-contract paths remain zero-price;
 payment, settlement, payout, refunds, and commercial SLA guarantees are not
-enabled by this candidate.
+enabled by this free pilot. `USDC_TEST` is a test denomination, not a charge;
+`FIXTURE_ONLY` does not promise a commercial SLA or remedy.
 
 Preview.19.3 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer may be public or targeted: public offers appear to eligible
@@ -254,6 +255,79 @@ machine, offer, and action. `--idempotency-key` remains an optional advanced
 override for those commands; compatibility-only `offer-replace` still requires
 an explicit agent config and key. The complete lifecycle and archive-release
 gate are in [Provider offer lifecycle](OFFER_LIFECYCLE_PREVIEW.md).
+
+### Existing Provider: create a future GPU offer
+
+A software-only upgrade preserves working spot offers. Do not retire an offer
+just to update the CLI or regenerate its service unit (see [Install](INSTALL.md)).
+Creating future terms is a separate, optional choice. Reuse the same machine ID,
+state directory, identity, credentials and generated configuration; no identity
+reset or repeat onboarding is needed.
+
+Save this complete example as an absolute JSON file owned by the Provider user,
+with mode `0600` (shown below as `/absolute/path/future-terms.json`):
+
+```json
+{
+  "schemaVersion": "punch.future-contract-terms.v1",
+  "exerciseWindowSeconds": 3600,
+  "deliveryTimeoutSeconds": 3600,
+  "rollover": {
+    "mode": "BEFORE_ACTIVATION",
+    "durationSeconds": 600,
+    "maxUses": 1,
+    "priceMinor": 0
+  },
+  "slaCompensation": {
+    "mode": "FIXTURE_ONLY",
+    "additionalSeconds": 60,
+    "maxAwards": 1
+  }
+}
+```
+
+The example offers one contiguous 600-second execution, exercisable within
+3600 seconds, with a 3600-second delivery deadline and one optional zero-price
+rollover. The 60-second fixture recovery bonus is not a commercial guarantee.
+There is no billing or charge. Review and choose these terms before creating
+the offer; they become immutable and Buyer acceptance binds their exact digest.
+
+Use fresh `punch-provider inventory --machine-id MACHINE_ID --state-dir STATE_DIR
+--json` to obtain this machine's GPU UUID/CDI and available resources. Substitute
+the existing identity/state and actual resource values below; do not copy
+another Provider's GPU identifiers. The selected GPU must be free of another
+nonterminal offer's binding.
+
+```bash
+punch-provider offer-create --machine-id MACHINE_ID --state-dir STATE_DIR \
+  --cpu-cores 2 --gpu-units 1 --gpu-uuid GPU_UUID --gpu-cdi GPU_CDI \
+  --vram-mib 16384 --ram-mib 4096 --disk-gib 10 \
+  --duration-seconds 600 --sale-audience PUBLIC --transfer-mode CLEAN_REPROVISION \
+  --network-outbound NONE --future-terms-file /absolute/path/future-terms.json --yes
+```
+
+`NONE` denies workload outbound internet. Choose `RESEARCH_EGRESS` instead only
+if you intend the configured restricted egress policy; it does not mean
+unrestricted internet. Fresh GPU inventory model/memory and the explicit
+UUID/CDI are bound into the future offer. Omitting `--future-terms-file` keeps
+the spot path. Keep identical inputs on an interrupted create retry.
+
+If a single GPU is already assigned to a spot offer and you elect to replace its
+terms, first unlist that exact offer to prevent new orders, wait for all jobs and
+access cleanup to complete, then retire it and run the create command above:
+
+```bash
+punch-provider offer-unlist --machine-id MACHINE_ID --state-dir STATE_DIR --offer-id OLD_OFFER_ID
+punch-provider offer-status --machine-id MACHINE_ID --state-dir STATE_DIR --offer-id OLD_OFFER_ID
+# Only after the offer is idle and all workload/access cleanup is confirmed:
+punch-provider offer-retire --machine-id MACHINE_ID --state-dir STATE_DIR --offer-id OLD_OFFER_ID
+```
+
+Retirement is permanent for the old offer; the successor receives a new offer ID.
+Do not bypass a retirement rejection or delete state. Verify the new offer is
+`LISTED`, heartbeat-eligible and shows future terms in Buyer `offers` before
+asking a Buyer to accept it. This optional same-identity/GPU retire/create path
+was exercised natively; it is not required for a software-only upgrade.
 
 ### Machine-readable results
 
