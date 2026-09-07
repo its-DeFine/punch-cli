@@ -157,7 +157,7 @@ rollover schedule without duplicating entitlement. The staged fixture is
 zero-price; fee, extension, capacity, and commercial policy are not approved
 by this page.
 
-## Recovery status: source semantics implemented; active end-to-end proof pending
+## Recovery status: controlled native staging proof passed
 
 The matched staging build accepts `future-contract-recover` only for a committed
 future claim whose source execution has a confirmed terminal Provider-caused
@@ -199,21 +199,38 @@ is validation/test surface, not an approved commercial SLA.
 The active-interruption source path records the verified Provider interruption
 and, after the cleanup gate, recovers signed remaining time plus one fixture-only
 additional-time award at most once. This remains validation/test behavior, not
-an approved commercial SLA. Core accounting, access-readiness, capacity,
-replay, and incident reports are still pending; the formula, cap, delivery
-method, expiry, and repeat-incident rules remain unresolved. No active-
+an approved commercial SLA. Controlled staging has verified accounting,
+access-readiness, capacity rejection, replay and an actual interruption/recovery
+scenario. The implemented fixture has explicit additional-time and award-cap
+values; commercial values and remedies remain unapproved. No active-
 interruption compensation is inferred from heartbeat loss, SSH disconnect,
 natural expiry, or Buyer stop. Core reports and internal legal/product drafts
 are required before any final approval or publication.
 
 ## Verification boundary
 
-This page makes no claim that a stage Control is running, a public binary has
-these commands, or external Buyer/NetBird transport or active full E2E has
-passed. Controlled staging checks have proven `RESEARCH_EGRESS` public HTTPS+DNS
-reachability while public port 80 and host port 443 are denied, and `NONE`
-outbound denial with GPU. These are bounded network/runtime checks, not full
-contract acceptance, active-interruption recovery, accounting, compensation,
-checkpoint, or SLA proof. A matched staging release must provide its own
-versioned evidence and limitations. No production or Provider-environment
-procedure is described here.
+On September 7, 2026, the controlled staging run used Control `820072c`,
+Provider management CLI `820072c`, and resident Provider/Buyer CLI `36ef697`.
+This identifies the tested builds, not a public release or a currently available
+endpoint. Current published binaries still must not be assumed to include this
+feature.
+
+The native Buyer/NetBird/Provider chain passed future acceptance and claim,
+nonroot GPU execution, matching-hash result download, `NONE` outbound denial,
+foreign-Buyer status denial and STOP cleanup. Two Buyers ran CPU/GPU jobs on
+two Providers concurrently; a competing CPU request was rejected. Native
+rollover and a deliberate owned-test-container interruption passed: cleanup
+completed, recovery delivered remaining runtime plus one fixture bonus,
+identical retries returned the same job, and the replacement ran GPU work.
+Recovery did not restore the interrupted process or its checkpoint.
+
+Separately, component checks proved `RESEARCH_EGRESS` public HTTPS+DNS
+reachability while public port 80 and host port 443 were denied. Full native
+`RESEARCH_EGRESS` acceptance remains pending; those component checks do not
+prove the complete contract path. GPU testing used a shared-kernel Ubuntu24
+system container, not an independent GPU VM. A few successful scenarios do
+not establish population reliability or a commercial SLA guarantee.
+
+No production release, Pon operation, payment or remote deletion followed from
+these tests. Obtain the matched stage release, endpoint and current acceptance
+report from the operator before using this guide.
