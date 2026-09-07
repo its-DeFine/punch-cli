@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: punch-public-cli-validate-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -22,3 +26,17 @@ jobs:
           sh tests/preview14-release-gate.sh
       - name: Validate public surface without ripgrep
         run: ./tests/validate-without-rg.sh
+      - name: Summarize public CLI source and future staging docs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_commit="$(git rev-parse HEAD)"
+          source_subject="$(git log -1 --format='%s')"
+          future_doc_count="$(find docs -maxdepth 1 -type f -name 'FUTURE*.md' | wc -l | tr -d ' ')"
+          future_cli_command_count="$(grep -Ec '^punch-buyer (offers|future-contract)' docs/FUTURE_COMPUTE_STAGING.md || true)"
+          echo "source_commit=$source_commit" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "source_subject=$source_subject" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "future_docs=$future_doc_count" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "future_cli_commands=$future_cli_command_count" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "validation_status=${{ job.status }}" | tee -a "$GITHUB_STEP_SUMMARY"
