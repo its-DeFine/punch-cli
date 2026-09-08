@@ -1,7 +1,7 @@
 # Command reference
 
-> **Version boundary:** this reference describes the Preview.19.3 public
-> source contract for Linux/x64 `v0.1.0-preview.19.3`. Exact flags are bound in
+> **Version boundary:** this reference describes the Preview.19.4 public
+> source contract for Linux/x64 `v0.1.0-preview.19.4`. Exact flags are bound in
 > `docs/preview19-runtime-contract.json` and the matching archive. This source
 > reference alone is not install authority; install only from the matching
 > non-draft release after verifying its checksum.
@@ -18,8 +18,8 @@ Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
 
-Preview.19.3 carries the state-aware `punch` home and the matched future-compute
-Buyer command surface without removing either role command. Preview.19.3's
+Preview.19.4 carries the state-aware `punch` home and the matched future-compute
+Buyer command surface without removing either role command. Preview.19.4's
 guided Provider entry point is `punch`, then
 **Provider**; the direct Provider entry point remains `punch-provider` for
 preflight, setup, and recovery. Its release boundary and behavior are documented in
@@ -65,7 +65,7 @@ Every Buyer command requires `--config`. `ssh` ends only the local connection;
 use `stop` to terminate the Punch lifecycle. Exact order and stop retries
 reconcile the same contract or operation.
 
-The six `future-contract-*` commands require the matched Preview.19.3
+The six `future-contract-*` commands require the matched Preview.19.4
 release and an enabled Control endpoint; older archives do not provide this
 feature. They use the authenticated Buyer session and exact terms
 digest; they do not accept `--yes` or a Buyer-supplied retry key. See
@@ -75,7 +75,7 @@ payment, settlement, payout, refunds, and commercial SLA guarantees are not
 enabled by this free pilot. `USDC_TEST` is a test denomination, not a charge;
 `FIXTURE_ONLY` does not promise a commercial SLA or remedy.
 
-Preview.19.3 Buyers do not pass a zero-price flag. An operator-approved
+Preview.19.4 Buyers do not pass a zero-price flag. An operator-approved
 zero-price offer may be public or targeted: public offers appear to eligible
 Buyers, while targeted offers appear only to the designated Buyer. See
 [Targeted zero-price test](TARGETED_ZERO_TEST.md).
@@ -89,14 +89,14 @@ exception when needed, prints the contract-bound command, and never spawns SSH.
 OSC 52 copy is optional and explicit-consent-only; the visible command remains
 the fallback.
 
-For guided Buyer join only, after confirmation Preview.19.3 probes passwordless
+For guided Buyer join only, after confirmation Preview.19.4 probes passwordless
 capability with `sudo -n true` before falling back to interactive `sudo -v`.
 Failed authorization stops before dependency installation or join. Direct
 non-interactive join still requires `--yes` and cached `sudo`.
 
 ## Provider
 
-The Preview.19.3 public Provider commands are:
+The Preview.19.4 public Provider commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -129,11 +129,11 @@ The Preview.19.3 public Provider commands are:
 
 The normal Provider path is `punch`, then **Provider**. Use
 `punch-provider --help` and the release-bound
-[Preview.19.3 Provider command reference](#provider)
+[Preview.19.4 Provider command reference](#provider)
 only for advanced automation or recovery flags. The Provider cannot approve its
 own identity, authorize a free offer, or publish an offer.
 
-The Preview.19.3 live acceptance target is Ubuntu 24.04 LTS on Linux/x64.
+The Preview.19.4 live acceptance target is Ubuntu 24.04 LTS on Linux/x64.
 
 For an existing Provider identity and state directory, the canonical service
 regeneration command is:
@@ -221,7 +221,7 @@ This is one guided/direct CLI session. After consent, guided TTY use probes
 non-interactive use requires explicit confirmation and cached `sudo`. Normal
 onboarding does not require `serve` or manual config.
 
-The Preview.19.3 source contract supports multiple independently supervised
+The Preview.19.4 source contract supports multiple independently supervised
 Provider machines and offers. Approval of a new Provider appends distinct
 authority without replacing an existing Provider or Buyer; full live
 multi-Provider scheduling and acceptance remain outside this source proof.
@@ -231,7 +231,7 @@ orderable through either the guided or direct Buyer command.
 ### Provider offer lifecycle
 
 `offer-status`, `offer-unlist`, and `offer-retire` were published in Preview.14.
-Preview.19.3 includes `offer-list`, resource-aware `offer-create`, and the compatible
+Preview.19.4 includes `offer-list`, resource-aware `offer-create`, and the compatible
 `offer-replace` shortcut. They do not alter the Buyer direct command surface.
 
 All lifecycle commands require `--machine-id` and `--state-dir`; they reuse the
@@ -302,16 +302,25 @@ nonterminal offer's binding.
 punch-provider offer-create --machine-id MACHINE_ID --state-dir STATE_DIR \
   --cpu-cores 2 --gpu-units 1 --gpu-uuid GPU_UUID --gpu-cdi GPU_CDI \
   --vram-mib 16384 --ram-mib 4096 --disk-gib 10 \
+  --duration-seconds 18000 --network-outbound RESEARCH_EGRESS \
   --future-terms-file /absolute/path/future-terms.json --yes
 ```
 
-Flat existing-provider `offer-create` inherits duration, audience, transfer and
-internet policy from the existing approved offer intent; it overlays only the
-future terms. Duration/network/audience flags do not change that authorization.
-Inspect `overview` and the resulting offer receipt before offering capacity:
-an approved 18000-second `RESEARCH_EGRESS` intent remains 18000 seconds with
-restricted egress. The native example used an already-approved 600-second
-`NONE` intent; it does not authorize changing another Provider's terms.
+The flags request a fixed 18000-second offer with restricted research egress;
+Control must explicitly approve these new-offer terms. The same flags work for
+spot creation without a future-terms file when the resident intent is spot.
+Audience, transfer and other unspecified fields retain the resident intent.
+Omitting duration/network flags uses the resident authorization, **not** the
+retired offer's terms. A previous five-hour offer does not itself authorize a
+new five-hour offer. No identity reset or resident configuration rewrite is needed.
+
+Before service start or activation, the CLI reads the authenticated offer list,
+selects the exact new offer ID, and compares duration, network and future terms
+to the requested intent. Missing or mismatching terms fail before activation;
+a newly pending offer remains unactivated. Do not manually list that offer.
+The successful result includes `offerIntent`, the exact verified readback.
+Check it and the Buyer's offer readback; LISTED alone does not prove the terms.
+
 `NONE` denies workload outbound internet; `RESEARCH_EGRESS` permits only the
 configured restricted egress, not unrestricted internet. Fresh GPU inventory model/memory and the explicit
 UUID/CDI are bound into the future offer. Omitting `--future-terms-file` keeps
@@ -378,12 +387,12 @@ is rejected until that pending operation reaches an authoritative result.
 ## Proof boundary
 
 Historical previews have owner-operated Provider-to-Buyer NetBird SSH and
-Buyer-stop proof. Preview.19.3 still requires exact-archive clean-host acceptance;
+Buyer-stop proof. Preview.19.4 still requires exact-archive clean-host acceptance;
 it does not prove payment settlement, refunds, arbitrary external Providers,
 multi-Provider scheduling, or general availability. Its release-bound public
 reference is the [Provider section of this document](#provider).
 
-## Preview.19.3 resource and marketplace additions
+## Preview.19.4 resource and marketplace additions
 
 Provider onboarding and setup carry the selected CPU, GPU UUID/CDI, VRAM, RAM,
 quota-backed disk, duration, audience, transfer, and network-policy terms. The

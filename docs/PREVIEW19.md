@@ -1,6 +1,7 @@
-# Punch Preview.19.3
+# Punch Preview.19.4
 
-Preview.19.3 is the corrected public packaging revision of the Preview.19
+Preview.19.4 is an unpublished candidate correcting explicit new-offer terms and
+pre-activation readback in the Preview.19
 zero-price resource and lifecycle contract for the Punch Compute pilot.
 Providers offer bounded CPU, RAM, quota-backed workspace disk, and optional GPU
 capacity; Buyers can order, use, extend, transfer, and stop that capacity.
@@ -8,7 +9,7 @@ Payment settlement is disabled for this preview.
 
 ## Release binding
 
-This page describes the Preview.19.3 public contract. For each candidate or
+This page describes the Preview.19.4 public contract. For each candidate or
 release archive, the exact runtime source, public packaging source, archive
 digest, and release binding are carried by its bundled
 `RELEASE-CONTRACT.json` and `RELEASE-BINDING.json`; verify the exact archive
@@ -53,7 +54,7 @@ result.
 
 Multiple simultaneous contracts on one machine share the configured gateway
 port but have separate workload bindings and SSH keys. Use the matching
-Preview.19.3 Linux/x64 archive on both Buyer and Provider for this path;
+Preview.19.4 Linux/x64 archive on both Buyer and Provider for this path;
 contract selection is automatic in `punch-buyer ssh`. Stopping one contract
 must not interrupt another.
 

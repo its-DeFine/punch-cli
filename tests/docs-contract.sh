@@ -41,6 +41,9 @@ require docs/PREVIEW9.md 'Exact order and stop retries'
 require docs/COMMANDS.md 'punch-buyer doctor|onboarding-request|onboarding-status|onboarding-pickup|join|offers|future-contracts|future-contract-show|future-contract-accept|future-contract-claim|future-contract-recover|future-contract-rollover|order|status|output|ssh|stop|resales|resale-create|resale-claim|resale-cancel|extension-exercise|extension-propose|extension-inbox|extension-accept|extension-reject'
 require docs/COMMANDS.md '`future-contract-recover` | Request bounded future-contract recovery after eligible failure and confirmed cleanup'
 require docs/COMMANDS.md '--future-terms-file /absolute/path/future-terms.json'
+require docs/COMMANDS.md '--duration-seconds 18000 --network-outbound RESEARCH_EGRESS'
+require docs/COMMANDS.md 'newly pending offer remains unactivated'
+require docs/COMMANDS.md "retired offer's terms"
 require docs/COMMANDS.md 'punch-provider service-install --machine-id ID --state-dir DIR --yes'
 require docs/COMMANDS.md 'commercial SLA guarantees are not'
 require docs/COMMANDS.md '`onboarding-pickup` | Redeem an approved invitation'
@@ -191,11 +194,11 @@ if grep -Eq '2d376786734fe7f7dbfef0c095d791782667a9cb|9873bd56dbf3ff2ee167ef9e3b
 fi
 require docs/TROUBLESHOOTING.md 'Preview.19.2 candidate recovery'
 require docs/TROUBLESHOOTING.md 'allows multiple nonterminal offers'
-require docs/PREVIEW19.md 'Preview.19.3 public contract'
-require docs/RELEASES.md 'Preview.19.3 Ubuntu Provider candidate'
-require docs/INSTALL.md "Preview.19.3's Provider scope is Ubuntu 24.04 LTS on Linux/x64"
-require docs/INSTALL.md 'punch-cli-0.1.0-preview.19.3-linux-x64.tar.gz'
-require docs/INSTALL.md 'NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.3/bin/punch-provider"'
+require docs/PREVIEW19.md 'Preview.19.4 public contract'
+require docs/RELEASES.md 'Preview.19.4 Ubuntu Provider candidate'
+require docs/INSTALL.md "Preview.19.4's Provider scope is Ubuntu 24.04 LTS on Linux/x64"
+require docs/INSTALL.md 'punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz'
+require docs/INSTALL.md 'NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.4/bin/punch-provider"'
 require docs/INSTALL.md 'service-install --machine-id MACHINE_ID --state-dir EXISTING_STATE_DIR --yes'
 require docs/GUIDED_CLI.md 'PENDING_AGENT'
 require docs/GUIDED_CLI.md 'resumable until the exact Buyer/NetBird binding'
