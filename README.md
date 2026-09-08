@@ -13,19 +13,25 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-[`Preview.19.2`](docs/PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64
-public candidate for the invitation-only preview. It is not a published or
-installable release. The exact source and archive identity is carried by the
-matching archive's bundled `RELEASE-CONTRACT.json` and `RELEASE-BINDING.json`;
-use those records and the same-release `SHA256SUMS` after the final rebuild.
-Do not install from this source checkout or from a draft or candidate archive.
+[`Preview.19.4`](docs/PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64 public candidate.
+It is not a published or installable release. It adds explicit new-offer terms and
+checks the exact pending offer before activation. No archive hash or native
+acceptance is claimed by this source checkout. The existing
+[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
+remains published; use only a published release's matching archive and `SHA256SUMS`.
 
-Until Preview.19.2 is accepted and published, [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
-is the last published Linux/x64 prerelease. Keep it only as historical release
-provenance. Install only its matching
-`punch-cli-0.1.0-preview.18-linux-x64.tar.gz` and `SHA256SUMS` assets; a source
-commit alone is not an installable release. The archive SHA-256 is
-`d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
+After separate approval of new-offer terms, Preview.19.4 accepts
+`--duration-seconds 18000 --network-outbound RESEARCH_EGRESS --future-terms-file`
+with an absolute JSON path. See the complete [Provider example](docs/COMMANDS.md#provider).
+Terms do not implicitly inherit from a retired offer. Preserve the existing
+identity/state/config and regenerate the version-pinned service unit with the
+new CLI's `service-install` before restart; see [upgrade instructions](docs/INSTALL.md).
+Working offers need no retirement for a software-only upgrade. This remains a
+free pilot without billing or commercial SLA guarantees.
+
+[`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+is historical release provenance, not the current install target.
+Its archive SHA-256 is `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 Preview.18 preserved guided
 Provider and Buyer onboarding from `punch`, adds explicit Provider offer
 selection and sequential replacement, and prepares a contract-bound,
