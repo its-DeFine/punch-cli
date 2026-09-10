@@ -13,12 +13,14 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-[`Preview.19.4`](docs/PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64 public candidate.
-It is not a published or installable release. It adds explicit new-offer terms and
-checks the exact pending offer before activation. No archive hash or native
-acceptance is claimed by this source checkout. The existing
-[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
-remains published; use only a published release's matching archive and `SHA256SUMS`.
+[`Preview.19.4`](docs/PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64
+prerelease. The published [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4)
+release is the install authority, not this source checkout. Verify its matching
+`SHA256SUMS` before installation; see the [release policy](docs/RELEASES.md) for
+the exact archive and binding metadata. It adds explicit new-offer terms and
+checks the exact pending offer before activation. Livepeer integration remains
+staging-only and unshipped; this release does not claim native acceptance or
+payment settlement.
 
 After separate approval of new-offer terms, Preview.19.4 accepts
 `--duration-seconds 18000 --network-outbound RESEARCH_EGRESS --future-terms-file`
@@ -69,8 +71,8 @@ with the matching immutable image set in
 
 ## Quick start
 
-1. Read the [Preview.19.2 candidate contract](docs/PREVIEW19.md); no public release asset is available until final acceptance and publication.
-2. When a matching non-draft Preview.19.2 release is published, download its archive and `SHA256SUMS`, then verify the checksum.
+1. Read the [Preview.19.4 contract](docs/PREVIEW19.md) and the [published Preview.19.4 release](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4).
+2. Download that release's Linux/x64 archive and `SHA256SUMS`, then verify the exact checksum before installation.
 3. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
 4. Run `punch` for the normal guided Provider or Buyer journey and follow the version-matched [Provider guide](docs/PROVIDER.md) or [Buyer guide](docs/BUYER.md).
 5. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.
@@ -91,6 +93,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
 - [Future compute staging note](docs/FUTURE_COMPUTE_STAGING.md) (staging-only, unreleased)
+- [Livepeer staging install and rollback](docs/LIVEPEER_STAGING_INSTALL.md) (staging-only, contract pending)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Autonomous agent runbook](docs/AGENT_RUNBOOK.md)
@@ -99,7 +102,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Platform support](docs/PLATFORMS.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Release and verification policy](docs/RELEASES.md)
-- [Preview.19.2 Ubuntu Provider candidate](docs/PREVIEW19.md)
+- [Preview.19.4 Ubuntu Provider contract](docs/PREVIEW19.md)
 - [Preview.9 clean-v4 supervised pilot](docs/PREVIEW9.md)
 - [Preview.11 supervised Buyer bootstrap](docs/PREVIEW11.md) (gated and unreleased)
 - [Preview.12 guided Punch home](docs/PREVIEW12.md) (superseded for Provider serving)

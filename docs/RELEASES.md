@@ -9,15 +9,26 @@ contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
 [`Preview.19.4`](PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64
-public candidate. It is not a published or installable release, and this
-source checkout is not install authority. The candidate remains subject to
-final acceptance; do not infer completion or publication from this page.
-Its exact source and archive identity will be read from the matching archive's
-bundled `RELEASE-CONTRACT.json` and `RELEASE-BINDING.json`, together with its
-same-release `SHA256SUMS`, after the final rebuild.
+prerelease. The published non-draft tag
+[`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4)
+is the install authority; this source checkout is not. The release was published
+at `2026-09-08T17:28:53Z` and targets public source commit
+`1d7af6f92c7ec36fca95eabd29c8f57e6a172228`.
 
-[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
-remains published. Preview.19.4 publication awaits its exact archive and acceptance.
+Verify the exact release assets with the same-release `SHA256SUMS` before
+installation:
+
+- Archive `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz`, 45,098,379 bytes,
+  SHA-256 `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`.
+- `RELEASE-BINDING.json`, SHA-256
+  `58afa6956d914aee8e0b601d6183c44393655669162d8424c3274962ed8cd811`.
+- `BUILD-MANIFEST.txt`, SHA-256
+  `7d8b3dd433998c2456d368b1755786e41018c7945f30a93fb0425a93c4bcb0ad`.
+
+The binding records the private release source
+`6bc3d1dd4c9bc1e241f3d04cf4a9ad6f8a37f3a0` and the same archive identity.
+Livepeer integration remains staging-only and unshipped; this
+release does not claim native acceptance or payment settlement.
 The historical [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 package used this exact public image set:
 
@@ -32,19 +43,18 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.19.4 Ubuntu Provider candidate
+## Preview.19.4 Ubuntu Provider prerelease
 
-Preview.19.4 narrows the candidate Provider target to Ubuntu 24.04 LTS on
-Linux/x64 and carries the resource-aware offer lifecycle, future-compute
-command surface, and contract-scoped Buyer gateway described in
-[Preview.19.4](PREVIEW19.md). This section is a
-candidate contract only: no release asset, archive digest, or live acceptance
-claim is published here. Use the bundled release metadata as the exact source
-and archive identity after the final rebuild.
+Preview.19.4 narrows the Provider target to Ubuntu 24.04 LTS on Linux/x64
+and carries the resource-aware offer lifecycle, future-compute command surface,
+and contract-scoped Buyer gateway described in [Preview.19.4](PREVIEW19.md).
+The exact installable artifact is the GitHub release and binding listed above;
+publication does not claim the separate staging-only, unshipped Livepeer
+native acceptance or payment settlement.
 
 ## Preview.18 historical Provider lifecycle and Buyer SSH handoff release
 
-Preview.18 is the last published Linux/x64 prerelease. It preserves the
+Preview.18 is an immutable historical Linux/x64 prerelease. It preserves the
 guided onboarding contract and adds authenticated Provider offer selection,
 sequential replacement using the same environment/setup binding, a strict
 targeted canonical-zero Buyer gate, scoped SSH egress consent, and a visible

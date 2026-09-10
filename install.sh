@@ -3,6 +3,7 @@ set -eu
 
 usage() {
   printf '%s\n' 'Usage: ./install.sh --role buyer|provider|all [--prefix ABSOLUTE_PATH]'
+  printf '%s\n' '       ./install.sh --activate-from ABSOLUTE_VERIFIED_RELEASE_DIR --role buyer|provider|all [--prefix ABSOLUTE_PATH]'
 }
 
 fail() {
@@ -12,6 +13,7 @@ fail() {
 
 role=
 prefix=${HOME:+"$HOME/.local"}
+activate_from=
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -23,6 +25,12 @@ while [ "$#" -gt 0 ]; do
     --prefix)
       [ "$#" -ge 2 ] || fail 'missing value for --prefix'
       prefix=$2
+      shift 2
+      ;;
+    --activate-from)
+      [ "$#" -ge 2 ] || fail 'missing value for --activate-from'
+      [ -n "$2" ] || fail 'empty value for --activate-from'
+      activate_from=$2
       shift 2
       ;;
     -h|--help)
@@ -53,24 +61,80 @@ version_file=$script_dir/VERSION
 payload_dir=$script_dir/payload
 
 [ -f "$version_file" ] && [ ! -L "$version_file" ] || fail 'release VERSION file is missing or unsafe'
+[ -d "$payload_dir" ] && [ ! -L "$payload_dir" ] || fail 'release payload is missing or unsafe'
+[ -x "$payload_dir/runtime/bin/node" ] || fail 'bundled runtime is missing'
+
+source_dir=$script_dir
+source_payload_dir=$payload_dir
 version=$(sed -n '1p' "$version_file")
 case "$version" in
   ''|.|..|*[!0-9A-Za-z._-]*) fail 'release VERSION is invalid' ;;
 esac
 
-[ -d "$payload_dir" ] && [ ! -L "$payload_dir" ] || fail 'release payload is missing or unsafe'
-[ -x "$payload_dir/runtime/bin/node" ] || fail 'bundled runtime is missing'
+if [ -n "$activate_from" ]; then
+  case "$activate_from" in
+    /*) ;;
+    *) fail '--activate-from must be an absolute path' ;;
+  esac
+  [ -d "$activate_from" ] && [ ! -L "$activate_from" ] || fail 'verified release directory is missing or unsafe'
+  source_dir=$(CDPATH= cd -- "$activate_from" && pwd -P)
+  source_version_file=$source_dir/VERSION
+  source_payload_dir=$source_dir/payload
+  [ -f "$source_version_file" ] && [ ! -L "$source_version_file" ] || fail 'verified release VERSION file is missing or unsafe'
+  [ -d "$source_payload_dir" ] && [ ! -L "$source_payload_dir" ] || fail 'verified release payload is missing or unsafe'
+  [ -x "$source_payload_dir/runtime/bin/node" ] || fail 'verified release runtime is missing'
+  version=$(sed -n '1p' "$source_version_file")
+  case "$version" in
+    ''|.|..|*[!0-9A-Za-z._-]*) fail 'verified release VERSION is invalid' ;;
+  esac
+fi
 
 install_root=$prefix/share/punch-cli
-install_dir=$install_root/$version
 bin_dir=$prefix/bin
 
-mkdir -p -- "$install_root" "$bin_dir"
-install_root=$(CDPATH= cd -- "$install_root" && pwd -P)
-bin_dir=$(CDPATH= cd -- "$bin_dir" && pwd -P)
-install_dir=$install_root/$version
-[ ! -e "$install_dir" ] || fail "version is already installed: $version"
-umask 022
+payload_manifest() {
+  LC_ALL=C find "$1" -mindepth 1 -printf '%P\t%y\n' | LC_ALL=C sort
+}
+
+assert_exact_payload() {
+  source_payload=$1
+  installed_payload=$2
+  [ -z "$(find "$source_payload" "$installed_payload" -type l -print -quit)" ] || fail 'activation payload contains an unsafe symlink'
+  source_manifest=$(payload_manifest "$source_payload")
+  installed_manifest=$(payload_manifest "$installed_payload")
+  [ "$source_manifest" = "$installed_manifest" ] || fail 'installed version payload differs from the verified release'
+  diff -qr -- "$source_payload" "$installed_payload" > /dev/null 2>&1 || fail 'installed version payload bytes differ from the verified release'
+}
+
+assert_activation_executables() {
+  [ -x "$install_dir/runtime/bin/node" ] || fail 'installed version bundled runtime is missing or not executable'
+  case "$role" in
+    buyer) activation_commands='punch punch-buyer' ;;
+    provider) activation_commands='punch punch-provider' ;;
+    all) activation_commands='punch punch-buyer punch-provider' ;;
+  esac
+  for activation_command in $activation_commands; do
+    [ -x "$install_dir/bin/$activation_command" ] || fail "installed version command is missing or not executable: $activation_command"
+  done
+}
+
+if [ -n "$activate_from" ]; then
+  [ -d "$install_root" ] && [ ! -L "$install_root" ] || fail 'installed Punch program root is missing or unsafe'
+  [ -d "$bin_dir" ] && [ ! -L "$bin_dir" ] || fail 'installed Punch bin directory is missing or unsafe'
+  install_root=$(CDPATH= cd -- "$install_root" && pwd -P)
+  bin_dir=$(CDPATH= cd -- "$bin_dir" && pwd -P)
+  install_dir=$install_root/$version
+  [ -d "$install_dir" ] && [ ! -L "$install_dir" ] || fail "installed version is missing: $version"
+  assert_exact_payload "$source_payload_dir" "$install_dir"
+  assert_activation_executables
+else
+  mkdir -p -- "$install_root" "$bin_dir"
+  install_root=$(CDPATH= cd -- "$install_root" && pwd -P)
+  bin_dir=$(CDPATH= cd -- "$bin_dir" && pwd -P)
+  install_dir=$install_root/$version
+  [ ! -e "$install_dir" ] || fail "version is already installed: $version"
+  umask 022
+fi
 
 check_link() {
   command=$1
@@ -103,17 +167,19 @@ case "$role" in
     ;;
 esac
 
-tmp_dir=$install_root/.install-$version-$$
-trap 'rm -rf -- "$tmp_dir"' EXIT HUP INT TERM
-mkdir -- "$tmp_dir"
-cp -R -- "$payload_dir"/. "$tmp_dir"/
+if [ -z "$activate_from" ]; then
+  tmp_dir=$install_root/.install-$version-$$
+  trap 'rm -rf -- "$tmp_dir"' EXIT HUP INT TERM
+  mkdir -- "$tmp_dir"
+  cp -R -- "$source_payload_dir"/. "$tmp_dir"/
 
-for command in punch punch-buyer punch-provider; do
-  [ -x "$tmp_dir/bin/$command" ] || fail "release command is missing: $command"
-done
+  for command in punch punch-buyer punch-provider; do
+    [ -x "$tmp_dir/bin/$command" ] || fail "release command is missing: $command"
+  done
 
-mv -- "$tmp_dir" "$install_dir"
-trap - EXIT HUP INT TERM
+  mv -- "$tmp_dir" "$install_dir"
+  trap - EXIT HUP INT TERM
+fi
 
 install_link() {
   command=$1
@@ -141,5 +207,9 @@ case "$role" in
     ;;
 esac
 
-printf 'Installed Punch CLI %s (%s) under %s\n' "$version" "$role" "$prefix"
+if [ -n "$activate_from" ]; then
+  printf 'Activated Punch CLI %s (%s) under %s from %s\n' "$version" "$role" "$prefix" "$source_dir"
+else
+  printf 'Installed Punch CLI %s (%s) under %s\n' "$version" "$role" "$prefix"
+fi
 printf 'Add %s to PATH if needed.\n' "$bin_dir"

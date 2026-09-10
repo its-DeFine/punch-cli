@@ -5,6 +5,11 @@
 > remains [Guided `punch` home](GUIDED_CLI.md); an autonomous agent uses only
 > the direct role commands below with `--json`.
 
+The private Livepeer staging candidate has a separate artifact, runtime-file,
+and service boundary. See [Livepeer staging install and rollback](LIVEPEER_STAGING_INSTALL.md)
+for its pending handoff; this runbook does not authorize native staging or
+production actions.
+
 An agent starts only with pre-issued, explicitly scoped authority. It must not
 launch bare `punch`, answer interactive prompts, mint an invitation, approve a
 Provider, select a commercial offer without policy, or acquire wider access.

@@ -14,6 +14,11 @@
 > [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 > archive, SHA-256 `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
 
+Private Livepeer staging flags are not part of this public Preview.19.4 command
+surface. Their candidate-only install and runtime boundary is documented in
+[Livepeer staging install and rollback](LIVEPEER_STAGING_INSTALL.md), pending
+final bundled help and binding metadata.
+
 Punch exposes two role-specific commands. The invitation and server-side
 identity determine what a user may do; installing both commands does not grant
 both roles. Secret-bearing paths must be absolute paths in private directories.
