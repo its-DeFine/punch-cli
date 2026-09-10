@@ -10,8 +10,12 @@ role-specific and does not expand the Provider host scope.
 
 ## Install from a release
 
-Preview.19.4 is a candidate: no installable archive or final acceptance is
-claimed here. Wait for the matching published release.
+Preview.19.4 is a published non-draft prerelease. Install authority is the
+matching GitHub release assets and same-release `SHA256SUMS`; this source
+checkout is not an installable release. See [Release and verification policy](RELEASES.md)
+for the exact archive and binding metadata. This page does not claim native
+Livepeer acceptance, payment settlement, or live Control/Provider-to-Buyer
+acceptance.
 
 Preview.19.4's Provider scope is Ubuntu 24.04 LTS on Linux/x64. Install only
 the matching non-draft `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` after its
@@ -70,6 +74,21 @@ a private temporary file and then executed; the CLI does not use `curl | sh`.
 The Buyer does not separately install, enroll, or log in to NetBird.
 
 ## Update
+
+For the private staging candidate, an installer can activate an already installed
+payload from an extracted, independently verified release directory:
+
+```bash
+./install.sh --activate-from ABS_EXTRACTED_VERIFIED_RELEASE_DIR \
+  --role provider --prefix ABSOLUTE_PREFIX
+```
+
+Activation checks the installed version payload against that directory and then
+changes only the owned role links. It does not rebuild the payload or alter
+identity, credentials, sessions, configuration, offers, or state. See the
+[Livepeer staging install and rollback](LIVEPEER_STAGING_INSTALL.md) boundary
+before using this candidate-only path; the public Preview.19.4 artifact remains
+separate.
 
 Before extraction, the user verifies the compressed archive against the matching entry in `SHA256SUMS`. The installer then checks the release payload directory, bundled runtime, and command launchers, copies the versioned payload, and atomically changes each selected command link only after the copy succeeds. It must not overwrite invitation, session, identity, credential, or state files.
 

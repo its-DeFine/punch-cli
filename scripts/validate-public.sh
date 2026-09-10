@@ -201,18 +201,19 @@ for current_boundary_doc in docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHO
   }
 done
 
-grep -F 'Preview.19.4' README.md > /dev/null && \
-  grep -F 'candidate' README.md > /dev/null && \
-  grep -F 'not a published' README.md > /dev/null || {
-  printf '%s\n' 'Preview.19.4 existing candidate status is missing from README.md'
+grep -F 'v0.1.0-preview.19.4' README.md > /dev/null && \
+  grep -F 'release policy' README.md > /dev/null && \
+  grep -F 'staging-only and unshipped' README.md > /dev/null || {
+  printf '%s\n' 'Preview.19.4 published release boundary is missing from README.md'
   exit 1
 }
 
-for candidate_boundary_doc in docs/RELEASES.md; do
-  grep -F 'Preview.19.4' "$candidate_boundary_doc" > /dev/null && \
-    grep -F 'candidate' "$candidate_boundary_doc" > /dev/null && \
-    grep -F 'not a published' "$candidate_boundary_doc" > /dev/null || {
-    printf 'Preview.19.4 candidate status is missing from %s\n' "$candidate_boundary_doc" >&2
+for release_boundary_doc in docs/RELEASES.md; do
+  grep -F 'Preview.19.4 Ubuntu Provider prerelease' "$release_boundary_doc" > /dev/null && \
+    grep -F 'non-draft tag' "$release_boundary_doc" > /dev/null && \
+    grep -F 'RELEASE-BINDING.json' "$release_boundary_doc" > /dev/null && \
+    grep -F 'Livepeer integration remains staging-only and unshipped' "$release_boundary_doc" > /dev/null || {
+    printf 'Preview.19.4 published release boundary is missing from %s\n' "$release_boundary_doc" >&2
     exit 1
   }
 done

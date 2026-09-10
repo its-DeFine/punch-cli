@@ -14,6 +14,13 @@
 > `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`. This
 > is historical provenance, not this guide's active release or platform contract.
 
+The public Preview.19.4 release and its exact installation boundary are recorded
+in [Installation and updates](INSTALL.md) and [Release policy](RELEASES.md).
+This Preview.19.2 guide retains its older public Provider command contract. The
+separate Livepeer staging candidate is documented in
+[Livepeer staging install and rollback](LIVEPEER_STAGING_INSTALL.md); it is not
+part of the public Preview.19.4 runtime.
+
 The Provider agent runs on the execution node and connects outbound to Punch.
 It does not expose a public SSH port, host SSH, or Docker over the Internet. Contract SSH is
 served by a gateway bound to the Provider's narrow NetBird overlay address on
