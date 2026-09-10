@@ -81,6 +81,38 @@ runner and one single-shot obligation runner. The managed unit is linked with
 adjacent manifest and receipt. Use exact receipt unit names; do not guess or
 hardcode them.
 
+## Existing native node handoff
+
+The default `attach-existing` path is an existing-node operation. The operator's
+existing install/upgrade journey provisions the paid native endpoint/config; no
+new Punch command or helper writes a registry, adds a listener, or replaces the
+existing binary, config, wallet, unit, or signer. Only the existing native CLI management endpoint is unauthenticated; keep it
+loopback-only and do not add or broaden a listener.
+
+Persist the complete existing registry file because native startup reads
+`-liveRunnerConfig FILE` once and does not watch it. Preserve its prior bytes
+and unrelated entries. After the file is ready, POST to the existing native CLI management port, then query discovery at the exact configured native `baseUrl`:
+
+```sh
+curl --fail --silent --show-error \
+  --request POST \
+  --header 'content-type: application/json' \
+  "http://127.0.0.1:<EXISTING_CLI_PORT>/registerLiveRunners" \
+  --data-binary @existing-static-registry.json
+curl --fail --silent --show-error \
+  "${NATIVE_BASE_URL}/discovery"
+```
+
+`registerLiveRunners` validates and atomically upserts the full registry,
+preserving existing label IDs and active sessions and leaving omitted labels
+unchanged. The discovery response must show the exact positive per-runner
+provider price required by the accepted native quote. Use the exact native discovery price, currency, and unit for the accepted
+`nativeBinding`. Keep the Punch offer price and native quote separately displayed
+and bound; do not invent equivalence or perform manual FX conversion. Any
+configured conversion inside the existing native node remains its behavior.
+An incompatible node uses the operator's existing upgrade process; do not parse
+or replace its service definition.
+
 ## Local config update and downgrade
 
 `config-update` changes only the canonical local Provider config. It requires a
