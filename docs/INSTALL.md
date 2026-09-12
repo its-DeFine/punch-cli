@@ -10,8 +10,8 @@ role-specific and does not expand the Provider host scope.
 
 ## Install from a release
 
-Preview.19.5 is a built public candidate, but its matching package is not yet
-published. The build receipt identifies
+Preview.19.5 is the public candidate bundle and includes optional Livepeer
+staging commands. Its build receipt identifies
 `punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
 `d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install
 only the matching non-draft archive after its exact line in the same-release
@@ -55,8 +55,9 @@ upgrade does not require replacing an offer.
 The same verified archive and role/prefix install path applies to a public
 CLI upgrade. Optional Livepeer commands are staging-only: they attach to an
 operator-provisioned native endpoint and keep native and payer/signer custody
-outside the CLI. Preview.19.5 is not an install target until its public archive,
-`SHA256SUMS`, and release binding are published; see [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+outside the CLI. The optional Livepeer commands remain staging-only; install
+Preview.19.5 only from a matching non-draft release with its exact archive,
+same-release `SHA256SUMS`, and bundled `RELEASE-CONTRACT.json`; see [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
 
 ## Default locations
 

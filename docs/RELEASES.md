@@ -9,23 +9,24 @@ contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
 [`Preview.19.5`](preview19-runtime-contract.json) is the current built Ubuntu
-24.04 LTS Linux/x64 public candidate. The matching package remains unpublished
-until a non-draft GitHub release publishes its archive and `SHA256SUMS`. The
-build receipt identifies `punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with
-SHA-256 `d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`.
-After publication, install authority comes from that release's archive,
-`RELEASE-CONTRACT.json`, `RELEASE-BINDING.json`, and same-release checksum.
+24.04 LTS Linux/x64 public candidate bundle. The build receipt identifies
+`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
+`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install
+19.5 only from a matching non-draft GitHub release and verify its archive
+against the same-release `SHA256SUMS`. The archive contains
+`RELEASE-CONTRACT.json`, which is the bundled release contract; source checkout
+identity is not install authority.
 
 [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) remains published with the exact archive
 `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` and SHA-256 `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract
 page and release identity stay unchanged.
-Livepeer integration remains staging-only and unshipped. Production deployment
-configuration keeps Control payment behavior `PAYMENT_DISABLED`; source docs and
-a staging endpoint do not enable native payment, payer/signer custody, or
-settlement. Optional staging commands and attach-existing compatibility are
-covered in [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
-The Preview.19.5 package remains unpublished until a matching non-draft
-GitHub release publishes its archive, checksum, and release binding.
+The 19.5 bundle ships optional Livepeer commands, while payment execution
+remains staging-only. Production deployment configuration keeps Control payment
+behavior `PAYMENT_DISABLED`; source docs and a staging endpoint do not enable
+native payment, payer/signer custody, or settlement. Attach-existing compatibility
+is covered in [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+Install the 19.5 bundle only from a matching non-draft GitHub release with its
+archive and same-release `SHA256SUMS`.
 The historical [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 package used this exact public image set:
 

@@ -1,14 +1,14 @@
 # Livepeer staging compatibility
 
-> **STAGING ONLY.** This page documents optional Livepeer integration carried
-> by the version-matched Preview.19.5 CLI bundle. Payment execution remains a
+> **STAGING ONLY.** This page documents optional Livepeer commands shipped in
+> the version-matched Preview.19.5 CLI bundle. Payment execution remains a
 > staging boundary and this page is not a settlement or production onboarding
 > instruction.
 
 Use [Installation and updates](INSTALL.md) for the normal public release
-install and upgrade path. Verify the archive against the same-release
-`SHA256SUMS`; Preview.19.5 remains unpublished until its matching public release
-assets are released.
+install and upgrade path. Install only from a matching non-draft release and
+verify the archive against its same-release `SHA256SUMS`; this source page is not
+install authority.
 
 ## Initial attach-existing setup
 
