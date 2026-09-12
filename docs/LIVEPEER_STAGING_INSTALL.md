@@ -10,6 +10,38 @@ install and upgrade path. Install only from a matching non-draft release and
 verify the archive against its same-release `SHA256SUMS`; this source page is not
 install authority.
 
+## Native runtime and custody boundary
+
+The Preview.19.5 CLI does not ship the go-livepeer native orchestrator, a payer
+signer, or a wallet. `attach-existing` requires an operator-provisioned native
+orchestrator/runner endpoint compatible with the Punch adapter; the Punch
+Provider and adapter remain separate components. The accepted staging native
+artifact is build `31bb2224`, published in the [matching native
+release](https://github.com/its-DeFine/go-livepeer/releases/tag/punch-livepeer-0.9.2-31bb2224-staging.1),
+with binary SHA-256
+`a19eb753e22e697cb09e3907beb8ec3146354297baabd5cb599add942188fc92`. Use that
+asset only after the release is non-draft and its exact archive and checksum are
+present. The target requires glibc >=2.35; it was tested on Ubuntu 24.04.
+After downloading `livepeer-punch-0.9.2-31bb2224-linux-amd64.tar.gz` from that
+release, verify and extract it before checking the executable:
+
+```bash
+NATIVE_ARCHIVE=livepeer-punch-0.9.2-31bb2224-linux-amd64.tar.gz
+NATIVE_SHA256=a60a2e3ff3ccf5596fcb48d5ef3786919d78e8753e03a4d81d9015ccb7ca6ee9
+NATIVE_DIR=/absolute/path/livepeer-0.9.2-31bb2224
+NATIVE_PREFIX=livepeer-punch-0.9.2-31bb2224-linux-amd64
+printf '%s  %s\n' "$NATIVE_SHA256" "$NATIVE_ARCHIVE" | sha256sum -c -
+mkdir -p "$NATIVE_DIR"
+tar -xzf "$NATIVE_ARCHIVE" -C "$NATIVE_DIR"
+"$NATIVE_DIR/$NATIVE_PREFIX/livepeer" --version
+```
+
+The same executable can run as the orchestrator or as a separately configured
+remote signer; the Punch runner/adapter is an external HTTP service. The
+orchestrator operator retains its own keystore, while payer/signer custody
+remains a separate remote authority. Do not replace a healthy native node or
+alter its configuration during active jobs.
+
 ## Initial attach-existing setup
 
 After an enrolled Provider has its existing identity and credential, create the

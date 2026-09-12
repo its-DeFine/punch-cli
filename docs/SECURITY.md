@@ -24,10 +24,13 @@ When a GPU is assigned, the lease uses a stable GPU UUID and CDI identity rather
 
 Access to the Docker Unix socket is normally equivalent to host-root authority.
 Run the Provider agent only on a dedicated or appropriately isolated node.
-Preview.9 supplies a hardened reference service but does not install or enable
-it; the operator must review its Docker authority and host isolation. Do not
-expose a Docker-compatible API over TCP or give Buyers access to the Unix
-socket.
+The released Preview.19.5 Provider flow installs and manages the machine-scoped
+service through the supervised `setup` and `service-install` lifecycle. The
+reviewed direct command is `punch-provider service-install --machine-id
+MACHINE_ID --state-dir STATE_DIR --yes`; `service-start` and `service-status`
+then address that machine-scoped unit by machine ID. Review its Docker authority
+and host isolation before use. Do not expose a Docker-compatible API over TCP or
+give Buyers access to the Unix socket.
 
 ## File permissions
 
@@ -47,4 +50,10 @@ container limits, revocation, and lifecycle cleanup remain required.
 
 ## Preview limitations
 
-The public repository and documentation are not a security certification. The invitation-only preview supports only the documented capacity and workload classes. Real-funds or production availability must be announced explicitly for a specific release; do not infer it from the presence of a command.
+The public repository and documentation are not a security certification. The
+repository's security and release tests are scoped checks of documented
+boundaries and artifact behavior; they are not a formal independent security
+audit. No saved database-role audit PASS is claimed. The invitation-only
+preview supports only the documented capacity and workload classes. Real-funds
+or production availability must be announced explicitly for a specific
+release; do not infer it from the presence of a command.
