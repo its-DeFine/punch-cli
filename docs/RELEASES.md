@@ -8,16 +8,25 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-[`Preview.19.4`](PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64
-public candidate. It is not a published or installable release, and this
-source checkout is not install authority. The candidate remains subject to
-final acceptance; do not infer completion or publication from this page.
-Its exact source and archive identity will be read from the matching archive's
-bundled `RELEASE-CONTRACT.json` and `RELEASE-BINDING.json`, together with its
-same-release `SHA256SUMS`, after the final rebuild.
+[`Preview.19.5`](preview19-runtime-contract.json) is the current built Ubuntu
+24.04 LTS Linux/x64 public candidate bundle. The build receipt identifies
+`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
+`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install
+19.5 only from a matching non-draft GitHub release and verify its archive
+against the same-release `SHA256SUMS`. The archive contains
+`RELEASE-CONTRACT.json`, which is the bundled release contract; source checkout
+identity is not install authority.
 
-[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
-remains published. Preview.19.4 publication awaits its exact archive and acceptance.
+[`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) remains published with the exact archive
+`punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` and SHA-256 `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract
+page and release identity stay unchanged.
+The 19.5 bundle ships optional Livepeer commands, while payment execution
+remains staging-only. Production deployment configuration keeps Control payment
+behavior `PAYMENT_DISABLED`; source docs and a staging endpoint do not enable
+native payment, payer/signer custody, or settlement. Attach-existing compatibility
+is covered in [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+Install the 19.5 bundle only from a matching non-draft GitHub release with its
+archive and same-release `SHA256SUMS`.
 The historical [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 package used this exact public image set:
 
@@ -32,15 +41,13 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.19.4 Ubuntu Provider candidate
+## Preview.19.4 Ubuntu Provider candidate (published historical)
 
-Preview.19.4 narrows the candidate Provider target to Ubuntu 24.04 LTS on
-Linux/x64 and carries the resource-aware offer lifecycle, future-compute
-command surface, and contract-scoped Buyer gateway described in
-[Preview.19.4](PREVIEW19.md). This section is a
-candidate contract only: no release asset, archive digest, or live acceptance
-claim is published here. Use the bundled release metadata as the exact source
-and archive identity after the final rebuild.
+Preview.19.4 was published for the Ubuntu 24.04 LTS Linux/x64 Provider
+scope with the resource-aware offer lifecycle, future-compute command surface,
+and contract-scoped Buyer gateway described in [Preview.19.4](PREVIEW19.md).
+Its exact archive SHA-256 is `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. This historical section retains its original
+contract boundary and does not change the Preview.19.5 release identity above.
 
 ## Preview.18 historical Provider lifecycle and Buyer SSH handoff release
 
@@ -290,4 +297,4 @@ Preview releases may change command or configuration schemas. Keep the Buyer and
 
 ## Rollback
 
-Installers must keep identity, credential, session, and state files outside the versioned program directory. Rolling back the program must not copy, rewrite, or downgrade those files. Provider operators must drain before changing a running agent version.
+Installers must keep identity, credential, session, and state files outside the versioned program directory. Provider operators must drain before changing a running agent version. At a safe idle boundary, select the retained version's complete payload and matching service unit together; preserve the external state files and do not rerun an installer into an occupied versioned prefix.

@@ -1,8 +1,8 @@
 {
   "schemaVersion": "punch.preview19-runtime-contract.v1",
-  "releaseVersion": "0.1.0-preview.19.4",
+  "releaseVersion": "0.1.0-preview.19.5",
   "platform": "linux-x64",
-  "privateReleaseSource": {"commit": "6bc3d1dd4c9bc1e241f3d04cf4a9ad6f8a37f3a0", "tree": "a4bcc4e57097dd3a03b200558e5c7387b62b5271"},
+  "privateReleaseSource": {"commit": "1f244682860d973295d0041c588d7336ad85f073", "tree": "525741f5547bf6719f1ef5c43879a17e092b6713"},
   "accessTransport": "NETBIRD_CONTRACT_SCOPED_GATEWAY",
   "buyerNetBirdBootstrap": "PUNCH_JOIN_ONE_OFF_NARROW_GROUP",
   "gatewayPort": 22222,
@@ -22,8 +22,8 @@
     "archiveFiles": ["bin/punch-provider-host-helper.mjs", "src/v0/providerHostSubstrate.js", "src/v0/strict.js", "packaging/clean-v4/punch-provider-host.socket", "packaging/clean-v4/punch-provider-host@.service", "packaging/clean-v4/provider-host-substrate.example.json"]
   },
   "publicCommands": {
-    "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "overview", "doctor", "inventory", "setup", "service-install", "service-start", "service-stop", "service-status", "service-logs", "serve", "status", "drain", "offer-create", "offer-list", "offer-status", "offer-unlist", "offer-retire", "offer-replace", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"],
-    "buyer": ["doctor", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "offers", "future-contracts", "future-contract-show", "future-contract-accept", "future-contract-claim", "future-contract-recover", "future-contract-rollover", "order", "status", "output", "ssh", "stop", "resales", "resale-create", "resale-claim", "resale-cancel", "extension-exercise", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"]
+    "provider": ["prepare-host", "identity-init", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "overview", "doctor", "inventory", "setup", "config-update", "service-install", "service-start", "service-stop", "service-status", "service-logs", "serve", "status", "drain", "offer-create", "offer-list", "offer-status", "offer-payment-plan", "offer-unlist", "offer-retire", "offer-replace", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"],
+    "buyer": ["doctor", "onboarding-request", "onboarding-status", "onboarding-pickup", "join", "offers", "provider-procurement-status", "provider-procurement-review", "future-contracts", "future-contract-show", "future-contract-accept", "future-contract-claim", "future-contract-recover", "future-contract-rollover", "order", "payment-status", "native-admission", "status", "output", "ssh", "stop", "resales", "resale-create", "resale-claim", "resale-cancel", "extension-exercise", "extension-propose", "extension-inbox", "extension-accept", "extension-reject"]
   },
   "commandMetadataSchemaVersion": "punch.public-cli-contract.v2",
   "proofBoundary": {"localDeterministic": "LOCAL_DETERMINISTIC_PASS", "releasedArtifact": "RELEASE_ARTIFACT_PROOF", "liveE2E": "LIVE_E2E_PROOF"}

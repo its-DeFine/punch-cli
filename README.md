@@ -13,21 +13,27 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-[`Preview.19.4`](docs/PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64 public candidate.
-It is not a published or installable release. It adds explicit new-offer terms and
-checks the exact pending offer before activation. No archive hash or native
-acceptance is claimed by this source checkout. The existing
-[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
-remains published; use only a published release's matching archive and `SHA256SUMS`.
+`Preview.19.5` is the current Ubuntu 24.04 LTS Linux/x64 public candidate
+bundle. Its build receipt records
+`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
+`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. The
+source checkout alone is not install authority. It is not a published or
+installable release. Install the 19.5 bundle only from a matching non-draft
+GitHub release and verify its same-release `SHA256SUMS`.
 
-After separate approval of new-offer terms, Preview.19.4 accepts
-`--duration-seconds 18000 --network-outbound RESEARCH_EGRESS --future-terms-file`
-with an absolute JSON path. See the complete [Provider example](docs/COMMANDS.md#provider).
-Terms do not implicitly inherit from a retired offer. Preserve the existing
-identity/state/config and regenerate the version-pinned service unit with the
-new CLI's `service-install` before restart; see [upgrade instructions](docs/INSTALL.md).
-Working offers need no retirement for a software-only upgrade. This remains a
-free pilot without billing or commercial SLA guarantees.
+The previous [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) release remains published.
+Its exact archive `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` has SHA-256
+`ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract page retains the explicit new-offer terms and
+pre-activation readback. The current candidate remains a free pilot without
+billing or commercial SLA guarantees.
+
+The 19.5 archive is the public CLI bundle and ships optional Livepeer
+commands. Those commands remain staging-only and require an operator-provisioned
+attach-existing native endpoint; native and payer/signer custody remain outside
+the public CLI. The public production deployment configuration keeps Control
+payment behavior `PAYMENT_DISABLED`. See [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md).
+Install the 19.5 bundle only from a matching non-draft release with its exact
+archive and same-release `SHA256SUMS`; the source checkout is not install authority.
 
 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 is historical release provenance, not the current install target.
@@ -69,8 +75,8 @@ with the matching immutable image set in
 
 ## Quick start
 
-1. Read the [Preview.19.2 candidate contract](docs/PREVIEW19.md); no public release asset is available until final acceptance and publication.
-2. When a matching non-draft Preview.19.2 release is published, download its archive and `SHA256SUMS`, then verify the checksum.
+1. Read the [Preview.19.5 runtime contract](docs/preview19-runtime-contract.json) and the matching release notes.
+2. When a matching non-draft Preview.19.5 release is published, download its archive and `SHA256SUMS`, then verify the checksum.
 3. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
 4. Run `punch` for the normal guided Provider or Buyer journey and follow the version-matched [Provider guide](docs/PROVIDER.md) or [Buyer guide](docs/BUYER.md).
 5. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.
@@ -91,6 +97,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
 - [Future compute staging note](docs/FUTURE_COMPUTE_STAGING.md) (staging-only, unreleased)
+- [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md) (staging-only)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Autonomous agent runbook](docs/AGENT_RUNBOOK.md)
