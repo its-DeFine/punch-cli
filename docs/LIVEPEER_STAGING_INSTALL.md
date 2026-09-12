@@ -1,8 +1,9 @@
 # Livepeer staging compatibility
 
-> **STAGING ONLY / UNRELEASED.** These commands require the version-matched
-> Preview.19.5 staging bundle. They are not a public release, payment,
-> settlement, or production onboarding instruction.
+> **STAGING ONLY.** This page documents optional Livepeer integration carried
+> by the version-matched Preview.19.5 CLI bundle. Payment execution remains a
+> staging boundary and this page is not a settlement or production onboarding
+> instruction.
 
 Use [Installation and updates](INSTALL.md) for the normal public release
 install and upgrade path. Verify the archive against the same-release
@@ -56,8 +57,10 @@ preserves the existing identity, credential, state, configuration, and offers:
 
 ```bash
 VERIFIED_RELEASE_DIR=/absolute/path/punch-cli-0.1.0-preview.19.5-linux-x64
-./install.sh --activate-from "$VERIFIED_RELEASE_DIR" \
-  --role provider --prefix "$HOME/.local"
+(
+  cd "$VERIFIED_RELEASE_DIR"
+  ./install.sh --role provider --prefix "$HOME/.local"
+)
 ```
 
 To change only the Livepeer runtime in an existing generated Provider config,

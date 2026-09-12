@@ -22,15 +22,17 @@ unpublished.
 installable release. The package becomes available only when that matching release is
 published.
 
-The previous `Preview.19.4` candidate remains documented in
-[its contract page](docs/PREVIEW19.md), including its explicit new-offer terms
-and pre-activation readback. The current candidate remains a free pilot without
+The previous [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) release remains published.
+Its exact archive `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` has SHA-256
+`ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract page retains the explicit new-offer terms and
+pre-activation readback. The current candidate remains a free pilot without
 billing or commercial SLA guarantees.
 
-The public production deployment configuration keeps Control payment behavior
-`PAYMENT_DISABLED`. Optional Livepeer commands are staging-only and require an
-operator-provisioned attach-existing native endpoint; native and payer/signer
-custody remain outside the public CLI. See [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md).
+The 19.5 archive is the public CLI bundle. Its optional Livepeer commands remain
+staging-only and require an operator-provisioned attach-existing native endpoint;
+native and payer/signer custody remain outside the public CLI. The public
+production deployment configuration keeps Control payment behavior
+`PAYMENT_DISABLED`. See [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md).
 Preview.19.5 is not published or an install target until its matching archive,
 `SHA256SUMS`, and release binding are published.
 
@@ -96,7 +98,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
 - [Future compute staging note](docs/FUTURE_COMPUTE_STAGING.md) (staging-only, unreleased)
-- [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md) (staging-only, unreleased)
+- [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md) (staging-only)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Autonomous agent runbook](docs/AGENT_RUNBOOK.md)

@@ -19,10 +19,10 @@ only the matching non-draft archive after its exact line in the same-release
 never infer an archive from its branch or documentation. This page does not
 claim live Control or Provider-to-Buyer acceptance.
 
-The preceding published [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+The preceding published [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) release uses the exact
+archive `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz`, whose SHA-256 is
+`ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. The still earlier published [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 used the exact historical archive `punch-cli-0.1.0-preview.18-linux-x64.tar.gz`.
-The older `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` name is retained only
-as historical candidate provenance; it is not a Preview.19.5 install target.
 Preview.19.4's Provider scope is Ubuntu 24.04 LTS on Linux/x64 in that
 historical contract. Its historical service path was:
 
@@ -52,8 +52,8 @@ For optional new terms after upgrade, see the [explicit 18000-second /
 RESEARCH_EGRESS / future-terms example](COMMANDS.md#provider). A software-only
 upgrade does not require replacing an offer.
 
-The same verified archive and `--activate-from` path applies to a public CLI
-upgrade. Optional Livepeer commands are staging-only: they attach to an
+The same verified archive and role/prefix install path applies to a public
+CLI upgrade. Optional Livepeer commands are staging-only: they attach to an
 operator-provisioned native endpoint and keep native and payer/signer custody
 outside the CLI. Preview.19.5 is not an install target until its public archive,
 `SHA256SUMS`, and release binding are published; see [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
@@ -112,9 +112,11 @@ NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.5/bin/punch-pr
 Use the actual existing machine ID and state directory, not these placeholders.
 Verify the service uses the new release paths and Control receives a fresh
 heartbeat. Keep working offers and their existing terms; do not retire or
-recreate an offer as part of this CLI upgrade. Keep the previous CLI payload
-and unit for rollback. This is an upgrade, not a new identity or onboarding
-request.
+recreate an offer as part of this CLI upgrade. Keep the previous verified CLI
+payload and matching unit for rollback. At a safe idle boundary, select the
+retained version's absolute `bin/punch-provider` or `bin/punch-buyer` (or prepend
+its `bin` directory to `PATH`) and restore its matching unit; preserve state.
+This is an upgrade, not a new identity or onboarding request.
 
 ### Existing Preview.19 Provider host helper
 

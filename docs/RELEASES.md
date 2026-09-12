@@ -16,9 +16,9 @@ SHA-256 `d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`.
 After publication, install authority comes from that release's archive,
 `RELEASE-CONTRACT.json`, `RELEASE-BINDING.json`, and same-release checksum.
 
-[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
-remains published. Preview.19.4 remains historical candidate provenance; its
-contract page and release identity stay unchanged.
+[`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) remains published with the exact archive
+`punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` and SHA-256 `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract
+page and release identity stay unchanged.
 Livepeer integration remains staging-only and unshipped. Production deployment
 configuration keeps Control payment behavior `PAYMENT_DISABLED`; source docs and
 a staging endpoint do not enable native payment, payer/signer custody, or
@@ -40,12 +40,12 @@ the same complete reference in `agent.json`. Never substitute Docker's local
 `.Id`: classic and containerd image stores report different local identities
 for the same OCI manifest.
 
-## Preview.19.4 Ubuntu Provider candidate (historical)
+## Preview.19.4 Ubuntu Provider candidate (published historical)
 
-Preview.19.4 narrowed the candidate Provider target to Ubuntu 24.04 LTS on
-Linux/x64 and carried the resource-aware offer lifecycle, future-compute
-command surface, and contract-scoped Buyer gateway described in
-[Preview.19.4](PREVIEW19.md). This historical section retains its original
+Preview.19.4 was published for the Ubuntu 24.04 LTS Linux/x64 Provider
+scope with the resource-aware offer lifecycle, future-compute command surface,
+and contract-scoped Buyer gateway described in [Preview.19.4](PREVIEW19.md).
+Its exact archive SHA-256 is `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. This historical section retains its original
 contract boundary and does not change the Preview.19.5 release identity above.
 
 ## Preview.18 historical Provider lifecycle and Buyer SSH handoff release
@@ -296,4 +296,4 @@ Preview releases may change command or configuration schemas. Keep the Buyer and
 
 ## Rollback
 
-Installers must keep identity, credential, session, and state files outside the versioned program directory. Rolling back the program must not copy, rewrite, or downgrade those files. Provider operators must drain before changing a running agent version.
+Installers must keep identity, credential, session, and state files outside the versioned program directory. Provider operators must drain before changing a running agent version. At a safe idle boundary, select the retained version's complete payload and matching service unit together; preserve the external state files and do not rerun an installer into an occupied versioned prefix.
