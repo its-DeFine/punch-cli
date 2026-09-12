@@ -21,18 +21,19 @@ release](https://github.com/its-DeFine/go-livepeer/releases/tag/punch-livepeer-0
 with binary SHA-256
 `a19eb753e22e697cb09e3907beb8ec3146354297baabd5cb599add942188fc92`. Use that
 asset only after the release is non-draft and its exact archive and checksum are
-present. The tested target is Linux amd64 with glibc 2.35 or newer (Ubuntu
-24.04). After downloading `livepeer-punch-0.9.2-31bb2224-linux-amd64.tar.gz`
-from that release, verify and extract it before checking the executable:
+present. The target requires glibc >=2.35; it was tested on Ubuntu 24.04.
+After downloading `livepeer-punch-0.9.2-31bb2224-linux-amd64.tar.gz` from that
+release, verify and extract it before checking the executable:
 
 ```bash
 NATIVE_ARCHIVE=livepeer-punch-0.9.2-31bb2224-linux-amd64.tar.gz
 NATIVE_SHA256=a60a2e3ff3ccf5596fcb48d5ef3786919d78e8753e03a4d81d9015ccb7ca6ee9
 NATIVE_DIR=/absolute/path/livepeer-0.9.2-31bb2224
+NATIVE_PREFIX=livepeer-punch-0.9.2-31bb2224-linux-amd64
 printf '%s  %s\n' "$NATIVE_SHA256" "$NATIVE_ARCHIVE" | sha256sum -c -
 mkdir -p "$NATIVE_DIR"
 tar -xzf "$NATIVE_ARCHIVE" -C "$NATIVE_DIR"
-"$NATIVE_DIR/livepeer" --version
+"$NATIVE_DIR/$NATIVE_PREFIX/livepeer" --version
 ```
 
 The same executable can run as the orchestrator or as a separately configured
