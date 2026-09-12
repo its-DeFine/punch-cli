@@ -13,21 +13,19 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-[`Preview.19.4`](docs/PREVIEW19.md) is the current Ubuntu 24.04 LTS Linux/x64 public candidate.
-It is not a published or installable release. It adds explicit new-offer terms and
-checks the exact pending offer before activation. No archive hash or native
-acceptance is claimed by this source checkout. The existing
-[`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
-remains published; use only a published release's matching archive and `SHA256SUMS`.
+`Preview.19.5` is the current Ubuntu 24.04 LTS Linux/x64 public candidate;
+its build receipt records the built archive, while the matching package remains
+unpublished.
+`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
+`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install it only after a matching non-draft GitHub release publishes the archive and
+`SHA256SUMS`; this source checkout is not install authority. It is not a published or
+installable release. The package becomes available only when that matching release is
+published.
 
-After separate approval of new-offer terms, Preview.19.4 accepts
-`--duration-seconds 18000 --network-outbound RESEARCH_EGRESS --future-terms-file`
-with an absolute JSON path. See the complete [Provider example](docs/COMMANDS.md#provider).
-Terms do not implicitly inherit from a retired offer. Preserve the existing
-identity/state/config and regenerate the version-pinned service unit with the
-new CLI's `service-install` before restart; see [upgrade instructions](docs/INSTALL.md).
-Working offers need no retirement for a software-only upgrade. This remains a
-free pilot without billing or commercial SLA guarantees.
+The previous `Preview.19.4` candidate remains documented in
+[its contract page](docs/PREVIEW19.md), including its explicit new-offer terms
+and pre-activation readback. The current candidate remains a free pilot without
+billing or commercial SLA guarantees.
 
 The public production deployment configuration keeps Control payment behavior
 `PAYMENT_DISABLED`. Optional Livepeer commands are staging-only and require an
@@ -76,8 +74,8 @@ with the matching immutable image set in
 
 ## Quick start
 
-1. Read the [Preview.19.2 candidate contract](docs/PREVIEW19.md); no public release asset is available until final acceptance and publication.
-2. When a matching non-draft Preview.19.2 release is published, download its archive and `SHA256SUMS`, then verify the checksum.
+1. Read the [Preview.19.5 runtime contract](docs/preview19-runtime-contract.json) and the matching release notes.
+2. When a matching non-draft Preview.19.5 release is published, download its archive and `SHA256SUMS`, then verify the checksum.
 3. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
 4. Run `punch` for the normal guided Provider or Buyer journey and follow the version-matched [Provider guide](docs/PROVIDER.md) or [Buyer guide](docs/BUYER.md).
 5. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.

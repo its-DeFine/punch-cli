@@ -4,24 +4,31 @@ Punch CLI installable packages are distributed only through versioned GitHub Rel
 
 ## Supported preview platforms
 
-See [Platform support](PLATFORMS.md). For Preview.19.4, the public contract is
+See [Platform support](PLATFORMS.md). For Preview.19.5, the public contract is
 Linux/x64 and the Provider target host is Ubuntu 24.04 LTS. Buyer support is
 role-specific and does not expand the Provider host scope.
 
 ## Install from a release
 
-Preview.19.4 is a candidate: no installable archive or final acceptance is
-claimed here. Wait for the matching published release.
+Preview.19.5 is a built public candidate, but its matching package is not yet
+published. The build receipt identifies
+`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
+`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install
+only the matching non-draft archive after its exact line in the same-release
+`SHA256SUMS` reports `OK`. This source checkout is not an installable release;
+never infer an archive from its branch or documentation. This page does not
+claim live Control or Provider-to-Buyer acceptance.
 
-Preview.19.4's Provider scope is Ubuntu 24.04 LTS on Linux/x64. Install only
-the matching non-draft `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` after its
-exact line in the same-release `SHA256SUMS` reports `OK`. This source checkout
-is not an installable release; never infer an archive from its branch or
-documentation. This page does not claim live Control or Provider-to-Buyer
-acceptance.
+The preceding published [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
+used the exact historical archive `punch-cli-0.1.0-preview.18-linux-x64.tar.gz`.
+The older `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` name is retained only
+as historical candidate provenance; it is not a Preview.19.5 install target.
+Preview.19.4's Provider scope is Ubuntu 24.04 LTS on Linux/x64 in that
+historical contract. Its historical service path was:
 
-The older `punch-cli-0.1.0-preview.18-linux-x64.tar.gz` name is retained only
-as historical release provenance; it is not a Preview.19.4 install target.
+```bash
+NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.4/bin/punch-provider"
+```
 
 1. Open a published, non-draft release from this repository's **Releases** page.
 2. Download exactly one archive for your operating system and architecture.
@@ -63,12 +70,12 @@ User installation:
 ```
 
 The Punch archive installer makes no privileged or system-service changes. In
-Preview.19.4, the later supervised Provider flow owns reviewed
+Preview.19.5, the later supervised Provider flow owns reviewed
 dependency changes, generated configuration, and service installation only
 after explicit consent. Do not manually install or edit the reference files
 carried under `provider/` as a substitute for that flow.
 
-Preview.19.4 Buyer `join` is different from archive installation: on supported
+Preview.19.5 Buyer `join` is different from archive installation: on supported
 Linux/x64, if the official NetBird client is missing, `join` explains the
 privileged package change and requires interactive confirmation or explicit
 `--yes` before downloading the official installer. The script is downloaded to
@@ -81,13 +88,13 @@ Before extraction, the user verifies the compressed archive against the matching
 
 ### Clean install or upgrade from Preview.19.1
 
-Installing Preview.19.4 as a clean versioned CLI upgrade from Preview.19.1
+Installing Preview.19.5 as a clean versioned CLI upgrade from Preview.19.1
 preserves the existing
 Provider identity, credential, onboarding or renewal request, generated
 configuration, state, and offer records. A `RETIRED` offer remains retired and
 is not silently recreated. Reopen the same state and credential paths with the
 fresh CLI; do not reset identity or repeat onboarding merely because the CLI
-was reinstalled. Apply the separate clean-CLI recovery rule in the Preview.19.4
+was reinstalled. Apply the separate clean-CLI recovery rule in the Preview.19.5
 contract when an old `PENDING` renewal is encountered.
 
 Updating the command link alone does not update a running systemd service.
@@ -95,7 +102,7 @@ With no active jobs, use the newly installed CLI to regenerate the existing
 machine-scoped unit against the same state and configuration, then restart it:
 
 ```bash
-NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.4/bin/punch-provider"
+NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.5/bin/punch-provider"
 "$NEW_PUNCH_PROVIDER" service-stop --machine-id MACHINE_ID --yes --json
 "$NEW_PUNCH_PROVIDER" service-install --machine-id MACHINE_ID --state-dir EXISTING_STATE_DIR --yes
 "$NEW_PUNCH_PROVIDER" service-start --machine-id MACHINE_ID --yes --json
