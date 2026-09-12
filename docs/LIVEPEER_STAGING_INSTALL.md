@@ -10,6 +10,19 @@ install and upgrade path. Install only from a matching non-draft release and
 verify the archive against its same-release `SHA256SUMS`; this source page is not
 install authority.
 
+## Native runtime and custody boundary
+
+The Preview.19.5 CLI does not ship the go-livepeer native orchestrator, a payer
+signer, or a wallet. `attach-existing` requires an operator-provisioned native
+orchestrator/runner endpoint compatible with the Punch adapter; the Punch
+Provider and adapter remain separate components. The accepted staging native
+artifact is build `31bb2224` with binary SHA-256
+`a19eb753e22e697cb09e3907beb8ec3146354297baabd5cb599add942188fc92`; use the
+same binary for its supported orchestrator and runner modes. The orchestrator
+operator retains its own keystore, while payer/signer custody remains a
+separate remote authority. Do not replace a healthy native node or alter its
+configuration during active jobs.
+
 ## Initial attach-existing setup
 
 After an enrolled Provider has its existing identity and credential, create the
