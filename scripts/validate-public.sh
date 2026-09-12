@@ -201,20 +201,19 @@ for current_boundary_doc in docs/INVITATIONS.md docs/PROVIDER.md docs/TROUBLESHO
   }
 done
 
-grep -F 'Preview.19.4' README.md > /dev/null && \
-  grep -F 'candidate' README.md > /dev/null && \
-  grep -F 'not a published' README.md > /dev/null || {
-  printf '%s\n' 'Preview.19.4 existing candidate status is missing from README.md'
-  exit 1
-}
-
-for candidate_boundary_doc in docs/RELEASES.md; do
-  grep -F 'Preview.19.4' "$candidate_boundary_doc" > /dev/null && \
-    grep -F 'candidate' "$candidate_boundary_doc" > /dev/null && \
-    grep -F 'not a published' "$candidate_boundary_doc" > /dev/null || {
-    printf 'Preview.19.4 candidate status is missing from %s\n' "$candidate_boundary_doc" >&2
-    exit 1
-  }
+for release_doc in README.md docs/RELEASES.md; do
+  for current_release_requirement in \
+    'Preview.19.5' \
+    'public candidate' \
+    'd18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae' \
+    'v0.1.0-preview.19.4' \
+    'remains published' \
+    'ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac'; do
+    grep -F -- "$current_release_requirement" "$release_doc" > /dev/null || {
+      printf 'current Preview.19.5 / published Preview.19.4 boundary is missing from %s: %s\n' "$release_doc" "$current_release_requirement" >&2
+      exit 1
+    }
+  done
 done
 
 grep -F 'Preview.19.4' docs/COMMANDS.md > /dev/null && \
