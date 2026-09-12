@@ -18,9 +18,10 @@ orchestrator/runner endpoint compatible with the Punch adapter; the Punch
 Provider and adapter remain separate components. The accepted staging native
 artifact is build `31bb2224` with binary SHA-256
 `a19eb753e22e697cb09e3907beb8ec3146354297baabd5cb599add942188fc92`; use the
-same binary for its supported orchestrator and runner modes. The orchestrator
-operator retains its own keystore, while payer/signer custody remains a
-separate remote authority. Do not replace a healthy native node or alter its
+same executable can run as the orchestrator or as a separately configured
+remote signer; the Punch runner/adapter is an external HTTP service. The
+orchestrator operator retains its own keystore, while payer/signer custody
+remains a separate remote authority. Do not replace a healthy native node or alter its
 configuration during active jobs.
 
 ## Initial attach-existing setup
