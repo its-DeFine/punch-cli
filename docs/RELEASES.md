@@ -18,6 +18,13 @@ same-release `SHA256SUMS`, after the final rebuild.
 
 [`v0.1.0-preview.19.3`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.3)
 remains published. Preview.19.4 publication awaits its exact archive and acceptance.
+Livepeer integration remains staging-only and unshipped. Production deployment
+configuration keeps Control payment behavior `PAYMENT_DISABLED`; source docs and
+a staging endpoint do not enable native payment, payer/signer custody, or
+settlement. Optional staging commands and attach-existing compatibility are
+covered in [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+Preview.19.5 remains unpublished until matching public release assets, checksum,
+and release binding are available.
 The historical [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 package used this exact public image set:
 

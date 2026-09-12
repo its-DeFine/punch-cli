@@ -29,6 +29,13 @@ new CLI's `service-install` before restart; see [upgrade instructions](docs/INST
 Working offers need no retirement for a software-only upgrade. This remains a
 free pilot without billing or commercial SLA guarantees.
 
+The public production deployment configuration keeps Control payment behavior
+`PAYMENT_DISABLED`. Optional Livepeer commands are staging-only and require an
+operator-provisioned attach-existing native endpoint; native and payer/signer
+custody remain outside the public CLI. See [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md).
+Preview.19.5 is not published or an install target until its matching archive,
+`SHA256SUMS`, and release binding are published.
+
 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 is historical release provenance, not the current install target.
 Its archive SHA-256 is `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.
@@ -91,6 +98,7 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
 - [Future compute staging note](docs/FUTURE_COMPUTE_STAGING.md) (staging-only, unreleased)
+- [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md) (staging-only, unreleased)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Autonomous agent runbook](docs/AGENT_RUNBOOK.md)

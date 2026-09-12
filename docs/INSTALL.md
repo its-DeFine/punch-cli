@@ -45,6 +45,12 @@ For optional new terms after upgrade, see the [explicit 18000-second /
 RESEARCH_EGRESS / future-terms example](COMMANDS.md#provider). A software-only
 upgrade does not require replacing an offer.
 
+The same verified archive and `--activate-from` path applies to a public CLI
+upgrade. Optional Livepeer commands are staging-only: they attach to an
+operator-provisioned native endpoint and keep native and payer/signer custody
+outside the CLI. Preview.19.5 is not an install target until its public archive,
+`SHA256SUMS`, and release binding are published; see [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+
 ## Default locations
 
 User installation:
