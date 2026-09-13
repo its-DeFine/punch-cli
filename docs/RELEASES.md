@@ -21,12 +21,32 @@ identity is not install authority.
 `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` and SHA-256 `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract
 page and release identity stay unchanged.
 The 19.5 bundle ships optional Livepeer commands, while payment execution
-remains staging-only. Production deployment configuration keeps Control payment
+remains staging-only. The public 19.5 deployment configuration keeps Control payment
 behavior `PAYMENT_DISABLED`; source docs and a staging endpoint do not enable
-native payment, payer/signer custody, or settlement. Attach-existing compatibility
-is covered in [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+native payment, payer/signer custody, or settlement. The gated 19.6 opt-in is
+configured separately in Control. Attach-existing compatibility is covered in
+[Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
 Install the 19.5 bundle only from a matching non-draft GitHub release with its
 archive and same-release `SHA256SUMS`.
+
+## Preview.19.6 bounded Livepeer opt-in (gated)
+
+Preview.19.6 is a gated contract update. It is not an installable release
+until the matching archive, `RELEASE-CONTRACT.json`, and same-release
+`SHA256SUMS` are published. Its public contract uses
+`PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER` while retaining
+`priceMinor: 0` and `paymentSettlementEnabled: false` as shipped defaults.
+The default public path remains zero-price and payment-disabled.
+
+The opt-in paid path is Control-gated: production requires
+`livepeerPayments.enabled: true`, `environment: "production"`, one payer
+actor/address, and `liveChain` on chain `42161` with an uncredentialed HTTPS
+RPC, TicketBroker, and a bounded provider allowlist. Each provider mapping
+pins its recipient, runtime input, issuance journal, and contract/installment
+caps. Free SPOT and FUTURE behavior remains unchanged. The CLI carries no
+payer or native-signer custody; native expected value and verified on-chain
+redemption remain separate proof fields.
+
 The historical [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 package used this exact public image set:
 

@@ -59,6 +59,29 @@ outside the CLI. The optional Livepeer commands remain staging-only; install
 Preview.19.5 only from a matching non-draft release with its exact archive,
 same-release `SHA256SUMS`, and bundled `RELEASE-CONTRACT.json`; see [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
 
+## Preview.19.6 production opt-in boundary
+
+The next Preview.19.6 runtime contract retains the shipped public defaults:
+`offerPolicy: PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER`, `priceMinor: 0`,
+and `paymentSettlementEnabled: false`. Those fields describe the safe public
+bundle defaults; they do not silently enable payment, and the false settlement
+value is not a universal statement that a separately gated production Control
+deployment cannot settle.
+
+A production paid deployment requires Control configuration with
+`livepeerPayments.enabled: true`, `environment: "production"`, a shared
+payer actor/address, and `liveChain` on chain `42161`. That chain must pin an
+uncredentialed HTTPS RPC, TicketBroker, and a bounded provider allowlist. Each
+mapped provider must bind its recipient, runtime input, issuance journal,
+`maxContractMinor`, and `maxInstallmentExpectedValueWei` caps. Free SPOT and
+FUTURE behavior remains unchanged. The native orchestrator and local signer are
+separate owner-managed components; native expected value is distinct from a
+verified on-chain redemption.
+
+Preview.19.6 remains gated until the matching versioned archive, release
+contract, and checksum are published. Installing a new CLI version does not
+copy profiles or keys, recreate offers, or replace an existing native service.
+
 ## Default locations
 
 User installation:
