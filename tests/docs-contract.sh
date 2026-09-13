@@ -200,6 +200,26 @@ require docs/INSTALL.md "Preview.19.4's Provider scope is Ubuntu 24.04 LTS on Li
 require docs/INSTALL.md 'punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz'
 require docs/INSTALL.md 'NEW_PUNCH_PROVIDER="$HOME/.local/share/punch-cli/0.1.0-preview.19.4/bin/punch-provider"'
 require docs/INSTALL.md 'service-install --machine-id MACHINE_ID --state-dir EXISTING_STATE_DIR --yes'
+require docs/RELEASES.md 'Preview.19.6 bounded Livepeer opt-in (gated)'
+require docs/INSTALL.md 'livepeerPayments.enabled: true'
+require docs/LIVEPEER_STAGING_INSTALL.md 'PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER'
+
+node <<'NODE'
+const fs = require('fs');
+const runtime = JSON.parse(fs.readFileSync('docs/preview19-runtime-contract.json', 'utf8'));
+const provider = JSON.parse(fs.readFileSync('packaging/preview19/provider-agent.example.json', 'utf8'));
+if (runtime.releaseVersion !== '0.1.0-preview.19.6'
+    || runtime.offerPolicy !== 'PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER'
+    || runtime.priceMinor !== 0 || runtime.paymentSettlementEnabled !== false) {
+  throw new Error('Preview.19.6 runtime contract defaults drifted');
+}
+if (provider.offerPolicy.offerPolicy !== 'PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER'
+    || provider.offerPolicy.priceMinor !== 0
+    || provider.offerPolicy.paymentSettlementEnabled !== false) {
+  throw new Error('Preview.19.6 Provider example defaults drifted');
+}
+process.stdout.write('Preview.19.6 opt-in contract defaults: PASS\n');
+NODE
 require docs/GUIDED_CLI.md 'PENDING_AGENT'
 require docs/GUIDED_CLI.md 'resumable until the exact Buyer/NetBird binding'
 require docs/GUIDED_CLI.md 'Multiple supervised Providers'

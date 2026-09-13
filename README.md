@@ -35,6 +35,12 @@ payment behavior `PAYMENT_DISABLED`. See [Livepeer staging compatibility](docs/L
 Install the 19.5 bundle only from a matching non-draft release with its exact
 archive and same-release `SHA256SUMS`; the source checkout is not install authority.
 
+Preview.19.6 is a separately gated contract update, not an installable release
+until its matching archive and checksum are published. It preserves the public
+zero-price defaults while describing an explicitly allowlisted Livepeer
+production opt-in; the shipped CLI still does not carry payer or native-signer
+custody.
+
 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 is historical release provenance, not the current install target.
 Its archive SHA-256 is `d144fd266328c022ef2601feb871ff62396a293d5e35e7130a3880cc0cdaf423`.

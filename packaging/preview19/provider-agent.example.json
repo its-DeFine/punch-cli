@@ -4,7 +4,7 @@
   "credentialFile": "/var/lib/punch-provider/preview19/provider-credential.private.json",
   "stateDirectory": "/var/lib/punch-provider/preview19",
   "netBirdGateway": {"enabled": true, "interfaceName": "wt0", "netBirdOverlayIp": "REPLACE_WITH_PROVIDER_NETBIRD_OVERLAY_IP", "gatewayPort": 22222},
-  "offerPolicy": {"offerPolicy": "PUBLIC_OR_TARGETED_ZERO_ONLY", "priceMinor": 0, "paymentSettlementEnabled": false, "selfServiceProviderOnboarding": false, "offerContractSchema": "punch.offer.v2", "resourceSnapshotSchema": "punch.resource-snapshot.v2"},
+  "offerPolicy": {"offerPolicy": "PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER", "priceMinor": 0, "paymentSettlementEnabled": false, "selfServiceProviderOnboarding": false, "offerContractSchema": "punch.offer.v2", "resourceSnapshotSchema": "punch.resource-snapshot.v2"},
   "imagePolicies": {
     "VALIDATION": {"image": "ghcr.io/its-define/punch-validation@sha256:d7de3c3549c2e36c1f5ef5237a671c7f06e44eb101c17be2faeca12a267adf86", "command": ["/punch/validate"], "inputKeys": ["nonce"]},
     "WORKLOAD": {"image": "ghcr.io/its-define/punch-workload@sha256:16fdfad931a97834bbe89c6a66724405e502535b9f8c35a971e91ed07b1242ce", "command": ["/punch/run"], "inputKeys": ["nonce", "window_seconds"]},

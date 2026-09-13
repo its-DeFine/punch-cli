@@ -82,6 +82,22 @@ plumbing, not part of the public installation path.
 must stay unchanged for an exact retry. Its default Livepeer mode is
 `attach-existing`, pointing at an operator-provisioned native endpoint.
 
+## Preview.19.6 production opt-in boundary
+
+The public 19.5 staging bundle remains payment-disabled. The gated 19.6
+contract describes a bounded production opt-in without changing the public
+Provider onboarding path. Control must explicitly enable
+`livepeerPayments` for `environment: "production"` and provide `liveChain`
+on chain `42161`, an uncredentialed HTTPS RPC, TicketBroker, and a non-empty
+provider allowlist. Every mapped provider binds its exact recipient, private
+runtime input and issuance journal, `maxContractMinor`, and
+`maxInstallmentExpectedValueWei`; unmapped actors or recipient drift are
+rejected before issuance. The shipped defaults remain
+`offerPolicy: PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER`, `priceMinor: 0`,
+and `paymentSettlementEnabled: false`. They do not enable paid settlement by
+themselves. Free SPOT/FUTURE behavior is preserved. Native expected value is
+separate from realized value, which requires verified on-chain redemption.
+
 ## Upgrade or runtime-only change
 
 For a verified package upgrade, use the normal installer activation path. It
@@ -113,6 +129,7 @@ verified bundle. `config-update` preserves identity, credential, state, and
 offers; it does not create onboarding, replace native or payer/signer custody,
 or issue or redeem payment tickets.
 
-Production deployment configuration keeps Control payment behavior
-`PAYMENT_DISABLED`. Native binary and payer/signer custody remain outside the
-CLI, and this staging page does not change the public onboarding path.
+The public 19.5 deployment configuration keeps Control payment behavior
+`PAYMENT_DISABLED`; the gated 19.6 opt-in is configured separately in Control.
+Native binary and payer/signer custody remain outside the CLI, and this staging
+page does not change the public onboarding path.
