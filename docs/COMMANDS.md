@@ -1,5 +1,10 @@
 # Command reference
 
+> For the current published package and separately deployed paid path, read
+> [Livepeer production operations](LIVEPEER_PRODUCTION.md) and
+> [Installation and updates](INSTALL.md). Version-specific commands below retain
+> their original artifact boundary; this update does not add commands to old binaries.
+
 > **Version boundary:** this reference describes the Preview.19.4 public
 > source contract for Linux/x64 `v0.1.0-preview.19.4`. Exact flags are bound in
 > `docs/preview19-runtime-contract.json` and the matching archive. This source

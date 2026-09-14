@@ -4,20 +4,23 @@ Punch CLI installable packages are distributed only through versioned GitHub Rel
 
 ## Supported preview platforms
 
-See [Platform support](PLATFORMS.md). For Preview.19.5, the public contract is
+See [Platform support](PLATFORMS.md). For Preview.19.6, the public contract is
 Linux/x64 and the Provider target host is Ubuntu 24.04 LTS. Buyer support is
 role-specific and does not expand the Provider host scope.
 
 ## Install from a release
 
-Preview.19.5 is the public candidate bundle and includes optional Livepeer
-staging commands. Its build receipt identifies
-`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
-`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install
-only the matching non-draft archive after its exact line in the same-release
-`SHA256SUMS` reports `OK`. This source checkout is not an installable release;
-never infer an archive from its branch or documentation. This page does not
-claim live Control or Provider-to-Buyer acceptance.
+**Current published CLI:** [v0.1.0-preview.19.6](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.6), published
+13 September 2026, is the current Ubuntu 24.04 LTS Linux/x64 public prerelease.
+Verify `punch-cli-0.1.0-preview.19.6-linux-x64.tar.gz` against the same-release
+`SHA256SUMS`; its archive SHA-256 is
+`1b6b2c4b99b66e9b811be3d67e185de904769e81535736f33aee32af975754ab`.
+A source checkout is not an installable release.
+
+The later AWS payment deployment uses separately versioned Control, Provider,
+and native services. Installing the published CLI does not install those later
+service fixes or wallet custody. See [Livepeer production operations](LIVEPEER_PRODUCTION.md)
+for the architecture, pricing, payment proof, and upgrade boundary.
 
 The preceding published [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) release uses the exact
 archive `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz`, whose SHA-256 is
@@ -52,16 +55,15 @@ For optional new terms after upgrade, see the [explicit 18000-second /
 RESEARCH_EGRESS / future-terms example](COMMANDS.md#provider). A software-only
 upgrade does not require replacing an offer.
 
-The same verified archive and role/prefix install path applies to a public
-CLI upgrade. Optional Livepeer commands are staging-only: they attach to an
-operator-provisioned native endpoint and keep native and payer/signer custody
-outside the CLI. The optional Livepeer commands remain staging-only; install
-Preview.19.5 only from a matching non-draft release with its exact archive,
-same-release `SHA256SUMS`, and bundled `RELEASE-CONTRACT.json`; see [Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
+Use the same verified archive and role/prefix install path for an upgrade.
+Preserve the existing identity, credentials, state, offers, and previous executable.
+For an already customized Provider service, retain its deployment pins: installing
+an older public bundle is not an upgrade to the later production service.
+The [19.5 staging guide](LIVEPEER_STAGING_INSTALL.md) is a historical baseline.
 
 ## Preview.19.6 production opt-in boundary
 
-The next Preview.19.6 runtime contract retains the shipped public defaults:
+The published Preview.19.6 runtime contract retains the shipped public defaults:
 `offerPolicy: PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER`, `priceMinor: 0`,
 and `paymentSettlementEnabled: false`. Those fields describe the safe public
 bundle defaults; they do not silently enable payment, and the false settlement
@@ -74,12 +76,12 @@ payer actor/address, and `liveChain` on chain `42161`. That chain must pin an
 uncredentialed HTTPS RPC, TicketBroker, and a bounded provider allowlist. Each
 mapped provider must bind its recipient, runtime input, issuance journal,
 `maxContractMinor`, and `maxInstallmentExpectedValueWei` caps. Free SPOT and
-FUTURE behavior remains unchanged. The native orchestrator and local signer are
+FUTURE behavior remains unchanged. The native orchestrator and AWS-hosted payer signer are
 separate owner-managed components; native expected value is distinct from a
 verified on-chain redemption.
 
-Preview.19.6 remains gated until the matching versioned archive, release
-contract, and checksum are published. Installing a new CLI version does not
+The paid deployment remains explicitly gated after package publication.
+Installing a new CLI version does not
 copy profiles or keys, recreate offers, or replace an existing native service.
 
 ## Default locations
