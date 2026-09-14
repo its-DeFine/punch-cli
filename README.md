@@ -13,33 +13,24 @@ The documented preview configuration uses the public Punch HTTPS endpoint. Buyer
 
 > **Public preview:** The repository is public, but the network remains invitation-only. A public repository does not make the service, payments, or capacity generally available.
 
-`Preview.19.5` is the current Ubuntu 24.04 LTS Linux/x64 public candidate
-bundle. Its build receipt records
-`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
-`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. The
-source checkout alone is not install authority. It is not a published or
-installable release. Install the 19.5 bundle only from a matching non-draft
-GitHub release and verify its same-release `SHA256SUMS`.
+**Current published CLI:** [v0.1.0-preview.19.6](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.6), published
+13 September 2026, is the current Ubuntu 24.04 LTS Linux/x64 public prerelease.
+Verify `punch-cli-0.1.0-preview.19.6-linux-x64.tar.gz` against the same-release
+`SHA256SUMS`; its archive SHA-256 is
+`1b6b2c4b99b66e9b811be3d67e185de904769e81535736f33aee32af975754ab`.
+A source checkout is not an installable release.
 
-The previous [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) release remains published.
-Its exact archive `punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` has SHA-256
-`ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract page retains the explicit new-offer terms and
-pre-activation readback. The current candidate remains a free pilot without
-billing or commercial SLA guarantees.
+The later AWS payment deployment uses separately versioned Control, Provider,
+and native services. Installing the published CLI does not install those later
+service fixes or wallet custody. See [Livepeer production operations](docs/LIVEPEER_PRODUCTION.md)
+for the architecture, pricing, payment proof, and upgrade boundary.
 
-The 19.5 archive is the public CLI bundle and ships optional Livepeer
-commands. Those commands remain staging-only and require an operator-provisioned
-attach-existing native endpoint; native and payer/signer custody remain outside
-the public CLI. The public production deployment configuration keeps Control
-payment behavior `PAYMENT_DISABLED`. See [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md).
-Install the 19.5 bundle only from a matching non-draft release with its exact
-archive and same-release `SHA256SUMS`; the source checkout is not install authority.
-
-Preview.19.6 is a separately gated contract update, not an installable release
-until its matching archive and checksum are published. It preserves the public
-zero-price defaults while describing an explicitly allowlisted Livepeer
-production opt-in; the shipped CLI still does not carry payer or native-signer
-custody.
+Preview.19.5 was the preceding public candidate; its retained archive SHA-256 is
+`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`.
+The historical [`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4)
+remains published with archive SHA-256
+`ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`.
+Old release archives, checksums, and version-specific guides remain immutable.
 
 [`v0.1.0-preview.18`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.18)
 is historical release provenance, not the current install target.
@@ -81,8 +72,8 @@ with the matching immutable image set in
 
 ## Quick start
 
-1. Read the [Preview.19.5 runtime contract](docs/preview19-runtime-contract.json) and the matching release notes.
-2. When a matching non-draft Preview.19.5 release is published, download its archive and `SHA256SUMS`, then verify the checksum.
+1. Read the published Preview.19.6 release notes and its bundled `RELEASE-CONTRACT.json`.
+2. Download its archive and same-release `SHA256SUMS`, then verify the checksum.
 3. Install the matching role from that verified release; see [Installation](docs/INSTALL.md).
 4. Run `punch` for the normal guided Provider or Buyer journey and follow the version-matched [Provider guide](docs/PROVIDER.md) or [Buyer guide](docs/BUYER.md).
 5. Cross the documented identity/join/setup boundary only after supervised onboarding is approved.
@@ -103,7 +94,8 @@ If the Releases page has no compatible published asset, the public CLI is not ye
 - [Buyer guide](docs/BUYER.md)
 - [Provider guide](docs/PROVIDER.md)
 - [Future compute staging note](docs/FUTURE_COMPUTE_STAGING.md) (staging-only, unreleased)
-- [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md) (staging-only)
+- [Livepeer production operations](docs/LIVEPEER_PRODUCTION.md) (separately deployed services)
+- [Livepeer staging compatibility](docs/LIVEPEER_STAGING_INSTALL.md) (historical 19.5 baseline)
 - [Conditional multi-GPU orders](docs/CONDITIONAL_ORDERS.md)
 - [Command reference](docs/COMMANDS.md)
 - [Autonomous agent runbook](docs/AGENT_RUNBOOK.md)

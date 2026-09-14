@@ -1,5 +1,10 @@
 # Buyer guide
 
+> For the current published package and separately deployed paid path, read
+> [Livepeer production operations](LIVEPEER_PRODUCTION.md) and
+> [Installation and updates](INSTALL.md). Version-specific commands below retain
+> their original artifact boundary; this update does not add commands to old binaries.
+
 The Buyer CLI is `punch-buyer`. The preview configuration below points it to the official public Punch HTTPS address. The CLI sends the Buyer session to the configured HTTPS origin, so changing that origin is a security-sensitive trust decision.
 
 > **Preview.19.2 public-contract boundary:** use only the matching Linux/x64

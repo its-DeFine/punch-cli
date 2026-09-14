@@ -1,9 +1,14 @@
 # Livepeer staging compatibility
 
-> **STAGING ONLY.** This page documents optional Livepeer commands shipped in
+> **HISTORICAL 19.5 STAGING BASELINE.** This page documents optional Livepeer commands shipped in
 > the version-matched Preview.19.5 CLI bundle. Payment execution remains a
 > staging boundary and this page is not a settlement or production onboarding
 > instruction.
+
+For the later AWS-hosted production deployment, see
+[Livepeer production operations](LIVEPEER_PRODUCTION.md). The native `31bb2224`
+release below predates that deployment and does not provide its guaranteed-ticket
+changes. Do not replace a working production service using this historical recipe.
 
 Use [Installation and updates](INSTALL.md) for the normal public release
 install and upgrade path. Install only from a matching non-draft release and
@@ -84,7 +89,7 @@ must stay unchanged for an exact retry. Its default Livepeer mode is
 
 ## Preview.19.6 production opt-in boundary
 
-The public 19.5 staging bundle remains payment-disabled. The gated 19.6
+The public 19.5 staging bundle remains payment-disabled. The separately published 19.6
 contract describes a bounded production opt-in without changing the public
 Provider onboarding path. Control must explicitly enable
 `livepeerPayments` for `environment: "production"` and provide `liveChain`

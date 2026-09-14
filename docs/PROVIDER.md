@@ -1,5 +1,10 @@
 # Preview.19.2 Provider guide
 
+> For the current published package and separately deployed paid path, read
+> [Livepeer production operations](LIVEPEER_PRODUCTION.md) and
+> [Installation and updates](INSTALL.md). Version-specific commands below retain
+> their original artifact boundary; this update does not add commands to old binaries.
+
 > **Status: `PREVIEW19.2_PUBLIC_SOURCE_CONTRACT`.** This guide targets the
 > Ubuntu 24.04 LTS Linux/x64 Provider path. Install only the matching non-draft
 > `v0.1.0-preview.19.2` archive after its same-release `SHA256SUMS` reports

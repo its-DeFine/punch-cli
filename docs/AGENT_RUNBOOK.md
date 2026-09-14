@@ -1,5 +1,10 @@
 # Punch agent runbook
 
+> For the current published package and separately deployed paid path, read
+> [Livepeer production operations](LIVEPEER_PRODUCTION.md) and
+> [Installation and updates](INSTALL.md). Version-specific commands below retain
+> their original artifact boundary; this update does not add commands to old binaries.
+
 > **Candidate boundary:** this runbook applies to the gated Preview.12
 > candidate. It does not publish or deploy that candidate. The human workflow
 > remains [Guided `punch` home](GUIDED_CLI.md); an autonomous agent uses only

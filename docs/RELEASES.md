@@ -8,32 +8,27 @@ This source checkout contains documentation, installers, launchers, and image
 contexts, not a versioned proprietary runtime archive or its checksum manifest.
 The GitHub release assets are the installable surface.
 
-[`Preview.19.5`](preview19-runtime-contract.json) is the current built Ubuntu
-24.04 LTS Linux/x64 public candidate bundle. The build receipt identifies
-`punch-cli-0.1.0-preview.19.5-linux-x64.tar.gz` with SHA-256
-`d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`. Install
-19.5 only from a matching non-draft GitHub release and verify its archive
-against the same-release `SHA256SUMS`. The archive contains
-`RELEASE-CONTRACT.json`, which is the bundled release contract; source checkout
-identity is not install authority.
+**Current published CLI:** [v0.1.0-preview.19.6](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.6), published
+13 September 2026, is the current Ubuntu 24.04 LTS Linux/x64 public prerelease.
+Verify `punch-cli-0.1.0-preview.19.6-linux-x64.tar.gz` against the same-release
+`SHA256SUMS`; its archive SHA-256 is
+`1b6b2c4b99b66e9b811be3d67e185de904769e81535736f33aee32af975754ab`.
+A source checkout is not an installable release.
 
-[`v0.1.0-preview.19.4`](https://github.com/its-DeFine/punch-cli/releases/tag/v0.1.0-preview.19.4) remains published with the exact archive
-`punch-cli-0.1.0-preview.19.4-linux-x64.tar.gz` and SHA-256 `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. Its contract
-page and release identity stay unchanged.
-The 19.5 bundle ships optional Livepeer commands, while payment execution
-remains staging-only. The public 19.5 deployment configuration keeps Control payment
-behavior `PAYMENT_DISABLED`; source docs and a staging endpoint do not enable
-native payment, payer/signer custody, or settlement. The gated 19.6 opt-in is
-configured separately in Control. Attach-existing compatibility is covered in
-[Livepeer staging compatibility](LIVEPEER_STAGING_INSTALL.md).
-Install the 19.5 bundle only from a matching non-draft GitHub release with its
-archive and same-release `SHA256SUMS`.
+The later AWS payment deployment uses separately versioned Control, Provider,
+and native services. Installing the published CLI does not install those later
+service fixes or wallet custody. See [Livepeer production operations](LIVEPEER_PRODUCTION.md)
+for the architecture, pricing, payment proof, and upgrade boundary.
+
+Preview.19.5 was the preceding public candidate bundle, with retained archive
+SHA-256 `d18f8e6586f6333610f3ef33e13c27c571dbc30bdbf34f7038908283069892ae`.
+The historical `v0.1.0-preview.19.4` remains published; its archive SHA-256 is
+`ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`.
+These older release identities are unchanged.
 
 ## Preview.19.6 bounded Livepeer opt-in (gated)
 
-Preview.19.6 is a gated contract update. It is not an installable release
-until the matching archive, `RELEASE-CONTRACT.json`, and same-release
-`SHA256SUMS` are published. Its public contract uses
+Preview.19.6 is published; its paid deployment remains gated. Its public contract uses
 `PUBLIC_OR_TARGETED_ZERO_WITH_OPT_IN_LIVEPEER` while retaining
 `priceMinor: 0` and `paymentSettlementEnabled: false` as shipped defaults.
 The default public path remains zero-price and payment-disabled.
@@ -67,11 +62,11 @@ Preview.19.4 was published for the Ubuntu 24.04 LTS Linux/x64 Provider
 scope with the resource-aware offer lifecycle, future-compute command surface,
 and contract-scoped Buyer gateway described in [Preview.19.4](PREVIEW19.md).
 Its exact archive SHA-256 is `ae7bfbb5c9e9b278e45e025853f35833997525b595a5ab6abaef54544f7450ac`. This historical section retains its original
-contract boundary and does not change the Preview.19.5 release identity above.
+contract boundary and does not change any published release identity.
 
 ## Preview.18 historical Provider lifecycle and Buyer SSH handoff release
 
-Preview.18 is the last published Linux/x64 prerelease. It preserves the
+Preview.18 is a historical published Linux/x64 prerelease. It preserves the
 guided onboarding contract and adds authenticated Provider offer selection,
 sequential replacement using the same environment/setup binding, a strict
 targeted canonical-zero Buyer gate, scoped SSH egress consent, and a visible

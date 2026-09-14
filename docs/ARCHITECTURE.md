@@ -49,3 +49,15 @@ Closing OpenSSH alone still does not direct step 7.
 Preview.9 has one owner-operated Provider-to-Buyer lifecycle proof. It does not
 prove payment settlement, refunds, arbitrary external Providers, broad
 concurrency, or general availability.
+
+## Opt-in Livepeer production services
+
+The payer-side wallet backend, Go remote signer, and redeemer run alongside
+Control on AWS as separately isolated services. The Provider's native
+orchestrator and adapter stay on the compute host. Native API and redemption
+traffic use narrow NetBird service routes, independently of Buyer workload SSH.
+No Mac or engineering-host tunnel is part of payment execution, and public
+administration SSH forwarding is not required for Buyer access.
+
+See [Livepeer production operations](LIVEPEER_PRODUCTION.md) for the component
+map, price binding, acceptance-before-compute rule, and exact release boundary.
